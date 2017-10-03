@@ -1,0 +1,85 @@
+---
+title: | 
+       | Containers and R:
+       | the Rockerverse and beyond
+author:
+  - name: Daniel Nüst
+    affiliation: Institute for Geoinformatics, University of Münster 
+    address:
+    - Heisenbergstr. 2, 48149 Münster, Germany
+    email: daniel.nuest@uni-muenster.de
+abstract: >
+  The Rocker project provides widely-used Docker images for R across different application scenarios. In this article we describe the downstream projects building upon Rocker and look beyond towards other container solutions and libraries to interact with them from R.
+preamble: >
+   \usepackage{longtable}
+output: rticles::rjournal_article
+---
+
+
+## Introduction
+
+\citep{R}
+
+### Containerization
+
+### Rocker
+
+## R images and containers
+
+### Rocker
+
+### Bioconductor
+
+### MRO
+
+### Renjin
+
+### pqR
+
+### Singularity
+
+### OCI
+
+## Packages
+
+### Automation and packaging
+
+- `containerit`
+- `dockertest`
+- `liftr`
+
+### Control and provisioning
+
+- `harbor`
+- `docker`
+- `RSelenium`
+- `googleComputeEngineR`
+- `analogsea`
+
+## Downstream Applications
+
+### Deployment and processing
+
+- `plumber`
+- `batchtools`
+
+### Cross-R testing
+
+Show how you can run the same script in multiple R variants in containers (new contribution).
+Ideally the images should be created using `containerit` and controlled with `harbor`/`docker`, i.e. via an R script.
+
+### Workflows and reproducibility
+
+...
+
+### Scalable deployments
+
+- Shiny talks @ useR!2017
+- ...
+
+
+
+
+
+\bibliography{RJreferences}
+

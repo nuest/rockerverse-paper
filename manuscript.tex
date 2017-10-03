@@ -1,0 +1,112 @@
+% !TeX root = RJwrapper.tex
+\title{Containers and R:\\
+the Rockerverse and beyond}
+\author{by Daniel Nüst}
+
+\maketitle
+
+\abstract{%
+The Rocker project provides widely-used Docker images for R across
+different application scenarios. In this article we describe the
+downstream projects building upon Rocker and look beyond towards other
+container solutions and libraries to interact with them from R.
+}
+
+\subsection{Introduction}\label{introduction}
+
+\citep{R}
+
+\subsubsection{Containerization}\label{containerization}
+
+\subsubsection{Rocker}\label{rocker}
+
+\subsection{R images and containers}\label{r-images-and-containers}
+
+\subsubsection{Rocker}\label{rocker-1}
+
+\subsubsection{Bioconductor}\label{bioconductor}
+
+\subsubsection{MRO}\label{mro}
+
+\subsubsection{Renjin}\label{renjin}
+
+\subsubsection{pqR}\label{pqr}
+
+\subsubsection{Singularity}\label{singularity}
+
+\subsubsection{OCI}\label{oci}
+
+\subsection{Packages}\label{packages}
+
+\subsubsection{Automation and packaging}\label{automation-and-packaging}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{containerit}
+\item
+  \texttt{dockertest}
+\item
+  \texttt{liftr}
+\end{itemize}
+
+\subsubsection{Control and provisioning}\label{control-and-provisioning}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{harbor}
+\item
+  \texttt{docker}
+\item
+  \texttt{RSelenium}
+\item
+  \texttt{googleComputeEngineR}
+\item
+  \texttt{analogsea}
+\end{itemize}
+
+\subsection{Downstream Applications}\label{downstream-applications}
+
+\subsubsection{Deployment and
+processing}\label{deployment-and-processing}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{plumber}
+\item
+  \texttt{batchtools}
+\end{itemize}
+
+\subsubsection{Cross-R testing}\label{cross-r-testing}
+
+Show how you can run the same script in multiple R variants in
+containers (new contribution). Ideally the images should be created
+using \texttt{containerit} and controlled with
+\texttt{harbor}/\texttt{docker}, i.e.~via an R script.
+
+\subsubsection{Workflows and
+reproducibility}\label{workflows-and-reproducibility}
+
+\ldots{}
+
+\subsubsection{Scalable deployments}\label{scalable-deployments}
+
+\begin{itemize}
+\tightlist
+\item
+  Shiny talks @ useR!2017
+\item
+  \ldots{}
+\end{itemize}
+
+\bibliography{RJreferences}
+
+\address{%
+Daniel Nüst\\
+Institute for Geoinformatics, University of Münster\\
+Heisenbergstr. 2, 48149 Münster, Germany\\
+}
+\href{mailto:daniel.nuest@uni-muenster.de}{\nolinkurl{daniel.nuest@uni-muenster.de}}
+
