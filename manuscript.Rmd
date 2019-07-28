@@ -1,83 +1,163 @@
 ---
-title: | 
-       | Containers and R:
-       | the Rockerverse and beyond
+title: "Containers and R: the Rockerverse and beyond"
 author:
   - name: Daniel Nüst
     affiliation: Institute for Geoinformatics, University of Münster 
     address:
     - Heisenbergstr. 2, 48149 Münster, Germany
     email: daniel.nuest@uni-muenster.de
+  - name: Carl Boettiger
+    #affiliation: -
+    #email: -
+  - name: Robrecht Cannoodt
+    #affiliatin: -
+    #email: -
+  - name: Dirk Eddelbuettel
+    #affiliation: -
+    #email: -
+  - name: Mark Edmondson
+    #affiliation: -
+    #email: -
+  - name: Colin Fay
+    #affiliation: -
+    #email: -
+  - name: Ben Marwick
+    #affiliation: -
+    #email: -
+  - name: Noam Ross
+    #affiliation: -
+    #email: -
+  - name: Nan Xiao
+    #affiliation: -
+    #email: - 
 abstract: >
-  The Rocker project provides widely-used Docker images for R across different application scenarios. In this article we describe the downstream projects building upon Rocker and look beyond towards other container solutions and libraries to interact with them from R.
+  The Rocker project provides widely-used Docker images for R across different application scenarios.
+  This articles surveys describe downstream projects building upon Rocker.
+  We also look beyond Rocker to other projects connecting containerisation with R.
+  These use cases and the diversity of applications demonstrate the power of Rocker and containerisation for collaboration, effectivity, scalability, and transparency.
 preamble: >
    \usepackage{longtable}
 output: rticles::rjournal_article
 ---
 
-
 ## Introduction
 
-\citep{R}
+The \citep{R} community keeps growing: the number of new packages on CRAN keeps on rising, meetups, conferences, online courses and unconferences prosper, and the uptake in education and industry increases [REFs].
+All this cements `R`'s role as the lingua franca of statistics, data visualisation, and computational research.
+Part of this success can be traced back to the _Rocker Project_ ([https://www.rocker-project.org/](https://www.rocker-project.org/)).
+The community project was introduced in 2014 and provides a number of [Docker](https://en.wikipedia.org/wiki/Docker_(software)) images for various use cases \citet{RJ-2017-065}.
+The considerable uptake and continued evolution of _Rocker_'s suite has lead to numerous projects extending or building upon _Rocker_ images ranging from reproducible research to production deployments.
+This article presents this _Rockerverse_ of projects.
+It also introduces related activities connecting the R language and environment with other containerisation solutions.
+The main contributions is a coherent picture of the current lay of the land of containers in, with, and for `R`.
+This diversity includes demonstrators, early prototypes, and mature projects.
 
-### Containerization
+## Containerization and Rocker
 
-### Rocker
+_Do we need a generic intro here?_
 
-## R images and containers
+## Images for alternative R distributions [@nuest]
 
-### Rocker
+- [MRO](https://github.com/nuest/mro-docker)
+- [Renjin](https://github.com/nuest/renjin-docker)
+- [pqR](https://github.com/nuest/pqr-docker)
+- [FastR](https://github.com/nuest/fastr-docker)
 
-### Bioconductor
+## Other containerisation platforms [NN]
 
-### MRO
+- R images for Singularity
+- Running Rocker images with
+  - Singularity
+  - CoreOS rkt?
+- nix?
 
-### Renjin
+## Non-Debian images [NN]
 
-### pqR
+- Alpine images
+- Images used by R-Hub (overlap with CI?)
+- [Windows](https://github.com/nuest/rocker-win) [@nuest]
+- https://github.com/jlisic/R-docker-centos
 
-### Singularity
+## Further Use-case Docker images [NN]
 
-### OCI
+- part of Rocker (if not mentioned in \citet{RJ-2017-065}) ?
+  - Binder
+  - GPU [@noamross, @cboettig]
+- [Bioconductor](http://bioconductor.org/help/docker/), https://github.com/Bioconductor/bioc_docker
+- Gigantum stack
+- ...
 
-## Packages
+## Rocker for Research Compendia [@benmarwick]
 
-### Automation and packaging
+...
+
+## Packages for automation and packaging [@nuest]
 
 - `containerit`
 - `dockertest`
-- `liftr`
+- `liftr` for OS-level reproducibility [@nanx]
+- [`rize` for Shiny](https://github.com/cole-brokamp/rize)
+- [`dockerfiler`](https://github.com/ColinFay/dockerfiler)
 
-### Control and provisioning
+## Packages for control and provisioning [@nuest]
 
-- `harbor`
-- `docker`
+- [`stevedore`](https://github.com/richfitz/stevedore)
+- [`babelwhale`](https://cran.r-project.org/web/packages/babelwhale/index.html): Running a Docker from R with Singularity or Docker as back-end. This is really useful in HPC environments where a user might not have root access but is able to install Singularity instead of Docker. [@rcannood]
+- [`docker`](https://bhaskarvk.github.io/docker/)
 - `RSelenium`
-- `googleComputeEngineR`
-- `analogsea`
+- [`googleComputeEngineR`](https://cloudyr.github.io/googleComputeEngineR/) (function `docker_run`)
+- [`analogsea`](https://github.com/sckott/analogsea)
+- [`harbor`](https://github.com/wch/harbor/)
+- [`dockermachine`](https://github.com/cboettig/dockermachine)
 
-## Downstream Applications
+## Continuous integration and continuous delivery [@noamross, @ColinFay]
 
-### Deployment and processing
+- R-Hub
+- DevOps
+  - https://www.opencpu.org/posts/opencpu-with-docker/
+- `r-ci`: https://github.com/ColinFay/r-ci
+- [dynwrap](https://github.com/dynverse/dynwrap_containers/blob/master/.travis.yml) [@rcannood]
+  - For this project, we use travis-ci to build rocker-derived containers, test them, and only push them to docker hub (from travis-ci.org) if the integration tests succeed.
+- ...
 
-- `plumber`
-- `batchtools`
+## Common work environments [@noamross]
+
+- ...
+- in education
+  - ready to use learning environments
+  - [`r-db`](https://github.com/ColinFay/r-db) [@ColinFay]
+- [RCloud](https://github.com/att/rcloud/tree/master/docker) ?
+
+## Deployment, processing, cloud
+
+- Docker images for cloud services [@MarkEdmondson1234]
+- [`plumber`](https://www.rplumber.io/docs/hosting.html#docker)
+- `batchtools` \citep{Lang2017batchtools} can [schedule jobs with Docker Swarm](https://mllg.github.io/batchtools/reference/makeClusterFunctionsDocker.html)
+- scalable deployments, e.g. start with numerous Shiny talks mentioning Rocker at useR!2017
+- [dynmethods](https://github.com/dynverse/dynmethods) [@rcannood]: In order to evaluate ±50 computational methods which all used different environments (R, Python, C++, ...), we wrapped each of them in a docker container and can execute these methods from R. Again, all of these containers are being built on travis-ci, and will only be pushed to docker hub if the integration test succeeds.
+- [ShinyProxy](https://www.shinyproxy.io/) [creates a container](https://github.com/openanalytics/shinyproxy/blob/master/src/main/java/eu/openanalytics/services/DockerService.java#L388) for each user
+
+## R versions [@ColinFay]
+
+- run code with Versions of R: https://srv.colinfay.me/r-online
+- old R versions: https://github.com/rocker-org/rocker-versioned/issues/138
+- [semantic version tags for Rocker](https://github.com/rocker-org/rocker-versioned/#version-tags)
+- debugging memory problems across multiple versions: https://github.com/wch/r-debug
 
 ### Cross-R testing
 
 Show how you can run the same script in multiple R variants in containers (new contribution).
 Ideally the images should be created using `containerit` and controlled with `harbor`/`docker`, i.e. via an R script.
 
-### Workflows and reproducibility
+## Discussion/outlook [all, please add bullet points]
 
-...
-
-### Scalable deployments
-
-- Shiny talks @ useR!2017
+- Missing pieces?
+- consolidation (e.g. via packages using `dockerfiler` and `stevedore`)
+- Common themes
+  - reproducibility
+- will knowledge about containers continue to spread?
+- what is needed for even more containers with R?
 - ...
-
-
 
 
 
