@@ -24,6 +24,9 @@ author:
   - name: Ben Marwick
     #affiliation: -
     #email: -
+  - name: Karthik Ram
+    #affiliation: -
+    #email: -
   - name: Noam Ross
     #affiliation: -
     #email: -
@@ -62,6 +65,7 @@ _Do we need a generic intro here?_
 - [Renjin](https://github.com/nuest/renjin-docker)
 - [pqR](https://github.com/nuest/pqr-docker)
 - [FastR](https://github.com/nuest/fastr-docker)
+- [Bioconductor](http://bioconductor.org/help/docker/), https://github.com/Bioconductor/bioc_docker
 
 ## Other containerisation platforms [NN]
 
@@ -78,24 +82,15 @@ _Do we need a generic intro here?_
 - [Windows](https://github.com/nuest/rocker-win) [@nuest]
 - https://github.com/jlisic/R-docker-centos
 
-## Further Use-case Docker images [NN]
-
-- part of Rocker (if not mentioned in \citet{RJ-2017-065}) ?
-  - Binder
-  - GPU [@noamross, @cboettig]
-- [Bioconductor](http://bioconductor.org/help/docker/), https://github.com/Bioconductor/bioc_docker
-- Gigantum stack
-- ...
-
 ## Rocker for Research Compendia [@benmarwick]
 
 ...
 
 ## Packages for automation and packaging [@nuest]
 
-- `containerit`
-- `dockertest`
-- `liftr` for OS-level reproducibility [@nanx]
+- [`containerit`](https://github.com/o2r-project/containerit/)
+- [`dockertest`](https://github.com/traitecoevo/dockertest/)
+- [`liftr`](https://liftr.me/) for OS-level reproducibility [@nanx]
 - [`rize` for Shiny](https://github.com/cole-brokamp/rize)
 - [`dockerfiler`](https://github.com/ColinFay/dockerfiler)
 
@@ -118,17 +113,19 @@ _Do we need a generic intro here?_
 - `r-ci`: https://github.com/ColinFay/r-ci
 - [dynwrap](https://github.com/dynverse/dynwrap_containers/blob/master/.travis.yml) [@rcannood]
   - For this project, we use travis-ci to build rocker-derived containers, test them, and only push them to docker hub (from travis-ci.org) if the integration tests succeed.
-- ...
 
-## Common work environments [@noamross]
+## Common or public work environments [div]
 
-- ...
-- in education
-  - ready to use learning environments
+- Binder
+  - [`holepunch`](https://github.com/karthik/holepunch) streamlines making an R research compendium Binder-ready [@karthik]
+  - [`repo2docker`](https://repo2docker.readthedocs.io/en/latest/config_files.html) (`install.R`, `DESCRPTION`, `runtime.txt`) based on the Rocker images [@nuest]
+- GPU [@noamross, @cboettig]
+- Gigantum stack
+- in education (ready to use teaching/learning environments)
   - [`r-db`](https://github.com/ColinFay/r-db) [@ColinFay]
 - [RCloud](https://github.com/att/rcloud/tree/master/docker) ?
 
-## Deployment, processing, cloud
+## Deployment, processing, cloud [div]
 
 - Docker images for cloud services [@MarkEdmondson1234]
 - [`plumber`](https://www.rplumber.io/docs/hosting.html#docker)
@@ -137,17 +134,13 @@ _Do we need a generic intro here?_
 - [dynmethods](https://github.com/dynverse/dynmethods) [@rcannood]: In order to evaluate ±50 computational methods which all used different environments (R, Python, C++, ...), we wrapped each of them in a docker container and can execute these methods from R. Again, all of these containers are being built on travis-ci, and will only be pushed to docker hub if the integration test succeeds.
 - [ShinyProxy](https://www.shinyproxy.io/) [creates a container](https://github.com/openanalytics/shinyproxy/blob/master/src/main/java/eu/openanalytics/services/DockerService.java#L388) for each user
 
-## R versions [@ColinFay]
+## R versions [@ColinFay, @nuest]
 
 - run code with Versions of R: https://srv.colinfay.me/r-online
 - old R versions: https://github.com/rocker-org/rocker-versioned/issues/138
 - [semantic version tags for Rocker](https://github.com/rocker-org/rocker-versioned/#version-tags)
 - debugging memory problems across multiple versions: https://github.com/wch/r-debug
-
-### Cross-R testing
-
-Show how you can run the same script in multiple R variants in containers (new contribution).
-Ideally the images should be created using `containerit` and controlled with `harbor`/`docker`, i.e. via an R script.
+- cross-R testing: Show how you can run the same script in multiple R variants in containers (new contribution). Ideally the images should be created using `containerit` and controlled with `stevedore`/`docker`, i.e. via an R script.
 
 ## Discussion/outlook [all, please add bullet points]
 
@@ -160,6 +153,4 @@ Ideally the images should be created using `containerit` and controlled with `ha
 - ...
 
 
-
 \bibliography{RJreferences}
-
