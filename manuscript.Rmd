@@ -33,6 +33,11 @@ author:
   - name: Nan Xiao
     #affiliation: -
     #email: - 
+  - name: Lori Shepherd
+    affiliation: Roswell Park Cancer Institute
+    address:
+    - Elm & Carlton Streets, Buffalo, New York, 14263 USA
+    email: lori.shepherd@roswellpark.org
 abstract: >
   The Rocker project provides widely-used Docker images for R across different application scenarios.
   This articles surveys describe downstream projects building upon Rocker.
@@ -67,6 +72,13 @@ _Do we need a generic intro here?_
 - [FastR](https://github.com/nuest/fastr-docker)
 
 - [Bioconductor](http://bioconductor.org/help/docker/), https://github.com/Bioconductor/bioc_docker
+
+
+
+
+#
+# Draft bullet point notes (brainstorming session)
+#
 
 - Most system dependencies come from rocker/r-ver and rocker/rstudio
   as needed.
@@ -117,6 +129,55 @@ _Do we need a generic intro here?_
 	  
 	- Docker images used for distributing Bioconductor workshop
       material post conference.
+
+
+#
+# Rough draft - they asked one sentance per line
+#
+
+Bioconductor is a free, open source and open development project aimed at the analysis and visualization of genetic and genomic data utilizing the R programming language [1]. 
+The project currently consists of approximately 1741 R packages and has a semiannual release subsequent to the Comprehensive R Archive Networks release of R [2]. 
+Biocondctor release versions are tightly correlated with a version of R. 
+Docker images allow availability of current and past versions of R/Bioconductor for convenience and reproducibility. 
+
+The Bioconductor docker images are built on top of rocker/r-ver and rocker/rstudio. By utilizing rocker as a base image, the R version and majority of package system dependencies are already included in a Bioconductor base image. 
+Bioconductor will install packages based on the selected R version and therefore leverage the rocker/rstudio and rocker/r-ver use of R version tagging. 
+Bioconductor selects the desired version of R from rocker, installs BiocManager which will default to the appropriate Bioconductor version, and creates a Bioconductor docker image with a informative tag (R_version_Bioc_version). 
+The images are built and distributed to the community through DockerHub [3]. 
+All past and current combinations of R and Bioconductor are therefore accessible via a specific docker tag. 
+
+The Bioconductor base image contains the minimial system depenedencies and R from rocker, and the BiocManager package for installation of packages configured for the proper version of Bioconductor given the installed R version. 
+Bioconductor has several other docker images specific for various areas of research. 
+The Bioconductor core image installs the most downloaded Bioconductor packages based on collected statistics. 
+The other Bioconductor images are community maintained: Laurent Gatto maintains proteomics images, Steffen Neumann maintains metabolomics images, and the RGLab maintains cytometry images. 
+All community maintained images build on top of the Bioconductor base image and therefore indirectly the rocker images [4]. 
+
+
+#
+# Need to move these to bib file and properly format. 
+#
+
+[1]  Gentleman, Robert C.; Carey, Vincent J.; Bates, Douglas M.; Bolstad, Ben;
+Dettling, Marcel; Dudoit, Sandrine; Ellis, Byron; Gautier, Laurent; Ge,
+Yongchao; Gentry, Jeff; Hornik, Kurt; Hothorn, Torsten; Huber, Wolfgang; Iacus,
+Stefano; Irizarry, Rafael; Leisch, Friedrich; Li, Cheng; Maechler, Martin;
+Rossini, Anthony J.; Sawitzki, Gunther; Smith, Colin; Smyth, Gordon; Tierney,
+Luke; Yang, Jean Y. H.; Zhang, Jianhua (2004). "Bioconductor: open software
+development for computational biology and bioinformatics". Genome Biology. 5
+(10): R80. doi:10.1186/gb-2004-5-10-r80. PMC 545600
+
+[2] R Core Team (2019). R: A language and environment for statistical
+  computing. R Foundation for Statistical Computing, Vienna, Austria.
+  URL https://www.R-project.org/
+
+[3] ??DockerHub citation?
+
+[4] ??Reference our docker help page/github?
+
+
+
+
+
 
 ## Other containerisation platforms [NN]
 
