@@ -65,7 +65,58 @@ _Do we need a generic intro here?_
 - [Renjin](https://github.com/nuest/renjin-docker)
 - [pqR](https://github.com/nuest/pqr-docker)
 - [FastR](https://github.com/nuest/fastr-docker)
+
 - [Bioconductor](http://bioconductor.org/help/docker/), https://github.com/Bioconductor/bioc_docker
+
+- Most system dependencies come from rocker/r-ver and rocker/rstudio
+  as needed.
+
+- Bioconductor works on two release cycles every year.
+
+- Docker images based on rocker/rstudio for release and devel.
+
+	- Naming and tagging of images.
+
+- Community maintained docker images like proteomics and metabolomics
+  and cytometry. (Include community names L gatto, sneumann, m.jiang)
+
+- Linux nightly build replica (bioconductor_full).
+
+	- testing environment for users and developers/maintainers. 
+
+	- Aim is to install MOST (if not all) Bioconductor packages.
+	
+	- Better alternative than distributing specific packages in a
+      image.
+	
+	- These images will be used for cloud based solutions in the near
+      future like AnVIL project.
+	  
+	- distributed on singularity as well. 
+
+- Improve reproducibility of Bioconductor versions and R versions
+  which are closely tied together.
+
+- Ruby and a rakefile along with a templating engine to generate all
+  of our images once every 6 months. (link to src)
+
+	- Takes away the pain of hand crafting dockerfiles each release cycl
+	
+	- recent work: improve src Dockerfiles, so that images are
+      smaller. Improvements like cleaning cache etc. Not installing
+      system dependencies once they have already been installed
+      rocker - images.
+
+- Docker hub allows us to build and distribute images to the
+  community.
+
+- Future: 
+
+	- Teaching workshops, and they don't have to worry about AWS
+      working vs not.
+	  
+	- Docker images used for distributing Bioconductor workshop
+      material post conference.
 
 ## Other containerisation platforms [NN]
 
