@@ -34,7 +34,7 @@ author:
     #affiliation: -
     #email: - 
   - name: Lori Shepherd
-    affiliation: Roswell Park Cancer Institute
+    affiliation: Roswell Park Comprehensive Cancer Center
     address:
     - Elm & Carlton Streets, Buffalo, New York, 14263 USA
     email: lori.shepherd@roswellpark.org
