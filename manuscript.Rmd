@@ -135,22 +135,22 @@ _Do we need a generic intro here?_
 # Rough draft - they asked one sentance per line
 #
 
-Bioconductor is a free, open source and open development project aimed at the analysis and visualization of genetic and genomic data utilizing the R programming language [1].
-The project currently consists of approximately 1741 R packages and has a semiannual release subsequent to the Comprehensive R Archive Networks release of R [2].
-Biocondctor release versions are tightly correlated with a version of R.
-Docker images allow availability of current and past versions of R/Bioconductor for convenience and reproducibility.
+_Bioconductor_ is a free, open source and open development project for the analysis and comprehension of genomic data [1].
+The project consists of 1741 R software packages, as well as packages containing annotation or experiment data.
+_Bioconductor_ has a semiannual release cycle, each release is associated with a particular version of R.
+Docker images allow availability of current and past versions of _Bioconductor_ for convenience and reproducibility.
 
-The Bioconductor docker images are built on top of rocker/r-ver and rocker/rstudio. By utilizing rocker as a base image, the R version and majority of package system dependencies are already included in a Bioconductor base image.
-Bioconductor will install packages based on the selected R version and therefore leverage the rocker/rstudio and rocker/r-ver use of R version tagging.
-Bioconductor selects the desired version of R from rocker, installs BiocManager which will default to the appropriate Bioconductor version, and creates a Bioconductor docker image with a informative tag (R_version_Bioc_version).
-The images are built and distributed to the community through DockerHub [3].
-All past and current combinations of R and Bioconductor are therefore accessible via a specific docker tag.
+_Bioconductor_ docker images are built on top of rocker/r-ver and rocker/rstudio.
+By using rocker as a base image, the R version and most package and system dependencies are included in a _Bioconductor_ base image.
+_Bioconductor_ installs packages based on the R version, and therefore leverage the rocker/rstudio and rocker/r-ver use of R version tagging.
+_Bioconductor_ selects the desired version of R from rocker, adds the BiocManager CRAN package for installing appropriate versions of _Bioconductor_ packages, and creates a _Bioconductor_ docker image with a informative tag (R\_version\_Bioc\_version).
+The images are summarized on the _Bioconductor_ web site [5], maintained in github [6], and available to the community through DockerHub [3].
+All past and current combinations of R and _Bioconductor_ are therefore accessible via a specific docker tag.
 
-The Bioconductor base image contains the minimial system depenedencies and R from rocker, and the BiocManager package for installation of packages configured for the proper version of Bioconductor given the installed R version.
-Bioconductor has several other docker images specific for various areas of research.
-The Bioconductor core image installs the most downloaded Bioconductor packages based on collected statistics.
-The other Bioconductor images are community maintained: Laurent Gatto maintains proteomics images, Steffen Neumann maintains metabolomics images, and the RGLab maintains cytometry images.
-All community maintained images build on top of the Bioconductor base image and therefore indirectly the rocker images [4].
+_Bioconductor_ has several other docker images specific to various areas of research.
+The 'core' image installs the most commonly used _Bioconductor_ packages.
+Other _Bioconductor_ images for proteomics, metabolomics, and flow cytometry are community maintained.
+All community maintained images build on top of the _Bioconductor_ base image and therefore indirectly the rocker images [4].
 
 
 #
@@ -174,9 +174,9 @@ development for computational biology and bioinformatics". Genome Biology. 5
 
 [4] ??Reference our docker help page/github?
 
+[5] ?? https://bioconductor.org/help/docker/
 
-
-
+[6] ?? https://github.com/Bioconductor/bioc_docker
 
 
 ## Other containerisation platforms [NN]
