@@ -2,7 +2,7 @@
 title: "Containers and R: the Rockerverse and beyond"
 author:
   - name: Daniel Nüst
-    affiliation: Institute for Geoinformatics, University of Münster 
+    affiliation: Institute for Geoinformatics, University of Münster
     address:
     - Heisenbergstr. 2, 48149 Münster, Germany
     email: daniel.nuest@uni-muenster.de
@@ -32,7 +32,7 @@ author:
     #email: -
   - name: Nan Xiao
     #affiliation: -
-    #email: - 
+    #email: -
   - name: Lori Shepherd
     affiliation: Roswell Park Comprehensive Cancer Center
     address:
@@ -87,24 +87,24 @@ _Do we need a generic intro here?_
 
 - Docker images based on rocker/rstudio for release and devel.
 
-	- Naming and tagging of images.
+    - Naming and tagging of images.
 
 - Community maintained docker images like proteomics and metabolomics
   and cytometry. (Include community names L gatto, sneumann, m.jiang)
 
 - Linux nightly build replica (bioconductor_full).
 
-	- testing environment for users and developers/maintainers. 
+    - testing environment for users and developers/maintainers.
 
-	- Aim is to install MOST (if not all) Bioconductor packages.
-	
-	- Better alternative than distributing specific packages in a
+    - Aim is to install MOST (if not all) Bioconductor packages.
+
+    - Better alternative than distributing specific packages in a
       image.
-	
-	- These images will be used for cloud based solutions in the near
+
+    - These images will be used for cloud based solutions in the near
       future like AnVIL project.
-	  
-	- distributed on singularity as well. 
+
+    - distributed on singularity as well.
 
 - Improve reproducibility of Bioconductor versions and R versions
   which are closely tied together.
@@ -112,9 +112,9 @@ _Do we need a generic intro here?_
 - Ruby and a rakefile along with a templating engine to generate all
   of our images once every 6 months. (link to src)
 
-	- Takes away the pain of hand crafting dockerfiles each release cycl
-	
-	- recent work: improve src Dockerfiles, so that images are
+    - Takes away the pain of hand crafting dockerfiles each release cycl
+
+    - recent work: improve src Dockerfiles, so that images are
       smaller. Improvements like cleaning cache etc. Not installing
       system dependencies once they have already been installed
       rocker - images.
@@ -122,12 +122,12 @@ _Do we need a generic intro here?_
 - Docker hub allows us to build and distribute images to the
   community.
 
-- Future: 
+- Future:
 
-	- Teaching workshops, and they don't have to worry about AWS
+    - Teaching workshops, and they don't have to worry about AWS
       working vs not.
-	  
-	- Docker images used for distributing Bioconductor workshop
+
+    - Docker images used for distributing Bioconductor workshop
       material post conference.
 
 
@@ -135,26 +135,26 @@ _Do we need a generic intro here?_
 # Rough draft - they asked one sentance per line
 #
 
-Bioconductor is a free, open source and open development project aimed at the analysis and visualization of genetic and genomic data utilizing the R programming language [1]. 
-The project currently consists of approximately 1741 R packages and has a semiannual release subsequent to the Comprehensive R Archive Networks release of R [2]. 
-Biocondctor release versions are tightly correlated with a version of R. 
-Docker images allow availability of current and past versions of R/Bioconductor for convenience and reproducibility. 
+Bioconductor is a free, open source and open development project aimed at the analysis and visualization of genetic and genomic data utilizing the R programming language [1].
+The project currently consists of approximately 1741 R packages and has a semiannual release subsequent to the Comprehensive R Archive Networks release of R [2].
+Biocondctor release versions are tightly correlated with a version of R.
+Docker images allow availability of current and past versions of R/Bioconductor for convenience and reproducibility.
 
-The Bioconductor docker images are built on top of rocker/r-ver and rocker/rstudio. By utilizing rocker as a base image, the R version and majority of package system dependencies are already included in a Bioconductor base image. 
-Bioconductor will install packages based on the selected R version and therefore leverage the rocker/rstudio and rocker/r-ver use of R version tagging. 
-Bioconductor selects the desired version of R from rocker, installs BiocManager which will default to the appropriate Bioconductor version, and creates a Bioconductor docker image with a informative tag (R_version_Bioc_version). 
-The images are built and distributed to the community through DockerHub [3]. 
-All past and current combinations of R and Bioconductor are therefore accessible via a specific docker tag. 
+The Bioconductor docker images are built on top of rocker/r-ver and rocker/rstudio. By utilizing rocker as a base image, the R version and majority of package system dependencies are already included in a Bioconductor base image.
+Bioconductor will install packages based on the selected R version and therefore leverage the rocker/rstudio and rocker/r-ver use of R version tagging.
+Bioconductor selects the desired version of R from rocker, installs BiocManager which will default to the appropriate Bioconductor version, and creates a Bioconductor docker image with a informative tag (R_version_Bioc_version).
+The images are built and distributed to the community through DockerHub [3].
+All past and current combinations of R and Bioconductor are therefore accessible via a specific docker tag.
 
-The Bioconductor base image contains the minimial system depenedencies and R from rocker, and the BiocManager package for installation of packages configured for the proper version of Bioconductor given the installed R version. 
-Bioconductor has several other docker images specific for various areas of research. 
-The Bioconductor core image installs the most downloaded Bioconductor packages based on collected statistics. 
-The other Bioconductor images are community maintained: Laurent Gatto maintains proteomics images, Steffen Neumann maintains metabolomics images, and the RGLab maintains cytometry images. 
-All community maintained images build on top of the Bioconductor base image and therefore indirectly the rocker images [4]. 
+The Bioconductor base image contains the minimial system depenedencies and R from rocker, and the BiocManager package for installation of packages configured for the proper version of Bioconductor given the installed R version.
+Bioconductor has several other docker images specific for various areas of research.
+The Bioconductor core image installs the most downloaded Bioconductor packages based on collected statistics.
+The other Bioconductor images are community maintained: Laurent Gatto maintains proteomics images, Steffen Neumann maintains metabolomics images, and the RGLab maintains cytometry images.
+All community maintained images build on top of the Bioconductor base image and therefore indirectly the rocker images [4].
 
 
 #
-# Need to move these to bib file and properly format. 
+# Need to move these to bib file and properly format.
 #
 
 [1]  Gentleman, Robert C.; Carey, Vincent J.; Bates, Douglas M.; Bolstad, Ben;
