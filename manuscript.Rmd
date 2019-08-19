@@ -38,6 +38,11 @@ author:
     address:
     - Elm & Carlton Streets, Buffalo, New York, 14263 USA
     email: lori.shepherd@roswellpark.org
+  - name: Nitesh Turaga
+    affiliation: Roswell Park Comprehensive Cancer Center
+    address:
+    - Elm & Carlton Streets, Buffalo, New York, 14263 USA
+    email: nitesh.turaga@roswellpark.org
 abstract: >
   The Rocker project provides widely-used Docker images for R across different application scenarios.
   This articles surveys describe downstream projects building upon Rocker.
