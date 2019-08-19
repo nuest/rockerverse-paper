@@ -83,97 +83,52 @@ _Do we need a generic intro here?_
 #
 
 
-_Bioconductor_ is a free, open source and open development project for
-the analysis and comprehension of genomic data [1]. The project
-consists of 1741 R software packages as of August 15th 2019, as well
-as packages containing annotation or experiment data. _Bioconductor_
-has a semiannual release cycle, each release is associated with a
-particular version of R. Docker images allow availability of current
-and past versions of _Bioconductor_ for convenience and
-reproducibility.
+_Bioconductor_ is a free, open source and open development project for the analysis and comprehension of genomic data [1].
+The project consists of 1741 R software packages as of August 15th 2019, as well as packages containing annotation or experiment data.
+_Bioconductor_has a semiannual release cycle, each release is associated with a particular version of R.
+Docker images allow availability of current and past versions of _Bioconductor_ for convenience and reproducibility.
 
-_Bioconductor_ docker images are built on top of rocker/r-ver and
-rocker/rstudio. By using rocker as a base image, the R version and
-most package and system dependencies are included in a _Bioconductor_
-base image.  _Bioconductor_ installs packages based on the R version,
-and therefore leverage the rocker/rstudio and rocker/r-ver use of R
-version tagging. _Bioconductor_ selects the desired version of R from
-rocker, adds the BiocManager CRAN package for installing appropriate
-versions of _Bioconductor_ packages, and creates a _Bioconductor_
-docker image with an informative tag (R\_version\_Bioc\_version). The
-images are summarized on the _Bioconductor_ web site [5], maintained
-in github [6], and available to the community through DockerHub [3].
-All past and current combinations of R and _Bioconductor_ are
-therefore accessible via a specific docker tag.
+_Bioconductor_ docker images are built on top of rocker/r-ver and rocker/rstudio.
+By using rocker as a base image, the R version and most package and system dependencies are included in a _Bioconductor_ base image.
+_Bioconductor_ installs packages based on the R version, and therefore leverage the rocker/rstudio and rocker/r-ver use of R version tagging.
+_Bioconductor_ selects the desired version of R from rocker, adds the BiocManager CRAN package for installing appropriate
+versions of _Bioconductor_ packages, and creates a _Bioconductor_ docker image with an informative tag (R\_version\_Bioc\_version).
+The images are summarized on the _Bioconductor_ web site [5], maintained in github [6], and available to the community through DockerHub [3].
+All past and current combinations of R and _Bioconductor_ are therefore accessible via a specific docker tag.
 
-_Bioconductor_ has several other docker images specific to various
-areas of research.  The 'core' image installs the most commonly used
-_Bioconductor_ packages.  Other _Bioconductor_ images for proteomics,
-metabolomics, and flow cytometry are community maintained.  All
-community maintained images build on top of the _Bioconductor_ base
-image and therefore indirectly the rocker images [4].
+_Bioconductor_ has several other docker images specific to various areas of research.
+The 'core' image installs the most commonly used _Bioconductor_ packages.  Other _Bioconductor_ images for proteomics, metabolomics, and flow cytometry are community maintained.
+All community maintained images build on top of the _Bioconductor_ base image and therefore indirectly the rocker images [4].
 
-Bioconductor's _bioc_docker_ software works using a templating engine
-based in ruby, has a source directory `src` and an output directory
-`out`.[*] This takes away in large part the repeated handcrafting of
-each Dockerfile produced by Bioconductor at each release cycle. Edits
-to the Dockerfile need to be made in the source directory, based on a
-config file, the output directory is populated with the appropriate
-Dockerfile for each specific to the various areas of research. A
-recent systematic "audit" of our docker images following best
-practices (as issued by the Docker website) led to a reduction in the
-number of layers and also size of the overall images being produced by
-Bioconductor. Some of the optimizations include removing cache,
-cleaning up after each layer produced by a `RUN` statement, and most
-importantly, not re-installing any dependencies already provided by
-rocker.
+Bioconductor's _bioc_docker_ software works using a templating engine based in ruby, has a source directory `src` and an output directory `out`[*].
+This takes away in large part the repeated handcrafting of each Dockerfile produced by Bioconductor at each release cycle.
+Edits to the Dockerfile need to be made in the source directory, based on a config file, the output directory is populated with the appropriate Dockerfile for each specific to the various areas of research.
+A recent systematic "audit" of our docker images following best practices (as issued by the Docker website) led to a reduction in the number of layers and also size of the overall images being produced by Bioconductor.
+Some of the optimizations include removing cache, cleaning up after each layer produced by a `RUN` statement, and most importantly, not re-installing any dependencies already provided by rocker.
 
-Bioconductor now produces a Docker image to mimic the _Bioconductor_
-nightly build system on Linux. This image is called the
-`bioconductor_full` (based on rocker/rstudio). The goal of the Docker
-image is to install _all the system dependencies_ needed to install
-all of the Bioconductor packages. We achieve this goal to a large
-extent, and are able to greater than _99%_ of packages (1730 out of
-1741). This image allows developers to test their packages extensively
-by replicating errors on the nightly build system, and users to
-install most of the packages they need without dealing with system
-dependencies. There is the added bonus that it comes with an RStudio
-interface to ease users into using R with Docker, thanks to rocker.
+Bioconductor now produces a Docker image to mimic the _Bioconductor_ nightly build system on Linux.
+This image is called the `bioconductor_full` (based on rocker/rstudio).
+The goal of the Docker image is to install _all the system dependencies_ needed to install all of the Bioconductor packages. We achieve this goal to a large extent, and are able to greater than _99%_ of packages (1730 out of 1741).
+This image allows developers to test their packages extensively by replicating errors on the nightly build system, and users to install most of the packages they need without dealing with system dependencies.
+There is the added bonus that it comes with an RStudio interface to ease users into using R with Docker, thanks to rocker.
 
-We found this to be a easier alternative to distributing installed
-_Bioconductor_ packages within Docker images as this is not entirely
-consistent with the way R/Bioconductor is used. Users usually install
-and add packages to their scripts in real time. It also keeps the
-Docker image smaller in size. Using R is almost never like a
-'workflow', which is defined by the pre-installed packages. We
-encourage users to mount a volume to their Bioconductor docker image,
-where all the installed (compiled) packages are stored in the external
-mountable volume. The library tree `.libPaths()` has
-`/usr/local/lib/R/host-site-library` as the first location searched
-for installed packages, which allows this functionality to work. This
-enables the docker image to be updated by using a `docker pull`
-command without the user having to worry about any packages saved on
-the image.
+We found this to be a easier alternative to distributing installed _Bioconductor_ packages within Docker images as this is not entirely consistent with the way R/Bioconductor is used.
+Users usually install and add packages to their scripts in real time.
+It also keeps the Docker image smaller in size.
+Using R is almost never like a 'workflow', which is defined by the pre-installed packages.
+We encourage users to mount a volume to their Bioconductor docker image, where all the installed (compiled) packages are stored in the external mountable volume.
+The library tree `.libPaths()` has `/usr/local/lib/R/host-site-library` as the first location searched for installed packages, which allows this functionality to work.
+This enables the docker image to be updated by using a `docker pull` command without the user having to worry about any packages saved on the image.
 
-The `bioconductor_full` image is forming the base for our cloud based
-solutions in upcoming future projects. We are currently able to host a
-Kubernetes orchestrated cluster on the Google Cloud Platform using the
-bioconductor_full image and the rocker/r-ver images. The distribution
-of computation is done through an R package called `RedisParam`
-(github: mtmorgan/RedisParam), where the `bioconductor_full` image is
-the master node and the `rocker/r-ver` images are the workers.
+The `bioconductor_full` image is forming the base for our cloud based solutions in upcoming future projects.
+We are currently able to host a Kubernetes orchestrated cluster on the Google Cloud Platform using the bioconductor_full image and the rocker/r-ver images.
+The distribution of computation is done through an R package called `RedisParam` (github: mtmorgan/RedisParam), where the `bioconductor_full` image is the master node and the `rocker/r-ver` images are the workers.
 
-We envision these Docker images being the primary way of teaching in
-the future. The goal is to let workshop participants pull a pre-built
-docker image for the specific worksop and run them on their local
-machines. As of right now, the same task is accomplished by creating
-and spinning up multiple AWS images (one per participant). The docker
-images can work in more fault tolerant, lasting, cost-effective
-manner, and be used by participants throughout their learning
-journey. The users can choose to scale their workshop skills using
-their cloud accounts to scale up with this provided docker image
-(using either the AWS Elastic Container service or Google Kubernetes
-Engine etc.)
+We envision these Docker images being the primary way of teaching in the future.
+The goal is to let workshop participants pull a pre-built docker image for the specific worksop and run them on their local machines.
+As of right now, the same task is accomplished by creating and spinning up multiple AWS images (one per participant).
+The docker images can work in more fault tolerant, lasting, cost-effective manner, and be used by participants throughout their learning journey.
+The users can choose to scale their workshop skills using their cloud accounts to scale up with this provided docker image (using either the AWS Elastic Container service or Google Kubernetes Engine etc.)
 
 #
 # Need to move these to bib file and properly format.
