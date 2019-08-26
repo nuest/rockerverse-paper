@@ -100,7 +100,7 @@ All community maintained images build on top of the _Bioconductor_ base image an
 To simplify building and maintaining _Bioconductor_ images, we use a Ruby templating engine.
 
 A recent audit of our Dockerfiles, following best practices from the Docker website, led to a reduction in the size and number of layers in images we produce.
-The most important insights involve the 'union' file system used by Docker [REF:FIXME].
+The most important insights involve the 'union' file system used by Docker [7].
 In this file system, once a layer (e.g., `RUN` statement) writes to a file path, the file path is never altered.
 A subsequent layer that might appear to remove or overwrite the path actually masks, rather than alters, the original.
 It is therefore important to clean up (e.g., cache removal) within each layer, and to avoid re-installing existing dependencies.
@@ -119,7 +119,7 @@ Images may be valuable in teaching, where participants pull pre-built images to 
 An appeal of this over our current approach (providing Amazon Machine Instances for the duration of the course) is the utility of the image to participant after the course is over.
 `bioconductor_full` introduces a common system configuration, so it becomes increasingly sensible for _Bioconductor_ to distribute convenient _binary_ packages.
 Images also suggest approaches to more advanced computational models.
-For instance, we are exploring use of images for Helm [REF:FIXME] orchestrated Kubernetes [REF:FIXME] clusters on the Google Cloud Platform.
+For instance, we are exploring use of images for Helm [8] orchestrated Kubernetes [9] clusters on the Google Cloud Platform.
 The user interacts with a manager image based on `bioconductor_full`, configured to perform map-reduce style computations via the BiocParallel package communicating with minimally-configured worker images.
 A strength of this approach is that the responsibility for complex software configuration (including customized development) is shifted from the user to the experienced _Bioconductor_ core team.
 
@@ -148,8 +148,11 @@ development for computational biology and bioinformatics". Genome Biology. 5
 
 [6] ?? https://github.com/Bioconductor/bioc_docker
 
-[*] The original work on `bioc_docker` was done by Dan Tanenbaum
+[7] https://docs.docker.com/storage/storagedriver/overlayfs-driver/#how-container-reads-and-writes-work-with-overlay-or-overlay2
 
+[8] https://helm.sh/
+
+[9] https://kubernetes.io/
 
 ## Other containerisation platforms [NN]
 
