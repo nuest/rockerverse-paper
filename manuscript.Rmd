@@ -13,11 +13,11 @@ author:
     #affiliatin: -
     #email: -
   - name: Dirk Eddelbuettel
-    #affiliation: -
+    #affiliation:
     #email: -
   - name: Mark Edmondson
-    #affiliation: -
-    #email: -
+    affiliation: IIH Nordic A/S, Google Developer Expert for GCP
+    email: mark@markedmondson.me
   - name: Colin Fay
     #affiliation: -
     #email: -
@@ -185,6 +185,7 @@ development for computational biology and bioinformatics". Genome Biology. 5
 - [`docker`](https://bhaskarvk.github.io/docker/)
 - `RSelenium`
 - [`googleComputeEngineR`](https://cloudyr.github.io/googleComputeEngineR/) (function `docker_run`)
+  - I don't think `docker_run` is main focus for containers for this package, its more how it uses Docker to launch custom environments that can be templated (e.g. rstudio, shiny etc.) and for parrallisation e.g. `library(future)`  using GCE VMs as endpoints. [@MarkEdmondson1234]
 - [`analogsea`](https://github.com/sckott/analogsea)
 - [`harbor`](https://github.com/wch/harbor/)
 - [`dockermachine`](https://github.com/cboettig/dockermachine)
@@ -197,6 +198,9 @@ development for computational biology and bioinformatics". Genome Biology. 5
 - `r-ci`: https://github.com/ColinFay/r-ci
 - [dynwrap](https://github.com/dynverse/dynwrap_containers/blob/master/.travis.yml) [@rcannood]
   - For this project, we use travis-ci to build rocker-derived containers, test them, and only push them to docker hub (from travis-ci.org) if the integration tests succeed.
+- Google Cloud Build [@MarkEdmondson1234]
+  - https://cloud.google.com/cloud-build/
+  - For me this is what makes Docker containers viable, as it builds the Dockerfiles on each GitHub commit.  It couples with Google Container Registry to build private Docker images, for downstream applications.
 
 ## Common or public work environments [div]
 
@@ -212,6 +216,8 @@ development for computational biology and bioinformatics". Genome Biology. 5
 ## Deployment, processing, cloud [div]
 
 - Docker images for cloud services [@MarkEdmondson1234]
+  - the most popular functionality for `googleComputeEngineR` is its use of Docker to enable parallel processing across VMS - [some demos here](https://cloudyr.github.io/googleComputeEngineR/articles/massive-parallel.html)
+- Google Cloud Run - CaaS (Containers as a Service) that lets you launch a Docker container without worrying about underlying infrastructure. An R implementation is shown here at [cloudRunR](https://github.com/MarkEdmondson1234/cloudRunR) which uses it to create a scalable R plumber API. 
 - [`plumber`](https://www.rplumber.io/docs/hosting.html#docker)
 - `batchtools` \citep{Lang2017batchtools} can [schedule jobs with Docker Swarm](https://mllg.github.io/batchtools/reference/makeClusterFunctionsDocker.html)
 - scalable deployments, e.g. start with numerous Shiny talks mentioning Rocker at useR!2017
@@ -234,6 +240,7 @@ development for computational biology and bioinformatics". Genome Biology. 5
   - reproducibility
 - will knowledge about containers continue to spread?
 - what is needed for even more containers with R?
+- the ability to move processing between services easily (e.g locally, one cloud providers VM, another cloud provider's Container-as-a-Service)
 - ...
 
 
