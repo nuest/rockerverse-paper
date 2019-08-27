@@ -78,10 +78,6 @@ _Do we need a generic intro here?_
 
 - [Bioconductor](http://bioconductor.org/help/docker/), https://github.com/Bioconductor/bioc_docker
 
-#
-# Rough draft - they asked one sentance per line
-#
-
 _Bioconductor_ is an open source, open development project for the analysis and comprehension of genomic data [1].
 The project consists of 1741 R software packages as of August 15th 2019, as well as packages containing annotation or experiment data.
 _Bioconductor_has a semiannual release cycle, each release is associated with a particular version of R.
