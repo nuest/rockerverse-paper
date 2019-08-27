@@ -19,8 +19,8 @@ author:
     affiliation: IIH Nordic A/S, Google Developer Expert for GCP
     email: mark@markedmondson.me
   - name: Colin Fay
-    #affiliation: -
-    #email: -
+    affiliation: ThinkR
+    email: contact@colinfay.me
   - name: Ben Marwick
     #affiliation: -
     #email: -
