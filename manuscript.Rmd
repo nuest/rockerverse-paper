@@ -76,27 +76,27 @@ _Do we need a generic intro here?_
 - [pqR](https://github.com/nuest/pqr-docker)
 - [FastR](https://github.com/nuest/fastr-docker)
 
-- [Bioconductor](http://bioconductor.org/help/docker/), https://github.com/Bioconductor/bioc_docker
+### Bioconductor
 
-_Bioconductor_ is an open source, open development project for the analysis and comprehension of genomic data [1].
+[_Bioconductor_](http://bioconductor.org/help/docker/) is an open source, open development project for the analysis and comprehension of genomic data [@gentleman_bioconductor_2004].
 The project consists of 1741 R software packages as of August 15th 2019, as well as packages containing annotation or experiment data.
 _Bioconductor_has a semiannual release cycle, each release is associated with a particular version of R.
 Docker images allow availability of current and past versions of _Bioconductor_ for convenience and reproducibility.
 
-_Bioconductor_ 'base' docker images are built on top of rocker/r-ver and rocker/rstudio.
-_Bioconductor_ installs packages based on the R version, and therefore uses rocker/rstudio and rocker/r-ver version tagging.
-_Bioconductor_ selects the desired version of R from rocker, adds the BiocManager CRAN package for installing appropriate versions of _Bioconductor_ packages, and creates a _Bioconductor_ docker image with an informative tag (R\_version\_Bioc\_version).
-The images are summarized on the _Bioconductor_ web site [5], maintained in github [6], and available to the community through DockerHub [3].
+_Bioconductor_ 'base' docker images are built on top of `rocker/r-ver` and `rocker/rstudio`.
+_Bioconductor_ installs packages based on the R version, and therefore uses `rocker/rstudio` and `rocker/r-ver` version tagging.
+_Bioconductor_ selects the desired version of R from _Rocker_, adds the BiocManager CRAN package for installing appropriate versions of _Bioconductor_ packages, and creates a _Bioconductor_ docker image with an informative tag (R\_version\_Bioc\_version).
+The images are summarized on the _Bioconductor_ web site (https://bioconductor.org/help/docker/), maintained on GitHub ([https://github.com/Bioconductor/bioc_docker](https://github.com/Bioconductor/bioc_docker)), and available to the community through [DockerHub](https://hub.docker.com/).
 Past and current combinations of R and _Bioconductor_ are therefore accessible via a specific docker tag.
 
 _Bioconductor_ has several images in addition to 'base', specific to various areas of research.
 The 'core' image installs the most commonly used _Bioconductor_ packages.
 _Bioconductor_ images for proteomics, metabolomics, and flow cytometry are community maintained.
-All community maintained images build on top of the _Bioconductor_ base image and therefore indirectly the rocker images [4].
+All community maintained images build on top of the _Bioconductor_ base image and therefore indirectly the _Rocker_ images.
 To simplify building and maintaining _Bioconductor_ images, we use a Ruby templating engine.
 
 A recent audit of our Dockerfiles, following best practices from the Docker website, led to a reduction in the size and number of layers in images we produce.
-The most important insights involve the 'union' file system used by Docker [7].
+The most important insights involve the ['union' file system used by Docker](https://docs.docker.com/storage/storagedriver/overlayfs-driver/#how-container-reads-and-writes-work-with-overlay-or-overlay2).
 In this file system, once a layer (e.g., `RUN` statement) writes to a file path, the file path is never altered.
 A subsequent layer that might appear to remove or overwrite the path actually masks, rather than alters, the original.
 It is therefore important to clean up (e.g., cache removal) within each layer, and to avoid re-installing existing dependencies.
@@ -115,40 +115,9 @@ Images may be valuable in teaching, where participants pull pre-built images to 
 An appeal of this over our current approach (providing Amazon Machine Instances for the duration of the course) is the utility of the image to participant after the course is over.
 `bioconductor_full` introduces a common system configuration, so it becomes increasingly sensible for _Bioconductor_ to distribute convenient _binary_ packages.
 Images also suggest approaches to more advanced computational models.
-For instance, we are exploring use of images for Helm [8] orchestrated Kubernetes [9] clusters on the Google Cloud Platform.
+For instance, we are exploring use of images for [Helm](https://helm.sh/)-orchestrated [Kubernetes](https://kubernetes.io/) clusters on the Google Cloud Platform.
 The user interacts with a manager image based on `bioconductor_full`, configured to perform map-reduce style computations via the BiocParallel package communicating with minimally-configured worker images.
 A strength of this approach is that the responsibility for complex software configuration (including customized development) is shifted from the user to the experienced _Bioconductor_ core team.
-
-#
-# Need to move these to bib file and properly format.
-#
-
-[1]  Gentleman, Robert C.; Carey, Vincent J.; Bates, Douglas M.; Bolstad, Ben;
-Dettling, Marcel; Dudoit, Sandrine; Ellis, Byron; Gautier, Laurent; Ge,
-Yongchao; Gentry, Jeff; Hornik, Kurt; Hothorn, Torsten; Huber, Wolfgang; Iacus,
-Stefano; Irizarry, Rafael; Leisch, Friedrich; Li, Cheng; Maechler, Martin;
-Rossini, Anthony J.; Sawitzki, Gunther; Smith, Colin; Smyth, Gordon; Tierney,
-Luke; Yang, Jean Y. H.; Zhang, Jianhua (2004). "_Bioconductor_: open software
-development for computational biology and bioinformatics". Genome Biology. 5
-(10): R80. doi:10.1186/gb-2004-5-10-r80. PMC 545600
-
-[2] R Core Team (2019). R: A language and environment for statistical
-  computing. R Foundation for Statistical Computing, Vienna, Austria.
-  URL https://www.R-project.org/
-
-[3] ??DockerHub citation?
-
-[4] ??Reference our docker help page/github?
-
-[5] ?? https://bioconductor.org/help/docker/
-
-[6] ?? https://github.com/Bioconductor/bioc_docker
-
-[7] https://docs.docker.com/storage/storagedriver/overlayfs-driver/#how-container-reads-and-writes-work-with-overlay-or-overlay2
-
-[8] https://helm.sh/
-
-[9] https://kubernetes.io/
 
 ## Other containerisation platforms [NN]
 
