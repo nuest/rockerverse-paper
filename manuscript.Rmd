@@ -31,8 +31,9 @@ author:
     #affiliation: -
     #email: -
   - name: Nan Xiao
-    #affiliation: -
-    #email: -
+    affiliation: Seven Bridges Genomics
+    address: "529 Main St, Suite 6610 \\newline Charlestown, MA 02129, USA \\newline ORCiD: 0000-0002-0250-5673"
+    email: me@nanx.me
   - name: Lori Shepherd
     affiliation: Roswell Park Comprehensive Cancer Center
     address:
@@ -184,7 +185,55 @@ A strength of this approach is that the responsibility for complex software conf
 
 - [`containerit`](https://github.com/o2r-project/containerit/)
 - [`dockertest`](https://github.com/traitecoevo/dockertest/)
-- [`liftr`](https://liftr.me/) for OS-level reproducibility [@nanx]
+
+### liftr
+
+[_liftr_](https://nanx.me/liftr/) \citep{liftr2019} aims to solve the problem of persistent reproducible reporting in statistical computing.
+Currently, the R Markdown format and its backend compilation engine _knitr_ offer a _de facto_ standard for creating dynamic documents \citep{xie2018}.
+However, the reproducibility of such content authoring environments is often limited to individual machines --- it is not easy to replicate the system environment (libraries, R versions, R packages) where the document was compiled.
+This issue becomes even more serious when it comes to collaborative document authoring and creating large-scale document building services.
+_liftr_ solves this reproducibility problem by bringing Docker to the game.
+In essence, _liftr_ helps R Markdown users create and manage Docker containers for rendering the documents, thus make the computations utterly reproducible across machines and systems.
+
+On implementation, with no side effects, _liftr_ extended and introduced new metadata fields to R Markdown, allowing users to declare the dependencies for rendering the document.
+_liftr_ parses such fields and generates a `Dockerfile` for creating Docker containers.
+_liftr_ then helps render the document inside the created Docker container.
+This workflow is summarized in Figure \ref{figure:liftr}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{liftr-workflow}
+  \caption{The liftr workflow for rendering containerized R Markdown documents.}
+  \label{figure:liftr}
+\end{figure}
+
+_knitr_ and R Markdown are used as the template engine to generate the `Dockerfile`.
+Features such as caching container layers for saving image build time, automatic housekeeping for fault-tolerant builds, and Docker status check are supported by _liftr_.
+Four RStudio addins are also offered by _liftr_ to allow push-button compilation of documents and provide better IDE integrations.
+
+Three basic principles are followed to design the _liftr_ package since its inception.
+
+1. Continuous reproducibility.
+Continuous integration, continuous delivery, and continuous deployment are well-accepted practices in software engineering.
+Similarly, it is believed by the authors of _liftr_ that ensuring computational reproducibility means a continuous process instead of creating static data/code archives or a one-time deal.
+Specifically, the software packages used in data analysis should be upgraded regularly in a manageable way.
+Therefore, _liftr_ supports specifying particular versions of package dependencies, while users are encouraged to always use the latest version of packages (without a version number) by default.
+
+2. Document first.
+Many data analysis workflows could be wrapped as either R packages or dynamic documents.
+In _liftr_, the endpoint of dynamic report creation is the focus of containerization, because this offers more possibilities for organizing both computations and documentation.
+Users are encouraged to start thinking from the visible research output from the first day.
+
+3. Minimal footprint.
+R Markdown and Docker are already complex software systems.
+Making them work together seamlessly can be complicated.
+Therefore, API designs such as function arguments are simplified while being kept as expressive and flexible as possible.
+
+In summary, _liftr_ tries to redefine the meaning of computational reproducibility by offering system-level reproducibility for data analysis.
+It provided a practical way for achieving it --- a new perspective on how reproducible research could be done in reality.
+Further, sharing system environments for data analysis also becomes extremely easy, since users only need to share the R Markdown document (with a few extra metadata fields), and compile them with _liftr_.
+As an example, _liftr_ demonstrated its advantage for R Markdown-based computational workflow orchestration, by effortlessly containerizing 18 complex Bioconductor workflows in the DockFlow project (https://dockflow.org) in 2017.
+
 - [`rize` for Shiny](https://github.com/cole-brokamp/rize)
 - [`dockerfiler`](https://github.com/ColinFay/dockerfiler)
 
