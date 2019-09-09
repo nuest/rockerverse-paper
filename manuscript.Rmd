@@ -237,7 +237,7 @@ As an example, _liftr_ demonstrated its advantage for R Markdown-based computati
 - [`rize` for Shiny](https://github.com/cole-brokamp/rize)
 - [`dockerfiler`](https://github.com/ColinFay/dockerfiler)
 
-## Packages for control and provisioning [@nuest]
+## Packages for control and provisioning [@nuest, @richfitz, @rcannood]
 
 - [`stevedore`](https://github.com/richfitz/stevedore)
 - [`babelwhale`](https://cran.r-project.org/web/packages/babelwhale/index.html): Running a Docker from R with Singularity or Docker as back-end. This is really useful in HPC environments where a user might not have root access but is able to install Singularity instead of Docker. [@rcannood]
