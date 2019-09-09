@@ -57,7 +57,7 @@ output: rticles::rjournal_article
 #    in_header: preamble.tex
 ---
 
-## Introduction
+# Introduction
 
 The \citep{R} community keeps growing: the number of new packages on CRAN keeps on rising, meetups, conferences, online courses and unconferences prosper, and the uptake in education and industry increases [REFs].
 All this cements `R`'s role as the lingua franca of statistics, data visualisation, and computational research.
@@ -69,9 +69,11 @@ It also introduces related activities connecting the R language and environment 
 The main contributions is a coherent picture of the current lay of the land of containers in, with, and for `R`.
 This diversity includes demonstrators, early prototypes, and mature projects.
 
-## Containerization and Rocker
+# Containerization and Rocker
 
 _Do we need a generic intro here?_
+
+# Container Images
 
 ## Images for alternative R distributions
 
@@ -114,7 +116,7 @@ While the images presented in this section are far from being as vetted, stable,
 All different distributions are published under GPL licenses.
 Since all of the different R distributions claim better performance as a core motivation, a comparision based on Docker images, potentially leveraging the [resource restriction mechanisms](https://docs.docker.com/config/containers/resource_constraints/) of Docker to level the playing field, seems useful future work.
 
-### Bioconductor
+## Bioconductor
 
 [_Bioconductor_](http://bioconductor.org/help/docker/) is an open source, open development project for the analysis and comprehension of genomic data \citep{gentleman_bioconductor_2004}.
 The project consists of 1741 R software packages as of August 15th 2019, as well as packages containing annotation or experiment data.
@@ -157,24 +159,26 @@ For instance, we are exploring use of images for [Helm](https://helm.sh/)-orches
 The user interacts with a manager image based on `bioconductor_full`, configured to perform map-reduce style computations via the BiocParallel package communicating with minimally-configured worker images.
 A strength of this approach is that the responsibility for complex software configuration (including customized development) is shifted from the user to the experienced _Bioconductor_ core team.
 
-## Other containerisation platforms [NN]
+## Images for (historic) R versions [@ColinFay, @nuest]
 
-- R images for Singularity
-- Running Rocker images with
-  - Singularity
-  - CoreOS rkt?
-- nix?
+- run code with Versions of R: https://srv.colinfay.me/r-online
+- old R versions: https://github.com/rocker-org/rocker-versioned/issues/138
+- [semantic version tags for Rocker](https://github.com/rocker-org/rocker-versioned/#version-tags)
+- debugging memory problems across multiple versions: https://github.com/wch/r-debug
+- cross-R testing: Show how you can run the same script in multiple R variants in containers (new contribution). Ideally the images should be created using `containerit` and controlled with `stevedore`/`docker`, i.e. via an R script.
 
-## Non-Debian images [NN]
+## Windows Images [@nuest]
+
+- [rocker-win](https://github.com/nuest/rocker-win)
+- is possible, only relevant in organisations with an existing Windows Server-based infrastructure, can meet policies then
+
+## Non-Debian Linux images [NN]
 
 - Alpine images
-- Images used by R-Hub (overlap with CI?)
-- [Windows](https://github.com/nuest/rocker-win) [@nuest]
+- [Images used by R-Hub](https://github.com/r-hub/rhub-linux-builders) (overlap with CI?)
 - https://github.com/jlisic/R-docker-centos
 
-## Rocker for Research Compendia [@benmarwick]
-
-...
+# R Packages
 
 ## Packages for automation and packaging [@nuest]
 
@@ -195,6 +199,8 @@ A strength of this approach is that the responsibility for complex software conf
 - [`analogsea`](https://github.com/sckott/analogsea)
 - [`harbor`](https://github.com/wch/harbor/)
 - [`dockermachine`](https://github.com/cboettig/dockermachine)
+
+# Use cases and applications
 
 ## Continuous integration and continuous delivery [@noamross, @ColinFay]
 
@@ -230,15 +236,19 @@ A strength of this approach is that the responsibility for complex software conf
 - [dynmethods](https://github.com/dynverse/dynmethods) [@rcannood]: In order to evaluate ±50 computational methods which all used different environments (R, Python, C++, ...), we wrapped each of them in a docker container and can execute these methods from R. Again, all of these containers are being built on travis-ci, and will only be pushed to docker hub if the integration test succeeds.
 - [ShinyProxy](https://www.shinyproxy.io/) [creates a container](https://github.com/openanalytics/shinyproxy/blob/master/src/main/java/eu/openanalytics/services/DockerService.java#L388) for each user
 
-## R versions [@ColinFay, @nuest]
+## Research Compendia [@benmarwick]
 
-- run code with Versions of R: https://srv.colinfay.me/r-online
-- old R versions: https://github.com/rocker-org/rocker-versioned/issues/138
-- [semantic version tags for Rocker](https://github.com/rocker-org/rocker-versioned/#version-tags)
-- debugging memory problems across multiple versions: https://github.com/wch/r-debug
-- cross-R testing: Show how you can run the same script in multiple R variants in containers (new contribution). Ideally the images should be created using `containerit` and controlled with `stevedore`/`docker`, i.e. via an R script.
+...
 
-## Discussion/outlook [all, please add bullet points]
+# Other containerisation platforms [NN]
+
+- R images for Singularity
+- Running Rocker images with
+  - Singularity
+  - CoreOS rkt?
+- nix?
+
+# Discussion/outlook/conclusion [@all, please add bullet points]
 
 - Missing pieces?
 - consolidation (e.g. via packages using `dockerfiler` and `stevedore`)
@@ -249,7 +259,7 @@ A strength of this approach is that the responsibility for complex software conf
 - the ability to move processing between services easily (e.g locally, one cloud providers VM, another cloud provider's Container-as-a-Service)
 - ...
 
-## Author contributions
+# Author contributions
 
 DN conceived of the presented idea and \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}.
 CB ..
