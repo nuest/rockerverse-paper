@@ -232,7 +232,7 @@ Therefore, API designs such as function arguments are simplified while being kep
 In summary, _liftr_ tries to redefine the meaning of computational reproducibility by offering system-level reproducibility for data analysis.
 It provided a practical way for achieving it --- a new perspective on how reproducible research could be done in reality.
 Further, sharing system environments for data analysis also becomes extremely easy, since users only need to share the R Markdown document (with a few extra metadata fields), and compile them with _liftr_.
-As an example, _liftr_ demonstrated its advantage for R Markdown-based computational workflow orchestration, by effortlessly containerizing 18 complex Bioconductor workflows in the DockFlow project (https://dockflow.org) in 2017.
+As an example, _liftr_ demonstrated its advantage for R Markdown-based computational workflow orchestration, by effortlessly containerizing 18 complex _Bioconductor_ workflows in the DockFlow project (https://dockflow.org) in 2017.
 
 - [`rize` for Shiny](https://github.com/cole-brokamp/rize)
 - [`dockerfiler`](https://github.com/ColinFay/dockerfiler)
@@ -319,7 +319,7 @@ CF ..
 BW ..
 KR ..
 NR ..
-NX ..
+NX wrote the section on liftr.
 LS \& NT wrote the section on Bioconductor.
 All authors contributed to the discussion and outlook section and approved the final version.
 This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
