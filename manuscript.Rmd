@@ -48,20 +48,16 @@ abstract: >
   This articles surveys describe downstream projects building upon Rocker.
   We also look beyond Rocker to other projects connecting containerisation with R.
   These use cases and the diversity of applications demonstrate the power of Rocker and containerisation for collaboration, effectivity, scalability, and transparency.
+# blank footnote? https://tex.stackexchange.com/questions/170511/footnotes-without-numbering
 preamble: >
   \usepackage{longtable}
-  \let\svthefootnote\thefootnote
-  \textheight 1in
-  \newcommand\blankfootnote[1]{%
-    \let\thefootnote\relax\footnotetext{#1}%
-    \let\thefootnote\svthefootnote%
-  }
+  \usepackage{hyperref}
 output: rticles::rjournal_article
+#  includes:
+#    in_header: preamble.tex
 ---
 
 ## Introduction
-
-\blankfootnote{This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.}
 
 The \citep{R} community keeps growing: the number of new packages on CRAN keeps on rising, meetups, conferences, online courses and unconferences prosper, and the uptake in education and industry increases [REFs].
 All this cements `R`'s role as the lingua franca of statistics, data visualisation, and computational research.
@@ -87,33 +83,31 @@ _Base R_, sometimes `GNU-R`, is the R distribution maintained by the [R Core Tea
 
 _Microsoft R Open_ ([MRO](https://github.com/nuest/mro-docker)) is an R distribution formerly known as Revolution R Open (RRO) before Revolution Analytics was acquired by Microsoft.
 MRO is compatible with main R and it's packages.sss
-"It includes additional capabilities for improved performance, reproducibility, and platform support." [@microsoft_mro]
-Most notably these capabilities are the MRAN repository a.k.a. CRAN Time Machine, which is enabled by default, and the (optional) integration with [Intel® Math Kernel Library](https://software.intel.com/en-us/mkl) (MKL) for multi-threading in linear algebra operations [@microsoft_multithread].
+"It includes additional capabilities for improved performance, reproducibility, and platform support." \citep{@microsoft_mro}
+Most notably these capabilities are the MRAN repository a.k.a. CRAN Time Machine, which is enabled by default, and the (optional) integration with [Intel® Math Kernel Library](https://software.intel.com/en-us/mkl) (MKL) for multi-threading in linear algebra operations \citep{microsoft_multithread}.
 <!-- MRAN is also used by versioned Rocker images. -->
 MRO does not provide official Docker images, but a set of community-maintained `Dockerfile`s and Docker images `nuest/mro` are available on Docker Hub at [https://github.com/nuest/mro-docker](https://github.com/nuest/mro-docker) and on GitHub at [https://github.com/nuest/mro-docker](https://github.com/nuest/mro-docker) respectively.
 The images are inspired by the Rocker images and can be used much in the same fashion, effectively a drop-in replacement allowing users to quickly evaluate if the benefits of MRO + Intel® MKL apply to their use case.
 Version-tagged images are provided for the latest bugfix release of recent R versions.
 Extended license information about MKL is printed at every startup.
 
-_Renjin_ is an interpreter for the R language running on top of the [Java Virtual Machine](https://en.wikipedia.org/wiki/Java_virtual_machine) (JVM) providing full two-way access between Java and R code [@wikipedia_renjin_2018].
+_Renjin_ is an interpreter for the R language running on top of the [Java Virtual Machine](https://en.wikipedia.org/wiki/Java_virtual_machine) (JVM) providing full two-way access between Java and R code \citep{wikipedia_renjin_2018}.
 It was developed to combine the benefits of R, such scripting and extension packages, with the JVM's advantages in the areas of security, cross-platform availability, and established position in enterprise settings.
 R extension packages need to be specially compiled and are distributed via the Java package manager [Apache Maven](https://en.wikipedia.org/wiki/Apache_Maven), cf. [http://packages.renjin.org/packages](http://packages.renjin.org/packages) for available packages.
 Packages are loaded on demand, i.e. at the first call to `library()`.
-Not all R packages, especially one linking to binary libraries, are available, e.g. `rgdal` [^1].
-[^1]: [http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1](http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1)
+Not all R packages, especially one linking to binary libraries, are available, e.g. `rgdal` \footnote{\href{http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1}{http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1}}.
+
 There are no offical Docker images for Renjin, but community-maintained images for selected releases only are available under `nuest/renjin` on Docker Hub and GitHub at [https://hub.docker.com/r/nuest/renjin](https://hub.docker.com/r/nuest/renjin) and [https://github.com/nuest/renjin-docker](https://github.com/nuest/renjin-docker) respectively.
 These images expose the command line interface of Renjin in a similar fashion as Rocker images and allow an easy evaluation of Renjin's suitability, but are not intended for production use.
 
 [_pqR_](http://www.pqr-project.org/) is a "a pretty quick version of R".
-_pqR_ fixes some opinionated issues in the R language and is the basis for experimental features, e.g. automatic diffentiation [^2].
+_pqR_ fixes some opinionated issues in the R language and is the basis for experimental features, e.g. automatic diffentiation\footnote{ \href{https://riotworkshop.github.io/abstracts/riot-2019-pqr.txt}{https://riotworkshop.github.io/abstracts/riot-2019-pqr.txt}}.
 The source code development [on GitHub](https://github.com/radfordneal/pqR/) is a one man project and it does not provide any Docker images.
 But especially disruptive approaches may contribute to the development of the R ecosystem, so the `nuest/pqr` images on Docker Hub and GitHub at [https://hub.docker.com/r/nuest/pqr/](https://hub.docker.com/r/nuest/pqr/) and [https://github.com/nuest/pqr-docker](https://github.com/nuest/pqr-docker) respectively.
-[^2]: [https://riotworkshop.github.io/abstracts/riot-2019-pqr.txt](https://riotworkshop.github.io/abstracts/riot-2019-pqr.txt)
 
 _FastR_ is "A high-performance implementation of the R programming language, built on GraalVM" (https://github.com/oracle/fastr).
-It is developed by Oracle, connects R to the [GraalVM ecosystem](), and also claims superior performance but also targets full compatibility with base R[^3].
-<!-- https://riotworkshop.github.io/abstracts/riot-2019-fastr.txt -->
-[^3]: [https://github.com/oracle/fastr#current-status](https://github.com/oracle/fastr#current-status)
+It is developed by Oracle, connects R to the GraalVM ecosystem \citep{wikipedia_graal_vm}, and also claims superior performance but also targets full compatibility with base R \footnote{ \href{https://github.com/oracle/fastr}{https://github.com/oracle/fastr}}.
+
 There are no offical Docker images provided, but `nuest/fastr-docker` provides image and `Dockerfile` on Docker Hub and GitHub at []() and [https://github.com/nuest/fastr-docker](https://github.com/nuest/fastr-docker) respectively.
 
 While the images presented in this section are far from being as vetted, stable, and widely used as any of the _Rocker_ images, they demonstrate an important advantage of containerisation technology, namely the abiliy to transparently build portable stacks of open source software and make them easily accessible to users.
@@ -122,7 +116,7 @@ Since all of the different R distributions claim better performance as a core mo
 
 ### Bioconductor
 
-[_Bioconductor_](http://bioconductor.org/help/docker/) is an open source, open development project for the analysis and comprehension of genomic data [@gentleman_bioconductor_2004].
+[_Bioconductor_](http://bioconductor.org/help/docker/) is an open source, open development project for the analysis and comprehension of genomic data \citep{gentleman_bioconductor_2004}.
 The project consists of 1741 R software packages as of August 15th 2019, as well as packages containing annotation or experiment data.
 _Bioconductor_has a semiannual release cycle, each release is associated with a particular version of R.
 Docker images allow availability of current and past versions of _Bioconductor_ for convenience and reproducibility.
