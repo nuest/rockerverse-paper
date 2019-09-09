@@ -249,5 +249,21 @@ A strength of this approach is that the responsibility for complex software conf
 - the ability to move processing between services easily (e.g locally, one cloud providers VM, another cloud provider's Container-as-a-Service)
 - ...
 
+## Author contributions
+
+DN conceived of the presented idea and \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}.
+CB ..
+RC ..
+DE ..
+ME ..
+CF ..
+BW ..
+KR ..
+NR ..
+NX ..
+LS \& NT wrote the section on Bioconductor.
+All authors contributed to the discussion and outlook section and approved the final version.
+This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
+The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page} and \href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history} provide a detailed view on the respective contributions.
 
 \bibliography{RJreferences}
