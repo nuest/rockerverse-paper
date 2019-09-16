@@ -13,8 +13,8 @@ author:
     #affiliatin: -
     #email: -
   - name: Dirk Eddelbuettel
-    #affiliation:
-    #email: -
+    affiliation: University of Illinois at Urbana-Champaign
+    email: dirkd@eddelbuettel.com
   - name: Mark Edmondson
     affiliation: IIH Nordic A/S, Google Developer Expert for GCP
     email: mark@markedmondson.me
@@ -60,11 +60,11 @@ output: rticles::rjournal_article
 
 # Introduction
 
-The \citep{R} community keeps growing: the number of new packages on CRAN keeps on rising, meetups, conferences, online courses and unconferences prosper, and the uptake in education and industry increases [REFs].
-All this cements `R`'s role as the lingua franca of statistics, data visualisation, and computational research.
-Part of this success can be traced back to the _Rocker Project_ ([https://www.rocker-project.org/](https://www.rocker-project.org/)).
-The community project was introduced in 2014 and provides a number of [Docker](https://en.wikipedia.org/wiki/Docker_(software)) images for various use cases \citet{RJ-2017-065}.
-The considerable uptake and continued evolution of _Rocker_'s suite has lead to numerous projects extending or building upon _Rocker_ images ranging from reproducible research to production deployments.
+The R community keeps growing: the number of new packages on CRAN keeps on rising, meetups, conferences, online courses and unconferences prosper, and the uptake in education and industry increases [REFs].
+All this cements the role of R as the lingua franca of statistics, data visualisation, and computational research.
+Coinciding with the rise of R was the advent of Docker [CITATION?] as a general tool for development, distribution, and deployment of software.
+Combining both these topics, the _Rocker Project_([https://www.rocker-project.org/](https://www.rocker-project.org/)) was introduced in 2014 and provides a number of [Docker](https://en.wikipedia.org/wiki/Docker_(software)) images for various use cases as described in \citet{RJ-2017-065}.
+The considerable uptake and continued evolution of the  _Rocker_ suite of containers has lead to numerous projects extending or building upon _Rocker_ images ranging from reproducible research to production deployments.
 This article presents this _Rockerverse_ of projects.
 It also introduces related activities connecting the R language and environment with other containerisation solutions.
 The main contributions is a coherent picture of the current lay of the land of containers in, with, and for `R`.
@@ -72,21 +72,21 @@ This diversity includes demonstrators, early prototypes, and mature projects.
 
 # Containerization and Rocker
 
-_Do we need a generic intro here?_
+_Do we need a generic intro here?_ DE: Yes, and happy to take a stab.
 
 # Container Images
 
 ## Images for alternative R distributions
 
-As outlined above, `R` is widespread language with a large community.
+As outlined above, R is a widely-used language with a large community.
 The large number of extension packages provides access to an unrivaled variety of established and upcoming features.
 Nevertheless, special use cases and experimental projects exist to test approaches or provide features different to what _"base R"_ provides.
 These projects stem both form academia and industry.
-_Base R_, sometimes `GNU-R`, is the R distribution maintained by the [R Core Team](https://www.r-project.org/contributors.html) and and provided via [CRAN](https://cran.r-project.org/).
+_Base R_, sometimes called `GNU-R`, is the R distribution maintained by the [R Core Team](https://www.r-project.org/contributors.html) and and provided via [CRAN](https://cran.r-project.org/).
 
 _Microsoft R Open_ ([MRO](https://github.com/nuest/mro-docker)) is an R distribution formerly known as Revolution R Open (RRO) before Revolution Analytics was acquired by Microsoft.
 MRO is compatible with main R and it's packages.sss
-"It includes additional capabilities for improved performance, reproducibility, and platform support." \citep{@microsoft_mro}
+"It includes additional capabilities for improved performance, reproducibility, and platform support." \citep{microsoft_mro}
 Most notably these capabilities are the MRAN repository a.k.a. CRAN Time Machine, which is enabled by default, and the (optional) integration with [Intel® Math Kernel Library](https://software.intel.com/en-us/mkl) (MKL) for multi-threading in linear algebra operations \citep{microsoft_multithread}.
 <!-- MRAN is also used by versioned Rocker images. -->
 MRO does not provide official Docker images, but a set of community-maintained `Dockerfile`s and Docker images `nuest/mro` are available on Docker Hub at [https://github.com/nuest/mro-docker](https://github.com/nuest/mro-docker) and on GitHub at [https://github.com/nuest/mro-docker](https://github.com/nuest/mro-docker) respectively.
@@ -109,7 +109,7 @@ The source code development [on GitHub](https://github.com/radfordneal/pqR/) is 
 But especially disruptive approaches may contribute to the development of the R ecosystem, so the `nuest/pqr` images on Docker Hub and GitHub at [https://hub.docker.com/r/nuest/pqr/](https://hub.docker.com/r/nuest/pqr/) and [https://github.com/nuest/pqr-docker](https://github.com/nuest/pqr-docker) respectively.
 
 _FastR_ is "A high-performance implementation of the R programming language, built on GraalVM" (https://github.com/oracle/fastr).
-It is developed by Oracle, connects R to the GraalVM ecosystem \citep{wikipedia_graal_vm}, and also claims superior performance but also targets full compatibility with base R \footnote{ \href{https://github.com/oracle/fastr}{https://github.com/oracle/fastr}}.
+It is developed by Oracle, connects R to the GraalVM ecosystem \citep{wikipedia_graalvm_2019}, and also claims superior performance but also targets full compatibility with base R \footnote{ \href{https://github.com/oracle/fastr}{https://github.com/oracle/fastr}}.
 
 There are no offical Docker images provided, but `nuest/fastr-docker` provides image and `Dockerfile` on Docker Hub and GitHub at []() and [https://github.com/nuest/fastr-docker](https://github.com/nuest/fastr-docker) respectively.
 
