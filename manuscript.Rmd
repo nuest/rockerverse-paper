@@ -162,7 +162,13 @@ A strength of this approach is that the responsibility for complex software conf
 
 ## Images for (historic) R versions [@ColinFay, @nuest]
 
-- run code with Versions of R: https://srv.colinfay.me/r-online
+As with any other software, each new version of R comes with its share of changes. 
+Some are breaking changes, some are not, but the fact is that running a piece of code in a given version might give different s from another version ; which, in some case, can be an issue when it comes to reproducibility.
+For example, think about R random seed: starting with `R 3.6.0`, running `set.seed(2811); sample(1:1000, 2)` will not give the same result as if it was run inside an older version of R.
+That might seem trivial, but all the code using the random number generator will not be exactly reproducible after this breaking change. 
+Detecting this kind of behavior is the reason why the [r-online](https://github.com/ColinFay/ronline) app has been developped: available as a standalone NodeJS app or [online](https://srv.colinfay.me/r-online), this app was designed for historic exploration of R: with it, the user can compare a piece of code run in two separate versions of R. 
+Internally, this app takes the piece of code written by the user, opens one or two docker instances with the given version of R, and returns the result to the user. 
+
 - old R versions: https://github.com/rocker-org/rocker-versioned/issues/138
 - [semantic version tags for Rocker](https://github.com/rocker-org/rocker-versioned/#version-tags)
 - debugging memory problems across multiple versions: https://github.com/wch/r-debug
