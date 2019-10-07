@@ -270,8 +270,16 @@ As an example, _liftr_ demonstrated its advantage for R Markdown-based computati
   - [`repo2docker`](https://repo2docker.readthedocs.io/en/latest/config_files.html) (`install.R`, `DESCRPTION`, `runtime.txt`) based on the Rocker images [@nuest]
 - GPU [@noamross, @cboettig]
 - Gigantum stack
-- in education (ready to use teaching/learning environments)
-  - [`r-db`](https://github.com/ColinFay/r-db) [@ColinFay]
+
+R is a fantastic tool when it comes to interfacing with databases: almost every open source and proprietary database system has an R package that allows users to connect and interact with the it 
+This flexibility is even broader now that we have tools like `DBI`, that allows to create a common API for interfacing these databases, or like `dbplyr`, which are designed to run `dplyr` code straight against the database. 
+But learning and teaching these tools comes with a cost: the cost of deploying or having access to an environment with the softwares and drivers installed. 
+For people teaching R, it can become a barrier if they need to install local versions of the drivers, or to connect to remote instances which might or might not be made available by the IT. 
+Giving access to a sandbox for the most common database environments is the idea behind [`r-db`](https://github.com/ColinFay/r-db) [@ColinFay], a docker image that contains everything needed to connect, from R, to a database. 
+Notably, with `r-db`, the users don't have to install complex drivers or to configure their machine in a specific way. 
+On top of that, `r-db` comes with a comprehensive [online guide](http://colinfay.me/r-db/), explaining how to spin a docker instance of a specific database, and how to use `r-db` to connect to it. 
+Each package contained inside this image also has a series examples, so that the user can get started with the database right away.
+
 - [RCloud](https://github.com/att/rcloud/tree/master/docker) ?
 
 ## Deployment, processing, cloud [div]
