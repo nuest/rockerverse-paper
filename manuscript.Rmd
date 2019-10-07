@@ -235,7 +235,14 @@ Further, sharing system environments for data analysis also becomes extremely ea
 As an example, _liftr_ demonstrated its advantage for R Markdown-based computational workflow orchestration, by effortlessly containerizing 18 complex _Bioconductor_ workflows in the DockFlow project (https://dockflow.org) in 2017.
 
 - [`rize` for Shiny](https://github.com/cole-brokamp/rize)
-- [`dockerfiler`](https://github.com/ColinFay/dockerfiler)
+
+One of the key tool of Docker are dockerfiles, which can be thought of as "recipes" used to build a specific image. 
+But building these files can feel like a workflow break as it demands to open a separate file, and / or to write a small wrapper around R's `write()` function to add elements to the file. 
+At the same time, doing it by hand prevents from using programming language for what they are good for: iteration, and automation. 
+Iteration and automation for Dockerfiles is the very reason behind [`dockerfiler`](https://github.com/ColinFay/dockerfiler), an R package designed for building Dockerfiles straigth from R. 
+
+For example, the [`golem`](https://github.com/ThinkR-open/golem) package (an R package for building production-grade Shiny application) makes an heavy use of `dockerfiler` when it comes to creating the `Dockerfile` for deploying the Shiny application to production. 
+The reason behind this is that `dockerfiler`, on top of being scriptable from R, can leverage all the tools available in R to parse a `DESCRIPTION` file, to get system requirements, to list dependencies, versions, etc. 
 
 ## Packages for control and provisioning [@nuest, @richfitz, @rcannood]
 
