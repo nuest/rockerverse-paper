@@ -94,11 +94,11 @@ of R, such scripting and extension packages, with the JVM's advantages
 in the areas of security, cross-platform availability, and established
 position in enterprise settings. R extension packages need to be
 specially compiled and are distributed via the Java package manager
-\href{https://en.wikipedia.org/wiki/Apache_Maven}{Apache Maven}, cf.
-\url{http://packages.renjin.org/packages} for available packages.
+\href{https://en.wikipedia.org/wiki/Apache_Maven}{Apache Maven},
+cf.~\url{http://packages.renjin.org/packages} for available packages.
 Packages are loaded on demand, i.e.~at the first call to
 \texttt{library()}. Not all R packages, especially one linking to binary
-libraries, are available, e.g. \texttt{rgdal}
+libraries, are available, e.g.~\texttt{rgdal}
 \footnote{\href{http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1}{http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1}}.
 
 There are no offical Docker images for Renjin, but community-maintained
@@ -415,7 +415,7 @@ project (\url{https://dockflow.org}) in 2017.
     I don't think \texttt{docker\_run} is main focus for containers for
     this package, its more how it uses Docker to launch custom
     environments that can be templated (e.g.~rstudio, shiny etc.) and
-    for parrallisation e.g. \texttt{library(future)} using GCE VMs as
+    for parrallisation e.g.~\texttt{library(future)} using GCE VMs as
     endpoints. {[}@MarkEdmondson1234{]}
   \end{itemize}
 \item
@@ -546,7 +546,7 @@ delivery {[}@noamross,
 \item
   \href{https://github.com/dynverse/dynmethods}{dynmethods}
   {[}@rcannood{]}: In order to evaluate ±50 computational methods which
-  all used different environments (R, Python, C++, \ldots{}), we wrapped
+  all used different environments (R, Python, C++, \ldots), we wrapped
   each of them in a docker container and can execute these methods from
   R. Again, all of these containers are being built on travis-ci, and
   will only be pushed to docker hub if the integration test succeeds.
@@ -686,10 +686,11 @@ Ben Marwick\\
 
 \address{%
 Karthik Ram\\
-\\
+Berkeley Institute for Data Science, University of California, Berkeley,
+CA 94720 USA\\
 \\
 }
-
+\href{mailto:karthik.ram@berkeley.edu}{\nolinkurl{karthik.ram@berkeley.edu}}
 
 \address{%
 Noam Ross\\
