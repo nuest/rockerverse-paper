@@ -482,18 +482,52 @@ delivery {[}@noamross,
 \tightlist
 \item
   Binder
+\end{itemize}
 
-  \begin{itemize}
-  \tightlist
-  \item
-    \href{https://github.com/karthik/holepunch}{\texttt{holepunch}}
-    streamlines making an R research compendium Binder-ready
-    {[}@karthik{]}
-  \item
-    \href{https://repo2docker.readthedocs.io/en/latest/config_files.html}{\texttt{repo2docker}}
-    (\texttt{install.R}, \texttt{DESCRPTION}, \texttt{runtime.txt})
-    based on the Rocker images {[}@nuest{]}
-  \end{itemize}
+The \href{https://mybinder.readthedocs.io/en/latest/}{Binder project},
+maintained by the team behind Jupyter, makes it possible for users to
+create and share their computing environments with others. A deployed
+version of this service called binder hub allows anyone with access to a
+web browser and an internet connection to launch a temporary instance of
+these custom environments and execute any notebooks contained within.
+From a reproducibility standpoint, Binder makes it exceedingly easy to
+compile a paper, visualize data, and run small examples from papers or
+tutorials without the need for any local installation.
+
+To set up Binder for a project, a user typically starts at an instance
+of a Binderhub (examples include mybinder.org and binder.pangeo.io) and
+passes the location of a hosted Git repository. Using internal tools
+such as
+\href{https://repo2docker.readthedocs.io/en/latest/config_files.html}{repo2docker},
+the binderhub builds a Dockerfile by parsing the contents of all code
+contained within. While this approach works well for most run of the
+mill Python projects, it is not so seamless for R projects. For any R
+projects that use the Tidyverse suite {[}citation in review{]}, the time
+and resources required to build all dependencies from source can often
+time out before completion, making it frustrating for the average R
+user.
+
+\href{https://github.com/karthik/holepunch}{\texttt{holepunch}} is a R
+package that was designed to remove some of these limitations and make
+Binder more accessible to novice R users. \texttt{holepunch} achieves
+this by leveraging Rocker images that contains the Tidyverse along
+special Jupyter dependencies, and only installs additional packages from
+CRAN and Bioconductor that are not already part of these images.
+Starting with the Binder/Tidyverse base images eliminates a large part
+of the build time and in most cases results in a binder instance
+launching within a minute. \texttt{holepunch} as a side effect also
+creates a DESCRIPTION file which then turns any project into a research
+compendium {[}\url{doi:10.1080/00031305.2017.1375986}{]}. The Dockerfile
+included with the project can also be used to launch a RStudio server
+locally independent of binder which is especially useful when more
+computational resources are required.
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://repo2docker.readthedocs.io/en/latest/config_files.html}{\texttt{repo2docker}}
+  (\texttt{install.R}, \texttt{DESCRPTION}, \texttt{runtime.txt}) based
+  on the Rocker images {[}@nuest{]}
 \item
   GPU {[}@noamross, @cboettig{]}
 \item
