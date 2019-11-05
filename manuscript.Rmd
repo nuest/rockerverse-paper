@@ -84,13 +84,23 @@ This diversity includes demonstrators, early prototypes, and mature projects.
 
 # Containerization and Rocker
 
-<!--_Do we need a generic intro here?_ DE: Yes, and happy to take a stab.-->
+Docker, an application and service provide by the eponymous company, has in just a few short years risen to prominence for development, testing, deployment and distribution of computer software.
+While there are related approaches such as LXC\footnote{\href{https://en.wikipedia.org/wiki/LXC}{https://en.wikipedia.org/wiki/LXC}} or Singularity \citep{kurtzer_singularity_2017}, Docker has become synomymous with "containerization"---the method of taking software artefacts and bundling them in such a way that use becomes standardized and portable across operationg systems.
+In doing so, Docker had recognised and validated the importance of one very important thread that had been emerging, namely virtualization.
+By allowing multiple concurrent applications or services to run concurrently on one host machine without any fear of interference between them, an important scalability feature had been realized.
+But Docker improved on virtualization by accessing the host system---generally Linux---through a much thinner and smaller shim than a full operating system emulation or virtualization.
+This makes for more efficient use of system resources and allowed another order of magnitude in terms of scalability of deployment [REFERENCES!].   
+While Docker makes use of Linux kernel features, its importance was large enough so that some required aspects of running Docker have been added to other operating systems to support Docker there more efficiently too \citep{microsoft_linux_2019}.
+The success even lead to standardisation and industry collaboration \citep{oci_open_2019}.
 
-Docker, an application and service provide by the eponymous company, has in just a few short years risen to prominence for development, testing, deployment and distribution of computer software.  While there are related approaches such as LXC or Singularity, Docker has become synomymous with "containerization"---the method of taking software artefacts and bundling them in such a way that use becomes standardized and portable across operationg systems.   In doing so, Docker had recognised and validated the importance of one very important thread that had been emerging, namely virtualization. By allowing multiple concurrent applications or services to run concurrently on one host machine without any fear of interference between them, an important scalability feature had been realized.  But Docker improved on virtualization by accessing the host system---generally Linux---through a much thinner and smaller shim than a full operating system emulation or virtualization.  This makes for more efficient use of system resources and allowed another order of magnitude in terms of scalability of deployment. [Reference?]   While Docker makes use of Linux kernel features, its importance was large enough so that some required aspects of running Docker have been added to other operating systems to support Docker there more efficiently too. [Win10; reference?] 
+The key accomplishment of Docker is to make a "bundled" aggregation of software available to any system running Docker, without requiring much else from the host.
+This is a rather attractive, and novel, proposition which has lead to widespread adoption and use of Docker in a variety of domains, e.g., cloud computing infrastructure \citep{Bernstein2014}, data science \citep{boettiger_introduction_2015}, and edge computing \citep{alam_orchestration_2018} [more examples!].
+It provided to be a natural match for "cloud deployment" which runs (or at least appears to run) "seamlessly" without much explicit reference to the underlying machine, architecture or operating system: containers can be deployed with very little in terms of dependencies on the host system---only the container runtime is required.
 
-The key accomplishment of Docker is to make a "bundled" aggregation of software available to any system running Docker, without requiring much else from the host.  This is a rather attractive, and novel, proposition which has lead to widespread adoption and use of Docker in a variety of domains.  It provided also a natural match for "cloud deployment" which runs (or at least appears to run) "seamlessly" without much explicit reference to the underlying machine, architecture or operating system.  Using containers on cloud hosted servers is a natural fit also because these containers can be deployed with very littler in terms of dependencies on the host system.
-
-For statistical computing and analysis centered around R, the Rocker Project has provided a variety of Docker containers since its start in 2014 \citep{RJ-2017-065}. The Rocker Project provides several lines of containeres spanning to from building blocks with R-release or R-devel to containers with RStudio Server and Shiny Server. Also of note is a series of "versioned" containers which match the R release they contain with the _then-current_ set of packages via the MRAN Snapshot views of CRAN. [Maybe at a later point add forward reference to other topics building on Rocker described here.]
+For statistical computing and analysis centered around R, the Rocker Project has provided a variety of Docker containers since its start in 2014 \citep{RJ-2017-065}.
+The Rocker Project provides several lines of containeres spanning to from building blocks with R-release or R-devel to containers with RStudio~Server and Shiny~Server.
+Also of note is a series of "versioned" containers which match the R release they contain with the _then-current_ set of packages via the MRAN Snapshot views of CRAN \citep{microsoft_cran_2019}.
+[Maybe at a later point add forward reference to other topics building on Rocker described here.]
 
 # Container Images
 
@@ -105,8 +115,7 @@ _Base R_, sometimes called `GNU-R`, is the R distribution maintained by the [R C
 _Microsoft R Open_ ([MRO](https://github.com/nuest/mro-docker)) is an R distribution formerly known as Revolution R Open (RRO) before Revolution Analytics was acquired by Microsoft.
 MRO is compatible with main R and it's packages.sss
 "It includes additional capabilities for improved performance, reproducibility, and platform support." \citep{microsoft_mro}
-Most notably these capabilities are the MRAN repository a.k.a. CRAN Time Machine, which is enabled by default, and the (optional) integration with [Intel® Math Kernel Library](https://software.intel.com/en-us/mkl) (MKL) for multi-threading in linear algebra operations \citep{microsoft_multithread}.
-<!-- MRAN is also used by versioned Rocker images. -->
+Most notably these capabilities are the MRAN repository, which is enabled by default, and the (optional) integration with [Intel® Math Kernel Library](https://software.intel.com/en-us/mkl) (MKL) for multi-threading in linear algebra operations \citep{microsoft_multithread}.
 MRO does not provide official Docker images, but a set of community-maintained `Dockerfile`s and Docker images `nuest/mro` are available on Docker Hub at [https://github.com/nuest/mro-docker](https://github.com/nuest/mro-docker) and on GitHub at [https://github.com/nuest/mro-docker](https://github.com/nuest/mro-docker) respectively.
 The images are inspired by the Rocker images and can be used much in the same fashion, effectively a drop-in replacement allowing users to quickly evaluate if the benefits of MRO + Intel® MKL apply to their use case.
 Version-tagged images are provided for the latest bugfix release of recent R versions.
