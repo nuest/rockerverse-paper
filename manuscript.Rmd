@@ -1,10 +1,13 @@
 ---
-title: "Containers and R: the Rockerverse and beyond"
+title: "Containers and R---the Rockerverse and beyond"
 author:
   - name: Daniel Nüst
     affiliation: Institute for Geoinformatics, University of Münster
     address:
-    - Heisenbergstr. 2, 48149 Münster, Germany
+    - Heisenbergstr. 2
+    - 48149 Münster
+    - Germany
+    - \orcid{0000-0002-0024-5046}
     email: daniel.nuest@uni-muenster.de
   - name: Carl Boettiger
     #affiliation: -
@@ -18,7 +21,7 @@ author:
       - Department of Statistics
       - Illini Hall, 725 S Wright St
       - Champaign, IL 61820
-      - ORCiD \href{https://orcid.org/0000-0001-6419-907X}{0000-0001-6419-907X}
+      - \orcid{0000-0001-6419-907X}
     email: dirkd@eddelbuettel.com
   - name: Mark Edmondson
     affiliation: IIH Nordic A/S, Google Developer Expert for GCP
@@ -37,17 +40,24 @@ author:
     #email: -
   - name: Nan Xiao
     affiliation: Seven Bridges Genomics
-    address: "529 Main St, Suite 6610 \\newline Charlestown, MA 02129, USA \\newline ORCiD: 0000-0002-0250-5673"
+    address:
+      - 529 Main St, Suite 6610
+      - Charlestown, MA 02129, USA
+      - \orcid{0000-0002-0250-5673}
     email: me@nanx.me
   - name: Lori Shepherd
     affiliation: Roswell Park Comprehensive Cancer Center
     address:
-    - Elm & Carlton Streets, Buffalo, New York, 14263 USA
+      - Elm & Carlton Streets
+      - Buffalo, New York, 14263 USA
+      - \orcid{0000-0002-5910-4010}
     email: lori.shepherd@roswellpark.org
   - name: Nitesh Turaga
     affiliation: Roswell Park Comprehensive Cancer Center
     address:
-    - Elm & Carlton Streets, Buffalo, New York, 14263 USA
+    - Elm & Carlton Streets
+    - Buffalo, New York, 14263 USA
+    - \orcid{0000-0002-0224-9817}
     email: nitesh.turaga@roswellpark.org
 abstract: >
   The Rocker project provides widely-used Docker images for R across different application scenarios.
@@ -55,12 +65,9 @@ abstract: >
   We also look beyond Rocker to other projects connecting containerisation with R.
   These use cases and the diversity of applications demonstrate the power of Rocker and containerisation for collaboration, effectivity, scalability, and transparency.
 # blank footnote? https://tex.stackexchange.com/questions/170511/footnotes-without-numbering
-preamble: >
-  \usepackage{longtable}
-  \usepackage{hyperref}
-output: rticles::rjournal_article
-#  includes:
-#    in_header: preamble.tex
+output:
+  rticles::rjournal_article:
+    keep_tex: true
 ---
 
 # Introduction
