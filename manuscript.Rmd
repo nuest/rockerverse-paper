@@ -104,7 +104,7 @@ Nevertheless, special use cases and experimental projects exist to test approach
 These projects stem both form academia and industry.
 _Base R_, sometimes called `GNU-R`, is the R distribution maintained by the [R Core Team](https://www.r-project.org/contributors.html) and and provided via [CRAN](https://cran.r-project.org/).
 
-_Microsoft R Open_ ([MRO](https://github.com/nuest/mro-docker)) is an R distribution formerly known as Revolution R Open (RRO) before Revolution Analytics was acquired by Microsoft.
+**Microsoft R Open** ([MRO](https://github.com/nuest/mro-docker)) is an R distribution formerly known as Revolution R Open (RRO) before Revolution Analytics was acquired by Microsoft.
 MRO is compatible with main R and it's packages.sss
 "It includes additional capabilities for improved performance, reproducibility, and platform support." \citep{microsoft_mro}
 Most notably these capabilities are the MRAN repository a.k.a. CRAN Time Machine, which is enabled by default, and the (optional) integration with [Intel® Math Kernel Library](https://software.intel.com/en-us/mkl) (MKL) for multi-threading in linear algebra operations \citep{microsoft_multithread}.
@@ -114,7 +114,7 @@ The images are inspired by the Rocker images and can be used much in the same fa
 Version-tagged images are provided for the latest bugfix release of recent R versions.
 Extended license information about MKL is printed at every startup.
 
-_Renjin_ is an interpreter for the R language running on top of the [Java Virtual Machine](https://en.wikipedia.org/wiki/Java_virtual_machine) (JVM) providing full two-way access between Java and R code \citep{wikipedia_renjin_2018}.
+**Renjin** is an interpreter for the R language running on top of the [Java Virtual Machine](https://en.wikipedia.org/wiki/Java_virtual_machine) (JVM) providing full two-way access between Java and R code \citep{wikipedia_renjin_2018}.
 It was developed to combine the benefits of R, such scripting and extension packages, with the JVM's advantages in the areas of security, cross-platform availability, and established position in enterprise settings.
 R extension packages need to be specially compiled and are distributed via the Java package manager [Apache Maven](https://en.wikipedia.org/wiki/Apache_Maven), cf. [http://packages.renjin.org/packages](http://packages.renjin.org/packages) for available packages.
 Packages are loaded on demand, i.e. at the first call to `library()`.
@@ -122,14 +122,14 @@ Not all R packages, especially one linking to binary libraries, are available, e
 There are no offical Docker images for Renjin, but community-maintained images for selected releases only are available under `nuest/renjin` on Docker Hub and GitHub at [https://hub.docker.com/r/nuest/renjin](https://hub.docker.com/r/nuest/renjin) and [https://github.com/nuest/renjin-docker](https://github.com/nuest/renjin-docker) respectively.
 These images expose the command line interface of Renjin in a similar fashion as Rocker images and allow an easy evaluation of Renjin's suitability, but are not intended for production use.
 
-[_pqR_](http://www.pqr-project.org/) is a "a pretty quick version of R".
+**[pqR](http://www.pqr-project.org/)** is a "a pretty quick version of R".
 _pqR_ fixes some opinionated issues in the R language and is the basis for experimental features, e.g. automatic diffentiation\footnote{ \href{https://riotworkshop.github.io/abstracts/riot-2019-pqr.txt}{https://riotworkshop.github.io/abstracts/riot-2019-pqr.txt}}.
 The source code development [on GitHub](https://github.com/radfordneal/pqR/) is a one man project and it does not provide any Docker images.
 But especially disruptive approaches may contribute to the development of the R ecosystem, so the `nuest/pqr` images on Docker Hub and GitHub at [https://hub.docker.com/r/nuest/pqr/](https://hub.docker.com/r/nuest/pqr/) and [https://github.com/nuest/pqr-docker](https://github.com/nuest/pqr-docker) respectively.
 
-_FastR_ is "A high-performance implementation of the R programming language, built on GraalVM" (https://github.com/oracle/fastr).
+**FastR** is "A high-performance implementation of the R programming language, built on GraalVM" (https://github.com/oracle/fastr).
 It is developed by Oracle, connects R to the GraalVM ecosystem \citep{wikipedia_graalvm_2019}, and also claims superior performance but also targets full compatibility with base R \footnote{ \href{https://github.com/oracle/fastr}{https://github.com/oracle/fastr}}.
-There are no offical Docker images provided, but `nuest/fastr-docker` provides image and `Dockerfile` on Docker Hub and GitHub at []() and [https://github.com/nuest/fastr-docker](https://github.com/nuest/fastr-docker) respectively.
+There are no offical Docker images provided, but `nuest/fastr` images and `Dockerfile` are independently maintained on [Docker Hub](https://cloud.docker.com/repository/docker/nuest/fastr/) and [GitHub](https://github.com/nuest/fastr-docker) respectively.
 
 While the images presented in this section are far from being as vetted, stable, and widely used as any of the Rocker images, they demonstrate an important advantage of containerisation technology, namely the abiliy to transparently build portable stacks of open source software and make them easily accessible to users.
 All different distributions are published under GPL licenses.
@@ -137,11 +137,10 @@ Since all of the different R distributions claim better performance as a core mo
 
 ## Bioconductor
 
-[_Bioconductor_](http://bioconductor.org/help/docker/) is an open source, open development project for the analysis and comprehension of genomic data \citep{gentleman_bioconductor_2004}.
+[_Bioconductor_](http://bioconductor.org/) is an open source, open development project for the analysis and comprehension of genomic data \citep{gentleman_bioconductor_2004}.
 The project consists of 1741 R software packages as of August 15th 2019, as well as packages containing annotation or experiment data.
 _Bioconductor_has a semiannual release cycle, each release is associated with a particular version of R.
 Docker images allow availability of current and past versions of _Bioconductor_ for convenience and reproducibility.
-
 _Bioconductor_ 'base' docker images are built on top of `rocker/r-ver` and `rocker/rstudio`.
 _Bioconductor_ installs packages based on the R version, and therefore uses `rocker/rstudio` and `rocker/r-ver` version tagging.
 _Bioconductor_ selects the desired version of R from Rocker, adds the BiocManager CRAN package for installing appropriate versions of _Bioconductor_ packages, and creates a _Bioconductor_ docker image with an informative tag (R\_version\_Bioc\_version).
@@ -153,8 +152,7 @@ The 'core' image installs the most commonly used _Bioconductor_ packages.
 _Bioconductor_ images for proteomics, metabolomics, and flow cytometry are community maintained.
 All community maintained images build on top of the _Bioconductor_ base image and therefore indirectly the Rocker images.
 To simplify building and maintaining _Bioconductor_ images, we use a Ruby templating engine.
-
-A recent audit of our Dockerfiles, following best practices from the Docker website, led to a reduction in the size and number of layers in images we produce.
+A recent audit of the _Bioconductor_ Dockerfiles, following best practices from the Docker website, led to a reduction in the size and number of layers.
 The most important insights involve the ['union' file system used by Docker](https://docs.docker.com/storage/storagedriver/overlayfs-driver/#how-container-reads-and-writes-work-with-overlay-or-overlay2).
 In this file system, once a layer (e.g., `RUN` statement) writes to a file path, the file path is never altered.
 A subsequent layer that might appear to remove or overwrite the path actually masks, rather than alters, the original.
@@ -224,7 +222,7 @@ These tags allow users to update the base image to retrieve bugfixes while reduc
 - [`containerit`](https://github.com/o2r-project/containerit/)
 - [`dockertest`](https://github.com/traitecoevo/dockertest/)
 
-[_liftr_](https://nanx.me/liftr/) \citep{liftr2019} aims to solve the problem of persistent reproducible reporting in statistical computing.
+**[_liftr_](https://nanx.me/liftr/)** \citep{liftr2019} aims to solve the problem of persistent reproducible reporting in statistical computing.
 Currently, the R Markdown format and its backend compilation engine _knitr_ offer a _de facto_ standard for creating dynamic documents \citep{xie2018}.
 However, the reproducibility of such content authoring environments is often limited to individual machines --- it is not easy to replicate the system environment (libraries, R versions, R packages) where the document was compiled.
 This issue becomes even more serious when it comes to collaborative document authoring and creating large-scale document building services.
@@ -277,7 +275,7 @@ But building these files can feel like a workflow break as it demands to open a 
 At the same time, doing it by hand prevents from using programming language for what they are good for: iteration, and automation. 
 Iteration and automation for Dockerfiles is the very reason behind [`dockerfiler`](https://github.com/ColinFay/dockerfiler), an R package designed for building Dockerfiles straigth from R. 
 
-For example, the [`golem`](https://github.com/ThinkR-open/golem) package (an R package for building production-grade Shiny application) makes an heavy use of `dockerfiler` when it comes to creating the `Dockerfile` for deploying the Shiny application to production. 
+For example, the **[`golem`](https://github.com/ThinkR-open/golem)** package makes an heavy use of `dockerfiler` when it comes to creating the `Dockerfile` for building production-grade Shiny applications and deploying them.
 The reason behind this is that `dockerfiler`, on top of being scriptable from R, can leverage all the tools available in R to parse a `DESCRIPTION` file, to get system requirements, to list dependencies, versions, etc. 
 
 # Use cases and applications
@@ -377,7 +375,7 @@ Developers can readily start a local container based on a Rocker image to invest
 Unlike recreating the reporter's environment on their regular machine, a container can simply be discarded after use, and there is no need to tediously roll back explorative changes to a previous state.
 Using the Rocker images with RStudio, the disposable environments lack no development comfort (see also the usage in research compendia).
 
-[`r-debug`](https://github.com/wch/r-debug) is a purpose built Docker image for debugging R memory problems.
+**[`r-debug`](https://github.com/wch/r-debug)** is a purpose built Docker image for debugging R memory problems.
 \citet{eddelbuettel_debugging_2019} describes how a Docker container was used to debug an issue with a package only occuring with a particular version of Fortran, and using tools which are not readily available on all platforms (e.g., not on macOS).
 
 # Other containerisation platforms [NN]
@@ -408,7 +406,7 @@ Using the Rocker images with RStudio, the disposable environments lack no develo
 
 # Author contributions
 
-DN conceived of the presented idea and \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}.
+DN conceived of the presented idea and \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team} and wrote the section about images for R distributions.
 CB ..
 RC ..
 DE ..
