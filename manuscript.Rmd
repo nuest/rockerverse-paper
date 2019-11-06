@@ -7,7 +7,7 @@ author:
     - Heisenbergstr. 2
     - 48149 Münster
     - Germany
-    - \orcid{0000-0002-0024-5046}
+    - \href{https://orcid.org/0000-0002-0024-5046}{\includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} https://orcid.org/0000-0002-0024-5046}
     email: daniel.nuest@uni-muenster.de
   - name: Carl Boettiger
     #affiliation: -
@@ -21,7 +21,7 @@ author:
       - Department of Statistics
       - Illini Hall, 725 S Wright St
       - Champaign, IL 61820
-      - \orcid{0000-0001-6419-907X}
+      - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0001-6419-907X}{https://orcid.org/0000-0001-6419-907X}
     email: dirkd@eddelbuettel.com
   - name: Mark Edmondson
     affiliation: IIH Nordic A/S, Google Developer Expert for GCP
@@ -43,21 +43,21 @@ author:
     address:
       - 529 Main St, Suite 6610
       - Charlestown, MA 02129, USA
-      - \orcid{0000-0002-0250-5673}
+      - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0002-0250-5673}{https://orcid.org/0000-0002-0250-5673}
     email: me@nanx.me
   - name: Lori Shepherd
     affiliation: Roswell Park Comprehensive Cancer Center
     address:
       - Elm & Carlton Streets
       - Buffalo, New York, 14263 USA
-      - \orcid{0000-0002-5910-4010}
+      - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0002-5910-4010}{https://orcid.org/0000-0002-5910-4010}
     email: lori.shepherd@roswellpark.org
   - name: Nitesh Turaga
     affiliation: Roswell Park Comprehensive Cancer Center
     address:
     - Elm & Carlton Streets
     - Buffalo, New York, 14263 USA
-    - \orcid{0000-0002-0224-9817}
+    - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0002-0224-9817}{https://orcid.org/0000-0002-0224-9817}
     email: nitesh.turaga@roswellpark.org
 abstract: >
   The Rocker project provides widely-used Docker images for R across different application scenarios.
