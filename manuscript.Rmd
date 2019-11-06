@@ -360,7 +360,7 @@ CB ..
 RC ..
 DE ..
 ME ..
-CF ..
+CF wrote the section about `r-online`, `dockerfiler`, `r-ci` and `r-db`.
 BW ..
 KR ..
 NR ..
