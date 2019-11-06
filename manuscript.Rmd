@@ -28,6 +28,8 @@ author:
     email: mark@markedmondson.me
   - name: Colin Fay
     affiliation: ThinkR
+    address:
+        - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0001-7343-1846}{https://orcid.org/0000-0001-7343-1846}
     email: contact@colinfay.me
   - name: Ben Marwick
     #affiliation: -
