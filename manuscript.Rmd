@@ -328,6 +328,26 @@ It short cicuits the configuration file parsing in `repo2docker` and starts with
 `holepunch` as a side effect also creates a `DESCRIPTION` file which then turns any project into a research compendium \citep{marwick_packaging_2018}.
 The Dockerfile included with the project can also be used to launch a RStudio server locally independent of Binder which is especially useful when more or special computational resources are required.
 
+
+One use for containers is to run on shared local hardware where teams manage their own high-performance servers.
+This can follow one of several design patterns: users may deploy containers to hardware as a work environment for a specific project, conatiners may provide per-user persistent environments, or a single container can act as a common multi-user environment for a server.
+In all cases, though, the containerized approach provides several advantages: First, users may use the same image and thus work environment on desktop and laptop computers, as well.
+The former models provide modularity, while the latter approach is most similar to a simple shared server.
+Second, software updates can be achieved by updating and redeploying the container, rather than tracking local installs on each server.
+Third, the containerized environment can be quickly deployed to other hardware, cloud or local, if more resources are neccessary or in case of server destruction or failure.
+In any of these cases, users need a method to interact with the containers, be it and IDE, or command-like access and tools such as SSH, which is usually not part of standard container recipes and must be added.
+The Rocker project provides containers pre-installed with the RStudio IDE.
+
+In cases where users store nontrivial amounts of data for their projects, data needs to persist beyond the life of the container.
+This may be via in shared disks, attached network volumes, or in separate storage where it is uploaded between sessions.
+In the case of shared disks or network-attached volumes, care must be taken to persist user permissions, and of course backups are still neccessary.
+When working with multiple servers, an automation framework such as [Ansible](https://www.ansible.com) may be useful for managing users, permisions, and disks along with containers.
+
+In some cases, containers are not completely portable between hardware environments.
+This is the case for software using graphical processing units (GPUs) which are increasingly popular for compute-intensive machine learning tasks.
+Containers running GPU software  require drivers and libraries specific to GPU models and versions, and containers require a specialized runtime to connect to the underlying GPU hardware.
+For NVIDIA GPUs, the [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker) includes a specialized runtime plugn for docker and set of base images with appropriate drivers and libraries, and the Rocker project has (beta) images based on these that include GPU-enabled versions of machine-learning R packages.
+
 R is a fantastic tool when it comes to interfacing with databases: almost every open source and proprietary database system has an R package that allows users to connect and interact with the it 
 This flexibility is even broader now that we have tools like `DBI`, that allows to create a common API for interfacing these databases, or like `dbplyr`, which are designed to run `dplyr` code straight against the database. 
 But learning and teaching these tools comes with a cost: the cost of deploying or having access to an environment with the softwares and drivers installed. 
@@ -337,8 +357,7 @@ Notably, with `r-db`, the users don't have to install complex drivers or to conf
 On top of that, `r-db` comes with a comprehensive [online guide](http://colinfay.me/r-db/), explaining how to spin a docker instance of a specific database, and how to use `r-db` to connect to it. 
 Each package contained inside this image also has a series examples, so that the user can get started with the database right away.
 
-- GPU environments [@noamross, @cboettig]
-- [RCloud](https://github.com/att/rcloud/tree/master/docker) ?
+[RCloud](https://github.com/att/rcloud/tree/master/docker) uses a `rocker/drd` base image for creation of collaborative data analysis and visualisation environments.
 
 ## Deployment, processing, cloud [div]
 
