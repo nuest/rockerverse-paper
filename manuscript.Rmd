@@ -180,19 +180,29 @@ For instance, we are exploring use of images for [Helm](https://helm.sh/)-orches
 The user interacts with a manager image based on `bioconductor_full`, configured to perform map-reduce style computations via the BiocParallel package communicating with minimally-configured worker images.
 A strength of this approach is that the responsibility for complex software configuration (including customized development) is shifted from the user to the experienced _Bioconductor_ core team.
 
-## Images for (historic) R versions [@ColinFay, @nuest]
+## Images for (historic) R versions
 
-As with any other software, each new version of R comes with its share of changes. 
-Some are breaking changes, some are not, but the fact is that running a piece of code in a given version might give different s from another version ; which, in some case, can be an issue when it comes to reproducibility.
+As with any other software, each new version of R comes with its share of changes.
+Some are breaking changes, some are not, but the fact is that running a piece of code in a given version might give different results from another version can be an issue when it comes to reproducibility of workflows and stability of applications.
 For example, think about R random seed: starting with `R 3.6.0`, running `set.seed(2811); sample(1:1000, 2)` will not give the same result as if it was run inside an older version of R.
-That might seem trivial, but all the code using the random number generator will not be exactly reproducible after this breaking change. 
-Detecting this kind of behavior is the reason why the [r-online](https://github.com/ColinFay/ronline) app has been developped: available as a standalone NodeJS app or [online](https://srv.colinfay.me/r-online), this app was designed for historic exploration of R: with it, the user can compare a piece of code run in two separate versions of R. 
-Internally, this app takes the piece of code written by the user, opens one or two docker instances with the given version of R, and returns the result to the user. 
+That might seem trivial, but all the code using the random number generator will not be exactly reproducible after this breaking change.
+Controlling the version of software is crucial for reproducible research [REF].
 
-- old R versions: https://github.com/rocker-org/rocker-versioned/issues/138
-- [semantic version tags for Rocker](https://github.com/rocker-org/rocker-versioned/#version-tags)
-- debugging memory problems across multiple versions: https://github.com/wch/r-debug
-- cross-R testing: Show how you can run the same script in multiple R variants in containers (new contribution). Ideally the images should be created using `containerit` and controlled with `stevedore`/`docker`, i.e. via an R script.
+Containers are perfectly suited to capture a specific configuration of a computing environment to prohibit such problems.
+The Rocker images provides the _versioned stack_ for different the version of R since the project inception, which use the _then-current_ stable Debian base image \citep[cf.][]{RJ-2017-065}.
+Based on custom build phase hooks\footnote{\href{https://docs.docker.com/docker-hub/builds/advanced/}{https://docs.docker.com/docker-hub/builds/advanced/}}, i.e. small shell scripts executed at different phases in the automated build of Rocker images, there are also semantic version tags for the most recent freezed (i.e. using MRAN) versions with only the major and minor version\footnote{See \href{https://github.com/rocker-org/rocker-versioned/blob/master/VERSIONS.md}{https://github.com/rocker-org/rocker-versioned/blob/master/VERSIONS.md}, FIXME: \href{https://github.com/rocker-org/rocker-versioned/issues/42#issuecomment-550266782}{https://github.com/rocker-org/rocker-versioned/issues/42\#issuecomment-550266782}}.
+So, at the time of writing this article, `rocker/r-ver:3` and `3.6` are aliases for `3.6.0`, because `3.6.1` is the latest release.
+With the release of `3.6.2` and pinning of the MRAN version in `3.6.1`, the tags `3` and `3.6` will deliver the same image as `3.6.1`.
+These tags allow users to update the base image to retrieve bugfixes while reducing the risk of also introducing breaking changes.
+
+[r-online](https://github.com/ColinFay/ronline) is an app for helping users to detect breaking changes between different R versions, and for historic exploration of R.
+With a standalone NodeJS app or [online](https://srv.colinfay.me/r-online), the user can compare a piece of code run in two separate versions of R.
+Internally, r-online opens one or two Docker instances with the given version of R based on Rocker images, executes a given piece of code, and returns the result to the user.
+
+A container also provides an isolated sandbox environment suitable for testing and evaluation, without interfering with the "main" working environment.
+This enables cross version testing and bugfixing.
+To take this even further, the Rocker contributors are discussing the provision of R versions reaching back futher than the project's own inception, reaching back as far as R `2.x` and `1.x` \footnote{\href{https://github.com/rocker-org/rocker-versioned/issues/138}{https://github.com/rocker-org/rocker-versioned/issues/138}}.
+The main challenges are finding a suitable base image with a matching OS version, or making the adjustments to compile R on more recent OS releases.
 
 ## Windows Images [@nuest]
 
