@@ -280,7 +280,13 @@ As an example, _liftr_ demonstrated its advantage for R Markdown-based computati
 - R-Hub
 - DevOps
   - https://www.opencpu.org/posts/opencpu-with-docker/
-- `r-ci`: https://github.com/ColinFay/r-ci
+
+When doing continuous integration and continuous delivery, it's crucial to test in an environment that matches the production environment.
+Tools like `Gitlab-CI` are built on top of Docker images: the user specifies a base Docker image, and the whole tests are run inside this environment. 
+But, as we just said, this environment has to be fixed, but it also have to contain the necessary toolkit. 
+In order to achieve that, [`r-ci`](https://github.com/ColinFay/r-ci) combines `rocker` versioning and a series of tools specifically designed for testing. 
+That way, package builders can use this image as a base image for there testing environment, without having to install the necessary packages every time they need to run a new test.
+
 - [dynwrap](https://github.com/dynverse/dynwrap_containers/blob/master/.travis.yml) [@rcannood]
   - For this project, we use travis-ci to build rocker-derived containers, test them, and only push them to docker hub (from travis-ci.org) if the integration tests succeed.
 - Google Cloud Build [@MarkEdmondson1234]
