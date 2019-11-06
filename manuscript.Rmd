@@ -326,6 +326,43 @@ The Dockerfile included with the project can also be used to launch a RStudio se
 
   - [`repo2docker`](https://repo2docker.readthedocs.io/en/latest/config_files.html) (`install.R`, `DESCRPTION`, `runtime.txt`) based on the Rocker images [@nuest]
 - GPU [@noamross, @cboettig]
+
+One use for containers is to run on shared local hardware where teams manage
+their own high-performance servers  This can follow one of several
+design patterns: users may deploy containers to hardware as a work environment
+for a specific project, conatiners may provide per-user persistent environments, or a single container can act as
+a common multi-user environment for a server.  The former models provide modularity,
+while the latter approach is most similar to a simple shared server. In all cases,
+though, the containerized approach provides several advantages: First, users may
+use the same image and thus work environment on desktop and laptop computers, as well.
+Second, software updates can be achieved by updating and redeploying the container,
+rather than tracking local installs on each server.  Third, the containerized
+environment can be quickly deployed to other hardware, cloud or local, if 
+more resources are neccessary or in case of server destruction or failure. In any of
+these cases, users need a method to interact with the containers, be it and
+IDE, or command-like access and tools such as SSH, which is usually not part
+of standard container recipes and must be added.  The Rocker project provides
+containers pre-installed with the RStudio IDE.
+
+In cases where users store nontrivial amounts of data for their projects, data
+needs to persist beyond the life of the container. This may be via in shared disks, attached
+network volumes, or in separate storage where it is uploaded between sessions. In
+the case of shared disks or network-attached volumes, care must be taken to
+persist user permissions, and of course backups are still neccessary.
+When working with multiple servers, an automation
+framework such as [Ansible](https://www.ansible.com) may be useful for managing
+users, permisions, and disks along with containers. 
+
+In some cases, containers are not completely portable between hardware environments.
+This is the case for software using graphical processing units (GPUs)
+which are increasingly popular for compute-intensive machine learning tasks.
+Containers running GPU software  require drivers and libraries specific
+to GPU models and versions, and containers require a specialized runtime to connect
+to the underlying GPU hardware. For NVIDIA GPUs, the [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker)
+includes a specialized runtime plugn for docker and set of base images with
+appropriate drivers and libraries, and the Rocker project has (beta) images
+based on these that include GPU-enabled versions of machine-learning R packages.
+
 - Gigantum stack
 
 R is a fantastic tool when it comes to interfacing with databases: almost every open source and proprietary database system has an R package that allows users to connect and interact with the it 
