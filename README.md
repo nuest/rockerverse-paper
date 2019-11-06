@@ -8,5 +8,5 @@ _Want to contribute?_ See https://github.com/nuest/rockerverse-paper/issues/3.
 
 ```bash
 docker build --tag rockerverse .
-docker run -i -v $(pwd):/rockerverse rockerverse Rscript -e 'setwd("/rockerverse"); rmarkdown::render("manuscript.Rmd")'
+docker run -i -v $(pwd):/rockerverse --user 1000 rockerverse Rscript -e 'setwd("/rockerverse"); rmarkdown::render("manuscript.Rmd")'
 ```

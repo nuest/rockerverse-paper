@@ -207,7 +207,9 @@ These tags allow users to update the base image to retrieve bugfixes while reduc
 <!-- from packages closer to Docker to second level packages to more complex ones -->
 
 ## Clients
-<!-- first order packages, talking directyl to Docker -->
+
+A number first order R packages exist that talk directly to Docker.
+They can be used to control the Docker daemon, e.g. to build images or run containers, from R without explicit knowledge of the Docker command line interface.
 
 - [`stevedore`](https://github.com/richfitz/stevedore)
 - [`docker`](https://bhaskarvk.github.io/docker/)
@@ -216,7 +218,8 @@ These tags allow users to update the base image to retrieve bugfixes while reduc
 - [`dockyard`](https://github.com/thebioengineer/dockyard)
 
 ## Capture and create environments [@nuest]
-<!-- second order packages -->
+
+Several second order R packages attempt to make the process of creating Docker images and using containers for specific tasks, such as running tests or rendering reproducible reports, easier.
 
 - [`dockerfiler`](https://github.com/ColinFay/dockerfiler/)
 - [`containerit`](https://github.com/o2r-project/containerit/)
@@ -280,17 +283,22 @@ The reason behind this is that `dockerfiler`, on top of being scriptable from R,
 
 # Use cases and applications
 
-## Deployment to cloud services [@nuest, @richfitz, @rcannood]
+## Deployment to cloud services [div]
+
+The cloud is the natural environment of containers, and becomes the go-to mechanism to expose applications written in R to users.
 
 - [`babelwhale`](https://cran.r-project.org/web/packages/babelwhale/index.html): Running a Docker from R with Singularity or Docker as back-end. This is really useful in HPC environments where a user might not have root access but is able to install Singularity instead of Docker. [@rcannood]
 - `RSelenium`
 - [`googleComputeEngineR`](https://cloudyr.github.io/googleComputeEngineR/) (function `docker_run`)
   - I don't think `docker_run` is main focus for containers for this package, its more how it uses Docker to launch custom environments that can be templated (e.g. rstudio, shiny etc.) and for parrallisation e.g. `library(future)`  using GCE VMs as endpoints. [@MarkEdmondson1234]
 - [`analogsea`](https://github.com/sckott/analogsea) (digital ocean R client)
+- [`plumber`](https://www.rplumber.io/docs/hosting.html#docker)
+- [production deployment of neural networks](https://github.com/tmobile/r-tensorflow-api) [@jnolis, @nolistic]
 
 ## Continuous integration and continuous delivery [@noamross, @ColinFay]
 
-- R-Hub
+The controlled nature of containers, i.e. it is possible to define the software environment very well, even on remote machines, make them also useful for continuous integration (CI) and continuous delivery of applications.
+
 - DevOps
   - https://www.opencpu.org/posts/opencpu-with-docker/
 
@@ -350,19 +358,19 @@ Notably, with `r-db`, the users don't have to install complex drivers or to conf
 On top of that, `r-db` comes with a comprehensive [online guide](http://colinfay.me/r-db/), explaining how to spin a docker instance of a specific database, and how to use `r-db` to connect to it. 
 Each package contained inside this image also has a series examples, so that the user can get started with the database right away.
 
-[RCloud](https://github.com/att/rcloud/tree/master/docker) uses a `rocker/drd` base image for creation of collaborative data analysis and visualisation environments.
+- [RCloud](https://github.com/att/rcloud/tree/master/docker) uses a `rocker/drd` base image for creation of collaborative data analysis and visualisation environments.
+- [ShinyProxy](https://www.shinyproxy.io/) [creates a container](https://github.com/openanalytics/shinyproxy/blob/master/src/main/java/eu/openanalytics/services/DockerService.java#L388) for each user
 
-## Deployment, processing, cloud [div]
+## Processing [div]
+
+The portability of containers becomes particularly useful when complex processing tasks shall be offloaded to a server.
 
 - Docker images for cloud services [@MarkEdmondson1234]
   - the most popular functionality for `googleComputeEngineR` is its use of Docker to enable parallel processing across VMS - [some demos here](https://cloudyr.github.io/googleComputeEngineR/articles/massive-parallel.html)
 - Google Cloud Run - CaaS (Containers as a Service) that lets you launch a Docker container without worrying about underlying infrastructure. An R implementation is shown here at [cloudRunR](https://github.com/MarkEdmondson1234/cloudRunR) which uses it to create a scalable R plumber API. 
-- [`plumber`](https://www.rplumber.io/docs/hosting.html#docker)
 - `batchtools` \citep{Lang2017batchtools} can [schedule jobs with Docker Swarm](https://mllg.github.io/batchtools/reference/makeClusterFunctionsDocker.html)
 - scalable deployments, e.g. start with numerous Shiny talks mentioning Rocker at useR!2017
 - [dynmethods](https://github.com/dynverse/dynmethods) [@rcannood]: In order to evaluate ±50 computational methods which all used different environments (R, Python, C++, ...), we wrapped each of them in a docker container and can execute these methods from R. Again, all of these containers are being built on travis-ci, and will only be pushed to docker hub if the integration test succeeds.
-- [ShinyProxy](https://www.shinyproxy.io/) [creates a container](https://github.com/openanalytics/shinyproxy/blob/master/src/main/java/eu/openanalytics/services/DockerService.java#L388) for each user
-- [production deployment of neural networks](https://github.com/tmobile/r-tensorflow-api) [@jnolis, @nolistic]
 
 ## Research Compendia [@benmarwick]
 
@@ -378,13 +386,14 @@ Using the Rocker images with RStudio, the disposable environments lack no develo
 **[`r-debug`](https://github.com/wch/r-debug)** is a purpose built Docker image for debugging R memory problems.
 \citet{eddelbuettel_debugging_2019} describes how a Docker container was used to debug an issue with a package only occuring with a particular version of Fortran, and using tools which are not readily available on all platforms (e.g., not on macOS).
 
-# Other containerisation platforms [NN]
+- **[R-Hub](https://github.com/r-hub/)**
 
-- R images for Singularity
-- Running Rocker images with
-  - Singularity
-  - CoreOS rkt?
-- nix?
+# Other containerisation platforms
+
+Docker is not the only containerisation software.
+An alternative stemming from the domain of high-perfomance computing is Singularity \citep{kurtzer_singularity_2017}.
+Singularity can run Docker images, and in the case of Rocker works out of the box if the main process is R, e.g., in `rocker/r-base`, but does not succeed in running images where there is an init script, e.g. in containers that by default run RStudio.
+In the latter case, a `Singularity` file, a set of instructions akin to a `Dockerfile` needs to be used.
 
 # Discussion/outlook/conclusion [@all, please add bullet points]
 
