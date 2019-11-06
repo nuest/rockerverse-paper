@@ -84,7 +84,7 @@ It also introduces related activities connecting the R language and environment 
 The main contributions is a coherent picture of the current lay of the land of containers in, with, and for `R`.
 This diversity includes demonstrators, early prototypes, and mature projects.
 
-# Containerization and Rocker
+# Containerization and Rocker [NN]
 
 <!--_Do we need a generic intro here?_ DE: Yes, and happy to take a stab.-->
 
@@ -206,13 +206,22 @@ Internally, this app takes the piece of code written by the user, opens one or t
 - https://github.com/jlisic/R-docker-centos
 
 # R Packages
+<!-- from packages closer to Docker to second level packages to more complex ones -->
 
-## Packages for automation and packaging [@nuest]
+## Clients
+<!-- first order packages, talking directyl to Docker -->
 
+- [`stevedore`](https://github.com/richfitz/stevedore)
+- [`docker`](https://bhaskarvk.github.io/docker/)
+- [`harbor`](https://github.com/wch/harbor/)
+- [`dockermachine`](https://github.com/cboettig/dockermachine)
+
+## Capture and create environments [@nuest]
+<!-- second order packages -->
+
+- [`dockerfiler`](https://github.com/ColinFay/dockerfiler/)
 - [`containerit`](https://github.com/o2r-project/containerit/)
 - [`dockertest`](https://github.com/traitecoevo/dockertest/)
-
-### liftr
 
 [_liftr_](https://nanx.me/liftr/) \citep{liftr2019} aims to solve the problem of persistent reproducible reporting in statistical computing.
 Currently, the R Markdown format and its backend compilation engine _knitr_ offer a _de facto_ standard for creating dynamic documents \citep{xie2018}.
@@ -270,19 +279,15 @@ Iteration and automation for Dockerfiles is the very reason behind [`dockerfiler
 For example, the [`golem`](https://github.com/ThinkR-open/golem) package (an R package for building production-grade Shiny application) makes an heavy use of `dockerfiler` when it comes to creating the `Dockerfile` for deploying the Shiny application to production. 
 The reason behind this is that `dockerfiler`, on top of being scriptable from R, can leverage all the tools available in R to parse a `DESCRIPTION` file, to get system requirements, to list dependencies, versions, etc. 
 
-## Packages for control and provisioning [@nuest, @richfitz, @rcannood]
+# Use cases and applications
 
-- [`stevedore`](https://github.com/richfitz/stevedore)
+## Deployment to cloud services [@nuest, @richfitz, @rcannood]
+
 - [`babelwhale`](https://cran.r-project.org/web/packages/babelwhale/index.html): Running a Docker from R with Singularity or Docker as back-end. This is really useful in HPC environments where a user might not have root access but is able to install Singularity instead of Docker. [@rcannood]
-- [`docker`](https://bhaskarvk.github.io/docker/)
 - `RSelenium`
 - [`googleComputeEngineR`](https://cloudyr.github.io/googleComputeEngineR/) (function `docker_run`)
   - I don't think `docker_run` is main focus for containers for this package, its more how it uses Docker to launch custom environments that can be templated (e.g. rstudio, shiny etc.) and for parrallisation e.g. `library(future)`  using GCE VMs as endpoints. [@MarkEdmondson1234]
-- [`analogsea`](https://github.com/sckott/analogsea)
-- [`harbor`](https://github.com/wch/harbor/)
-- [`dockermachine`](https://github.com/cboettig/dockermachine)
-
-# Use cases and applications
+- [`analogsea`](https://github.com/sckott/analogsea) (digital ocean R client)
 
 ## Continuous integration and continuous delivery [@noamross, @ColinFay]
 
@@ -346,6 +351,9 @@ Each package contained inside this image also has a series examples, so that the
 
 # Discussion/outlook/conclusion [@all, please add bullet points]
 
+- next steps
+  - consolidation?
+- support more complex set-ups with ready-to-use stacks, e.g. GPU, AI, ML
 - Missing pieces?
 - consolidation (e.g. via packages using `dockerfiler` and `stevedore`)
 - Common themes
@@ -353,6 +361,10 @@ Each package contained inside this image also has a series examples, so that the
 - will knowledge about containers continue to spread?
 - what is needed for even more containers with R?
 - the ability to move processing between services easily (e.g locally, one cloud providers VM, another cloud provider's Container-as-a-Service)
+- running RStudio in a container is a common approach for reproducibility - _is there a need to run/control containers from a UI integrated in RStudio?_
+- moving away from Docker focus towards containers?
+  - is there a need for a wrapper for [podman's Varlink-API](https://github.com/containers/libpod/blob/master/API.md) (similar to stevedore) and buildah to manage containers and images respectively with alternative software stacks?
+  - will there be control packages for Singularity support?
 - ...
 
 # Author contributions
