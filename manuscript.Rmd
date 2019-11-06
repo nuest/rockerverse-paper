@@ -77,8 +77,8 @@ output:
 The R community keeps growing: the number of new packages on CRAN keeps on rising, meetups, conferences, online courses and unconferences prosper, and the uptake in education and industry increases [REFs].
 All this cements the role of R as the lingua franca of statistics, data visualisation, and computational research.
 Coinciding with the rise of R was the advent of Docker [CITATION?] as a general tool for development, distribution, and deployment of software.
-Combining both these topics, the _Rocker Project_([https://www.rocker-project.org/](https://www.rocker-project.org/)) was introduced in 2014 and provides a number of [Docker](https://en.wikipedia.org/wiki/Docker_(software)) images for various use cases as described in \citet{RJ-2017-065}.
-The considerable uptake and continued evolution of the  _Rocker_ suite of containers has lead to numerous projects extending or building upon _Rocker_ images ranging from reproducible research to production deployments.
+Combining both these topics, the _Rocker Project_ ([https://www.rocker-project.org/](https://www.rocker-project.org/)) was introduced in 2014 and provides a number of [Docker](https://en.wikipedia.org/wiki/Docker_(software)) images for various use cases as described in \citet{RJ-2017-065}.
+The considerable uptake and continued evolution of the Rocker suite of containers has lead to numerous projects extending or building upon Rocker images ranging from reproducible research to production deployments.
 This article presents this _Rockerverse_ of projects.
 It also introduces related activities connecting the R language and environment with other containerisation solutions.
 The main contributions is a coherent picture of the current lay of the land of containers in, with, and for `R`.
@@ -119,7 +119,6 @@ It was developed to combine the benefits of R, such scripting and extension pack
 R extension packages need to be specially compiled and are distributed via the Java package manager [Apache Maven](https://en.wikipedia.org/wiki/Apache_Maven), cf. [http://packages.renjin.org/packages](http://packages.renjin.org/packages) for available packages.
 Packages are loaded on demand, i.e. at the first call to `library()`.
 Not all R packages, especially one linking to binary libraries, are available, e.g. `rgdal` \footnote{\href{http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1}{http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1}}.
-
 There are no offical Docker images for Renjin, but community-maintained images for selected releases only are available under `nuest/renjin` on Docker Hub and GitHub at [https://hub.docker.com/r/nuest/renjin](https://hub.docker.com/r/nuest/renjin) and [https://github.com/nuest/renjin-docker](https://github.com/nuest/renjin-docker) respectively.
 These images expose the command line interface of Renjin in a similar fashion as Rocker images and allow an easy evaluation of Renjin's suitability, but are not intended for production use.
 
@@ -130,10 +129,9 @@ But especially disruptive approaches may contribute to the development of the R 
 
 _FastR_ is "A high-performance implementation of the R programming language, built on GraalVM" (https://github.com/oracle/fastr).
 It is developed by Oracle, connects R to the GraalVM ecosystem \citep{wikipedia_graalvm_2019}, and also claims superior performance but also targets full compatibility with base R \footnote{ \href{https://github.com/oracle/fastr}{https://github.com/oracle/fastr}}.
-
 There are no offical Docker images provided, but `nuest/fastr-docker` provides image and `Dockerfile` on Docker Hub and GitHub at []() and [https://github.com/nuest/fastr-docker](https://github.com/nuest/fastr-docker) respectively.
 
-While the images presented in this section are far from being as vetted, stable, and widely used as any of the _Rocker_ images, they demonstrate an important advantage of containerisation technology, namely the abiliy to transparently build portable stacks of open source software and make them easily accessible to users.
+While the images presented in this section are far from being as vetted, stable, and widely used as any of the Rocker images, they demonstrate an important advantage of containerisation technology, namely the abiliy to transparently build portable stacks of open source software and make them easily accessible to users.
 All different distributions are published under GPL licenses.
 Since all of the different R distributions claim better performance as a core motivation, a comparision based on Docker images, potentially leveraging the [resource restriction mechanisms](https://docs.docker.com/config/containers/resource_constraints/) of Docker to level the playing field, seems useful future work.
 
@@ -146,14 +144,14 @@ Docker images allow availability of current and past versions of _Bioconductor_ 
 
 _Bioconductor_ 'base' docker images are built on top of `rocker/r-ver` and `rocker/rstudio`.
 _Bioconductor_ installs packages based on the R version, and therefore uses `rocker/rstudio` and `rocker/r-ver` version tagging.
-_Bioconductor_ selects the desired version of R from _Rocker_, adds the BiocManager CRAN package for installing appropriate versions of _Bioconductor_ packages, and creates a _Bioconductor_ docker image with an informative tag (R\_version\_Bioc\_version).
+_Bioconductor_ selects the desired version of R from Rocker, adds the BiocManager CRAN package for installing appropriate versions of _Bioconductor_ packages, and creates a _Bioconductor_ docker image with an informative tag (R\_version\_Bioc\_version).
 The images are summarized on the _Bioconductor_ web site (https://bioconductor.org/help/docker/), maintained on GitHub ([https://github.com/Bioconductor/bioc_docker](https://github.com/Bioconductor/bioc_docker)), and available to the community through [DockerHub](https://hub.docker.com/).
 Past and current combinations of R and _Bioconductor_ are therefore accessible via a specific docker tag.
 
 _Bioconductor_ has several images in addition to 'base', specific to various areas of research.
 The 'core' image installs the most commonly used _Bioconductor_ packages.
 _Bioconductor_ images for proteomics, metabolomics, and flow cytometry are community maintained.
-All community maintained images build on top of the _Bioconductor_ base image and therefore indirectly the _Rocker_ images.
+All community maintained images build on top of the _Bioconductor_ base image and therefore indirectly the Rocker images.
 To simplify building and maintaining _Bioconductor_ images, we use a Ruby templating engine.
 
 A recent audit of our Dockerfiles, following best practices from the Docker website, led to a reduction in the size and number of layers in images we produce.
@@ -189,10 +187,12 @@ That might seem trivial, but all the code using the random number generator will
 Detecting this kind of behavior is the reason why the [r-online](https://github.com/ColinFay/ronline) app has been developped: available as a standalone NodeJS app or [online](https://srv.colinfay.me/r-online), this app was designed for historic exploration of R: with it, the user can compare a piece of code run in two separate versions of R. 
 Internally, this app takes the piece of code written by the user, opens one or two docker instances with the given version of R, and returns the result to the user. 
 
-- old R versions: https://github.com/rocker-org/rocker-versioned/issues/138
-- [semantic version tags for Rocker](https://github.com/rocker-org/rocker-versioned/#version-tags)
-- debugging memory problems across multiple versions: https://github.com/wch/r-debug
-- cross-R testing: Show how you can run the same script in multiple R variants in containers (new contribution). Ideally the images should be created using `containerit` and controlled with `stevedore`/`docker`, i.e. via an R script.
+Containers are perfectly suited to capture a specific configuration of a computing environment to prohibit such problems.
+The Rocker images provides the _versioned stack_ for different the version of R since the project inception, which use the _then-current_ stable Debian base image \citep[cf.][]{RJ-2017-065}.
+Based on custom build phase hooks\footnote{\href{https://docs.docker.com/docker-hub/builds/advanced/}{https://docs.docker.com/docker-hub/builds/advanced/}}, i.e. small shell scripts executed at different phases in the automated build of Rocker images, there are also semantic version tags for the most recent freezed (i.e. using MRAN) versions with only the major and minor version\footnote{See \href{https://github.com/rocker-org/rocker-versioned/blob/master/VERSIONS.md}{https://github.com/rocker-org/rocker-versioned/blob/master/VERSIONS.md}, FIXME: \href{https://github.com/rocker-org/rocker-versioned/issues/42}{https://github.com/rocker-org/rocker-versioned/issues/42}.}.
+So, at the time of writing this article, `rocker/r-ver:3` and `3.6` are aliases for `3.6.0`, because `3.6.1` is the latest release.
+With the release of `3.6.2` and pinning of the MRAN version in `3.6.1`, the tags `3` and `3.6` will deliver the same image as `3.6.1`.
+These tags allow users to update the base image to retrieve bugfixes while reducing the risk of also introducing breaking changes.
 
 ## Windows Images [@nuest]
 
@@ -215,6 +215,7 @@ Internally, this app takes the piece of code written by the user, opens one or t
 - [`docker`](https://bhaskarvk.github.io/docker/)
 - [`harbor`](https://github.com/wch/harbor/)
 - [`dockermachine`](https://github.com/cboettig/dockermachine)
+- [`dockyard`](https://github.com/thebioengineer/dockyard)
 
 ## Capture and create environments [@nuest]
 <!-- second order packages -->
@@ -336,10 +337,21 @@ Each package contained inside this image also has a series examples, so that the
 - scalable deployments, e.g. start with numerous Shiny talks mentioning Rocker at useR!2017
 - [dynmethods](https://github.com/dynverse/dynmethods) [@rcannood]: In order to evaluate ±50 computational methods which all used different environments (R, Python, C++, ...), we wrapped each of them in a docker container and can execute these methods from R. Again, all of these containers are being built on travis-ci, and will only be pushed to docker hub if the integration test succeeds.
 - [ShinyProxy](https://www.shinyproxy.io/) [creates a container](https://github.com/openanalytics/shinyproxy/blob/master/src/main/java/eu/openanalytics/services/DockerService.java#L388) for each user
+- [production deployment of neural networks](https://github.com/tmobile/r-tensorflow-api) [@jnolis, @nolistic]
 
 ## Research Compendia [@benmarwick]
 
 ...
+
+## Development and debugging
+
+Containers can also serve as useful playgrounds to create environments ad-hoc or to provide very specific environments that are not often needed.
+Developers can readily start a local container based on a Rocker image to investigate a bug report, which might require them to install a specific combination of package versions or use a specific R version (see also versioned images above).
+Unlike recreating the reporter's environment on their regular machine, a container can simply be discarded after use, and there is no need to tediously roll back explorative changes to a previous state.
+Using the Rocker images with RStudio, the disposable environments lack no development comfort (see also the usage in research compendia).
+
+[`r-debug`](https://github.com/wch/r-debug) is a purpose built Docker image for debugging R memory problems.
+\citet{eddelbuettel_debugging_2019} describes how a Docker container was used to debug an issue with a package only occuring with a particular version of Fortran, and using tools which are not readily available on all platforms (e.g., not on macOS).
 
 # Other containerisation platforms [NN]
 
