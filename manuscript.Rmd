@@ -302,8 +302,25 @@ The cloud is the natural environment of containers, and becomes the go-to mechan
 - [`googleComputeEngineR`](https://cloudyr.github.io/googleComputeEngineR/) (function `docker_run`)
   - I don't think `docker_run` is main focus for containers for this package, its more how it uses Docker to launch custom environments that can be templated (e.g. rstudio, shiny etc.) and for parrallisation e.g. `library(future)`  using GCE VMs as endpoints. [@MarkEdmondson1234]
 - [`analogsea`](https://github.com/sckott/analogsea) (digital ocean R client)
-- [`plumber`](https://www.rplumber.io/docs/hosting.html#docker)
-- [production deployment of neural networks](https://github.com/tmobile/r-tensorflow-api) [@jnolis, @nolistic]
+
+## Using R to power enterprise software in production environments [@jnolis, @nolistic]
+
+R has been historically viewed as a tool for analysis and scientific research--not for creating software that corporations can rely on to continously run in real time. However, thanks to advancements in R running as a web service, along with with the ability to deploy R in docker containers, modern enterprises are now capable of having real-time machine learning powered by R.
+
+The backbone of this work is the _[plumber](https://www.rplumber.io/docs/hosting.html#docker)_ package, created by Jeff Allen. The plumber package allows R to be used to host web services through RESTful APIs. When R is running on a server, a different server can ask R to make a computation through an HTTP request and get an immediate response. For instance, if a data scientist at a company creates a machine learning model to tell which customers are likely to make a repeat purchase, if they serve the model through a plumber API then someone else on the marketing team could write software that sends different emails depending on that real-time prediction. Plumber syntax is simple to read and understand: the API is created by commenting above function names in an R script.
+
+```
+#* Return the sum of two numbers
+#* @get /random
+function(){
+  runif()
+}
+```
+_Example of a plumber API to generated a random number by visiting `http://127.0.0.1/random`_
+
+Plumber becomes far more powerful with the addition of Docker. Docker can be used to create images that [include both R and plumber](https://www.rplumber.io/docs/hosting.html#docker). Then when the image is deployed, that creates the web endpoints that other services can hit and call the R code. This pattern of deploying code mimics those used by software engineering services created in Java, Python, and other modern languages. By using Docker to deploy plumber APIs, R can be used alongside those langages as a first class member of a software engineering technical stack.
+
+At T-Mobile, R is used to power real-time services that are called over a million times a day. T-Mobile created a set of neural network machine learning natural language processing models to help customer care agents manage text-based messages for customers. The models are convolutional neural networks that use the RStudio Keras package and are built on top of a Rocker Docker image. Since the models power tools for agents and customers, they need to have extremely high uptime and reliability--and they found that R is able to perform. The AI @ T-Mobile team open sourced [their docker images](https://github.com/tmobile/r-tensorflow-api  which are available on GitHub.
 
 ## Continuous integration and continuous delivery [@noamross, @ColinFay]
 
