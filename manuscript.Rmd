@@ -304,6 +304,7 @@ The cloud is the natural environment of containers, and becomes the go-to mechan
 - [`analogsea`](https://github.com/sckott/analogsea) (digital ocean R client)
 - [`plumber`](https://www.rplumber.io/docs/hosting.html#docker)
 - [production deployment of neural networks](https://github.com/tmobile/r-tensorflow-api) [@jnolis, @nolistic]
+- Kubernetes - A popular platform for managing Docker containers is [Kubernetes](https://kubernetes.io/), which is used for a wide variety of containerized applications.  It may be your organisation has a Kubernetes cluster already for other applications.  Docker containers are used within Kubernetes clusters to hold native code, for which Kubernetes creates a framework around network connections and scaling of resources up and down.  An introduction on using [Kubernetes with R is published at this blog post](https://code.markedmondson.me/r-on-kubernetes-serverless-shiny-r-apis-and-scheduled-scripts/).
 
 ## Continuous integration and continuous delivery [@noamross, @ColinFay]
 
