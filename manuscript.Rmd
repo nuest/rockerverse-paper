@@ -115,7 +115,7 @@ These projects stem both form academia and industry.
 _Base R_, sometimes called `GNU-R`, is the R distribution maintained by the [R Core Team](https://www.r-project.org/contributors.html) and and provided via [CRAN](https://cran.r-project.org/).
 
 **Microsoft R Open** ([MRO](https://github.com/nuest/mro-docker)) is an R distribution formerly known as Revolution R Open (RRO) before Revolution Analytics was acquired by Microsoft.
-MRO is compatible with main R and it's packages.sss
+MRO is compatible with main R and its packages.
 "It includes additional capabilities for improved performance, reproducibility, and platform support." \citep{microsoft_mro}
 Most notably these capabilities are the MRAN repository a.k.a. CRAN Time Machine, which is enabled by default, and the (optional) integration with [Intel® Math Kernel Library](https://software.intel.com/en-us/mkl) (MKL) for multi-threading in linear algebra operations \citep{microsoft_multithread}.
 <!-- MRAN is also used by versioned Rocker images. -->
@@ -302,6 +302,7 @@ The cloud is the natural environment of containers, and becomes the go-to mechan
 - [`googleComputeEngineR`](https://cloudyr.github.io/googleComputeEngineR/) (function `docker_run`)
   - I don't think `docker_run` is main focus for containers for this package, its more how it uses Docker to launch custom environments that can be templated (e.g. rstudio, shiny etc.) and for parrallisation e.g. `library(future)`  using GCE VMs as endpoints. [@MarkEdmondson1234]
 - [`analogsea`](https://github.com/sckott/analogsea) (digital ocean R client)
+- [`AzureContainers`](https://cran.r-project.org/package=AzureContainers): Umbrella package for working with containers in Microsoft's Azure cloud. Provides interfaces to three Azure services: Container Registry, Container Instances (for running individual containers), and Kubernetes Services (for orchestrated deployments)
 
 ## Using R to power enterprise software in production environments [@jnolis, @nolistic]
 
@@ -321,6 +322,75 @@ _Example of a plumber API to generated a random number by visiting `http://127.0
 Plumber becomes far more powerful with the addition of Docker. Docker can be used to create images that [include both R and plumber](https://www.rplumber.io/docs/hosting.html#docker). Then when the image is deployed, that creates the web endpoints that other services can hit and call the R code. This pattern of deploying code mimics those used by software engineering services created in Java, Python, and other modern languages. By using Docker to deploy plumber APIs, R can be used alongside those langages as a first class member of a software engineering technical stack.
 
 At T-Mobile, R is used to power real-time services that are called over a million times a day. T-Mobile created a set of neural network machine learning natural language processing models to help customer care agents manage text-based messages for customers. The models are convolutional neural networks that use the RStudio Keras package and are built on top of a Rocker Docker image. Since the models power tools for agents and customers, they need to have extremely high uptime and reliability--and they found that R is able to perform. The AI @ T-Mobile team open sourced [their docker images](https://github.com/tmobile/r-tensorflow-api  which are available on GitHub.
+
+## Deployment to the cloud [@hongooi]
+
+While Plumber provides the low-level infrastructure for turning a statistical model into a predictive service, for production purposes it is usually necessary to take into account considerations such as scalability, reliability and ease of management. A single container is limited in the volume of requests it can service. Furthermore, if the container goes down, or is occupied with processing a computationally intensive task, the service becomes unavailable until it is restarted.
+
+These issues can be mitigated by deploying not a single container, but a _cluster_ of containers, orchestrated as a single deployment. The deployment system of choice at the time of writing is [Kubernetes](https://kubernetes.io). This allows you to deploy a single image to a pool of servers, which can then serve requests in parallel. Client-side requests are made to the cluster ingress endpoint, which then redircts them to individual servers. The orchestrator can identify nodes that have failed, and restart them automatically; it can also detect when there is no capacity to service more requests, and start additional containers as needed.
+
+While these load-balancing and autoscaling properties of a Kubernetes cluster are invaluable, they are still limited by the hardware resources that it has access to. A cluster cannot scale out if it has run out of servers. This issue in turn can be addressed by deploying not to on-premise servers but to the cloud, where effectively unlimited computing resources are available (as long as one can pay for them). From a management perspective, cloud deployments have the additional advantage that hardware maintenance becomes the responsibility of the cloud provider, eliminating another pain point. Orchestrator services are available from all the major cloud service providers, including Amazon Web Services (AWS), Google Cloud Platform, and Microsoft Azure.
+
+An example of an R package for working with containers in the cloud is AzureContainers, which interacts with three Azure services: Container Instances (for running a single container), Container Registry (a private docker registry service), and Kubernetes Service (for Kubernetes on Azure). AzureContainers provides a powerful interface that builds on the framework provided by AzureRMR, which is an overarching package for working with Resource Manager, the framwork for deploying and managing arbitrary resource in Azure. On the client side, it provides simple shells to the Docker, Kubectl and Helm tools that are commonly used for managing containers and Kubernetes clusters.
+
+Here is some simple code that pushes a Docker image to an Azure Container Registry, and then creates a deployment using Azure Kubernetes Service. This is a slightly modified version of the code from the "Deploying a prediction service with Plumber" AzureContainers vignette. The code makes use of a yaml file to define the deployment and predictive service, which is standard practice with Kubernetes; the yaml can be seen in the aforementioned vignette.
+
+```r
+library(AzureContainers)
+# create a resource group for our deployments
+deployresgrp <- AzureRMR::get_azure_login()$
+    get_subscription("subscription_id")$
+    create_resource_group("deployresgrp", location="australiaeast")
+
+### create a container registry
+deployreg_svc <- deployresgrp$create_acr("deployreg")
+
+# build our image (a random forest on the Boston housing data, available in the MASS package)
+call_docker("build -t bos-rf .")
+
+# upload the image to Azure
+deployreg <- deployreg_svc$get_docker_registry()
+deployreg$push("bos-rf")
+
+
+### create a Kubernetes cluster with 2 nodes
+deployclus_svc <- deployresgrp$create_aks("deployclus", agent_pools=aks_pools("pool1", 2))
+
+# grant the cluster pull access to the registry
+gr <- AzureGraph::get_graph_login()
+aks_app_id <- deployclus$properties$servicePrincipalProfile$clientID
+reg$add_role_assignment(gr$get_app(aks_app_id), "Acrpull")
+
+
+# get the cluster endpoint
+deployclus <- deployclus_svc$get_cluster()
+
+# create and start the service
+deployclus$create("bos-rf.yaml")
+```
+
+Once the service has been created, we can check on its status and obtain predictions:
+
+```r
+deployclus$get("deployment bos-rf")
+#> Kubernetes operation: get deployment bos-rf  --kubeconfig=".../kubeconfigxxxx"
+#> NAME      DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+#> bos-rf    1         1         1            1           5m
+
+deployclus$get("service bos-rf-svc")
+#> Kubernetes operation: get service bos-rf-svc  --kubeconfig=".../kubeconfigxxxx"
+#> NAME         TYPE           CLUSTER-IP   EXTERNAL-IP     PORT(S)          AGE
+#> bos-rf-svc   LoadBalancer   10.0.8.189   xxx.xxx.xxx.xxx 8000:32276/TCP   5m 
+
+
+response <- httr::POST("http://xxx.xxx.xxx.xxx:8000/score",
+    body=list(df=MASS::Boston[1:10,]), encode="json")
+httr::content(response, simplifyVector=TRUE)
+#> [1] 25.9269 22.0636 34.1876 33.7737 34.8081 27.6394 21.8007 22.3577 16.7812 18.9785
+```
+
+Note that Plumber, by itself, provides no authentication or security features; anybody who knows the cluster's IP address can access the predictive service. At minimum, a basic authentication layer should be added to any Kubernetes deployment. Standard Kubernetes procedure involves creating an ingress controller, for example with the nginx or traefik reverse proxy software, and one can then add application-specific authentication layers on top of that (for example, to authenticate with a user's Azure Active Directory or LDAP credentials). More details can be found from most Kubernetes learning resources, and are outside the scope of this paper.
+
 
 ## Continuous integration and continuous delivery [@noamross, @ColinFay]
 
