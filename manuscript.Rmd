@@ -71,6 +71,12 @@ author:
     - Buffalo, New York, 14263, USA
     - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0002-0224-9817}{https://orcid.org/0000-0002-0224-9817}
     email: nitesh.turaga@roswellpark.org
+  - name: Hong Ooi
+    affiliation: Microsoft
+    address:
+    - Level 5, 4 Freshwater Place
+    - Southbank, VIC 3006, Australia
+    email: hongooi@microsoft.com
 abstract: >
   The Rocker project provides widely-used Docker images for R across different application scenarios.
   This articles surveys describe downstream projects building upon Rocker.
