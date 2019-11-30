@@ -72,12 +72,12 @@ output:
 
 # Introduction
 
-The R community keeps growing: the number of new packages on CRAN keeps on rising, meetups, conferences, online courses and unconferences prosper, and the uptake in education and industry increases [REFs].
-All this cements the role of R as the lingua franca of statistics, data visualisation, and computational research.
+The R community keeps growing. This can be seen in the number of new packages on CRAN which keeps on rising, but also in the increased number of conferences, online courses, meetups, and unconferences, as well as in the uptake in education and industry increases [REFs].
+All this cements the role of R as the _lingua franca_ of statistics, data visualisation, and computational research.
 Coinciding with the rise of R was the advent of [Docker](https://en.wikipedia.org/wiki/Docker_(software)) as a general tool for distribution and deployment of software.
-Combining both these topics, the Rocker Project ([https://www.rocker-project.org/](https://www.rocker-project.org/)) provides images with R (see details next Section).
-The considerable uptake and continued evolution of Rocker images has lead to numerous projects extending or building upon Rocker images, ranging from reproducible research to production deployments.
-This article presents this _Rockerverse_ of projects across all development stages: demonstrators, prototypes, and mature products.
+Combining both these topics, the Rocker Project ([https://www.rocker-project.org/](https://www.rocker-project.org/)) provides images with R (see the next Section for more details).
+The considerable uptake and continued evolution of the Rocker Project has lead to numerous projects extending or building upon Rocker images, ranging from reproducible research to production deployments.
+This article presents this _Rockerverse_ of projects across all development stages: demonstrations, prototypes, and mature products.
 We also introduce related activities connecting the R language and environment with other containerisation solutions.
 The main contributions is a coherent picture of the current lay of the land of using containers in, with, and for R.
 
@@ -86,14 +86,14 @@ The main contributions is a coherent picture of the current lay of the land of u
 Docker, an application and service provide by the eponymous company, has in just a few short years risen to prominence for development, testing, deployment and distribution of computer software \citep[cf.][]{datadog_8_2018,munoz_history_2019}.
 While there are related approaches such as LXC\footnote{\href{https://en.wikipedia.org/wiki/LXC}{https://en.wikipedia.org/wiki/LXC}} or Singularity \citep{kurtzer_singularity_2017}, Docker has become synomymous with "containerization"---the method of taking software artefacts and bundling them in such a way that use becomes standardized and portable across operationg systems.
 In doing so, Docker had recognised and validated the importance of one very important thread that had been emerging, namely virtualization.
-By allowing multiple concurrent applications or services to run concurrently on one host machine without any fear of interference between them, an important scalability feature had been realized.
+By allowing (one or possibly) multiple applications or services to run concurrently on one host machine without any fear of interference between them, an important scalability opportunity is being provided.
 But Docker improved on virtualization by accessing the host system---generally Linux---through a much thinner and smaller shim than a full operating system emulation or virtualization.
 This makes for more efficient use of system resources and allowed another order of magnitude in terms of scalability of deployment [REFERENCE!].   
 While Docker makes use of Linux kernel features, its importance was large enough so that some required aspects of running Docker have been added to other operating systems to support Docker there more efficiently too \citep{microsoft_linux_2019}.
 The success even lead to standardisation and industry collaboration \citep{oci_open_2019}.
 
-The key accomplishment of Docker is to make a "bundled" aggregation of software available to any system running Docker, without requiring much else from the host.
-This is a rather attractive, and novel, proposition which has lead to widespread adoption and use of Docker in a variety of domains, e.g., cloud computing infrastructure \citep{Bernstein2014}, data science \citep{boettiger_introduction_2015}, and edge computing \citep{alam_orchestration_2018} [more examples!].
+The key accomplishment of Docker (as an "application") is to make a "bundled" aggregation of software (the so-called "image") available to any system equipped to run Docker, without requiring much else from the host besides the actual Docker application installation.
+This is a rather attractive, and novel, proposition which has lead to widespread adoption and use of Docker in a variety of domains, _e.g._, cloud computing infrastructure \citep{Bernstein2014}, data science \citep{boettiger_introduction_2015}, and edge computing \citep{alam_orchestration_2018} [more examples!].
 It provided to be a natural match for "cloud deployment" which runs (or at least appears to run) "seamlessly" without much explicit reference to the underlying machine, architecture or operating system: containers can be deployed with very little in terms of dependencies on the host system---only the container runtime is required.
 
 For statistical computing and analysis centered around R, the Rocker Project has provided a variety of Docker containers since its start in 2014 \citep{RJ-2017-065}.
