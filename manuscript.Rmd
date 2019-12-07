@@ -91,7 +91,6 @@ output:
 
 ```{r setup, include=FALSE}
 library(tidyverse)
-library(kableExtra)
 ```
 
 # Introduction
@@ -237,10 +236,7 @@ A number of first-order R packages provide a interface to the Docker CLI, allowi
 Each of these packages has particular advantages as they provide function wrappers for interacting with the Docker CLI at different stages of a container's life cycle. Examples of such interactions are installing the Docker software, creating Dockerfiles, building an image, and launching a container on a local machine or on the cloud. As such, the choice of which package is most useful depends on the use-case at hand.
 <!-- ^ in the examples listed above, the name of the packages which provide such functionality could be mentioned, this would highlight the variety in functionality already. -->
 
-```{r clientfunctionalities, echo=FALSE, results='asis', warning=FALSE, message=FALSE,}
-
-library(kableExtra)
-
+```{r clientfunctionalities, echo=FALSE, results='asis', warning=FALSE, message=FALSE}
 functionalities <- tribble(
   ~id, ~Functionality,
   "dockerfile", "Generate a Dockerfile",
@@ -276,9 +272,16 @@ tab <-
   slice(match(functionalities$id, id)) %>% 
   select(-id)
 
-knitr::kable(tab, escape = FALSE) %>% 
-  # kable_styling(latex_options = "striped") %>%
-  row_spec(0, angle = -90)
+# inserting a table in the R Journal currently fails
+# waiting for this PR to merge
+# https://github.com/rstudio/rticles/pull/261
+if (packageVersion("rticles") >= "0.12.3") {
+  requireNamespace("kableExtra")
+  knitr::kable(tab, escape = FALSE) %>%
+    kableExtra::row_spec(0, angle = -90)
+} else {
+  cat("\n\n[Functionality overview table omitted due to a small bug in rticles]\n\n")
+}
 ```
 
 **stevedore** ([https://cran.r-project.org/package=stevedore](https://cran.r-project.org/package=stevedore)) 
