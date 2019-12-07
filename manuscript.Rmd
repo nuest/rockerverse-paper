@@ -13,7 +13,13 @@ author:
     #affiliation: -
     #email: -
   - name: Robrecht Cannoodt
-    #affiliatin: -
+    affiliation: Ghent University
+    address:
+      - Data Mining and Modelling for Biomedicine group
+      - VIB Center for Inflammation Research
+      - Technologiepark 71
+      - 9052 Ghent, Belgium
+      - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0003-3641-729X}{https://orcid.org/0000-0003-3641-729X}
     #email: -
   - name: Dirk Eddelbuettel
     affiliation: University of Illinois at Urbana-Champaign
@@ -81,6 +87,11 @@ output:
   rticles::rjournal_article:
     keep_tex: true
 ---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(kableExtra)
+```
 
 # Introduction
 
@@ -216,35 +227,96 @@ These tags allow users to update the base image to retrieve bugfixes while reduc
 # R Packages
 <!-- from packages closer to Docker to second level packages to more complex ones -->
 
-## Clients [Ellis Hughes]
+## Clients [Ellis Hughes, Robrecht Cannoodt @rcannood]
 
-Interfacing with the Docker daemon is done through the Docker Command Line Interface (CLI).
-Moving back and forth between an R session and the command line can create friction in workflows and reduce reproducibility.
-To solve this problem there are a number first order R packages exist that provide an interface to the Docker CLI.
-This then means that R users are able to take advantage of the benefits of Docker without explicitly working with the CLI.
+Interfacing with the Docker daemon is typically done through the Docker Command Line Interface (CLI).
+However, moving back and forth between an R console and the command line can create friction in workflows and reduce reproducibility.
+A number of first-order R packages provide a interface to the Docker CLI, allowing to automate interaction with the Docker CLI from an R console.
 
-- [`stevedore`](https://github.com/richfitz/stevedore)
-- [`docker`](https://bhaskarvk.github.io/docker/)
-- [`harbor`](https://github.com/wch/harbor/)
-- [`dockermachine`](https://github.com/cboettig/dockermachine)
-- [`dockyard`](https://github.com/thebioengineer/dockyard)
+Each of these packages has particular advantages as they provide function wrappers for interacting with the Docker CLI at different stages of a container's life cycle. Examples of such interactions are installing the Docker software, creating Dockerfiles, building an image, and launching a container on a local machine or on the cloud. As such, the choice of which package is most useful depends on the use-case at hand.
+<!-- ^ in the examples listed above, the name of the packages which provide such functionality could be mentioned, this would highlight the variety in functionality already. -->
 
-At the time of writing this paper, these packages can work in concert to provide interfaces for installing Docker, building images, and running/controlling the life cycle of docker containers. 
+```{r clientfunctionalities, echo=FALSE, results='asis', warning=FALSE, message=FALSE,}
 
-Each of these packages provide functional wrappers to the Docker CLI at different stages of the docker lifecycle. 
+library(kableExtra)
 
-_dockyard_ has the goal of lowering barrier to creating dockerfiles and docker images, and deploying docker containers. 
+functionalities <- tribble(
+  ~id, ~Functionality,
+  "dockerfile", "Generate a Dockerfile",
+  "build", "Build an image",
+  "execute", "Execute a container locally or remotely",
+  "cloud", "Deploy or manage an instances in the cloud",
+  "interact", "Interact with an instance (e.g. file transfer)",
+  "images", "Manage storage of images",
+  "othercontainers", "Supports Docker and Singularity",
+  "api", "Direct access to Docker API instead of using the CLI",
+  "install", "Installing Docker software"
+)
+
+# some functionalities might be missing. please add them if you find that any are missing!
+package_functionalities <- tribble(
+  ~package, ~id,
+  "stevedore", c("api", "execute", "cloud", "images", "interact"), # build?
+  "dockyard", c("dockerfile", "build", "execute"), # cloud?
+  "dockermachine", c("install", "execute", "cloud", "interact"),
+  "AzureContainers", c("execute", "cloud"),
+  "babelwhale", c("execute", "interact", "othercontainers"),  
+  "harbor", c("execute", "cloud", "images")
+)
+
+tab <- 
+  full_join(
+  functionalities %>% crossing(package = package_functionalities$package), 
+  package_functionalities %>% unnest(id) %>% mutate(check = "\\checkmark"),#\u2714 # \\checkmark
+  by = c("id", "package")
+) %>%
+  mutate(check = ifelse(is.na(check), "", check)) %>% 
+  spread(package, check) %>% 
+  slice(match(functionalities$id, id)) %>% 
+  select(-id)
+
+knitr::kable(tab, escape = FALSE) %>% 
+  # kable_styling(latex_options = "striped") %>%
+  row_spec(0, angle = -90)
+# don't print this table just yet, wait for this PR to be merged
+# https://github.com/rstudio/rticles/pull/261
+```
+
+**stevedore** ([https://cran.r-project.org/package=stevedore](https://cran.r-project.org/package=stevedore)) 
+<!-- from the CRAN description:
+Work with containers over the Docker API. Rather than using system calls to interact with a docker client, using the API directly means that we can receive richer information from docker. The interface in the package is automatically generated using the 'OpenAPI' (a.k.a., 'swagger') specification, and all return values are checked in order to make them type stable.
+-->
+
+<!--
+**docker** ([https://bhaskarvk.github.io/docker](https://bhaskarvk.github.io/docker)
+docker has been removed from CRAN, seems unmaintained by authors. Maybe it should be removed from this list?
+-->
+
+
+**dockyard** ([https://github.com/thebioengineer/dockyard](https://github.com/thebioengineer/dockyard)) has the goal of lowering barrier to creating dockerfiles and docker images, and deploying docker containers. 
 The way docker images are made is by reading and following a set of instructions found in dockerfiles/
 This requires stepping out of the R ecosystem and into an infrastructure mindset where the user needs to specify the environment they require.
 Because dockerfiles can be read as a series of steps, this lends itself well to the `tidyverse` style of programming where each step is piped into the next.
-_dockyard_ has a 'dockerfile' object that either starts out as an empty dockerfile, or can use existing dockerfile to use as a template.
+dockyard has a 'dockerfile' object that either starts out as an empty dockerfile, or can use existing dockerfile to use as a template.
 This combined with a series of functions that are analogous to the steps commonly found in a dockerfile, it makes building docker images much more approachable to R users.
 There are also wrappers for commonly used steps for R programmers like adding libraries and copying files into the R docker containers.
+Once the dockerfile is created, dockyard has the functionality to build the image and deploy it.
 
-Once the dockerfile is created, _dockyard_ has the functionality to build the image and deploy it.
+<!-- From the github description:
+The goal of **dockermachine** ([https://github.com/cboettig/dockermachine](https://github.com/cboettig/dockermachine)) is to provide a convenient interface to docker-machine from the R command line. This will allow R users to easily create, control, and destroy cloud instances across a wide variety of providers.
+-->
 
-These clients are important for bringing accessibility to the Docker ecosystem for the wide variety of R programmers.
+<!-- From the cran description
+**AzureContainers** ([https://cran.r-project.org/package=AzureContainers](https://cran.r-project.org/package=AzureContainers)) lets you build and deploy containerised services in R, using Docker and Kubernetes. For full functionality, you should have Docker installed, as well as the kubectl and helm commandline tools. Otherwise it is relatively lightweight, requiring neither Powershell nor Python.
+-->
 
+**babelwhale** ([https://cran.r-project.org/package=babelwhale](https://cran.r-project.org/package=babelwhale)) 
+allows executing and interacting with containers, which can use either Docker or Singularity as a backend.
+provides a unified interface to interact with Docker and Singularity containers. You can execute a command inside a container, mount a volume or copy a file.
+
+<!-- from the github description
+**harbor** ([https://github.com/wch/harbor](https://github.com/wch/harbor) is an R package for controlling docker containers on local and remote hosts.
+-->
 
 ## Capture and create environments [@nuest]
 
@@ -316,7 +388,6 @@ The reason behind this is that `dockerfiler`, on top of being scriptable from R,
 
 The cloud is the natural environment of containers, and becomes the go-to mechanism to expose applications written in R to users.
 
-- [`babelwhale`](https://cran.r-project.org/web/packages/babelwhale/index.html): Running a Docker from R with Singularity or Docker as back-end. This is really useful in HPC environments where a user might not have root access but is able to install Singularity instead of Docker. [@rcannood]
 - `RSelenium`
 - [`googleComputeEngineR`](https://cloudyr.github.io/googleComputeEngineR/) (function `docker_run`)
   - I don't think `docker_run` is main focus for containers for this package, its more how it uses Docker to launch custom environments that can be templated (e.g. rstudio, shiny etc.) and for parrallisation e.g. `library(future)`  using GCE VMs as endpoints. [@MarkEdmondson1234]
