@@ -7,7 +7,7 @@ author:
       - Institute for Geoinformatics
       - Heisenbergstr. 2
       - 48149 Münster, Germany
-      - \href{https://orcid.org/0000-0002-0024-5046}{\includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} https://orcid.org/0000-0002-0024-5046}
+      - \orcid{0000-0002-0024-5046}
     email: daniel.nuest@uni-muenster.de
   - name: Carl Boettiger
     #affiliation: -
@@ -19,7 +19,7 @@ author:
       - VIB Center for Inflammation Research
       - Technologiepark 71
       - 9052 Ghent, Belgium
-      - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0003-3641-729X}{https://orcid.org/0000-0003-3641-729X}
+      - \orcid{0000-0003-3641-729X}
     email: robrecht@cannoodt.dev
   - name: Ellis Hughes
   - name: Dirk Eddelbuettel
@@ -28,7 +28,7 @@ author:
       - Department of Statistics
       - Illini Hall, 725 S Wright St
       - Champaign, IL 61820, USA
-      - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0001-6419-907X}{https://orcid.org/0000-0001-6419-907X}
+      - \orcid{0000-0001-6419-907X}
     email: dirkd@eddelbuettel.com
   - name: Mark Edmondson
     affiliation: IIH Nordic A/S, Google Developer Expert for GCP
@@ -38,7 +38,7 @@ author:
     address:
       - 5O rue Arthur Rimbaud
       - 93300 Aubervilliers, France
-      - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0001-7343-1846}{https://orcid.org/0000-0001-7343-1846}
+      - \orcid{0000-0001-7343-1846}
     email: contact@colinfay.me
   - name: Ben Marwick
     #affiliation: -
@@ -48,35 +48,35 @@ author:
     address:
       - University of California
       - Berkeley, CA 94720, USA
-      - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0002-0233-1757}{https://orcid.org/0000-0002-0233-1757}
+      - \orcid{0000-0002-0233-1757}
     email: karthik.ram@berkeley.edu
   - name: Noam Ross
     affiliation: EcoHealth Alliance
     address:
       - 460 W 34th St., Ste. 1701
       - New York, NY 10001, USA
-      - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0002-0233-1757}{https://orcid.org/0000-0002-0233-1757}
+      - \orcid{0000-0002-0233-1757}
     email: ross@ecohealthalliance.org
   - name: Nan Xiao
     affiliation: Seven Bridges Genomics
     address:
       - 529 Main St, Suite 6610
       - Charlestown, MA 02129, USA
-      - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0002-0250-5673}{https://orcid.org/0000-0002-0250-5673}
+      - \orcid{0000-0002-0250-5673}
     email: me@nanx.me
   - name: Lori Shepherd
     affiliation: Roswell Park Comprehensive Cancer Center
     address:
       - Elm & Carlton Streets
       - Buffalo, New York, 14263, USA
-      - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0002-5910-4010}{https://orcid.org/0000-0002-5910-4010}
+      - \orcid{0000-0002-5910-4010}
     email: lori.shepherd@roswellpark.org
   - name: Nitesh Turaga
     affiliation: Roswell Park Comprehensive Cancer Center
     address:
     - Elm & Carlton Streets
     - Buffalo, New York, 14263, USA
-    - \includegraphics[height=\fontcharht\font`\0]{ORCID-iD_icon-vector.pdf} \href{https://orcid.org/0000-0002-0224-9817}{https://orcid.org/0000-0002-0224-9817}
+    - \orcid{0000-0002-0224-9817}
     email: nitesh.turaga@roswellpark.org
 abstract: >
   The Rocker project provides widely-used Docker images for R across different application scenarios.
@@ -87,6 +87,8 @@ abstract: >
 output:
   rticles::rjournal_article:
     keep_tex: true
+    includes:
+      in_header: header.tex
 ---
 
 ```{r setup, include=FALSE}
