@@ -345,7 +345,7 @@ This workflow is summarized in Figure \ref{figure:liftr}.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{liftr-workflow}
+  \includegraphics[width=\textwidth]{figures/liftr-workflow}
   \caption{The liftr workflow for rendering containerized R Markdown documents.}
   \label{figure:liftr}
 \end{figure}
