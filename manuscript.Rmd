@@ -219,6 +219,7 @@ These tags allow users to update the base image to retrieve bugfixes while reduc
 
 - [rocker-win](https://github.com/nuest/rocker-win)
 - is possible, only relevant in organisations with an existing Windows Server-based infrastructure, can meet policies then
+<!-- can also be relevant for standalone Win 10 Professional users who have Docker for Windows installed -- HO -->
 
 ## Non-Debian Linux images [NN]
 
@@ -311,10 +312,7 @@ Once the dockerfile is created, dockyard has the functionality to build the imag
 **dockermachine** ([https://github.com/cboettig/dockermachine](https://github.com/cboettig/dockermachine)) provides a convenient interface to docker-machine from the R command line. This will allow R users to easily create, control, and destroy cloud instances across a wide variety of providers.
 -->
 
-**AzureContainers** ([https://cran.r-project.org/package=AzureContainers](https://cran.r-project.org/package=AzureContainers))
-<!-- From the cran description
- lets you build and deploy containerised services in R, using Docker and Kubernetes. For full functionality, you should have Docker installed, as well as the kubectl and helm commandline tools. Otherwise it is relatively lightweight, requiring neither Powershell nor Python.
--->
+**AzureContainers** ([https://cran.r-project.org/package=AzureContainers](https://cran.r-project.org/package=AzureContainers)) is an interface to a number of container-related services in Microsoft's Azure cloud, namely Container Instances, Container Registry and Kubernetes Service. While it is mainly intended for working with Azure, as a convenience feature it includes lightweight, cross-platform shells to Docker, kubectl and helm. These can be used to create and manage arbitrary Docker images and containers, as well as Kubernetes clusters on any platform or cloud service.
 
 **babelwhale** ([https://cran.r-project.org/package=babelwhale](https://cran.r-project.org/package=babelwhale)) 
 allows executing and interacting with containers, which can use either Docker or Singularity as a backend.
