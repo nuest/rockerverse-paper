@@ -440,7 +440,7 @@ For any R projects that use the Tidyverse suite [citation in review. Will add by
 
 [`holepunch`](https://github.com/karthik/holepunch) is a R package that was designed to remove some of these limitations and make Binder more accessible to novice R users.
 `holepunch` achieves this by leveraging Rocker images that contains the Tidyverse along special Jupyter dependencies, and only installs additional packages from CRAN and Bioconductor that are not already part of these images.
-Starting with the Binder/Tidyverse base images eliminates a large part of the build time and in most cases results in a binder instance launching within a minute. `holepunch` as a side effect also creates a DESCRIPTION file which then turns any project into a research compendium [doi:10.1080/00031305.2017.1375986].
+Starting with the Binder/Tidyverse base images eliminates a large part of the build time and in most cases results in a binder instance launching within a minute. `holepunch` as a side effect also creates a DESCRIPTION file which then turns any project into a research compendium \citep{marwick_packaging_2018}.
 The Dockerfile included with the project can also be used to launch a RStudio server locally independent of binder which is especially useful when more computational resources are required.
 
 One use for containers is to run on shared local hardware where teams manage their own high-performance servers.
@@ -541,6 +541,6 @@ NX wrote the section on liftr.
 LS \& NT wrote the section on Bioconductor.
 All authors contributed to the discussion and outlook section and approved the final version.
 This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
-The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page} and \href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history} provide a detailed view on the respective contributions.
+The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page}, \href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history}, and \href{https://github.com/nuest/rockerverse-paper/issues/}{discussion issues} provide a detailed view on the respective contributions.
 
 \bibliography{RJreferences}
