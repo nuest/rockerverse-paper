@@ -112,13 +112,13 @@ library(tidyverse)
 The R community keeps growing. This can be seen in the number of new packages on CRAN which keeps on rising, but also in the increased number of conferences, online courses, meetups, and unconferences, as well as in the uptake in education and industry increases [REFs].
 All this cements the role of R as the _lingua franca_ of statistics, data visualisation, and computational research.
 Coinciding with the rise of R was the advent of [Docker](https://en.wikipedia.org/wiki/Docker_(software)) as a general tool for distribution and deployment of software.
-Combining both these topics, the Rocker Project ([https://www.rocker-project.org/](https://www.rocker-project.org/)) provides images with R (see the next Section for more details).
+Combining both these topics, the _Rocker Project_ ([https://www.rocker-project.org/](https://www.rocker-project.org/)) provides images with R (see the next Section for more details).
 The considerable uptake and continued evolution of the Rocker Project has lead to numerous projects extending or building upon Rocker images, ranging from reproducible research to production deployments.
 This article presents this _Rockerverse_ of projects across all development stages: demonstrations, prototypes, and mature products.
 We also introduce related activities connecting the R language and environment with other containerisation solutions.
 The main contributions is a coherent picture of the current lay of the land of using containers in, with, and for R.
 
-# Containerization and Rocker [NN]
+# Containerization and Rocker
 
 Docker, an application and service provide by the eponymous company, has in just a few short years risen to prominence for development, testing, deployment and distribution of computer software \citep[cf.][]{datadog_8_2018,munoz_history_2019}.
 While there are related approaches such as LXC\footnote{\href{https://en.wikipedia.org/wiki/LXC}{https://en.wikipedia.org/wiki/LXC}} or Singularity \citep{kurtzer_singularity_2017}, Docker has become synomymous with "containerization"---the method of taking software artefacts and bundling them in such a way that use becomes standardized and portable across operationg systems.
@@ -136,7 +136,7 @@ It provided to be a natural match for "cloud deployment" which runs (or at least
 For statistical computing and analysis centered around R, the Rocker Project has provided a variety of Docker containers since its start in 2014 \citep{RJ-2017-065}.
 The Rocker Project provides several lines of containers spanning to from building blocks with `R-release` or `R-devel`, via containers with RStudio~Server and Shiny~Server, to domain-specific containers such as `geospatial`.
 Also of note is a series of "versioned" containers which match the R release they contain with the _then-current_ set of packages via the MRAN Snapshot views of CRAN \citep{microsoft_cran_2019}.
-[Maybe at a later point add forward reference to other topics building on Rocker described here.]
+The Rocker Project's impact and importance was acknowledged by the Chan Zuckerberg Initiative's _Essential Open Source Software for Science_, who provide findung for the projects's sustainable maintenance, community growth, and targeting new hardware platforms including GPUs \citep{chan_zuckerberg_initiative_maintaining_2019}.
 
 # Container Images
 
