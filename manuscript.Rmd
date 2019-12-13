@@ -74,10 +74,16 @@ author:
   - name: Nitesh Turaga
     affiliation: Roswell Park Comprehensive Cancer Center
     address:
-    - Elm & Carlton Streets
-    - Buffalo, New York, 14263, USA
-    - \orcid{0000-0002-0224-9817}
+      - Elm & Carlton Streets
+      - Buffalo, New York, 14263, USA
+      - \orcid{0000-0002-0224-9817}
     email: nitesh.turaga@roswellpark.org
+  - name: Jacqueline Nolis
+    affiliation: Nolis, LLC
+    address:
+      - Seattle, WA, USA
+      #- \orcid{NA}
+    email: jacqueline@jnolis.com
   - name: Hong Ooi
     affiliation: Microsoft
     address:
