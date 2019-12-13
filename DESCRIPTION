@@ -12,6 +12,10 @@ Description: Rockerverse paper
 License: MIT + file LICENSE
 Depends: 
     rmarkdown,
-    rticles
+    rticles,
+    kableExtra
+Remotes:
+    rstudio/rticles
 Encoding: UTF-8
 LazyData: true
+
