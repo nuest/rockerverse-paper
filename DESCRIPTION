@@ -1,0 +1,17 @@
+Type: Compendium
+Package: compendium
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.1
+Authors@R: 
+    person(given = "Ben",
+           family = "Marwick",
+           role = c("aut", "cre"),
+           email = "benmarwick@gmail.com",
+           comment = c(ORCID = "0000-0001-7879-4531"))
+Description: Rockerverse paper
+License: MIT + file LICENSE
+Depends: 
+    rmarkdown,
+    rticles
+Encoding: UTF-8
+LazyData: true
