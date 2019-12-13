@@ -1,10 +1,10 @@
 # Rockerverse
 
 <!-- badges: start -->
-[![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/benmarwick/rockerverse-paper/master?urlpath=rstudio)
+[![Launch RStudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/nuest/rockerverse-paper/master?urlpath=rstudio)
 <!-- badges: end -->
 
-Draft for an article of everything related to containers and R, based on http://bit.ly/docker-r.
+Draft for an article of everything related to containers and R, originally based on the blog post http://bit.ly/docker-r.
 
 _Want to contribute?_ See https://github.com/nuest/rockerverse-paper/issues/3.
 
