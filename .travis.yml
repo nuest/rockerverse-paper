@@ -5,17 +5,12 @@ services:
 
 language: generic
 
-# https://github.com/travis-ci/travis-ci/issues/5358
-cache:
-  directories:
-  - docker_images
-before_install:
-  - docker load -i docker_images/images.tar || true
-before_cache:
-  - docker save -o docker_images/images.tar rockerverse
+branches:
+  only:
+    - master
 
 install:
-  - docker build --tag rockerverse .
+  - docker build --tag rockerverse --file .binder/Dockerfile .
 
 build:
   - docker run -i -v $(pwd):/rockerverse rockerverse Rscript -e 'setwd("/rockerverse"); rmarkdown::render("manuscript.Rmd")'
@@ -35,3 +30,12 @@ after_success:
   - rev=$(git rev-parse --short HEAD)
   - git commit -m "Rebuild at ${rev}"
   - git push -q upstream HEAD:gh-pages
+
+env:
+  global:
+    # GITHUB_PAT to solve GH API rate limit
+    - secure: "at0zw2gJ+KR1Y9I7IGeiy0uyBHizVCcYfZ2iKjvxVUSNyMf7IB0X+ffODnJkVC/5aX0AMO8xIYZA35Q19DzF9WF73RkdcWU77cvmeyiwX2k/bgSFKvmILwBt/alrcksfh0HRr0NniTtU+Ip5ywhlCwR52nE5h58x0DJkfvSAI7HqZqjEJqwZZAvnYeW6+XH1isUDtMgqkgwUDmCgX3NPu3dlCD8RcfNbRnSWGebwW/BVPKG2/w/VwxnPwquPXQNcj7lar6UZSHMVap+RtqUcEVLnUcsgWzrtXjdD3GRsWAqT0HW2YyYv9pV5vwNUiKQlFs8FxKF9XjwMF+lJ6PVRWPPXMG8QMgfx1tn2G2di05m3kXFN4Kmmn5b8l4Qb1lxDy7gZxp4HVtvnb7a1Cb41hy87G57piIJPNC8CBtR50jHsECU8dg5lDvBkMAecKcg2orQJdPwQBI63poeOlRLjTPJvDGLGnoKOjzzPMjVCHRCdLs2c1y/KFQvueTJ8T/E8dOzmLkQEMXg+tjUbvgYLyvRgyiu9sxQVVcokZF7eb53WppCuGcsyqNShQ0lF6L41ei/Qfb1N0a3JkBrWuHmxt1a7bmPmFTaR1h1DnV5v+dfaeOZKOp1ojWzT3yVKLKGh7ZKbip6OFBJxDfVD18Nptg6eCprzxyKKJe2gpSm2OE0="
+    # GH token and email
+    - secure: "Cc4bOX3TQHtfiBQMeGqwuBN8xHgz9JnpH/ypbZ0Lxp5yMf5vmNWER/d7C32xML7rIEYcdHKXXgfQwx6xXNPV+q/FpQs+zKZF/uFKffxPY8vFNViZnf5mswz4e4AlMRxV7UH/0gZYpx9pTzlegV5w+yE80kqqVnY/iz7hoNC4mDiXnXYO+y9NXHtKD3mSJIIJh+qpMsTyLmuZQ1y68s+5J5MvXrm8TLyR40OitLXFbqdF0e4AuK3rC7oFw4JYXYa4WZ1fmZayBqALIX8QXtmnD3waugwpznJurXfJfascovDIXHyHsBvrAAarva4gOod4I1Uk9RGan8E6PRRFtRpxKlkzDgfTT34+q7IiKuNjaWbWFjQKUMqP9IJEofDGY+Av+PNTJv4XvGZdKuI2xF9r5a45OZNcIycFmAoGlOm9mwWut7NG6qx8KbddNrz9HDVZk8ZkXZdSTl/StTEpdFSlXEZfVPk5xJn6glMC1s0B0zl5IJ0bqbrVvYG9DnpoUx4vxaZUJFxTWTRk4bIgUOZ1J7qNpsWaBiN92bSfghOtZU3sqCG+ADhzd+FurQsE7nGbSSmgsR0XJtwaSoyNN7YMTobekxtzDudT2A5e9CuWgdxyVeXDYS4UfuzfGz0LEW8ZVxzGnsIRb2YFSmgfqn6ZBN8Fos8PEYy7maHi9SwJBP0="
+    - GH_USER_NAME: "nuest"
+    - secure: "dq0MK7GEaBt02NLhkfiyexNBUahk0jCTrer/eVSq+3UWinsdlhMGcS/UpV1lcPk/w61A71LfwobXJA3JaC4gXlHFFbwLBdC4sYifAikjnsIKVrtrBzFmcxHxDv710ZL1GUzzO7JMaD4GmZdjP0VpQRmA05YnbtZs3QZuIRfedUu3ISu8YvIBD/OmmjXLgonwdPEgnuJGCAipb5GCeHQryHvSmWB38KD3Q/W+o4Oq3HsQDsIcN/S0MIovt3LEUjQ45jT/xy+m5DG/urU5hvFJdIYLUILy5L/shsxPTIrwhMddDgkvhrrcx0ocizdJl+Okd2MVgS86Z5vZFUbVn7N1j6V2jQcMvnUvPeav+GgKFUGlXLw268THJ2fhpRlenOMA9NvGH6oHCJcOvBT4ccSJfWmft8falT54cOIrqEGDURMezTKIgccRF7acfNcMk206WGdMn2NuI0pEmUkaMSoN7iCNwJjwIR8Oyuxli5PgF8EJZYH8pJu6dsprDR1w4MjCd4smlIpG1pUGQFQuRqDGl5Yo0jnFIRmnIgCYulLswxfRWHuc5JxjkDLiwvDClE6G44N4Faguzj/0EXMT8dKSoPWA9Zojq+Fg6ykG1gBFGpe8gTJcN0CH+7R+vhP3mskdoMmOhFup+9y0/X7MF73JlHj4sQqHtQBhfsSOROlzVbw="
