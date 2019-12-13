@@ -8,6 +8,8 @@ Draft for an article of everything related to containers and R, originally based
 
 _Want to contribute?_ See https://github.com/nuest/rockerverse-paper/issues/3.
 
+**Current draft**: https://nuest.github.io/rockerverse-paper/master.pdf
+
 **Render the manuscript with Docker**:
 
 ```bash
