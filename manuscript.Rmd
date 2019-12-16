@@ -2,6 +2,7 @@
 title: "Containers and R---the Rockerverse and beyond"
 author:
   - name: Daniel Nüst
+    # https://github.com/nuest
     affiliation: University of Münster
     address:
       - Institute for Geoinformatics
@@ -9,10 +10,8 @@ author:
       - 48149 Münster, Germany
       - \orcid{0000-0002-0024-5046}
     email: daniel.nuest@uni-muenster.de
-  - name: Carl Boettiger
-    #affiliation: -
-    #email: -
   - name: Robrecht Cannoodt
+    # https://github.com/rcannood
     affiliation: Ghent University
     address:
       - Data Mining and Modelling for Biomedicine group
@@ -21,8 +20,8 @@ author:
       - 9052 Ghent, Belgium
       - \orcid{0000-0003-3641-729X}
     email: robrecht@cannoodt.dev
-  - name: Ellis Hughes
   - name: Dirk Eddelbuettel
+    # https://github.com/eddelbuettel
     affiliation: University of Illinois at Urbana-Champaign
     address:
       - Department of Statistics
@@ -34,16 +33,15 @@ author:
     affiliation: IIH Nordic A/S, Google Developer Expert for GCP
     email: mark@markedmondson.me
   - name: Colin Fay
+    # https://github.com/ColinFay
     affiliation: ThinkR
     address:
       - 5O rue Arthur Rimbaud
       - 93300 Aubervilliers, France
       - \orcid{0000-0001-7343-1846}
     email: contact@colinfay.me
-  - name: Ben Marwick
-    #affiliation: -
-    #email: -
   - name: Karthik Ram
+    # https://github.com/karthik
     affiliation: Berkeley Institute for Data Science
     address:
       - University of California
@@ -51,6 +49,7 @@ author:
       - \orcid{0000-0002-0233-1757}
     email: karthik.ram@berkeley.edu
   - name: Noam Ross
+    # https://github.com/noamross
     affiliation: EcoHealth Alliance
     address:
       - 460 W 34th St., Ste. 1701
@@ -58,6 +57,7 @@ author:
       - \orcid{0000-0002-0233-1757}
     email: ross@ecohealthalliance.org
   - name: Nan Xiao
+    # https://github.com/nanxstats
     affiliation: Seven Bridges Genomics
     address:
       - 529 Main St, Suite 6610
@@ -65,6 +65,7 @@ author:
       - \orcid{0000-0002-0250-5673}
     email: me@nanx.me
   - name: Lori Shepherd
+    # https://github.com/lshep
     affiliation: Roswell Park Comprehensive Cancer Center
     address:
       - Elm & Carlton Streets
@@ -72,6 +73,7 @@ author:
       - \orcid{0000-0002-5910-4010}
     email: lori.shepherd@roswellpark.org
   - name: Nitesh Turaga
+    # https://github.com/nturaga
     affiliation: Roswell Park Comprehensive Cancer Center
     address:
       - Elm & Carlton Streets
@@ -79,17 +81,29 @@ author:
       - \orcid{0000-0002-0224-9817}
     email: nitesh.turaga@roswellpark.org
   - name: Jacqueline Nolis
+    # https://github.com/jnolis/
     affiliation: Nolis, LLC
     address:
       - Seattle, WA, USA
       #- \orcid{NA}
     email: jacqueline@jnolis.com
   - name: Hong Ooi
+    # https://github.com/Hong-Revo
     affiliation: Microsoft
     address:
     - Level 5, 4 Freshwater Place
     - Southbank, VIC 3006, Australia
     email: hongooi@microsoft.com
+  - name: Ellis Hughes
+    # https://github.com/thebioengineer
+    affiliation: Fred Hutchinson Cancer Research Center 
+    address:
+      - Vaccine and Infectious Disease
+      - 1100 Fairview Ave. N., P.O. Box 19024
+      - Seattle, WA 98109-1024, USA
+      #- \orcid{}
+    email: ehhughes@fredhutch.org
+  - name: Ben Marwick
 abstract: >
   The Rocker project provides widely-used Docker images for R across different application scenarios.
   This articles surveys describe downstream projects building upon Rocker.
@@ -258,7 +272,7 @@ The main challenges are finding a suitable base image with a matching OS version
 # R Packages
 <!-- from packages closer to Docker to second level packages to more complex ones -->
 
-## Interfaces for Docker in R [Ellis Hughes, Robrecht Cannoodt]
+## Interfaces for Docker in R
 
 Interfacing with the Docker daemon is typically done through the Docker Command Line Interface (CLI).
 However, moving back and forth between an R console and the command line can create friction in workflows and reduce reproducibility.
@@ -647,7 +661,7 @@ An alternative stemming from the domain of high-perfomance computing is Singular
 Singularity can run Docker images, and in the case of Rocker works out of the box if the main process is R, e.g., in `rocker/r-base`, but does not succeed in running images where there is an init script, e.g. in containers that by default run RStudio.
 In the latter case, a `Singularity` file, a set of instructions akin to a `Dockerfile` needs to be used.
 
-# Discussion/outlook/conclusion [@all, please add bullet points]
+# Conclusions
 
 - next steps
   - consolidation?
@@ -667,18 +681,19 @@ In the latter case, a `Singularity` file, a set of instructions akin to a `Docke
 
 # Author contributions
 
-DN conceived of the presented idea and \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team} and wrote the section about images for R distributions.
+DN conceived of the presented idea and \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}, wrote the section about images for R distributions, wrote the conclusions section, and revised all sections.
 CB ..
-RC and RC wrote the section on interfaces for Docker in R.
-DE ..
+RC and EH wrote the section on interfaces for Docker in R.
+DE wrote the introduction and section about Rocker.
 ME ..
-CF wrote the section about `r-online`, `dockerfiler`, `r-ci` and `r-db`.
+CF wrote the paragraphs about `r-online`, `dockerfiler`, `r-ci` and `r-db`.
 BW ..
 KR ..
 NR ..
 NX wrote the section on liftr.
 LS \& NT wrote the section on Bioconductor.
-All authors contributed to the discussion and outlook section and approved the final version.
+All authors contributed minor edits, gave feedback on other sections, and approved the final version.
+
 This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
 The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page}, \href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history}, and \href{https://github.com/nuest/rockerverse-paper/issues/}{discussion issues} provide a detailed view on the respective contributions.
 
