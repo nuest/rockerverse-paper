@@ -257,11 +257,30 @@ This enables cross version testing and bugfixing.
 To take this even further, the Rocker contributors are discussing the provision of R versions reaching back futher than the project's own inception, reaching back as far as R `2.x` and `1.x` \footnote{\href{https://github.com/rocker-org/rocker-versioned/issues/138}{https://github.com/rocker-org/rocker-versioned/issues/138}}.
 The main challenges are finding a suitable base image with a matching OS version, or making the adjustments to compile R on more recent OS releases.
 
-## Windows Images [@nuest]
+## Windows Images
 
-- [rocker-win](https://github.com/nuest/rocker-win)
-- is possible, only relevant in organisations with an existing Windows Server-based infrastructure, can meet policies then
-<!-- can also be relevant for standalone Win 10 Professional users who have Docker for Windows installed -- HO -->
+Docker containers on the Windows operating system were originally quite cumbersome to use.
+They required an extra tool, [Docker Toolbox](https://docs.docker.com/toolbox/), which by now only exists as a legacy solution for older Windows systems.
+Docker toolbox leverages `docker-machine` (see also Section&nbsp;\ref{interfaces} for an R package interfacing with `docker-machine`) to handle the process of creating a local virtual host which could host Docker Engine, while exposing the regular Docker CLI.
+The Docker CLI commands are forwarded to the virtual host transparently for the user.
+
+For current Windows Server (2016 and later) and Windows Desktop ([Docker Desktop](https://www.docker.com/products/docker-desktop) requires Windows 10) versions, Docker is supported natively\footnote{\href{https://www.docker.com/products/windows-containers}{https://www.docker.com/products/windows-containers}} and different base images are offered by Microsoft\footnote{\href{https://docs.microsoft.com/en-us/virtualization/windowscontainers/about/index}{https://docs.microsoft.com/en-us/virtualization/windowscontainers/about/index}}.
+The Docker CLI can be used in just the same way as on other operating systems but not every base image is supported on every Windows host\footnote{\href{https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/version-compatibility}{https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/version-compatibility}}.
+On Docker Desktop for Windows, the user can run both Linux-based and Windows-based containers, but only one of the Docker daemons can be used at a time\footnote{See "Switch between Windows and Linux containers" on \href{https://docs.docker.com/docker-for-windows/}{https://docs.docker.com/docker-for-windows/}.}.
+
+[`rocker-win`](https://github.com/nuest/rocker-win) is a proof of concept for running R in Windows-based containers.
+It provides selected R versions using three different base images using `microsoft/windowsservercore` and `mcr.microsoft.com/windows/servercore`.
+These base images match different Windows versions: Windows Server 2019, Windows Server 2016, and Windows Server, version 1803.
+The images are built using two CI services, [Travis CI](https://docs.travis-ci.com/user/reference/windows/) and [Appveyor](https://www.appveyor.com/docs/windows-images-software/), which provide the different Windows versions and therefore support different base images, and published automatically [on Docker Hub](https://hub.docker.com/r/nuest/rocker-win).
+The images are built from manually maintained seperate Dockerfiles, are tagged with both Windows-variant and R version, e.g. `nuest/rocker-win:ltsc2019-3.6.2` or `nuest/rocker-win:1803-latest`, and run the `R.exe` process by default.
+New R versions are only added on demand.
+The explorative project demonstrates the variety and pontentially confusing complexity of Windows on Docker, e.g., because of the different base images, but also provides a starting point for any Windows-constrained user to leverage containerisation, including examples for apps using \pkg{plumber\, \pkg{Shiny}, or R packages with system dependencies such as \pkg{sf}.
+The latter is quite comfortable actually, as R ships pre-compiled binaries for Windows.
+
+For Windows, just as originally for Linux, the cloud use cases drive the development and Docker and Microsoft collaborate closely\footnote{\href{https://www.docker.com/partners/microsoft}{https://www.docker.com/partners/microsoft}}.
+In most cases, individual developers or researchers worrying about reproducibility, will prefer the more widely and host independent Linux-based containers.
+Naturally, a Windows license is required for the host machine.
+But the developments in the `rocker-win` prototype show that containers can also be used for R workflows depending on Windows-only tools, for leveraging an existing Windows Server-based infrastructure where policies can otherwise not be met, or for streamlining interactions with system operating staff that runs Windows-based containers themselves.
 
 ## Non-Debian Linux images [NN]
 
