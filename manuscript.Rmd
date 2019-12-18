@@ -295,11 +295,13 @@ But the developments in the `rocker-win` prototype show that containers can also
 - Alpine images
 - [Images used by R-Hub](https://github.com/r-hub/rhub-linux-builders) (overlap with CI?)
 - https://github.com/jlisic/R-docker-centos
+- Fedora > easy to install: https://github.com/ismailsunni/dockeRs
 
 # R Packages
 <!-- from packages closer to Docker to second level packages to more complex ones -->
 
 ## Interfaces for Docker in R
+\label{interfaces}
 
 Interfacing with the Docker daemon is typically done through the Docker Command Line Interface (CLI).
 However, moving back and forth between an R console and the command line can create friction in workflows and reduce reproducibility.
