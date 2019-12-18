@@ -85,8 +85,16 @@ author:
     affiliation: Nolis, LLC
     address:
       - Seattle, WA, USA
+      - \orcid{0000-0001-9354-6501}
+    email: jacqueline@nolisllc.com
+  - name: Heather Nolis
+    # https://github.com/nolistic/
+    affiliation: T-Mobile
+    address:
+      - 12920 Se 38th St.
+      - Bellevue, WA, 98006
       #- \orcid{NA}
-    email: jacqueline@jnolis.com
+    email: heather.wensler1@t-mobile.com
   - name: Hong Ooi
     # https://github.com/Hong-Revo
     affiliation: Microsoft
