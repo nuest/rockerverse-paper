@@ -313,7 +313,7 @@ For current Windows Server (2016 and later) and Windows Desktop ([Docker Desktop
 The Docker CLI can be used in just the same way as on other operating systems but not every base image is supported on every Windows host\footnote{\href{https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/version-compatibility}{https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/version-compatibility}}.
 On Docker Desktop for Windows, the user can run both Linux-based and Windows-based containers, but only one of the Docker daemons can be used at a time\footnote{See "Switch between Windows and Linux containers" on \href{https://docs.docker.com/docker-for-windows/}{https://docs.docker.com/docker-for-windows/}.}.
 
-[`rocker-win`](https://github.com/nuest/rocker-win) is a proof of concept for running R in Windows-based containers.
+[`rocker-win`](https://github.com/nuest/rocker-win) is a proof of concept for running R in Windows-based containers \citep{nust_rocker-win_2019}.
 It provides selected R versions using three different base images using `microsoft/windowsservercore` and `mcr.microsoft.com/windows/servercore`.
 These base images match different Windows versions: Windows Server 2019, Windows Server 2016, and Windows Server, version 1803.
 The images are built using two CI services, [Travis CI](https://docs.travis-ci.com/user/reference/windows/) and [Appveyor](https://www.appveyor.com/docs/windows-images-software/), which provide the different Windows versions and therefore support different base images, and published automatically [on Docker Hub](https://hub.docker.com/r/nuest/rocker-win).
@@ -327,18 +327,16 @@ In most cases, individual developers or researchers worrying about reproducibili
 Naturally, a Windows license is required for the host machine.
 But the developments in the `rocker-win` prototype show that containers can also be used for R workflows depending on Windows-only tools, for leveraging an existing Windows Server-based infrastructure where policies can otherwise not be met, or for streamlining interactions with system operating staff that runs Windows-based containers themselves.
 
-## Non-Debian Linux images [NN]
+## Non-Debian Linux images
 
 - Alpine images
 - [Images used by R-Hub](https://github.com/r-hub/rhub-linux-builders) (overlap with CI?)
 - https://github.com/jlisic/R-docker-centos
-- Fedora > easy to install: https://github.com/ismailsunni/dockeRs
 
 # R Packages
 <!-- from packages closer to Docker to second level packages to more complex ones -->
 
 ## Interfaces for Docker in R
-\label{interfaces}
 
 Interfacing with the Docker daemon is typically done through the Docker Command Line Interface (CLI).
 However, moving back and forth between an R console and the command line can create friction in workflows and reduce reproducibility.
@@ -384,8 +382,8 @@ tab <-
   select(-id)
 
 # inserting a table in the R Journal currently fails
-# waiting for this PR to merge
-# https://github.com/rstudio/rticles/pull/261
+# waiting for new release of articles including this PR to be published: https://github.com/rstudio/rticles/pull/261
+# Until then, use remotes::install_github("rstudio/rticles")
 if (packageVersion("rticles") >= "0.12.3") {
   requireNamespace("kableExtra")
   knitr::kable(tab, escape = FALSE) %>%
