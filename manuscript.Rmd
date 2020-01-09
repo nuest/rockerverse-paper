@@ -692,8 +692,7 @@ In the latter case, a `Singularity` file, a set of instructions akin to a `Docke
 
 # Conclusions
 
-- next steps
-  - consolidation?
+- what are next steps?
 - support more complex set-ups with ready-to-use stacks, e.g. GPU, AI, ML
 - Missing pieces?
 - consolidation (e.g. via packages using `dockerfiler` and `stevedore`)
@@ -706,7 +705,7 @@ In the latter case, a `Singularity` file, a set of instructions akin to a `Docke
 - moving away from Docker focus towards containers?
   - is there a need for a wrapper for [podman's Varlink-API](https://github.com/containers/libpod/blob/master/API.md) (similar to stevedore) and buildah to manage containers and images respectively with alternative software stacks?
   - will there be control packages for Singularity support?
-- ...
+- sustain the overview and structure in this article in form of a CRAN Task View
 
 # Author contributions
 
