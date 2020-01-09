@@ -13,7 +13,10 @@ License: MIT + file LICENSE
 Depends: 
     rmarkdown,
     rticles,
-    kableExtra
+    kableExtra,
+    hexSticker,
+    magick,
+    here
 Remotes:
     rstudio/rticles
 Encoding: UTF-8

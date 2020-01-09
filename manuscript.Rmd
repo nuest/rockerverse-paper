@@ -140,6 +140,43 @@ This article presents this _Rockerverse_ of projects across all development stag
 We also introduce related activities connecting the R language and environment with other containerisation solutions.
 The main contributions is a coherent picture of the current lay of the land of using containers in, with, and for R.
 
+```{r hexSticker, message=TRUE, warning=FALSE, cache=TRUE, include=FALSE}
+if(!file.exists("rockerverse.png")) {
+  library("magick")
+  library("here")
+  
+  # https://commons.wikimedia.org/wiki/File:NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg
+  universe <- magick::image_read("https://upload.wikimedia.org/wikipedia/commons/6/69/NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg")
+  magick::image_write(universe, here("universe.png"))
+  # rockerLogoMask <-
+  magick::image_read("https://avatars2.githubusercontent.com/u/9100160?s=200&v=4") %>%
+    magick::image_scale("2100x2100") %>%
+    magick::image_channel("Matte") %>%
+    image_negate() %>%
+    magick::image_border("black", "150x0") %>%
+    magick::image_write(here("rocker_mask.png"))
+    
+  # does not work: image_composite(universe, rockerLogoMask, operator = "CopyOpacity", compose_args = "-composite -alpha Off")
+  system2("convert", c(here("universe.png"), here("rocker_mask.png"),
+    "-alpha Off",
+    "-compose CopyOpacity",
+    "-composite",
+    here("whaleverse.png")))
+
+  library("hexSticker")
+  hexSticker::sticker(here("whaleverse.png"), package = "Rockerverse",
+          p_size = 20, s_x = 0.97, s_y = 0.95, s_width = 1,
+          h_fill = "#000000", h_color = "#ffffff",
+          url = "github.com/nuest/rockerverse-paper",
+          u_color = "#ffffff", u_size = 4,
+          filename = here("rockerverse.png"))
+  
+  file.remove(c(here("universe.png"), here("whaleverse.png"), here("rocker_mask.png")))
+}
+```
+
+![Rockerverse hex sticker](`r here::here("rockerverse.png")`)
+
 # Containerization and Rocker
 
 Docker, an application and service provide by the eponymous company, has in just a few short years risen to prominence for development, testing, deployment and distribution of computer software \citep[cf.][]{datadog_8_2018,munoz_history_2019}.
@@ -724,5 +761,10 @@ All authors contributed minor edits, gave feedback on other sections, and approv
 
 This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
 The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page}, \href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history}, and \href{https://github.com/nuest/rockerverse-paper/issues/}{discussion issues} provide a detailed view on the respective contributions.
+
+# Acknowledgements
+
+DN is supported by the project Opening Reproducible Research ([o2r](https://www.uni-muenster.de/forschungaz/project/12343)) funded by the German Research Foundation (DFG) under project number [PE&nbsp;1632/17-1](https://gepris.dfg.de/gepris/projekt/415851837).
+The funders had no role in data collection and analysis, decision to publish, or preparation of the manuscript.
 
 \bibliography{RJreferences}
