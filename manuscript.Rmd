@@ -204,7 +204,17 @@ These containers form _image stacks_, building on top of each other for better m
 Also of note is a series of "versioned" containers which match the R release they contain with the _then-current_ set of packages via the MRAN Snapshot views of CRAN \citep{microsoft_cran_2019}.
 The Rocker Project's impact and importance was acknowledged by the Chan Zuckerberg Initiative's _Essential Open Source Software for Science_, who provide findung for the projects's sustainable maintenance, community growth, and targeting new hardware platforms including GPUs \citep{chan_zuckerberg_initiative_maintaining_2019}.
 
-# Container Images
+Docker is not the only containerisation software.
+An alternative stemming from the domain of high-perfomance computing is **Singularity** \citep{kurtzer_singularity_2017}.
+Singularity can run Docker images, and in the case of Rocker works out of the box if the main process is R, e.g., in `rocker/r-base`, but does not succeed in running images where there is an init script, e.g., in containers that by default run RStudio.
+In the latter case, a `Singularity` file, a recipe akin to a `Dockerfile`, needs to be used.
+To date, no comparable image stack to Rocker exists on [Singularity Hub](https://singularity-hub.org/).
+A further tool for running containers is [**podman**](https://github.com/containers/libpod), which also can build `Dockerfile`s and run Docker images.
+Proof of concepts for using podman to build and run Rocker containers exist\footnote{See \href{https://github.com/nuest/rodman}{https://github.com/nuest/rodman} and \href{https://github.com/rocker-org/rocker-versioned/issues/187}{https://github.com/rocker-org/rocker-versioned/issues/187}}.
+Yet the prevelance of Docker, especially in the broader user community beyond experts or niche systems, and the vast amount of blog posts and courses for Docker, currently caps specific development efforts for both Singularity and podman in the R community.
+This might quickly change when usability and spread increase, or security features such as rootless/unprivileged containers, which both these tools support out of the box, become more sought after.
+
+# Container images
 
 ## Images for alternative R distributions
 
