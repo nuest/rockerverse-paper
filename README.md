@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![Launch RStudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/nuest/rockerverse-paper/master?urlpath=rstudio)
+[![Build Status](https://travis-ci.org/nuest/rockerverse-paper.svg?branch=master)](https://travis-ci.org/nuest/rockerverse-paper)
 <!-- badges: end -->
 
 Draft for an article of everything related to containers and R, originally based on the blog post http://bit.ly/docker-r.
