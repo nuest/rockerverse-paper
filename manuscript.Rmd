@@ -333,9 +333,25 @@ But the developments in the `rocker-win` prototype show that containers can also
 
 ## Non-Debian Linux images
 
-- Alpine images
-- [Images used by R-Hub](https://github.com/r-hub/rhub-linux-builders) (overlap with CI?)
-- https://github.com/jlisic/R-docker-centos
+\label{rhub}
+The **R-hub** project provides _"a collection of services to help R package development", with the package builder as the most prominent one\citep{r-hub_docs_2019}.
+The builder allows R package developers to check their R package on different platforms and R versions using a web form or the package \pkg{rhub} \citep{csardi_rhub_2019}.
+The builder uses Docker containers to conduct these checks, taking advantages of their well-defined environments and sandboxing.
+The `Dockerfile`s and images are published on Docker Hub\footnote{\href{https://hub.docker.com/u/rhub}{https://hub.docker.com/u/rhub}} and GitHub\footnote{\href{https://github.com/r-hub/rhub-linux-builders}{https://github.com/r-hub/rhub-linux-builders}} respectively.
+The images comprise release and development builds of R running in the base images of the [Debian](https://www.debian.org/), [Ubuntu](https://ubuntu.com/), [Fedora](https://getfedora.org/), and [CentOS](https://centos.org/) linux distributions (Arch Linux is under development\footnote{\href{https://github.com/r-hub/rhub-linux-builders/pull/41}{https://github.com/r-hub/rhub-linux-builders/pull/41}}, `see `rhub::local_check_linux_images()` for a full list), and are intended for debugging (see Section&nbsp;\ref{development}) not for reproducible workflows.
+_The rationale_ of not re-using the Rocker image stack is the high number of operatings systems and configurations, which can be more uniformly maintained in a seperate suite of images.
+Also, a common structure across the respective image stacks of the operating systems, e.g., for `debian`, adding GCC in `debian-gcc` and then R's development version in `debian-gcc-devel`.
+The platform also has a specific user configuration differing from the setup covering typical applications of Rocker images, and the images include considerably more software, such as a fairly complete LaTeX installation, to provide an experience closer to CRAN.
+
+There are also independent projects installing R or RStudio on [**Alpine Linux**](https://www.alpinelinux.org/), but not beyond the proof of concept stage\footnote{\href{https://github.com/artemklevtsov/r-alpine}{https://github.com/artemklevtsov/r-alpine} or \href{https://www.github.com/velaco/alpine-r}{https://www.github.com/velaco/alpine-r} provide different use case images but are not recently maintained (development of the latter documented in \citet{ratesic_building_2018}); \href{https://github.com/cmplopes/alpine-r}{https://github.com/cmplopes/alpine-r} has only base R images, is relatively up-to-date but sparsely documented.}.
+Alpine images are often used for minimalistic and thereby small and secure containers, e.g., in hardware with limited storage, though this advantage quickly deteriorates if more features are needed, e.g. if installing RStudio, package building envrionments, or powerful data science tools.
+Furthermore the distribution uses the [`musl` C library](https://www.musl-libc.org/) instead of the `glibc` used in Debian/Ubuntu, for which more tooling and experiences exist\footnote{Cf. \href{https://github.com/rocker-org/rocker/issues/231}{https://github.com/rocker-org/rocker/issues/231}}.
+\href{https://github.com/CenterForStatistics-UGent/mountainr}{https://github.com/CenterForStatistics-UGent/mountainr} only has a single and quite short `Dockerfile`, showing the easy installation of the latest R from Alpine sources.
+These images are used ...
+
+[`altRnative`](https://github.com/ismailsunni/altRnative/) is an experimental R package for running the same code across multiple containerised versions of R, intended for comparison across operating systems and different implementations of R.
+It comes with a collection of `Dockerfile`s and corresponding images \footnote{\href{https://github.com/ismailsunni/dockeRs}{https://github.com/ismailsunni/dockeRs}}.
+
 
 # Use cases and applications
 <!-- from packages closer to Docker to second level packages to more complex use cases -->
@@ -709,6 +725,7 @@ The portability of containers becomes particularly useful when complex processin
 ...
 
 ## Development and debugging
+\label{development}
 
 Containers can also serve as useful playgrounds to create environments ad-hoc or to provide very specific environments that are not often needed.
 Developers can readily start a local container based on a Rocker image to investigate a bug report, which might require them to install a specific combination of package versions or use a specific R version (see also versioned images above).
@@ -718,14 +735,9 @@ Using the Rocker images with RStudio, the disposable environments lack no develo
 **[`r-debug`](https://github.com/wch/r-debug)** is a purpose built Docker image for debugging R memory problems.
 \citet{eddelbuettel_debugging_2019} describes how a Docker container was used to debug an issue with a package only occuring with a particular version of Fortran, and using tools which are not readily available on all platforms (e.g., not on macOS).
 
-- **[R-Hub](https://github.com/r-hub/)**
-
-# Other containerisation platforms
-
-Docker is not the only containerisation software.
-An alternative stemming from the domain of high-perfomance computing is Singularity \citep{kurtzer_singularity_2017}.
-Singularity can run Docker images, and in the case of Rocker works out of the box if the main process is R, e.g., in `rocker/r-base`, but does not succeed in running images where there is an init script, e.g. in containers that by default run RStudio.
-In the latter case, a `Singularity` file, a set of instructions akin to a `Dockerfile` needs to be used.
+The R-hub Docker images (see Section&nbsp;\ref{rhub}) can also be used to debug problems locally using various combinations of Linux platforms, R versions, and compilers\footnote{See \href{https://r-hub.github.io/rhub/articles/local-debugging.html}{https://r-hub.github.io/rhub/articles/local-debugging.html} and \href{https://blog.r-hub.io/2019/04/25/r-devel-linux-x86-64-debian-clang/}{https://blog.r-hub.io/2019/04/25/r-devel-linux-x86-64-debian-clang/}.
+The images go beyond the configurations, or _flavours_, used by CRAN for checking packages\footnote{\href{https://cran.r-project.org/web/checks/check_flavors.html}{https://cran.r-project.org/web/checks/check_flavors.html}}, e.g., with CentOS-based images, but lack a container for checking on Windows or OS X.
+The images greatly support package developers to provide support on operating systems they are not familiar.
 
 # Conclusions
 
