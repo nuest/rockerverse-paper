@@ -194,10 +194,13 @@ The success even lead to standardisation and industry collaboration \citep{oci_o
 
 The key accomplishment of Docker (as an "application") is to make a "bundled" aggregation of software (the so-called "image") available to any system equipped to run Docker, without requiring much else from the host besides the actual Docker application installation.
 This is a rather attractive, and novel, proposition which has lead to widespread adoption and use of Docker in a variety of domains, _e.g._, cloud computing infrastructure \citep{Bernstein2014}, data science \citep{boettiger_introduction_2015}, and edge computing \citep{alam_orchestration_2018} [more examples!].
-It provided to be a natural match for "cloud deployment" which runs (or at least appears to run) "seamlessly" without much explicit reference to the underlying machine, architecture or operating system: containers can be deployed with very little in terms of dependencies on the host system---only the container runtime is required.
+It provided to be a natural match for "cloud deployment" which runs (or at least appears to run) "seamlessly" without much explicit reference to the underlying machine, architecture or operating system: containers are portable and can be deployed with very little in terms of dependencies on the host system---only the container runtime is required.
+Images are normally build from plain text documents called `Dockerfile`.
+A `Dockerfile` has a specific set of instructions to create and document a well-defined environment, i.e., install specific software and expose specific ports.
 
 For statistical computing and analysis centered around R, the Rocker Project has provided a variety of Docker containers since its start in 2014 \citep{RJ-2017-065}.
 The Rocker Project provides several lines of containers spanning to from building blocks with `R-release` or `R-devel`, via containers with RStudio~Server and Shiny~Server, to domain-specific containers such as `geospatial`.
+These containers form _image stacks_, building on top of each other for better maintainability and 
 Also of note is a series of "versioned" containers which match the R release they contain with the _then-current_ set of packages via the MRAN Snapshot views of CRAN \citep{microsoft_cran_2019}.
 The Rocker Project's impact and importance was acknowledged by the Chan Zuckerberg Initiative's _Essential Open Source Software for Science_, who provide findung for the projects's sustainable maintenance, community growth, and targeting new hardware platforms including GPUs \citep{chan_zuckerberg_initiative_maintaining_2019}.
 
