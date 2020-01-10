@@ -738,7 +738,7 @@ Using the Rocker images with RStudio, the disposable environments lack no develo
 \citet{eddelbuettel_debugging_2019} describes how a Docker container was used to debug an issue with a package only occuring with a particular version of Fortran, and using tools which are not readily available on all platforms (e.g., not on macOS).
 
 The R-hub Docker images (see Section&nbsp;\ref{rhub}) can also be used to debug problems locally using various combinations of Linux platforms, R versions, and compilers\footnote{See \href{https://r-hub.github.io/rhub/articles/local-debugging.html}{https://r-hub.github.io/rhub/articles/local-debugging.html} and \href{https://blog.r-hub.io/2019/04/25/r-devel-linux-x86-64-debian-clang/}{https://blog.r-hub.io/2019/04/25/r-devel-linux-x86-64-debian-clang/}.
-The images go beyond the configurations, or _flavours_, used by CRAN for checking packages\footnote{\href{https://cran.r-project.org/web/checks/check_flavors.html}{https://cran.r-project.org/web/checks/check_flavors.html}}, e.g., with CentOS-based images, but lack a container for checking on Windows or OS X.
+The images go beyond the configurations, or _flavours_, used by CRAN for checking packages\footnote{\href{https://cran.r-project.org/web/checks/check_flavors.html}{https://cran.r-project.org/web/checks/check\_flavors.html}}, e.g., with CentOS-based images, but lack a container for checking on Windows or OS X.
 The images greatly support package developers to provide support on operating systems they are not familiar.
 
 # Conclusions
