@@ -364,6 +364,36 @@ These images are used ...
 [`altRnative`](https://github.com/ismailsunni/altRnative/) is an experimental R package for running the same code across multiple containerised versions of R, intended for comparison across operating systems and different implementations of R.
 It comes with a collection of `Dockerfile`s and corresponding images \footnote{\href{https://github.com/ismailsunni/dockeRs}{https://github.com/ismailsunni/dockeRs}}.
 
+## Data Science images
+
+The notion of _Data Science_ is widely discussed among all academic disciplines.
+Using computers and complex software to make sense of (large amounts of) collected or simulated data is a cross-cutting phenomenon leading to _X Data Science_ disciplines, seminars, and study majors, there are also Docker images with commonly used tools and software stacks pre-installed that are often used in combination for analysing data.
+A large number of bespoke computing environments are created this way.
+Here we only mention a few image stacks as examples that are not based on Rocker images but prominently include installations of R.
+
+The [**Jupyter Docker Stacks** project](https://github.com/jupyter/docker-stacks/) are a set of ready-to-run Docker images containing Jupyter applications and interactive computing tools \citep{project_jupyter_jupyter_2018}.
+The `jupyter/r-notebook` image includes R and "popular packages", and R is also included in the catchall `datascience-notebook` image\footnote{\href{https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html}{https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html}}.
+For example, these images allow users to quickly start a Jupyter Notebook server locally or build their own specialised images on top of stable toolsets.
+
+**Kaggle** provides the [`gcr.io/kaggle-images/rstats`](https://hub.docker.com/r/kaggle/rstats) image (previously `kaggle/rstats`) and [corresponding `Dockerfile`](https://github.com/Kaggle/docker-rstats) for usage in their Machine Learning competitions and easy access to the associated datasets.
+It includes machine learling libraries such as Tensorflow and Keras, and also configures the \pkg{reticulate} package.
+The image uses a base image with _all packages from CRAN_, `gcr.io/kaggle-images/rcran`, which requires a Google Cloud Build as Docker Hub would time out\footnote{Originally, a stacked collection of over 20 images with automated builds on Docker Hub was used, see \href{https://web.archive.org/web/20190606043353/http://blog.kaggle.com/2016/02/05/how-to-get-started-with-data-science-in-containers/}{https://web.archive.org/web/20190606043353/http://blog.kaggle.com/2016/02/05/how-to-get-started-with-data-science-in-containers/} and \href{https://hub.docker.com/r/kaggle/rcran/dockerfile}{https://hub.docker.com/r/kaggle/rcran/dockerfile}}.
+The final extracted image size is over 25GB, which makes it debatable if having everything available is actually convenient.
+
+```{bash kaggle_images, eval=FALSE, include=FALSE}
+docker pull gcr.io/kaggle-images/rcran
+docker pull kaggle/rcran # over 22 months old
+docker pull gcr.io/kaggle-images/rstats
+docker images | grep kaggle
+```
+
+As a further example, [**Radiant** project](https://radiant-rstats.github.io/docs/) provides several images, e.g., [`vnijs/rsm-msba-spark`](https://hub.docker.com/r/vnijs/rsm-msba-spark), for their browser-based business analytics interface based on \pkg{Shiny} (`Dockerfile` [on GitHub](https://github.com/radiant-rstats/docker)) and for use in education as part of an MSc course.
+As data science often applies a multitude of tools, this image favours inclusion over selection and features Python, Postgres, JupyterLab and Visual Studio Code besides R and RStudio, bringing the image size up to 9GB.
+
+```{bash radiant_images, eval=FALSE, include=FALSE}
+docker pull vnijs/rsm-msba-spark
+docker images | grep vnijs
+```
 
 # Use cases and applications
 <!-- from packages closer to Docker to second level packages to more complex use cases -->
