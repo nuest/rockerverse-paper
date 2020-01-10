@@ -140,6 +140,10 @@ This article presents this _Rockerverse_ of projects across all development stag
 We also introduce related activities connecting the R language and environment with other containerisation solutions.
 The main contributions is a coherent picture of the current lay of the land of using containers in, with, and for R.
 
+The article continues with a brief introduction of containerization basics and the Rocker Project, followed by descriptions of projects developing images with R installations.
+Then, we present applications, starting with the R packages specificly for interacting with Docker, second-level packages using containers mediately or only for specific features, up to complex use cases leveraging containers.
+We conclude with a reflection on the landscape of packages and applications and point out future directions of development.
+
 ```{r hexSticker, message=TRUE, warning=FALSE, cache=TRUE, include=FALSE}
 if(!file.exists("rockerverse.png")) {
   library("magick")
@@ -333,8 +337,8 @@ But the developments in the `rocker-win` prototype show that containers can also
 - [Images used by R-Hub](https://github.com/r-hub/rhub-linux-builders) (overlap with CI?)
 - https://github.com/jlisic/R-docker-centos
 
-# R Packages
-<!-- from packages closer to Docker to second level packages to more complex ones -->
+# Use cases and applications
+<!-- from packages closer to Docker to second level packages to more complex use cases -->
 
 ## Interfaces for Docker in R
 
@@ -492,8 +496,6 @@ Iteration and automation for Dockerfiles is the very reason behind [`dockerfiler
 
 For example, the **[`golem`](https://github.com/ThinkR-open/golem)** package makes an heavy use of `dockerfiler` when it comes to creating the `Dockerfile` for building production-grade Shiny applications and deploying them.
 The reason behind this is that `dockerfiler`, on top of being scriptable from R, can leverage all the tools available in R to parse a `DESCRIPTION` file, to get system requirements, to list dependencies, versions, etc. 
-
-# Use cases and applications
 
 ## Deployment to cloud services [div]
 
