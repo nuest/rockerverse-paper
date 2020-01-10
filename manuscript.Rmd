@@ -435,7 +435,9 @@ Several second order R packages attempt to make the process of creating Docker i
 
 - [`dockerfiler`](https://github.com/ColinFay/dockerfiler/)
 - [`containerit`](https://github.com/o2r-project/containerit/)
+- [`dockr`](https://github.com/smaakage85/dockr)
 - [`dockertest`](https://github.com/traitecoevo/dockertest/)
+- [`renv` with Docker](https://rstudio.github.io/renv/articles/docker.html)
 
 **[_liftr_](https://nanx.me/liftr/)** \citep{liftr2019} aims to solve the problem of persistent reproducible reporting in statistical computing.
 Currently, the R Markdown format and its backend compilation engine _knitr_ offer a _de facto_ standard for creating dynamic documents \citep{xie2018}.
@@ -482,8 +484,6 @@ In summary, _liftr_ tries to redefine the meaning of computational reproducibili
 It provided a practical way for achieving it --- a new perspective on how reproducible research could be done in reality.
 Further, sharing system environments for data analysis also becomes extremely easy, since users only need to share the R Markdown document (with a few extra metadata fields), and compile them with _liftr_.
 As an example, _liftr_ demonstrated its advantage for R Markdown-based computational workflow orchestration, by effortlessly containerizing 18 complex _Bioconductor_ workflows in the DockFlow project (https://dockflow.org) in 2017.
-
-- [`rize` for Shiny](https://github.com/cole-brokamp/rize)
 
 One of the key tool of Docker are dockerfiles, which can be thought of as "recipes" used to build a specific image. 
 But building these files can feel like a workflow break as it demands to open a separate file, and / or to write a small wrapper around R's `write()` function to add elements to the file. 
