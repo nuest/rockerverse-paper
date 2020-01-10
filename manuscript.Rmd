@@ -236,13 +236,13 @@ Extended license information about MKL is printed at every startup.
 **Renjin** is an interpreter for the R language running on top of the [Java Virtual Machine](https://en.wikipedia.org/wiki/Java_virtual_machine) (JVM) providing full two-way access between Java and R code \citep{wikipedia_renjin_2018}.
 It was developed to combine the benefits of R, such scripting and extension packages, with the JVM's advantages in the areas of security, cross-platform availability, and established position in enterprise settings.
 R extension packages need to be specially compiled and are distributed via the Java package manager [Apache Maven](https://en.wikipedia.org/wiki/Apache_Maven), cf. [http://packages.renjin.org/packages](http://packages.renjin.org/packages) for available packages.
-Packages are loaded on demand, i.e. at the first call to `library()`.
-Not all R packages, especially one linking to binary libraries, are available, e.g. `rgdal` \footnote{\href{http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1}{http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1}}.
+Packages are loaded on demand, i.e., at the first call to `library()`.
+Not all R packages, especially one linking to binary libraries, are available, e.g., `rgdal` \footnote{\href{http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1}{http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1}}.
 There are no offical Docker images for Renjin, but community-maintained images for selected releases only are available under `nuest/renjin` on Docker Hub and GitHub at [https://hub.docker.com/r/nuest/renjin](https://hub.docker.com/r/nuest/renjin) and [https://github.com/nuest/renjin-docker](https://github.com/nuest/renjin-docker) respectively.
 These images expose the command line interface of Renjin in a similar fashion as Rocker images and allow an easy evaluation of Renjin's suitability, but are not intended for production use.
 
 **[pqR](http://www.pqr-project.org/)** is a "a pretty quick version of R".
-_pqR_ attempts to improve R on some opinionated issues in the R language and is the basis for experimental features, e.g. automatic diffentiation\footnote{\href{https://riotworkshop.github.io/abstracts/riot-2019-pqr.txt}{https://riotworkshop.github.io/abstracts/riot-2019-pqr.txt}}.
+_pqR_ attempts to improve R on some opinionated issues in the R language and is the basis for experimental features, e.g., automatic diffentiation\footnote{\href{https://riotworkshop.github.io/abstracts/riot-2019-pqr.txt}{https://riotworkshop.github.io/abstracts/riot-2019-pqr.txt}}.
 The source code development [on GitHub](https://github.com/radfordneal/pqR/) is a one man project and it does not provide any Docker images.
 But especially disruptive approaches may contribute to the development of the R ecosystem, so the `nuest/pqr` images on Docker Hub and GitHub at [https://hub.docker.com/r/nuest/pqr/](https://hub.docker.com/r/nuest/pqr/) and [https://github.com/nuest/pqr-docker](https://github.com/nuest/pqr-docker) respectively.
 
@@ -271,7 +271,7 @@ The 'core' image installs the most commonly used _Bioconductor_ packages.
 _Bioconductor_ images for proteomics, metabolomics, and flow cytometry are community maintained.
 All community maintained images build on top of the _Bioconductor_ base image and therefore indirectly the Rocker images.
 To simplify building and maintaining _Bioconductor_ images, we use a Ruby templating engine.
-A recent audit of the _Bioconductor_ Dockerfiles, following best practices from the Docker website, led to a reduction in the size and number of layers.
+A recent audit of the _Bioconductor_ `Dockerfile`s, following best practices from the Docker website, led to a reduction in the size and number of layers.
 The most important insights involve the ['union' file system used by Docker](https://docs.docker.com/storage/storagedriver/overlayfs-driver/#how-container-reads-and-writes-work-with-overlay-or-overlay2).
 In this file system, once a layer (e.g., `RUN` statement) writes to a file path, the file path is never altered.
 A subsequent layer that might appear to remove or overwrite the path actually masks, rather than alters, the original.
@@ -305,7 +305,7 @@ Therefore, controlling the version of software is most crucial for reproducible 
 
 Containers are perfectly suited to capture a specific configuration of a computing environment to prohibit such problems.
 The Rocker images provides the _versioned stack_ for different the version of R since the project inception, which use the _then-current_ stable Debian base image \citep[cf.][]{RJ-2017-065}.
-Based on custom build phase hooks\footnote{\href{https://docs.docker.com/docker-hub/builds/advanced/}{https://docs.docker.com/docker-hub/builds/advanced/}}, i.e. small shell scripts executed at different phases in the automated build of Rocker images, there are also semantic version tags for the most recent freezed (i.e. using MRAN) versions with only the major and minor version\footnote{See \href{https://github.com/rocker-org/rocker-versioned/blob/master/VERSIONS.md}{https://github.com/rocker-org/rocker-versioned/blob/master/VERSIONS.md}, FIXME: \href{https://github.com/rocker-org/rocker-versioned/issues/42}{https://github.com/rocker-org/rocker-versioned/issues/42}.}.
+Based on custom build phase hooks\footnote{\href{https://docs.docker.com/docker-hub/builds/advanced/}{https://docs.docker.com/docker-hub/builds/advanced/}}, i.e., small shell scripts executed at different phases in the automated build of Rocker images, there are also semantic version tags for the most recent freezed (i.e., using MRAN) versions with only the major and minor version\footnote{See \href{https://github.com/rocker-org/rocker-versioned/blob/master/VERSIONS.md}{https://github.com/rocker-org/rocker-versioned/blob/master/VERSIONS.md}, FIXME: \href{https://github.com/rocker-org/rocker-versioned/issues/42}{https://github.com/rocker-org/rocker-versioned/issues/42}.}.
 So, at the time of writing this article, `rocker/r-ver:3` and `3.6` are aliases for `3.6.0`, because `3.6.1` is the latest release.
 With the release of `3.6.2` and pinning of the MRAN version in `3.6.1`, the tags `3` and `3.6` will deliver the same image as `3.6.1`.
 These tags allow users to update the base image to retrieve bugfixes while reducing the risk of also introducing breaking changes.
@@ -325,16 +325,15 @@ Docker containers on the Windows operating system were originally quite cumberso
 They required an extra tool, [Docker Toolbox](https://docs.docker.com/toolbox/), which by now only exists as a legacy solution for older Windows systems.
 Docker toolbox leverages `docker-machine` (see also Section&nbsp;\ref{interfaces} for an R package interfacing with `docker-machine`) to handle the process of creating a local virtual host which could host Docker Engine, while exposing the regular Docker CLI.
 The Docker CLI commands are forwarded to the virtual host transparently for the user.
-
 For current Windows Server (2016 and later) and Windows Desktop ([Docker Desktop](https://www.docker.com/products/docker-desktop) requires Windows 10) versions, Docker is supported natively\footnote{\href{https://www.docker.com/products/windows-containers}{https://www.docker.com/products/windows-containers}} and different base images are offered by Microsoft\footnote{\href{https://docs.microsoft.com/en-us/virtualization/windowscontainers/about/index}{https://docs.microsoft.com/en-us/virtualization/windowscontainers/about/index}}.
 The Docker CLI can be used in just the same way as on other operating systems but not every base image is supported on every Windows host\footnote{\href{https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/version-compatibility}{https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/version-compatibility}}.
 On Docker Desktop for Windows, the user can run both Linux-based and Windows-based containers, but only one of the Docker daemons can be used at a time\footnote{See "Switch between Windows and Linux containers" on \href{https://docs.docker.com/docker-for-windows/}{https://docs.docker.com/docker-for-windows/}.}.
 
-[`rocker-win`](https://github.com/nuest/rocker-win) is a proof of concept for running R in Windows-based containers \citep{nust_rocker-win_2019}.
+**[`rocker-win`](https://github.com/nuest/rocker-win)** is a proof of concept for running R in Windows-based containers \citep{nust_rocker-win_2019}.
 It provides selected R versions using three different base images using `microsoft/windowsservercore` and `mcr.microsoft.com/windows/servercore`.
 These base images match different Windows versions: Windows Server 2019, Windows Server 2016, and Windows Server, version 1803.
 The images are built using two CI services, [Travis CI](https://docs.travis-ci.com/user/reference/windows/) and [Appveyor](https://www.appveyor.com/docs/windows-images-software/), which provide the different Windows versions and therefore support different base images, and published automatically [on Docker Hub](https://hub.docker.com/r/nuest/rocker-win).
-The images are built from manually maintained seperate Dockerfiles, are tagged with both Windows-variant and R version, e.g. `nuest/rocker-win:ltsc2019-3.6.2` or `nuest/rocker-win:1803-latest`, and run the `R.exe` process by default.
+The images are built from manually maintained seperate `Dockerfile`s, are tagged with both Windows-variant and R version, e.g., `nuest/rocker-win:ltsc2019-3.6.2` or `nuest/rocker-win:1803-latest`, and run the `R.exe` process by default.
 New R versions are only added on demand.
 The explorative project demonstrates the variety and pontentially confusing complexity of Windows on Docker, e.g., because of the different base images, but also provides a starting point for any Windows-constrained user to leverage containerisation, including examples for apps using \pkg{plumber\, \pkg{Shiny}, or R packages with system dependencies such as \pkg{sf}.
 The latter is quite comfortable actually, as R ships pre-compiled binaries for Windows.
@@ -375,7 +374,7 @@ Interfacing with the Docker daemon is typically done through the Docker Command 
 However, moving back and forth between an R console and the command line can create friction in workflows and reduce reproducibility.
 A number of first-order R packages provide a interface to the Docker CLI, allowing to automate interaction with the Docker CLI from an R console.
 
-Each of these packages has particular advantages as they provide function wrappers for interacting with the Docker CLI at different stages of a container's life cycle. Examples of such interactions are installing the Docker software, creating Dockerfiles, building an image, and launching a container on a local machine or on the cloud. As such, the choice of which package is most useful depends on the use-case at hand.
+Each of these packages has particular advantages as they provide function wrappers for interacting with the Docker CLI at different stages of a container's life cycle. Examples of such interactions are installing the Docker software, creating `Dockerfile`s, building an image, and launching a container on a local machine or on the cloud. As such, the choice of which package is most useful depends on the use-case at hand.
 <!-- ^ in the examples listed above, the name of the packages which provide such functionality could be mentioned, this would highlight the variety in functionality already. -->
 
 ```{r clientfunctionalities, echo=FALSE, results='asis', warning=FALSE, message=FALSE}
@@ -436,15 +435,12 @@ Work with containers over the Docker API. Rather than using system calls to inte
 docker has been removed from CRAN, seems unmaintained by authors. Maybe it should be removed from this list?
 -->
 
-
-**dockyard** ([https://github.com/thebioengineer/dockyard](https://github.com/thebioengineer/dockyard)) has the goal of lowering barrier to creating dockerfiles and docker images, and deploying docker containers. 
-The way docker images are made is by reading and following a set of instructions found in dockerfiles/
 This requires stepping out of the R ecosystem and into an infrastructure mindset where the user needs to specify the environment they require.
-Because dockerfiles can be read as a series of steps, this lends itself well to the `tidyverse` style of programming where each step is piped into the next.
-dockyard has a 'dockerfile' object that either starts out as an empty dockerfile, or can use existing dockerfile to use as a template.
-This combined with a series of functions that are analogous to the steps commonly found in a dockerfile, it makes building docker images much more approachable to R users.
-There are also wrappers for commonly used steps for R programmers like adding libraries and copying files into the R docker containers.
-Once the dockerfile is created, dockyard has the functionality to build the image and deploy it.
+Because `Dockerfile`s can be read as a series of steps, this lends itself well to the `tidyverse` style of programming where each step is piped into the next.
+dockyard has a `Dockerfile` object that either starts out as an empty `Dockerfile`, or can use existing `Dockerfile` to use as a template.
+This combined with a series of functions that are analogous to the steps commonly found in a `Dockerfile`, it makes building Docker images much more approachable to R users.
+There are also wrappers for commonly used steps for R programmers like adding libraries and copying files into the R Docker containers.
+Once the `Dockerfile` is created, dockyard has the functionality to build the image and deploy it.
 
 **dockermachine** ([https://github.com/cboettig/dockermachine](https://github.com/cboettig/dockermachine))
 <!-- From the github description:
@@ -518,10 +514,10 @@ It provided a practical way for achieving it --- a new perspective on how reprod
 Further, sharing system environments for data analysis also becomes extremely easy, since users only need to share the R Markdown document (with a few extra metadata fields), and compile them with _liftr_.
 As an example, _liftr_ demonstrated its advantage for R Markdown-based computational workflow orchestration, by effortlessly containerizing 18 complex _Bioconductor_ workflows in the DockFlow project (https://dockflow.org) in 2017.
 
-One of the key tool of Docker are dockerfiles, which can be thought of as "recipes" used to build a specific image. 
+One of the key tool of Docker are `Dockerfile`s, which can be thought of as "recipes" used to build a specific image. 
 But building these files can feel like a workflow break as it demands to open a separate file, and / or to write a small wrapper around R's `write()` function to add elements to the file. 
 At the same time, doing it by hand prevents from using programming language for what they are good for: iteration, and automation. 
-Iteration and automation for Dockerfiles is the very reason behind [`dockerfiler`](https://github.com/ColinFay/dockerfiler), an R package designed for building Dockerfiles straigth from R. 
+Iteration and automation for `Dockerfile`s is the very reason behind [`dockerfiler`](https://github.com/ColinFay/dockerfiler), an R package designed for building `Dockerfile`s straight from R. 
 
 For example, the **[`golem`](https://github.com/ThinkR-open/golem)** package makes an heavy use of `dockerfiler` when it comes to creating the `Dockerfile` for building production-grade Shiny applications and deploying them.
 The reason behind this is that `dockerfiler`, on top of being scriptable from R, can leverage all the tools available in R to parse a `DESCRIPTION` file, to get system requirements, to list dependencies, versions, etc. 
@@ -532,7 +528,7 @@ The cloud is the natural environment of containers, and becomes the go-to mechan
 
 - `RSelenium`
 - [`googleComputeEngineR`](https://cloudyr.github.io/googleComputeEngineR/) (function `docker_run`)
-  - I don't think `docker_run` is main focus for containers for this package, its more how it uses Docker to launch custom environments that can be templated (e.g. rstudio, shiny etc.) and for parrallisation e.g. `library(future)`  using GCE VMs as endpoints. [@MarkEdmondson1234]
+  - I don't think `docker_run` is main focus for containers for this package, its more how it uses Docker to launch custom environments that can be templated (e.g., rstudio, shiny etc.) and for parrallisation e.g., `library(future)`  using GCE VMs as endpoints. [@MarkEdmondson1234]
 - [`analogsea`](https://github.com/sckott/analogsea) (digital ocean R client)
 - [`AzureContainers`](https://cran.r-project.org/package=AzureContainers): Umbrella package for working with containers in Microsoft's Azure cloud. Provides interfaces to three Azure services: Container Registry, Container Instances (for running individual containers), and Kubernetes Services (for orchestrated deployments)
 
@@ -647,7 +643,7 @@ More details can be found from most Kubernetes learning resources, and are outsi
 
 ## Continuous integration and continuous delivery [@noamross, @ColinFay]
 
-The controlled nature of containers, i.e. it is possible to define the software environment very well, even on remote machines, make them also useful for continuous integration (CI) and continuous delivery of applications.
+The controlled nature of containers, i.e., it is possible to define the software environment very well, even on remote machines, make them also useful for continuous integration (CI) and continuous delivery of applications.
 
 - DevOps
   - https://www.opencpu.org/posts/opencpu-with-docker/
@@ -662,7 +658,7 @@ That way, package builders can use this image as a base image for there testing 
   - For this project, we use travis-ci to build rocker-derived containers, test them, and only push them to docker hub (from travis-ci.org) if the integration tests succeed.
 - Google Cloud Build [@MarkEdmondson1234]
   - https://cloud.google.com/cloud-build/
-  - For me this is what makes Docker containers viable, as it builds the Dockerfiles on each GitHub commit.  It couples with Google Container Registry to build private Docker images, for downstream applications.
+  - For me this is what makes Docker containers viable, as it builds the `Dockerfile`s on each GitHub commit.  It couples with Google Container Registry to build private Docker images, for downstream applications.
 
 ## Common or public work environments
 
@@ -675,19 +671,15 @@ A _BinderHub_ allows anyone with access to a web browser and an internet connect
 From a reproducibility standpoint, Binder makes it exceedingly easy to compile a paper, visualize data, and run small examples from papers or tutorials without the need for any local installation.
 To set up Binder for a project, a user typically starts at an instance of a BinderHub and passes the location of a repository with a workspace, e.g., a hosted Git repository, or a data repository like Zenodo.
 Binder's core internal tool is [repo2docker](https://repo2docker.readthedocs.io/en/latest/config_files.html).
-It deterministically builds a Docker image by parsing the contents of a repository, e.g. project dependency configurations or simple configuration files.
-In the most powerful case, `repo2docker` builds a given Dockerfile.
+It deterministically builds a Docker image by parsing the contents of a repository, e.g., project dependency configurations or simple configuration files.
+In the most powerful case, `repo2docker` builds a given `Dockerfile`.
 While this approach works well for most run of the mill Python projects, it is not so seamless for R projects.
-For any R projects that use the Tidyverse suite [citation in review, will add by the time this gets submitted], the time and resources required to build all dependencies from source can often time out before completion, making it frustrating for the average R user.
+For any R projects that use the Tidyverse suite \citep{wickham_welcome_2019}, the time and resources required to build all dependencies from source can often time out before completion, making it frustrating for the average R user.
 `holepunch` removes some of these limitations by leveraging Rocker images that contain the Tidyverse along special Jupyter dependencies, and only installs additional packages from CRAN and Bioconductor that are not already part of these images.
 It short cicuits the configuration file parsing in `repo2docker` and starts with the Binder/Tidyverse base images, which eliminates a large part of the build time and in most cases results in a binder instance launching within a minute.
 `holepunch` as a side effect also creates a `DESCRIPTION` file which then turns any project into a research compendium \citep{marwick_packaging_2018}.
-The Dockerfile included with the project can also be used to launch a RStudio server locally independent of Binder which is especially useful when more or special computational resources are required.
-
-[`holepunch`](https://github.com/karthik/holepunch) is a R package that was designed to remove some of these limitations and make Binder more accessible to novice R users.
-`holepunch` achieves this by leveraging Rocker images that contains the Tidyverse along special Jupyter dependencies, and only installs additional packages from CRAN and Bioconductor that are not already part of these images.
-Starting with the Binder/Tidyverse base images eliminates a large part of the build time and in most cases results in a binder instance launching within a minute. `holepunch` as a side effect also creates a DESCRIPTION file which then turns any project into a research compendium \citep{marwick_packaging_2018}.
-The Dockerfile included with the project can also be used to launch a RStudio server locally independent of binder which is especially useful when more computational resources are required.
+The `Dockerfile` included with the project can also be used to launch a RStudio server locally, i.e., independent of Binder, which is especially useful when more or special computational resources can be provided there.
+The local image usage reduces the number of seperately managed environments and thereby reduces work and increases portability and reproducibility.
 
 In **high-performance computing**, one use for containers is to run workflows on shared local hardware where teams manage their own high-performance servers.
 This can follow one of several design patterns: users may deploy containers to hardware as a work environment for a specific project, conatiners may provide per-user persistent environments, or a single container can act as a common multi-user environment for a server.
@@ -703,7 +695,7 @@ In the case of shared disks or network-attached volumes, care must be taken to p
 When working with multiple servers, an automation framework such as [Ansible](https://www.ansible.com) may be useful for managing users, permisions, and disks along with containers.
 
 Using **GPUs** (graphical processing units) as a specialised hardware from containerized common work environments is also possible and useful \citep{haydel_enhancing_2015}.
-GPUs are increasingly popular for compute-intensive machine learning tasks, e.g. deep artificial neural networks \citep{schmidhuber_deep_2015}.
+GPUs are increasingly popular for compute-intensive machine learning tasks, e.g., deep artificial neural networks \citep{schmidhuber_deep_2015}.
 Though in this case, containers are not completely portable between hardware environments.
 Containers running GPU software require drivers and libraries specific to GPU models and versions, and containers require a specialized runtime to connect to the underlying GPU hardware.
 For NVIDIA GPUs, the [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker) includes a specialized runtime plugin for Docker and a set of base images with appropriate drivers and libraries.
@@ -730,7 +722,7 @@ The portability of containers becomes particularly useful when complex processin
   - the most popular functionality for `googleComputeEngineR` is its use of Docker to enable parallel processing across VMS - [some demos here](https://cloudyr.github.io/googleComputeEngineR/articles/massive-parallel.html)
 - Google Cloud Run - CaaS (Containers as a Service) that lets you launch a Docker container without worrying about underlying infrastructure. An R implementation is shown here at [cloudRunR](https://github.com/MarkEdmondson1234/cloudRunR) which uses it to create a scalable R plumber API. 
 - `batchtools` \citep{Lang2017batchtools} can [schedule jobs with Docker Swarm](https://mllg.github.io/batchtools/reference/makeClusterFunctionsDocker.html)
-- scalable deployments, e.g. start with numerous Shiny talks mentioning Rocker at useR!2017
+- scalable deployments, e.g., start with numerous Shiny talks mentioning Rocker at useR!2017
 - [dynmethods](https://github.com/dynverse/dynmethods) [@rcannood]: In order to evaluate ±50 computational methods which all used different environments (R, Python, C++, ...), we wrapped each of them in a docker container and can execute these methods from R. Again, all of these containers are being built on travis-ci, and will only be pushed to docker hub if the integration test succeeds.
 
 ## Research Compendia [@benmarwick]
@@ -755,9 +747,9 @@ The images greatly support package developers to provide support on operating sy
 # Conclusions
 
 - what are next steps?
-- support more complex set-ups with ready-to-use stacks, e.g. GPU, AI, ML
+- support more complex set-ups with ready-to-use stacks, e.g., GPU, AI, ML
 - Missing pieces?
-- consolidation (e.g. via packages using `dockerfiler` and `stevedore`)
+- consolidation (e.g., via packages using `dockerfiler` and `stevedore`)
 - Common themes
   - reproducibility
 - will knowledge about containers continue to spread?
