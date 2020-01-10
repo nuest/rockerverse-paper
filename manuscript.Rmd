@@ -430,11 +430,8 @@ if (packageVersion("rticles") >= "0.12.3") {
 Work with containers over the Docker API. Rather than using system calls to interact with a docker client, using the API directly means that we can receive richer information from docker. The interface in the package is automatically generated using the 'OpenAPI' (a.k.a., 'swagger') specification, and all return values are checked in order to make them type stable.
 -->
 
-<!--
-**docker** ([https://bhaskarvk.github.io/docker](https://bhaskarvk.github.io/docker)
-docker has been removed from CRAN, seems unmaintained by authors. Maybe it should be removed from this list?
--->
-
+**dockyard** ([https://github.com/thebioengineer/dockyard](https://github.com/thebioengineer/dockyard)) has the goal of lowering barrier to creating `Dockerfile`s and Docker images, and deploying Docker containers. 
+The way docker images are made is by reading and following a set of instructions found in `Dockerfile`s.
 This requires stepping out of the R ecosystem and into an infrastructure mindset where the user needs to specify the environment they require.
 Because `Dockerfile`s can be read as a series of steps, this lends itself well to the `tidyverse` style of programming where each step is piped into the next.
 dockyard has a `Dockerfile` object that either starts out as an empty `Dockerfile`, or can use existing `Dockerfile` to use as a template.

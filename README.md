@@ -10,9 +10,16 @@ _Want to contribute?_ See https://github.com/nuest/rockerverse-paper/issues/3.
 
 **Current draft**: https://nuest.github.io/rockerverse-paper/master.pdf
 
-**Render the manuscript with Docker**:
+## Render the manuscript with Docker
 
 ```bash
 docker build --tag rockerverse --file .binder/Dockerfile .
 docker run -i -v $(pwd):/rockerverse --user $UID rockerverse Rscript -e 'setwd("/rockerverse"); rmarkdown::render("manuscript.Rmd")'
 ```
+
+## Not included projects and packages
+
+- `rize`, because discontinued, see #35
+- `docker` ([https://bhaskarvk.github.io/docker](https://bhaskarvk.github.io/docker) has been removed from CRAN, seems unmaintained by authors
+- https://github.com/svlentink/dockerfiles/blob/master/svlentink/r-base-alpine/Dockerfile because the Alpine image is quite a trivial one
+- https://github.com/jlisic/R-docker-centos because CentOS images are also provided by R-hub
