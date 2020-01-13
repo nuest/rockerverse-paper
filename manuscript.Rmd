@@ -111,6 +111,14 @@ author:
       - Seattle, WA 98109-1024, USA
       #- \orcid{}
     email: ehhughes@fredhutch.org
+  - name: Sean Lopp
+    # https://github.com/slopp
+    affiliation: RStudio, Inc
+    address:
+      - RStudio
+      - 250 Northern Ave
+      - Boston, MA 02210
+    email: sean@rstudio.com
   - name: Ben Marwick
 abstract: >
   The Rocker project provides widely-used Docker images for R across different application scenarios.
@@ -355,6 +363,14 @@ _The rationale_ of not re-using the Rocker image stack is the high number of ope
 Also, a common structure across the respective image stacks of the operating systems, e.g., for `debian`, adding GCC in `debian-gcc` and then R's development version in `debian-gcc-devel`.
 The platform also has a specific user configuration differing from the setup covering typical applications of Rocker images, and the images include considerably more software, such as a fairly complete LaTeX installation, to provide an experience closer to CRAN.
 
+RStudio also maintains a set of [Docker images](https://github.com/rstudio/r-docker) that provide an [opinionated R installation](https://github.com/rstudio/r-builds) built with the following considerations: 
+
+- They use a minimal set of build and runtime dependencies. 
+- R is installed in a versioned directory
+- The R installation and profile is consistent across the different Linux distributions.
+
+Images are provided for multiple operating systems including SUSE, Ubuntu, CentOS, and Debian. These images are also responsible for creating pre-compiled binary R packages for Linux, which supplement the binaries built by CRAN. These pre-compiled packages dramatically decrease the installation time of R packages on Linux, which is especially important in decreasing the build time of Docker images. More informaiton is available [here](https://blog.rstudio.com/2019/11/07/package-manager-v1-1-no-interruptions/).
+
 There are also independent projects installing R or RStudio on [**Alpine Linux**](https://www.alpinelinux.org/), but not beyond the proof of concept stage\footnote{\href{https://github.com/artemklevtsov/r-alpine}{https://github.com/artemklevtsov/r-alpine} or \href{https://www.github.com/velaco/alpine-r}{https://www.github.com/velaco/alpine-r} provide different use case images but are not recently maintained (development of the latter documented in \citet{ratesic_building_2018}); \href{https://github.com/cmplopes/alpine-r}{https://github.com/cmplopes/alpine-r} has only base R images, is relatively up-to-date but sparsely documented.}.
 Alpine images are often used for minimalistic and thereby small and secure containers, e.g., in hardware with limited storage, though this advantage quickly deteriorates if more features are needed, e.g. if installing RStudio, package building envrionments, or powerful data science tools.
 Furthermore the distribution uses the [`musl` C library](https://www.musl-libc.org/) instead of the `glibc` used in Debian/Ubuntu, for which more tooling and experiences exist\footnote{Cf. \href{https://github.com/rocker-org/rocker/issues/231}{https://github.com/rocker-org/rocker/issues/231}}.
@@ -394,6 +410,8 @@ As data science often applies a multitude of tools, this image favours inclusion
 docker pull vnijs/rsm-msba-spark
 docker images | grep vnijs
 ```
+
+A general description of what to consider when creating a Docker image used for data science projects is provided on [environments.rstudio.com](https://environments.rstudio.com/docker).
 
 # Use cases and applications
 <!-- from packages closer to Docker to second level packages to more complex use cases -->
@@ -743,6 +761,19 @@ Each package contained inside this image also has a series examples, so that the
 The `rocker/tidyverse` base image ensures that users can also readily use packages for analysis, display, and reporting.
 
 **[RCloud](https://github.com/att/rcloud/tree/master/docker)** uses a `rocker/drd` base image for creation of collaborative data analysis and visualisation environments.
+
+## Using Docker in a Data Science Platform
+
+In addition to embedding RStudio Open Source Server inside of Docker images, such as Rocker, many organizations use Docker through RStudio Team - RStudio's modular data science platform. These professional products allow teams of data scientists and their respective IT/DevOps groups to develop and deploy code in R and Python, using the benefits of containers, without requiring users to learn new tools or directly interact with containers. More information for scaling RStudio is [available here](https://solutions.rstudio.com/launcher/overview/). Notable patterns include:
+
+1) To deploy and manage RStudio Professional Products
+Many RStudio customers are managing professional products in Docker containers as an alternative to bare-metals servers or virtual machines. Best practices for [running RStudio with Docker containers](https://support.rstudio.com/hc/en-us/articles/360021594513-Running-RStudio-with-Docker-containers) as well as [Docker images](https://github.com/rstudio/rstudio-docker-products) for our commerical products are available.
+
+2) To run interactive RStudio sessions on a cluster
+In the RStudio Server Pro 1.2 release in 2019, we added new functionality called Launcher, which gives our users the ability to spawn RStudio sessions on Kubernetes. We provide [Docker images](https://support.rstudio.com/hc/en-us/articles/360019253393-Using-Docker-images-with-RStudio-Server-Pro-Launcher-and-Kubernetes) as a starting point for users to work with Kubernetes. Some of our customers are also using Launcher with Slurm clusters, and optionally, with Singularity containers. A key benefit of Launcher is the ability for R and Python users to interactively work in RStudio without learning about Docker at all - while still leveraging containers and Kubernetes. Launcher also enables users to submit batch jobs to Kubernetes clusters without writing specific deployment scripts.
+
+3) To deploy applications into production
+Most RStudio customers use [RStudio Connect](https://rstudio.com/products/connect/) to deploy dashboards, REST APIs, and other R and Python content into production. RStudio Connect uses an approach to isolate deployed R applications that is similar to Docker's filesystem and process namespacing. Many customers benefit from using [RStudio Package Manager](https://rstudio.com/products/package-manager/) to [manage their R environments and package versions with Docker](https://environments.rstudio.com/docker) to ensure that the images are built deterministically.
 
 ## Processing [div]
 
