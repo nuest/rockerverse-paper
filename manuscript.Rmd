@@ -487,21 +487,25 @@ This combined with a series of functions that are analogous to the steps commonl
 There are also wrappers for commonly used steps for R programmers like adding libraries and copying files into the R Docker containers.
 Once the `Dockerfile` is created, dockyard has the functionality to build the image and deploy it.
 
-**dockermachine** ([https://github.com/cboettig/dockermachine](https://github.com/cboettig/dockermachine))
-<!-- From the github description:
-**dockermachine** ([https://github.com/cboettig/dockermachine](https://github.com/cboettig/dockermachine)) provides a convenient interface to docker-machine from the R command line. This will allow R users to easily create, control, and destroy cloud instances across a wide variety of providers.
--->
+**\pkg{dockermachine}** ([https://github.com/cboettig/dockermachine](https://github.com/cboettig/dockermachine)) is an R package to provide a convenient interface to [Docker Machine](https://docs.docker.com/machine/overview/) from R.
+Docker Machine's CLI tool `docker-machine` allows users to create and manage virtual host on local computers, local data centers, or at cloud providers.
+A local Docker installation can be configured to forward all commands issues on the local Docker CLI to a selected (remote) virtual host fully transparent.
+For local Docker Machine was especially crucial in early days of Docker, when no native Docker support was available for Mac or Windows computers, but remains relevant for provisioning on remote systems.
+The package has not received any updates for two years, but was functional with a current version of `docker-machine` (`0.16.2`) and potentially lowers the barriers for R users to run containers on various hosts, if using the Docker Machine CLI is perceived as a barrier.
 
-**AzureContainers** ([https://cran.r-project.org/package=AzureContainers](https://cran.r-project.org/package=AzureContainers)) is an interface to a number of container-related services in Microsoft's Azure cloud, namely Container Instances, Container Registry and Kubernetes Service. While it is mainly intended for working with Azure, as a convenience feature it includes lightweight, cross-platform shells to Docker, kubectl and helm. These can be used to create and manage arbitrary Docker images and containers, as well as Kubernetes clusters on any platform or cloud service.
-
-**babelwhale** ([https://cran.r-project.org/package=babelwhale](https://cran.r-project.org/package=babelwhale)) 
-allows executing and interacting with containers, which can use either Docker or Singularity as a backend.
-provides a unified interface to interact with Docker and Singularity containers. You can execute a command inside a container, mount a volume or copy a file.
-
-**harbor** ([https://github.com/wch/harbor](https://github.com/wch/harbor)
-<!-- from the github description
-is an R package for controlling docker containers on local and remote hosts.
--->
+```{r dockermachine, eval=FALSE, include=FALSE}
+library("dockermachine")
+dockermachine::machine_create(driver = "amazonec2")
+# machine started: https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:sort=instanceId
+# get config on command line: $ docker-machine env machine
+# activate: $ $(docker-machine env test) does not work, because of "
+# run container: docker run -it -p 80:80 nginx
+# allow inbound HTTP traffic
+# http://ec2-3-85-85-61.compute-1.amazonaws.com/ shows "Welcome to nginx"!
+# Nice!
+# > dockermachine::machine_rm()
+# Instance shut down.
+```
 
 ## Capture and create environments [@nuest]
 
