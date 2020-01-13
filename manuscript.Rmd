@@ -491,7 +491,7 @@ Several second order R packages attempt to make the process of creating Docker i
 
 - [`dockerfiler`](https://github.com/ColinFay/dockerfiler/)
 - [`containerit`](https://github.com/o2r-project/containerit/)
-- [`dockr`](https://github.com/smaakage85/dockr)
+- [`dockr`](https://github.com/smaakage85/dockr), see also http://smaakage85.netlify.com/2019/12/21/dockr-easy-containerization-for-r/
 - [`dockertest`](https://github.com/traitecoevo/dockertest/)
 - [`renv` with Docker](https://rstudio.github.io/renv/articles/docker.html)
 
