@@ -195,14 +195,16 @@ Docker, an application and service provide by the eponymous company, has in just
 While there are related approaches such as LXC\footnote{\href{https://en.wikipedia.org/wiki/LXC}{https://en.wikipedia.org/wiki/LXC}} or Singularity \citep{kurtzer_singularity_2017}, Docker has become synomymous with "containerization"---the method of taking software artefacts and bundling them in such a way that use becomes standardized and portable across operationg systems.
 In doing so, Docker had recognised and validated the importance of one very important thread that had been emerging, namely virtualization.
 By allowing (one or possibly) multiple applications or services to run concurrently on one host machine without any fear of interference between them, an important scalability opportunity is being provided.
-But Docker improved on virtualization by accessing the host system---generally Linux---through a much thinner and smaller shim than a full operating system emulation or virtualization.
+But Docker improved this compartmentalization by accessing the host system---generally Linux---through a much thinner and smaller shim than a full operating system emulation or virtualization.
+This containerization is also called operating-system-level virtualization \ref{wikipedia_contributors_os-level_2020}.
+Typically a container runs one process, whereas virtualization may run whole operating systems at a larger footprint.
 This makes for more efficient use of system resources \citep{felter_updated_2015} and allowed another order of magnitude in terms of scalability of deployment \citep[cf.][]{datadog_8_2018}.
 While Docker makes use of Linux kernel features, its importance was large enough so that some required aspects of running Docker have been added to other operating systems to support Docker there more efficiently too \citep{microsoft_linux_2019}.
 The success even lead to standardisation and industry collaboration \citep{oci_open_2019}.
 
-The key accomplishment of Docker (as an "application") is to make a "bundled" aggregation of software (the so-called "image") available to any system equipped to run Docker, without requiring much else from the host besides the actual Docker application installation.
-This is a rather attractive, and novel, proposition which has lead to widespread adoption and use of Docker in a variety of domains, _e.g._, cloud computing infrastructure \citep{Bernstein2014}, data science \citep{boettiger_introduction_2015}, and edge computing \citep{alam_orchestration_2018} [more examples!].
-It provided to be a natural match for "cloud deployment" which runs (or at least appears to run) "seamlessly" without much explicit reference to the underlying machine, architecture or operating system: containers are portable and can be deployed with very little in terms of dependencies on the host system---only the container runtime is required.
+The key accomplishment of Docker as an "application" is to make a "bundled" aggregation of software (the so-called "image") available to any system equipped to run Docker, without requiring much else from the host besides the actual Docker application installation.
+This is a rather attractive proposition and Docker's very easy to use user interface has lead to widespread adoption and use of Docker in a variety of domains, e.g., cloud computing infrastructure \citep{Bernstein2014}, data science \citep{boettiger_introduction_2015}, and edge computing \citep{alam_orchestration_2018} [more examples!].
+It provided to be a natural match for "cloud deployment" which runs, or at least appears to run, "seamlessly" without much explicit reference to the underlying machine, architecture or operating system: containers are portable and can be deployed with very little in terms of dependencies on the host system---only the container runtime is required.
 Images are normally build from plain text documents called `Dockerfile`.
 A `Dockerfile` has a specific set of instructions to create and document a well-defined environment, i.e., install specific software and expose specific ports.
 
