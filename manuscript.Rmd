@@ -816,10 +816,12 @@ The portability of containers becomes particularly useful when complex processin
 - `batchtools` \citep{Lang2017batchtools} can [schedule jobs with Docker Swarm](https://mllg.github.io/batchtools/reference/makeClusterFunctionsDocker.html)
 - scalable deployments, e.g., start with numerous Shiny talks mentioning Rocker at useR!2017
 - [dynmethods](https://github.com/dynverse/dynmethods) [@rcannood]: In order to evaluate ±50 computational methods which all used different environments (R, Python, C++, ...), we wrapped each of them in a docker container and can execute these methods from R. Again, all of these containers are being built on travis-ci, and will only be pushed to docker hub if the integration test succeeds.
+- \pkg{drake}, https://docs.ropensci.org/drake/index.html?q=docker#with-docker
 
 ## Research Compendia [@benmarwick]
 
-...
+- https://github.com/benmarwick/rrtools
+- \pkg{renv}, https://rstudio.github.io/renv/articles/docker.html
 
 ## Development and debugging
 \label{development}
