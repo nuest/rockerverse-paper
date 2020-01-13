@@ -870,7 +870,7 @@ A concrete effort by this work towards these pieces is to sustain the structure 
 
 # Author contributions
 
-DN conceived of the presented idea and \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}, wrote the section about images for R distributions, wrote the conclusions section, and revised all sections.
+DN conceived of the presented idea and \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}, wrote sections not mentioned below, and revised the full first draft.
 CB ..
 RC and EH wrote the section on interfaces for Docker in R.
 DE wrote the introduction and section about Rocker.

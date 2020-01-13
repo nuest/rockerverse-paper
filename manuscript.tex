@@ -1,6 +1,6 @@
 % !TeX root = RJwrapper.tex
 \title{Containers and R---the Rockerverse and beyond}
-\author{by Daniel Nüst, Robrecht Cannoodt, Dirk Eddelbuettel, Mark Edmondson, Colin Fay, Karthik Ram, Noam Ross, Nan Xiao, Lori Shepherd, Nitesh Turaga, Jacqueline Nolis, Heather Nolis, Hong Ooi, Ellis Hughes, Ben Marwick}
+\author{by Daniel Nüst, Robrecht Cannoodt, Dirk Eddelbuettel, Mark Edmondson, Colin Fay, Karthik Ram, Noam Ross, Nan Xiao, Lori Shepherd, Nitesh Turaga, Jacqueline Nolis, Heather Nolis, Hong Ooi, Ellis Hughes, Sean Lopp, Ben Marwick}
 
 \maketitle
 
@@ -77,10 +77,14 @@ recognised and validated the importance of one very important thread
 that had been emerging, namely virtualization. By allowing (one or
 possibly) multiple applications or services to run concurrently on one
 host machine without any fear of interference between them, an important
-scalability opportunity is being provided. But Docker improved on
-virtualization by accessing the host system---generally Linux---through
-a much thinner and smaller shim than a full operating system emulation
-or virtualization. This makes for more efficient use of system resources
+scalability opportunity is being provided. But Docker improved this
+compartmentalization by accessing the host system---generally
+Linux---through a much thinner and smaller shim than a full operating
+system emulation or virtualization. This containerization is also called
+operating-system-level virtualization
+\ref{wikipedia_contributors_os-level_2020}. Typically a container runs
+one process, whereas virtualization may run whole operating systems at a
+larger footprint. This makes for more efficient use of system resources
 \citep{felter_updated_2015} and allowed another order of magnitude in
 terms of scalability of deployment \citep[cf.][]{datadog_8_2018}. While
 Docker makes use of Linux kernel features, its importance was large
@@ -89,17 +93,17 @@ to other operating systems to support Docker there more efficiently too
 \citep{microsoft_linux_2019}. The success even lead to standardisation
 and industry collaboration \citep{oci_open_2019}.
 
-The key accomplishment of Docker (as an ``application'') is to make a
+The key accomplishment of Docker as an ``application'' is to make a
 ``bundled'' aggregation of software (the so-called ``image'') available
 to any system equipped to run Docker, without requiring much else from
 the host besides the actual Docker application installation. This is a
-rather attractive, and novel, proposition which has lead to widespread
-adoption and use of Docker in a variety of domains, \emph{e.g.}, cloud
-computing infrastructure \citep{Bernstein2014}, data science
-\citep{boettiger_introduction_2015}, and edge computing
+rather attractive proposition and Docker's very easy to use user
+interface has lead to widespread adoption and use of Docker in a variety
+of domains, e.g., cloud computing infrastructure \citep{Bernstein2014},
+data science \citep{boettiger_introduction_2015}, and edge computing
 \citep{alam_orchestration_2018} {[}more examples!{]}. It provided to be
-a natural match for ``cloud deployment'' which runs (or at least appears
-to run) ``seamlessly'' without much explicit reference to the underlying
+a natural match for ``cloud deployment'' which runs, or at least appears
+to run, ``seamlessly'' without much explicit reference to the underlying
 machine, architecture or operating system: containers are portable and
 can be deployed with very little in terms of dependencies on the host
 system---only the container runtime is required. Images are normally
@@ -227,8 +231,8 @@ programming language, built on GraalVM''
 (\url{https://github.com/oracle/fastr}). It is developed by Oracle,
 connects R to the GraalVM ecosystem \citep{wikipedia_graalvm_2019}, and
 also claims superior performance but also targets full compatibility
-with base R
-\footnote{\href{https://github.com/oracle/fastr}{https://github.com/oracle/fastr}}.
+with base
+R\footnote{\href{https://github.com/oracle/fastr}{https://github.com/oracle/fastr}}.
 There are no offical Docker images provided, but \texttt{nuest/fastr}
 images and \texttt{Dockerfile} are independently maintained on
 \href{https://cloud.docker.com/repository/docker/nuest/fastr/}{Docker
@@ -250,7 +254,7 @@ useful future work.
 \hypertarget{bioconductor}{%
 \subsection{Bioconductor}\label{bioconductor}}
 
-\href{http://bioconductor.org/}{\emph{Bioconductor}} is an open source,
+\emph{Bioconductor} (\url{https://bioconductor.org/}) is an open source,
 open development project for the analysis and comprehension of genomic
 data \citep{gentleman_bioconductor_2004}. The project consists of 1741 R
 software packages as of August 15th 2019, as well as packages containing
@@ -392,7 +396,7 @@ cumbersome to use. They required an extra tool,
 \href{https://docs.docker.com/toolbox/}{Docker Toolbox}, which by now
 only exists as a legacy solution for older Windows systems. Docker
 toolbox leverages \texttt{docker-machine} (see also
-Section~\ref{interfaces} for an R package interfacing with
+Section~\nameref{interfaces} for an R package interfacing with
 \texttt{docker-machine}) to handle the process of creating a local
 virtual host which could host Docker Engine, while exposing the regular
 Docker CLI. The Docker CLI commands are forwarded to the virtual host
@@ -411,8 +415,8 @@ Windows-based containers, but only one of the Docker daemons can be used
 at a
 time\footnote{See "Switch between Windows and Linux containers" on \href{https://docs.docker.com/docker-for-windows/}{https://docs.docker.com/docker-for-windows/}.}.
 
-\textbf{\href{https://github.com/nuest/rocker-win}{\texttt{rocker-win}}}
-is a proof of concept for running R in Windows-based containers
+\textbf{rocker-win} (\url{https://github.com/nuest/rocker-win}) is a
+proof of concept for running R in Windows-based containers
 \citep{nust_rocker-win_2019}. It provides selected R versions using
 three different base images using \texttt{microsoft/windowsservercore}
 and \texttt{mcr.microsoft.com/windows/servercore}. These base images
@@ -453,8 +457,8 @@ Windows-based containers themselves.
 \hypertarget{non-debian-linux-images}{%
 \subsection{Non-Debian Linux images}\label{non-debian-linux-images}}
 
-\label{rhub} The \textbf{R-hub} project provides \_``a collection of
-services to help R package development'', with the package builder as
+\label{rhub} The \textbf{R-hub} project provides \emph{``a collection of
+services to help R package development''}, with the package builder as
 the most prominent one\citep{r-hub_docs_2019}. The builder allows R
 package developers to check their R package on different platforms and R
 versions using a web form or the package \pkg{rhub}
@@ -472,50 +476,84 @@ running in the base images of the
 \href{https://centos.org/}{CentOS} linux distributions (Arch Linux is
 under
 development\footnote{\href{https://github.com/r-hub/rhub-linux-builders/pull/41}{https://github.com/r-hub/rhub-linux-builders/pull/41}},
-\texttt{see}rhub::local\_check\_linux\_images()\texttt{for\ a\ full\ list),\ and\ are\ intended\ for\ debugging\ (see\ Section\&nbsp;\textbackslash{}ref\{development\})\ not\ for\ reproducible\ workflows.\ \_The\ rationale\_\ of\ not\ re-using\ the\ Rocker\ image\ stack\ is\ the\ high\ number\ of\ operatings\ systems\ and\ configurations,\ which\ can\ be\ more\ uniformly\ maintained\ in\ a\ seperate\ suite\ of\ images.\ Also,\ a\ common\ structure\ across\ the\ respective\ image\ stacks\ of\ the\ operating\ systems,\ e.g.,\ for}debian\texttt{,\ adding\ GCC\ in}debian-gcc\texttt{and\ then\ R\textquotesingle{}s\ development\ version\ in}debian-gcc-devel`.
-The platform also has a specific user configuration differing from the
-setup covering typical applications of Rocker images, and the images
-include considerably more software, such as a fairly complete LaTeX
-installation, to provide an experience closer to CRAN.
+see \texttt{rhub::local\_check\_linux\_images()} for a full list), and
+are intended for debugging (see Section~\nameref{development}) not for
+reproducible workflows. \emph{The rationale} of not re-using the Rocker
+image stack is the high number of operatings systems and configurations,
+which can be more uniformly maintained in a seperate suite of images.
+Also, a common structure across the respective image stacks of the
+operating systems, e.g., for \texttt{debian}, adding GCC in
+\texttt{debian-gcc} and then R's development version in
+\texttt{debian-gcc-devel}. The platform also has a specific user
+configuration differing from the setup covering typical applications of
+Rocker images, and the images include considerably more software, such
+as a fairly complete LaTeX installation, to provide an experience closer
+to CRAN.
+
+\textbf{RStudio} also maintains a set of
+\href{https://github.com/rstudio/r-docker}{Docker images} for multiple
+operating systems including SUSE, Ubuntu, CentOS, and Debian. The image
+stacks include an \href{https://github.com/rstudio/r-builds}{opinionated
+R installation} and ensure the R installation and profile is consistent
+across the different Linux distributions. The images also install R in a
+versioned directory and use a minimal set of build and runtime
+dependencies, Furthermore these images are responsible for creating
+pre-compiled binary R packages for Linux, which supplement the binaries
+built by CRAN. These pre-compiled packages dramatically decrease the
+installation time of R packages on Linux and subsequently can decrease
+the build time of Docker images \citep{lopp_package_2019}.
 
 There are also independent projects installing R or RStudio on
 \href{https://www.alpinelinux.org/}{\textbf{Alpine Linux}}, but not
 beyond the proof of concept
-stage\footnote{\href{https://github.com/artemklevtsov/r-alpine}{https://github.com/artemklevtsov/r-alpine} or \href{https://www.github.com/velaco/alpine-r}{https://www.github.com/velaco/alpine-r} provide different use case images but are not recently maintained (development of the latter documented in \citet{ratesic_building_2018}); \href{https://github.com/cmplopes/alpine-r}{https://github.com/cmplopes/alpine-r} has only base R images, is relatively up-to-date but sparsely documented.}.
-Alpine images are often used for minimalistic and thereby small and
-secure containers, e.g., in hardware with limited storage, though this
-advantage quickly deteriorates if more features are needed, e.g.~if
-installing RStudio, package building envrionments, or powerful data
-science tools. Furthermore the distribution uses the
+stage\footnote{\href{https://gitlab.com/artemklevtsov/r-alpine}{https://gitlab.com/artemklevtsov/r-alpine} or \href{https://www.github.com/velaco/alpine-r}{https://www.github.com/velaco/alpine-r} provide different use case images but are not recently maintained (development of the latter documented in \citet{ratesic_building_2018}); \href{https://github.com/cmplopes/alpine-r}{https://github.com/cmplopes/alpine-r} has only base R images, is relatively up-to-date but sparsely documented; \href{https://github.com/CenterForStatistics-UGent/mountainr}{https://github.com/CenterForStatistics-UGent/mountainr} is a ghost project with only a single short `Dockerfile`, yet it shows the easy installation of the latest R from Alpine sources}.
+In general, Alpine-based Docker images are often chosen for minimalistic
+and thereby small and secure containers, e.g., in hardware with limited
+storage. R-hub's proof of concept
+\href{https://github.com/r-hub/r-minimal}{\texttt{r-minimal}} takes this
+to the extreme with compressed image size of 20MB and bespoke install
+scripts, e.g., to cleverly remove compilers after package installation.
+For R though, this advantage quickly deteriorates if more features are
+needed, e.g.~if adding compilers, packages, or especially if installing
+powerful data science and communication tools, like RStudio or LaTeX.
+Furthermore the distribution uses the
 \href{https://www.musl-libc.org/}{\texttt{musl} C library} instead of
 the \texttt{glibc} used in Debian/Ubuntu, for which more tooling and
 experiences
 exist\footnote{Cf. \href{https://github.com/rocker-org/rocker/issues/231}{https://github.com/rocker-org/rocker/issues/231}}.
-\href{https://github.com/CenterForStatistics-UGent/mountainr}{https://github.com/CenterForStatistics-UGent/mountainr}
-only has a single and quite short \texttt{Dockerfile}, showing the easy
-installation of the latest R from Alpine sources. These images are used
-\ldots{}
+In fact, using Debian's `slim' variant and removing capabilities, one
+could probalby achieve similarly small image sizes on a more common
+stack.
 
-\href{https://github.com/ismailsunni/altRnative/}{\texttt{altRnative}}
-is an experimental R package for running the same code across multiple
-containerised versions of R, intended for comparison across operating
-systems and different implementations of R. It comes with a collection
-of \texttt{Dockerfile}s and corresponding images
-\footnote{\href{https://github.com/ismailsunni/dockeRs}{https://github.com/ismailsunni/dockeRs}}.
+\textbf{\pkg{altRnative}}
+(\url{https://github.com/ismailsunni/altRnative/}) is an experimental R
+package for running the same code across multiple containerised versions
+of R, intended for comparison across operating systems and different
+implementations of R. It comes with a collection of \texttt{Dockerfile}s
+and corresponding images in multiple combinations, currently including,
+e.g., MRO, FastR, Fedora, and
+TERR\footnote{See `Dockerfile`s at \href{https://github.com/ismailsunni/dockeRs}{https://github.com/ismailsunni/dockeRs}.}.
 
 \hypertarget{data-science-images}{%
 \subsection{Data Science images}\label{data-science-images}}
 
-The notion of \emph{Data Science} is widely discussed among all academic
-disciplines. Using computers and complex software to make sense of
-(large amounts of) collected or simulated data is a cross-cutting
-phenomenon leading to \emph{X Data Science} disciplines, seminars, and
-study majors, there are also Docker images with commonly used tools and
-software stacks pre-installed that are often used in combination for
-analysing data. A large number of bespoke computing environments are
-created this way. Here we only mention a few image stacks as examples
-that are not based on Rocker images but prominently include
-installations of R.
+\emph{Data Science} is a widely discussed topic among all academic
+disciplines \citep[cf. e.g.,][]{donoho_50_2017}. Using computers and
+complex software to make sense of (large amounts of) collected or
+simulated data is a cross-cutting phenomenon leading to \emph{X Data
+Science} disciplines, seminars, and study majors. The practice to apply
+a combination tools and software stacks for analysing data and the
+cross-cutting skillsets connected with data science puts the management
+of computing environments and the challenges of reproducibility high up
+on the agenda. This awareness leads to a large number of bespoke Docker
+images but also some commonly used image stacks, ranging from base
+images with very common tools to `catch all' images including \emph{a
+lot} of software. Here we only mention a few image stacks as examples,
+which are not based on Rocker images or stem from the R community, but
+prominently include installations of R. A general description of what to
+consider when creating a Docker image used for data science projects in
+R is provided on
+\href{https://environments.rstudio.com/docker}{environments.rstudio.com}.
 
 The \href{https://github.com/jupyter/docker-stacks/}{\textbf{Jupyter
 Docker Stacks} project} are a set of ready-to-run Docker images
@@ -561,20 +599,24 @@ and RStudio, bringing the image size up to 9GB.
 \subsection{Interfaces for Docker in
 R}\label{interfaces-for-docker-in-r}}
 
-Interfacing with the Docker daemon is typically done through the Docker
-Command Line Interface (CLI). However, moving back and forth between an
-R console and the command line can create friction in workflows and
-reduce reproducibility. A number of first-order R packages provide a
-interface to the Docker CLI, allowing to automate interaction with the
-Docker CLI from an R console.
+\label{interfaces}
+
+Interfacing with the Docker daemon is typically done through the
+\href{https://docs.docker.com/engine/reference/commandline/cli/}{Docker
+Command Line Interface} (Docker CLI). However, moving back and forth
+between an R console and the command line can create friction in
+workflows and reduce reproducibility. A number of first-order R packages
+provide a interface to the Docker CLI, allowing to automate interaction
+with the Docker CLI from an R console.
 
 Each of these packages has particular advantages as they provide
 function wrappers for interacting with the Docker CLI at different
 stages of a container's life cycle. Examples of such interactions are
-installing the Docker software, creating \texttt{Dockerfile}s, building
-an image, and launching a container on a local machine or on the cloud.
-As such, the choice of which package is most useful depends on the
-use-case at hand.
+installing the Docker software, creating \texttt{Dockerfile}s
+(\pkg{dockerfiler}), \pkg{containerit}), building images and launching a
+containers (\pkg{stevedore}, \pkg{docker}) on a local machine or on the
+cloud. As such, the choice of which package is most useful depends on
+the use-case at hand, but also the users level of expertise.
 
 \begin{tabular}{l|l|l|l|l|l|l}
 \hline
@@ -600,12 +642,38 @@ Installing Docker software &  &  & \checkmark &  &  & \\
 \hline
 \end{tabular}
 
-\textbf{stevedore} (\url{https://cran.r-project.org/package=stevedore})
+\textbf{\pkg{stevedore}}
+(\url{https://cran.r-project.org/package=stevedore})
 
-\textbf{dockyard} (\url{https://github.com/thebioengineer/dockyard}) has
-the goal of lowering barrier to creating \texttt{Dockerfile}s and Docker
-images, and deploying Docker containers. The way docker images are made
-is by reading and following a set of instructions found in
+\textbf{\pkg{AzureContainers}}
+(\url{https://cran.r-project.org/package=AzureContainers}) is an
+interface to a number of container-related services in Microsoft's
+\href{https://azure.microsoft.com/}{Azure Cloud}, namely
+\href{https://azure.microsoft.com/en-us/services/container-instances/}{Container
+Instances},
+\href{https://azure.microsoft.com/en-us/services/container-registry/}{Container
+Registry}, and
+\href{https://azure.microsoft.com/en-us/services/kubernetes-service/}{Kubernetes
+Service}. While it is mainly intended for working with Azure, as a
+convenience feature it includes lightweight, cross-platform shells to
+Docker and Kubernetes (tools \texttt{kubectl} and \texttt{helm}). These
+can be used to create and manage arbitrary Docker images and containers,
+as well as Kubernetes clusters on any platform or cloud service.
+
+\textbf{\pkg{babelwhale}}
+(\url{https://cran.r-project.org/package=babelwhale}) allows executing
+and interacting with containers, which can use either Docker or
+Singularity as a backend. The package provides a unified interface to
+interact with Docker and Singularity containers. Users can, for example,
+execute a command inside a container, mount a volume or copy a file.
+
+\textbf{\pkg{harbor}} (\url{https://github.com/wch/harbor}
+
+\textbf{\pkg{dockyard}}
+(\url{https://github.com/thebioengineer/dockyard}) has the goal of
+lowering barrier to creating \texttt{Dockerfile}s and Docker images, and
+deploying Docker containers. The way docker images are made is by
+reading and following a set of instructions found in
 \texttt{Dockerfile}s. This requires stepping out of the R ecosystem and
 into an infrastructure mindset where the user needs to specify the
 environment they require. Because \texttt{Dockerfile}s can be read as a
@@ -618,29 +686,25 @@ the steps commonly found in a \texttt{Dockerfile}, it makes building
 Docker images much more approachable to R users. There are also wrappers
 for commonly used steps for R programmers like adding libraries and
 copying files into the R Docker containers. Once the \texttt{Dockerfile}
-is created, dockyard has the functionality to build the image and deploy
-it.
+is created, dockyard has built-in functionality to build the image and
+run a container.
 
-\textbf{dockermachine} (\url{https://github.com/cboettig/dockermachine})
-
-\textbf{AzureContainers}
-(\url{https://cran.r-project.org/package=AzureContainers}) is an
-interface to a number of container-related services in Microsoft's Azure
-cloud, namely Container Instances, Container Registry and Kubernetes
-Service. While it is mainly intended for working with Azure, as a
-convenience feature it includes lightweight, cross-platform shells to
-Docker, kubectl and helm. These can be used to create and manage
-arbitrary Docker images and containers, as well as Kubernetes clusters
-on any platform or cloud service.
-
-\textbf{babelwhale}
-(\url{https://cran.r-project.org/package=babelwhale}) allows executing
-and interacting with containers, which can use either Docker or
-Singularity as a backend. provides a unified interface to interact with
-Docker and Singularity containers. You can execute a command inside a
-container, mount a volume or copy a file.
-
-\textbf{harbor} (\url{https://github.com/wch/harbor}
+\textbf{\pkg{dockermachine}}
+(\url{https://github.com/cboettig/dockermachine}) is an R package to
+provide a convenient interface to
+\href{https://docs.docker.com/machine/overview/}{Docker Machine} from R.
+Docker Machine's CLI tool \texttt{docker-machine} allows users to create
+and manage virtual host on local computers, local data centers, or at
+cloud providers. A local Docker installation can be configured to
+forward all commands issues on the local Docker CLI to a selected
+(remote) virtual host fully transparent. For local Docker Machine was
+especially crucial in early days of Docker, when no native Docker
+support was available for Mac or Windows computers, but remains relevant
+for provisioning on remote systems. The package has not received any
+updates for two years, but was functional with a current version of
+\texttt{docker-machine} (\texttt{0.16.2}) and potentially lowers the
+barriers for R users to run containers on various hosts, if using the
+Docker Machine CLI is perceived as a barrier.
 
 \hypertarget{capture-and-create-environments-nuest}{%
 \subsection{\texorpdfstring{Capture and create environments
@@ -657,15 +721,18 @@ tests or rendering reproducible reports, easier.
 \item
   \href{https://github.com/o2r-project/containerit/}{\texttt{containerit}}
 \item
-  \href{https://github.com/smaakage85/dockr}{\texttt{dockr}}
+  \href{https://github.com/smaakage85/dockr}{\texttt{dockr}}, see also
+  \url{http://smaakage85.netlify.com/2019/12/21/dockr-easy-containerization-for-r/}
 \item
   \href{https://github.com/traitecoevo/dockertest/}{\texttt{dockertest}}
 \item
   \href{https://rstudio.github.io/renv/articles/docker.html}{\texttt{renv}
   with Docker}
+\item
+  \url{https://github.com/gigantum/base-images}
 \end{itemize}
 
-\textbf{\href{https://nanx.me/liftr/}{\emph{liftr}}} \citep{liftr2019}
+\textbf{\pkg{liftr}} (\url{https://nanx.me/liftr/}) \citep{liftr2019}
 aims to solve the problem of persistent reproducible reporting in
 statistical computing. Currently, the R Markdown format and its backend
 compilation engine \emph{knitr} offer a \emph{de facto} standard for
@@ -764,9 +831,9 @@ applications and deploying them. The reason behind this is that
 all the tools available in R to parse a \texttt{DESCRIPTION} file, to
 get system requirements, to list dependencies, versions, etc.
 
-\hypertarget{deployment-to-cloud-services-div}{%
-\subsection{Deployment to cloud services
-{[}div{]}}\label{deployment-to-cloud-services-div}}
+\hypertarget{deployment-to-cloud-services}{%
+\subsection{Deployment to cloud
+services}\label{deployment-to-cloud-services}}
 
 The cloud is the natural environment of containers, and becomes the
 go-to mechanism to expose applications written in R to users.
@@ -777,20 +844,38 @@ go-to mechanism to expose applications written in R to users.
   \texttt{RSelenium}
 \item
   \href{https://cloudyr.github.io/googleComputeEngineR/}{\texttt{googleComputeEngineR}}
-  (function \texttt{docker\_run})
+  (function \texttt{gce\_vm\_template()})
 
   \begin{itemize}
   \tightlist
   \item
-    I don't think \texttt{docker\_run} is main focus for containers for
-    this package, its more how it uses Docker to launch custom
-    environments that can be templated (e.g., rstudio, shiny etc.) and
-    for parrallisation e.g., \texttt{library(future)} using GCE VMs as
-    endpoints. \citep{MarkEdmondson1234}
+    To enable quick deployments of key R services such as RStudio and
+    Shiny onto cloud virtual machines (VMs), this package utilises
+    Dockerfiles to move the labour of setting up those services from the
+    user to a premade Docker image. For example, by specifying the
+    template \texttt{template="rstudio"} in
+    \texttt{gce\_vm\_template()/gce\_vm()} an up to date RStudio Service
+    image is launched. Specifying \texttt{template="rstudio-gpu"} will
+    launch an RStudio Server image with a GPU attached, etc.\\
   \end{itemize}
 \item
   \href{https://github.com/sckott/analogsea}{\texttt{analogsea}}
   (digital ocean R client)
+\item
+  \href{https://www.rplumber.io/docs/hosting.html\#docker}{\texttt{plumber}}
+\item
+  \href{https://github.com/tmobile/r-tensorflow-api}{production
+  deployment of neural networks} \citep[\citet{nolistic}]{jnolis}
+\item
+  Kubernetes - A popular platform for managing Docker containers is
+  \href{https://kubernetes.io/}{Kubernetes}, which is used for a wide
+  variety of containerized applications. It may be your organisation has
+  a Kubernetes cluster already for other applications. Docker containers
+  are used within Kubernetes clusters to hold native code, for which
+  Kubernetes creates a framework around network connections and scaling
+  of resources up and down. An introduction on using
+  \href{https://code.markedmondson.me/r-on-kubernetes-serverless-shiny-r-apis-and-scheduled-scripts/}{Kubernetes
+  with R is published at this blog post}.
 \item
   \href{https://cran.r-project.org/package=AzureContainers}{\texttt{AzureContainers}}:
   Umbrella package for working with containers in Microsoft's Azure
@@ -799,24 +884,22 @@ go-to mechanism to expose applications written in R to users.
   Kubernetes Services (for orchestrated deployments)
 \end{itemize}
 
-\hypertarget{using-r-to-power-enterprise-software-in-production-environments-nolisticjnolis-nolistic}{%
-\subsection{\texorpdfstring{Using R to power enterprise software in
-production environments
-\citep[\citet{nolistic}]{jnolis}}{Using R to power enterprise software in production environments , @nolistic{[}@jnolis, @nolistic{]}}}\label{using-r-to-power-enterprise-software-in-production-environments-nolisticjnolis-nolistic}}
+\hypertarget{using-r-to-power-enterprise-software-in-production-environments}{%
+\subsection{Using R to power enterprise software in production
+environments}\label{using-r-to-power-enterprise-software-in-production-environments}}
 
 R has been historically viewed as a tool for analysis and scientific
 research--not for creating software that corporations can rely on to
 continously run in real time. However, thanks to advancements in R
 running as a web service, along with with the ability to deploy R in
-docker containers, modern enterprises are now capable of having
+Docker containers, modern enterprises are now capable of having
 real-time machine learning powered by R.
 
-The backbone of this work is the
-\emph{\href{https://www.rplumber.io/docs/hosting.html\#docker}{plumber}}
-package, created by Jeff Allen. The plumber package allows R to be used
-to host web services through RESTful APIs. When R is running on a
-server, a different server can ask R to make a computation through an
-HTTP request and get an immediate response. For instance, if a data
+The backbone of this work is the \pkg{plumber}
+(\url{https://www.rplumber.io/}) package. The plumber package allows R
+to be used to host web services through RESTful APIs. When R is running
+on a server, a different server can ask R to make a computation through
+an HTTP request and get an immediate response. For instance, if a data
 scientist at a company creates a machine learning model to tell which
 customers are likely to make a repeat purchase, if they serve the model
 through a plumber API then someone else on the marketing team could
@@ -857,9 +940,8 @@ they found that R is able to perform. The AI @ T-Mobile team open
 sourced their Docker images
 \href{https://github.com/tmobile/r-tensorflow-api}{on GitHub}.
 
-\hypertarget{deployment-to-the-cloud-hongooi}{%
-\subsection{\texorpdfstring{Deployment to the cloud
-\citep{hongooi}}{Deployment to the cloud {[}@hongooi{]}}}\label{deployment-to-the-cloud-hongooi}}
+\hypertarget{deployment-to-the-cloud}{%
+\subsection{Deployment to the cloud}\label{deployment-to-the-cloud}}
 
 While Plumber provides the low-level infrastructure for turning a
 statistical model into a predictive service, for production purposes it
@@ -1024,17 +1106,22 @@ necessary packages every time they need to run a new test.
     travis-ci.org) if the integration tests succeed.
   \end{itemize}
 \item
-  Google Cloud Build \citep{MarkEdmondson1234}
+  Google Cloud Build
 
   \begin{itemize}
   \tightlist
   \item
     \url{https://cloud.google.com/cloud-build/}
   \item
-    For me this is what makes Docker containers viable, as it builds the
-    \texttt{Dockerfile}s on each GitHub commit. It couples with Google
-    Container Registry to build private Docker images, for downstream
-    applications.
+    Cloud Build is another continuous intergation service that helps
+    move the workload of building the Docker images to an online
+    service. Cloud Build can be set up to build the Dockerfiles on each
+    GitHub commit or release. This means you do not need to build the
+    Docker images locally, which can tie up resources since Docker
+    images can be several GBs and take a long time to compile. Google
+    Cloud Build works alongside Google Container Registry to allow you
+    to build private and public Docker images, which allows you to build
+    up your own dependency graphs for downstream applications.
   \end{itemize}
 \end{itemize}
 
@@ -1048,9 +1135,9 @@ environment. This is even more useful when some of the users do not have
 the expertise to create such an environment themselves, and when these
 environments can be run in public or shared infrastructure.
 
-\href{https://github.com/karthik/holepunch}{\texttt{holepunch}} is an R
-package that was designed to make sharing work environments accessible
-to novice R users based on \emph{Binder}. The
+\textbf{\pkg{holepunch}} (\url{https://github.com/karthik/holepunch}) is
+an R package that was designed to make sharing work environments
+accessible to novice R users based on \textbf{Binder}. The
 \href{https://mybinder.readthedocs.io/en/latest/}{Binder project},
 maintained by the team behind Jupyter, makes it possible for users to
 create and share their computing environments with others
@@ -1064,7 +1151,7 @@ installation. To set up Binder for a project, a user typically starts at
 an instance of a BinderHub and passes the location of a repository with
 a workspace, e.g., a hosted Git repository, or a data repository like
 Zenodo. Binder's core internal tool is
-\href{https://repo2docker.readthedocs.io/en/latest/config_files.html}{repo2docker}.
+\href{https://repo2docker.readthedocs.io/en/latest/config_files.html}{\texttt{repo2docker}}.
 It deterministically builds a Docker image by parsing the contents of a
 repository, e.g., project dependency configurations or simple
 configuration files. In the most powerful case, \texttt{repo2docker}
@@ -1167,6 +1254,59 @@ can also readily use packages for analysis, display, and reporting.
 uses a \texttt{rocker/drd} base image for creation of collaborative data
 analysis and visualisation environments.
 
+\hypertarget{using-docker-in-a-commercial-data-science-platform}{%
+\subsection{Using Docker in a commercial Data Science
+Platform}\label{using-docker-in-a-commercial-data-science-platform}}
+
+In addition to embedding RStudio Open Source Server inside of Docker
+images, such as Rocker, RStudio offers the moduler data science platform
+\href{https://rstudio.com/products/team/}{RStudio Team}, a commercial
+product allowing teams of data scientists and their respective IT/DevOps
+groups to develop and deploy code in R and Python. RStudio team enables
+these groups to use the benefits of containers, without requiring users
+to learn new tools or directly interact with containers. Notable
+patterns include:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \emph{To deploy and manage RStudio Professional Products:} Many
+  RStudio customers are managing professional products in Docker
+  containers as an alternative to bare-metals servers or virtual
+  machines. Best practices for
+  \href{https://support.rstudio.com/hc/en-us/articles/360021594513-Running-RStudio-with-Docker-containers}{running
+  RStudio with Docker containers} as well as
+  \href{https://github.com/rstudio/rstudio-docker-products}{Docker
+  images} for RStudio's commerical products are available.
+\item
+  \emph{To run interactive RStudio sessions on a cluster:} In the
+  RStudio Server Pro 1.2 release in 2019, RStudio added new
+  functionality called
+  \href{https://solutions.rstudio.com/launcher/overview/}{Launcher}. It
+  gives users the ability to spawn RStudio instances and background jobs
+  in a scalable way on external clusters, e.g.,
+  \href{https://support.rstudio.com/hc/en-us/articles/360019253393-Using-Docker-images-with-RStudio-Server-Pro-Launcher-and-Kubernetes}{Kubernetes
+  based on Docker images} or \href{https://slurm.schedmd.com/}{Slurm}
+  clusters, and optionally, with Singularity containers. A key benefit
+  of Launcher is the ability for R and Python users to interactively
+  work in RStudio without learning about Docker at all - while still
+  leveraging containers and Kubernetes. Users can submit batch jobs to
+  Kubernetes clusters without writing specific deployment scripts.
+\end{enumerate}
+
+\href{https://rstudio.com/products/connect/}{RStudio Connect} is a
+commercial publishing platform to deploy dashboards, REST APIs, and
+other R and Python content into production. RStudio Connect uses an
+approach to isolate deployed R applications that is similar to Docker's
+filesystem and process namespacing and leverages the
+\href{https://rstudio.com/products/package-manager/}{RStudio Package
+Manager} to manage R environments including system dependencies. RStudio
+Package manager may also be used to
+\href{https://environments.rstudio.com/docker}{manage their R
+environments and package versions with Docker} and to ensure
+deterministic image builds.
+
 \hypertarget{processing-div}{%
 \subsection{Processing {[}div{]}}\label{processing-div}}
 
@@ -1176,22 +1316,45 @@ processing tasks shall be offloaded to a server.
 \begin{itemize}
 \tightlist
 \item
-  Docker images for cloud services \citep{MarkEdmondson1234}
+  Docker images for cloud services
 
   \begin{itemize}
   \tightlist
   \item
-    the most popular functionality for \texttt{googleComputeEngineR} is
-    its use of Docker to enable parallel processing across VMS -
+    A popular application of using Docker is to create the environments
+    that can run in parallel for speeding up R code. For example,
+    \href{https://CRAN.R-project.org/package=googleComputeEngineR}{\texttt{googleComputeEngineR}}'s
+    \texttt{gce\_vm\_cluster()} function can create clusters of 2 or
+    more virtual machines, running multi-CPU architectures. Instead of
+    running a local R script with the local CPU and RAM restrictions,
+    the same code can be processed on all CPU threads of the cluster of
+    machines in the cloud, all running in a Docker container with the
+    same R environments. This is achieved through
+    \texttt{googleComputeEngineR}'s integration with the R parralisation
+    library
+    \href{https://CRAN.R-project.org/package=future}{\texttt{library(future)}
+    by Henrik Bengtsson}. Local R computation can be thrown up to a
+    multi-CPU and VM environment to achieve parrell computation in a few
+    lines of R code in your local session. -
     \href{https://cloudyr.github.io/googleComputeEngineR/articles/massive-parallel.html}{some
-    demos here}
+    demonstrations are available here}.
   \end{itemize}
 \item
-  Google Cloud Run - CaaS (Containers as a Service) that lets you launch
-  a Docker container without worrying about underlying infrastructure.
-  An R implementation is shown here at
+  \href{https://cloud.run}{Google Cloud Run} - This is a CaaS
+  (Containers as a Service) that lets you launch a Docker container
+  without worrying about underlying infrastructure. This dispenses with
+  the developer creating a cloud server to run the Docker image on, by
+  abstracting away those servers to a more serverless configuration.
+  Cloud Run lets you run your code on top of a managed or your own
+  Kubernetes cluster running Knative, and can accept any Docker image.
+  The service takes care of network ingress, scaling machines up and
+  down to zero, authentication and authorisation, all features which are
+  non-trivial for a developer to create on their own. This can be used
+  to scale up R code to millions of instances if they need to, with
+  little or no changes to existing code. An R implementation is shown
+  here at
   \href{https://github.com/MarkEdmondson1234/cloudRunR}{cloudRunR} which
-  uses it to create a scalable R plumber API.
+  uses Cloud Run to create a scalable R plumber API.
 \item
   \texttt{batchtools} \citep{Lang2017batchtools} can
   \href{https://mllg.github.io/batchtools/reference/makeClusterFunctionsDocker.html}{schedule
@@ -1206,13 +1369,22 @@ processing tasks shall be offloaded to a server.
   each of them in a docker container and can execute these methods from
   R. Again, all of these containers are being built on travis-ci, and
   will only be pushed to docker hub if the integration test succeeds.
+\item
+  \pkg{drake},
+  \url{https://docs.ropensci.org/drake/index.html?q=docker\#with-docker}
 \end{itemize}
 
 \hypertarget{research-compendia-benmarwick}{%
 \subsection{\texorpdfstring{Research Compendia
 \citep{benmarwick}}{Research Compendia {[}@benmarwick{]}}}\label{research-compendia-benmarwick}}
 
-\ldots{}
+\begin{itemize}
+\tightlist
+\item
+  \url{https://github.com/benmarwick/rrtools}
+\item
+  \pkg{renv}, \url{https://rstudio.github.io/renv/articles/docker.html}
+\end{itemize}
 
 \hypertarget{development-and-debugging}{%
 \subsection{Development and debugging}\label{development-and-debugging}}
@@ -1238,7 +1410,7 @@ used to debug an issue with a package only occuring with a particular
 version of Fortran, and using tools which are not readily available on
 all platforms (e.g., not on macOS).
 
-The R-hub Docker images (see Section~\ref{rhub}) can also be used to
+The R-hub Docker images (see Section~\nameref{rhub}) can also be used to
 debug problems locally using various combinations of Linux platforms, R
 versions, and compilers\textbackslash{}footnote\{See
 \href{https://r-hub.github.io/rhub/articles/local-debugging.html}{https://r-hub.github.io/rhub/articles/local-debugging.html}
@@ -1254,66 +1426,84 @@ provide support on operating systems they are not familiar.
 \hypertarget{conclusions}{%
 \section{Conclusions}\label{conclusions}}
 
-\begin{itemize}
-\tightlist
-\item
-  what are next steps?
-\item
-  support more complex set-ups with ready-to-use stacks, e.g., GPU, AI,
-  ML
-\item
-  Missing pieces?
-\item
-  consolidation (e.g., via packages using \texttt{dockerfiler} and
-  \texttt{stevedore})
-\item
-  Common themes
+This article is a snapshot of the R-corner in a universe of applications
+built many-faced piece of software, Docker. Docker became synonymous
+with applying the concept of containerisation to solve many challenges,
+such as reproducible environments in research, scalable deployments in
+heterogenous organisations, and the ability to move processing between
+machines easily (e.g., locally, one cloud providers VM, another cloud
+provider's Container-as-a-Service). These are probably the thre common
+themes described in this work.
 
-  \begin{itemize}
-  \tightlist
-  \item
-    reproducibility
-  \end{itemize}
-\item
-  will knowledge about containers continue to spread?
-\item
-  what is needed for even more containers with R?
-\item
-  the ability to move processing between services easily (e.g locally,
-  one cloud providers VM, another cloud provider's
-  Container-as-a-Service)
-\item
-  running RStudio in a container is a common approach for
-  reproducibility - \emph{is there a need to run/control containers from
-  a UI integrated in RStudio?}
-\item
-  moving away from Docker focus towards containers?
+The R packages and use cases presented show the positive drive in the
+community to innovate, but also the challenge of keeping up with
+continuous evolving landscape. The use cases contributed by co-authors
+also have a degree of overlap. A common language and understanding of
+good practices is still taking shape. The easiness with which one can
+create a complex software systems, such as an independent Docker image
+stack, to serve one's specific needs currently leads to some
+fragmentation. It is unclear if Docker alone as a core technology is
+really a feasible level of collaboration and abstraction. Furthermore
+fragmentation may not be a bad sign but instead a reflection of a
+growing market, which is able to sustain multiple related efforts. With
+the maturing of core building blocks, such as the Rocker suite of
+images, more systems will be built successfully but will also be behind
+the curtains.
 
-  \begin{itemize}
-  \tightlist
-  \item
-    is there a need for a wrapper for
-    \href{https://github.com/containers/libpod/blob/master/API.md}{podman's
-    Varlink-API} (similar to stevedore) and buildah to manage containers
-    and images respectively with alternative software stacks?
-  \item
-    will there be control packages for Singularity support?
-  \end{itemize}
-\item
-  sustain the overview and structure in this article in form of a CRAN
-  Task View
-\end{itemize}
+However, at least \emph{on the level of R packages}, some consolidation
+seems in order, e.g., to reduce the number of packages creating
+\texttt{Dockerfile}s from R code or controlling the Docker daemon with R
+code. It remains to be seen which approach to control Docker, via the
+Docker API as \texttt{stevedore} or via system calls as
+\texttt{dockyard}/\texttt{docker}/\texttt{dockr}, is more sustainable,
+or if the question will be answered by the endurance of maintainers and
+sufficient funding. Similarly, the capturing of environments and their
+serialization in form of a \texttt{Dockerfile} currently happens at
+different levels of abstraction and re-use of functionality seems
+reasonable, e.g.~\texttt{liftr} could generate the environment with
+\texttt{containerit}, which in turn may use \texttt{dockerfiler} for low
+level objects representing a \texttt{Dockerfile}. In this consolidation,
+the Rocker Project could play the role of a unifying and coordinating
+entity in the future. Though for the moment, the sign of the times
+points to more experimentation and feature growth, e.g.~images for
+GPU-based computing and artificial intelligence. Even with coding being
+more and more accepted as a required, and achievable skill, an easier
+access, for example by exposing containerisation benefits via simple
+user interfaces in the users' IDE, could be an important next step.
+Currently containerisation happens more in the background at the system
+level.
+
+New features, which make complex workflows accessible and reproducible,
+and variety in packages, even when they have overlapping features, are a
+signal and a support for a growing user base. This growth is possibly
+the the most important goal for the foreseeable future in the
+\emph{Rockerverse}. The dominant position of Docker is a blessing and a
+curse for these goals. It could be wise to start experimenting with
+non-Docker containerisation tools now, e.g.~R packages interfacing with
+other container engines such as
+\href{https://github.com/containers/libpod}{podman/buildah} or
+\href{https://coreos.com/rkt/}{rkt}, or an R package for creating
+Singularity image recipe files. Such efforts help to avoid lock-in and
+to design sustainable workflows based on concepts of
+\emph{containerisation}, not on their implementation in Docker. If
+adoption of containerisation and R continue to grow, the missing pieces
+for a success predominantly lie in (a) coordination and documentation of
+activities to reduce repeated work in favour of open collaboration, (b)
+the sharing of lessons learned from use cases to build common knowledge
+and language, and (c) a sustainable continuation and funding for all of
+development, community support, and education. A concrete effort by this
+work towards these pieces is to sustain the structure and captured
+status quo in a CRAN Task View \emph{Containerization}.
 
 \hypertarget{author-contributions}{%
 \section{Author contributions}\label{author-contributions}}
 
 DN conceived of the presented idea and
 \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team},
-wrote the section about images for R distributions, wrote the
-conclusions section, and revised all sections. CB .. RC and EH wrote the
-section on interfaces for Docker in R. DE wrote the introduction and
-section about Rocker. ME .. CF wrote the paragraphs about
-\texttt{r-online}, \texttt{dockerfiler}, \texttt{r-ci} and
+wrote sections not mentioned below, and revised the full first draft. CB
+.. RC and EH wrote the section on interfaces for Docker in R. DE wrote
+the introduction and section about Rocker. ME .. CF wrote the paragraphs
+about \texttt{r-online}, \texttt{dockerfiler}, \texttt{r-ci} and
 \texttt{r-db}. BW .. KR .. NR .. NX wrote the section on liftr. LS \& NT
 wrote the section on Bioconductor. All authors contributed minor edits,
 gave feedback on other sections, and approved the final version.
@@ -1437,6 +1627,13 @@ Fred Hutchinson Cancer Research Center\\
 Vaccine and Infectious Disease\\ 1100 Fairview Ave. N., P.O. Box 19024\\ Seattle, WA 98109-1024, USA\\
 }
 \href{mailto:ehhughes@fredhutch.org}{\nolinkurl{ehhughes@fredhutch.org}}
+
+\address{%
+Sean Lopp\\
+RStudio, Inc\\
+RStudio\\ 250 Northern Ave\\ Boston, MA 02210\\
+}
+\href{mailto:sean@rstudio.com}{\nolinkurl{sean@rstudio.com}}
 
 \address{%
 Ben Marwick\\
