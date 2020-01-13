@@ -418,13 +418,14 @@ docker images | grep vnijs
 <!-- from packages closer to Docker to second level packages to more complex use cases -->
 
 ## Interfaces for Docker in R
+\label{interfaces}
 
-Interfacing with the Docker daemon is typically done through the Docker Command Line Interface (CLI).
+Interfacing with the Docker daemon is typically done through the [Docker Command Line Interface](https://docs.docker.com/engine/reference/commandline/cli/) (Docker CLI).
 However, moving back and forth between an R console and the command line can create friction in workflows and reduce reproducibility.
 A number of first-order R packages provide a interface to the Docker CLI, allowing to automate interaction with the Docker CLI from an R console.
 
-Each of these packages has particular advantages as they provide function wrappers for interacting with the Docker CLI at different stages of a container's life cycle. Examples of such interactions are installing the Docker software, creating `Dockerfile`s, building an image, and launching a container on a local machine or on the cloud. As such, the choice of which package is most useful depends on the use-case at hand.
-<!-- ^ in the examples listed above, the name of the packages which provide such functionality could be mentioned, this would highlight the variety in functionality already. -->
+Each of these packages has particular advantages as they provide function wrappers for interacting with the Docker CLI at different stages of a container's life cycle. Examples of such interactions are installing the Docker software, creating `Dockerfile`s (\pkg{dockerfiler}), \pkg{containerit}), building images and launching a containers (\pkg{stevedore}, \pkg{docker}) on a local machine or on the cloud.
+As such, the choice of which package is most useful depends on the use-case at hand, but also the users level of expertise.
 
 ```{r clientfunctionalities, echo=FALSE, results='asis', warning=FALSE, message=FALSE}
 functionalities <- tribble(
@@ -474,19 +475,33 @@ if (packageVersion("rticles") >= "0.12.3") {
 }
 ```
 
-**stevedore** ([https://cran.r-project.org/package=stevedore](https://cran.r-project.org/package=stevedore)) 
+**\pkg{stevedore}** ([https://cran.r-project.org/package=stevedore](https://cran.r-project.org/package=stevedore)) 
 <!-- from the CRAN description:
 Work with containers over the Docker API. Rather than using system calls to interact with a docker client, using the API directly means that we can receive richer information from docker. The interface in the package is automatically generated using the 'OpenAPI' (a.k.a., 'swagger') specification, and all return values are checked in order to make them type stable.
 -->
 
-**dockyard** ([https://github.com/thebioengineer/dockyard](https://github.com/thebioengineer/dockyard)) has the goal of lowering barrier to creating `Dockerfile`s and Docker images, and deploying Docker containers. 
+**\pkg{AzureContainers}** ([https://cran.r-project.org/package=AzureContainers](https://cran.r-project.org/package=AzureContainers)) is an interface to a number of container-related services in Microsoft's [Azure Cloud](https://azure.microsoft.com/), namely [Container Instances](https://azure.microsoft.com/en-us/services/container-instances/), [Container Registry](https://azure.microsoft.com/en-us/services/container-registry/), and [Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/).
+While it is mainly intended for working with Azure, as a convenience feature it includes lightweight, cross-platform shells to Docker and Kubernetes (tools `kubectl` and `helm`).
+These can be used to create and manage arbitrary Docker images and containers, as well as Kubernetes clusters on any platform or cloud service.
+
+**\pkg{babelwhale}** ([https://cran.r-project.org/package=babelwhale](https://cran.r-project.org/package=babelwhale)) 
+allows executing and interacting with containers, which can use either Docker or Singularity as a backend.
+The package provides a unified interface to interact with Docker and Singularity containers.
+Users can, for example, execute a command inside a container, mount a volume or copy a file.
+
+**\pkg{harbor}** ([https://github.com/wch/harbor](https://github.com/wch/harbor)
+<!-- from the github description
+is an R package for controlling docker containers on local and remote hosts.
+-->
+
+**\pkg{dockyard}** ([https://github.com/thebioengineer/dockyard](https://github.com/thebioengineer/dockyard)) has the goal of lowering barrier to creating `Dockerfile`s and Docker images, and deploying Docker containers. 
 The way docker images are made is by reading and following a set of instructions found in `Dockerfile`s.
 This requires stepping out of the R ecosystem and into an infrastructure mindset where the user needs to specify the environment they require.
 Because `Dockerfile`s can be read as a series of steps, this lends itself well to the `tidyverse` style of programming where each step is piped into the next.
 dockyard has a `Dockerfile` object that either starts out as an empty `Dockerfile`, or can use existing `Dockerfile` to use as a template.
 This combined with a series of functions that are analogous to the steps commonly found in a `Dockerfile`, it makes building Docker images much more approachable to R users.
 There are also wrappers for commonly used steps for R programmers like adding libraries and copying files into the R Docker containers.
-Once the `Dockerfile` is created, dockyard has the functionality to build the image and deploy it.
+Once the `Dockerfile` is created, dockyard has built-in functionality to build the image and run a container.
 
 **\pkg{dockermachine}** ([https://github.com/cboettig/dockermachine](https://github.com/cboettig/dockermachine)) is an R package to provide a convenient interface to [Docker Machine](https://docs.docker.com/machine/overview/) from R.
 Docker Machine's CLI tool `docker-machine` allows users to create and manage virtual host on local computers, local data centers, or at cloud providers.
@@ -517,6 +532,7 @@ Several second order R packages attempt to make the process of creating Docker i
 - [`dockr`](https://github.com/smaakage85/dockr), see also http://smaakage85.netlify.com/2019/12/21/dockr-easy-containerization-for-r/
 - [`dockertest`](https://github.com/traitecoevo/dockertest/)
 - [`renv` with Docker](https://rstudio.github.io/renv/articles/docker.html)
+- https://github.com/gigantum/base-images
 
 **\pkg{liftr}** ([https://nanx.me/liftr/](https://nanx.me/liftr/)) \citep{liftr2019} aims to solve the problem of persistent reproducible reporting in statistical computing.
 Currently, the R Markdown format and its backend compilation engine _knitr_ offer a _de facto_ standard for creating dynamic documents \citep{xie2018}.
@@ -572,7 +588,7 @@ Iteration and automation for `Dockerfile`s is the very reason behind [`dockerfil
 For example, the **[`golem`](https://github.com/ThinkR-open/golem)** package makes an heavy use of `dockerfiler` when it comes to creating the `Dockerfile` for building production-grade Shiny applications and deploying them.
 The reason behind this is that `dockerfiler`, on top of being scriptable from R, can leverage all the tools available in R to parse a `DESCRIPTION` file, to get system requirements, to list dependencies, versions, etc. 
 
-## Deployment to cloud services [div]
+## Deployment to cloud services
 
 The cloud is the natural environment of containers, and becomes the go-to mechanism to expose applications written in R to users.
 
@@ -585,7 +601,7 @@ The cloud is the natural environment of containers, and becomes the go-to mechan
 - Kubernetes - A popular platform for managing Docker containers is [Kubernetes](https://kubernetes.io/), which is used for a wide variety of containerized applications.  It may be your organisation has a Kubernetes cluster already for other applications.  Docker containers are used within Kubernetes clusters to hold native code, for which Kubernetes creates a framework around network connections and scaling of resources up and down.  An introduction on using [Kubernetes with R is published at this blog post](https://code.markedmondson.me/r-on-kubernetes-serverless-shiny-r-apis-and-scheduled-scripts/).
 - [`AzureContainers`](https://cran.r-project.org/package=AzureContainers): Umbrella package for working with containers in Microsoft's Azure cloud. Provides interfaces to three Azure services: Container Registry, Container Instances (for running individual containers), and Kubernetes Services (for orchestrated deployments)
 
-## Using R to power enterprise software in production environments [@jnolis, @nolistic]
+## Using R to power enterprise software in production environments
 
 R has been historically viewed as a tool for analysis and scientific research--not for creating software that corporations can rely on to continously run in real time.
 However, thanks to advancements in R running as a web service, along with with the ability to deploy R in Docker containers, modern enterprises are now capable of having real-time machine learning powered by R.
@@ -617,7 +633,7 @@ The models are convolutional neural networks that use the RStudio Keras package 
 Since the models power tools for agents and customers, they need to have extremely high uptime and reliability--and they found that R is able to perform.
 The AI @ T-Mobile team open sourced their Docker images [on GitHub](https://github.com/tmobile/r-tensorflow-api).
 
-## Deployment to the cloud [@hongooi]
+## Deployment to the cloud
 
 While Plumber provides the low-level infrastructure for turning a statistical model into a predictive service, for production purposes it is usually necessary to take into account considerations such as scalability, reliability and ease of management.
 A single container is limited in the volume of requests it can service.
@@ -772,7 +788,7 @@ The `rocker/tidyverse` base image ensures that users can also readily use packag
 
 **[RCloud](https://github.com/att/rcloud/tree/master/docker)** uses a `rocker/drd` base image for creation of collaborative data analysis and visualisation environments.
 
-## Using Docker in a Data Science Platform
+## Using Docker in a commercial Data Science Platform
 
 In addition to embedding RStudio Open Source Server inside of Docker images, such as Rocker, RStudio offers the moduler data science platform [RStudio Team](https://rstudio.com/products/team/), a commercial product allowing teams of data scientists and their respective IT/DevOps groups to develop and deploy code in R and Python.
 RStudio team enables these groups to use the benefits of containers, without requiring users to learn new tools or directly interact with containers.
