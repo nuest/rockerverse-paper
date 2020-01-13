@@ -257,7 +257,7 @@ The source code development [on GitHub](https://github.com/radfordneal/pqR/) is 
 But especially disruptive approaches may contribute to the development of the R ecosystem, so the `nuest/pqr` images on Docker Hub and GitHub at [https://hub.docker.com/r/nuest/pqr/](https://hub.docker.com/r/nuest/pqr/) and [https://github.com/nuest/pqr-docker](https://github.com/nuest/pqr-docker) respectively.
 
 **FastR** is "A high-performance implementation of the R programming language, built on GraalVM" (https://github.com/oracle/fastr).
-It is developed by Oracle, connects R to the GraalVM ecosystem \citep{wikipedia_graalvm_2019}, and also claims superior performance but also targets full compatibility with base R \footnote{\href{https://github.com/oracle/fastr}{https://github.com/oracle/fastr}}.
+It is developed by Oracle, connects R to the GraalVM ecosystem \citep{wikipedia_graalvm_2019}, and also claims superior performance but also targets full compatibility with base R\footnote{\href{https://github.com/oracle/fastr}{https://github.com/oracle/fastr}}.
 There are no offical Docker images provided, but `nuest/fastr` images and `Dockerfile` are independently maintained on [Docker Hub](https://cloud.docker.com/repository/docker/nuest/fastr/) and [GitHub](https://github.com/nuest/fastr-docker) respectively.
 
 While the images presented in this section are far from being as vetted, stable, and widely used as any of the Rocker images, they demonstrate an important advantage of containerisation technology, namely the abiliy to transparently build portable stacks of open source software and make them easily accessible to users.
@@ -266,7 +266,7 @@ Since all of the different R distributions claim better performance as a core mo
 
 ## Bioconductor
 
-[_Bioconductor_](http://bioconductor.org/) is an open source, open development project for the analysis and comprehension of genomic data \citep{gentleman_bioconductor_2004}.
+_Bioconductor_ ([https://bioconductor.org/](https://bioconductor.org/)) is an open source, open development project for the analysis and comprehension of genomic data \citep{gentleman_bioconductor_2004}.
 The project consists of 1741 R software packages as of August 15th 2019, as well as packages containing annotation or experiment data.
 _Bioconductor_has a semiannual release cycle, each release is associated with a particular version of R.
 Docker images allow availability of current and past versions of _Bioconductor_ for convenience and reproducibility.
@@ -333,13 +333,13 @@ The main challenges are finding a suitable base image with a matching OS version
 
 Docker containers on the Windows operating system were originally quite cumbersome to use.
 They required an extra tool, [Docker Toolbox](https://docs.docker.com/toolbox/), which by now only exists as a legacy solution for older Windows systems.
-Docker toolbox leverages `docker-machine` (see also Section&nbsp;\ref{interfaces} for an R package interfacing with `docker-machine`) to handle the process of creating a local virtual host which could host Docker Engine, while exposing the regular Docker CLI.
+Docker toolbox leverages `docker-machine` (see also Section&nbsp;\nameref{interfaces} for an R package interfacing with `docker-machine`) to handle the process of creating a local virtual host which could host Docker Engine, while exposing the regular Docker CLI.
 The Docker CLI commands are forwarded to the virtual host transparently for the user.
 For current Windows Server (2016 and later) and Windows Desktop ([Docker Desktop](https://www.docker.com/products/docker-desktop) requires Windows 10) versions, Docker is supported natively\footnote{\href{https://www.docker.com/products/windows-containers}{https://www.docker.com/products/windows-containers}} and different base images are offered by Microsoft\footnote{\href{https://docs.microsoft.com/en-us/virtualization/windowscontainers/about/index}{https://docs.microsoft.com/en-us/virtualization/windowscontainers/about/index}}.
 The Docker CLI can be used in just the same way as on other operating systems but not every base image is supported on every Windows host\footnote{\href{https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/version-compatibility}{https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/version-compatibility}}.
 On Docker Desktop for Windows, the user can run both Linux-based and Windows-based containers, but only one of the Docker daemons can be used at a time\footnote{See "Switch between Windows and Linux containers" on \href{https://docs.docker.com/docker-for-windows/}{https://docs.docker.com/docker-for-windows/}.}.
 
-**[`rocker-win`](https://github.com/nuest/rocker-win)** is a proof of concept for running R in Windows-based containers \citep{nust_rocker-win_2019}.
+**rocker-win** ([https://github.com/nuest/rocker-win](https://github.com/nuest/rocker-win)) is a proof of concept for running R in Windows-based containers \citep{nust_rocker-win_2019}.
 It provides selected R versions using three different base images using `microsoft/windowsservercore` and `mcr.microsoft.com/windows/servercore`.
 These base images match different Windows versions: Windows Server 2019, Windows Server 2016, and Windows Server, version 1803.
 The images are built using two CI services, [Travis CI](https://docs.travis-ci.com/user/reference/windows/) and [Appveyor](https://www.appveyor.com/docs/windows-images-software/), which provide the different Windows versions and therefore support different base images, and published automatically [on Docker Hub](https://hub.docker.com/r/nuest/rocker-win).
@@ -356,11 +356,11 @@ But the developments in the `rocker-win` prototype show that containers can also
 ## Non-Debian Linux images
 
 \label{rhub}
-The **R-hub** project provides _"a collection of services to help R package development", with the package builder as the most prominent one\citep{r-hub_docs_2019}.
+The **R-hub** project provides _"a collection of services to help R package development"_, with the package builder as the most prominent one\citep{r-hub_docs_2019}.
 The builder allows R package developers to check their R package on different platforms and R versions using a web form or the package \pkg{rhub} \citep{csardi_rhub_2019}.
 The builder uses Docker containers to conduct these checks, taking advantages of their well-defined environments and sandboxing.
 The `Dockerfile`s and images are published on Docker Hub\footnote{\href{https://hub.docker.com/u/rhub}{https://hub.docker.com/u/rhub}} and GitHub\footnote{\href{https://github.com/r-hub/rhub-linux-builders}{https://github.com/r-hub/rhub-linux-builders}} respectively.
-The images comprise release and development builds of R running in the base images of the [Debian](https://www.debian.org/), [Ubuntu](https://ubuntu.com/), [Fedora](https://getfedora.org/), and [CentOS](https://centos.org/) linux distributions (Arch Linux is under development\footnote{\href{https://github.com/r-hub/rhub-linux-builders/pull/41}{https://github.com/r-hub/rhub-linux-builders/pull/41}}, `see `rhub::local_check_linux_images()` for a full list), and are intended for debugging (see Section&nbsp;\ref{development}) not for reproducible workflows.
+The images comprise release and development builds of R running in the base images of the [Debian](https://www.debian.org/), [Ubuntu](https://ubuntu.com/), [Fedora](https://getfedora.org/), and [CentOS](https://centos.org/) linux distributions (Arch Linux is under development\footnote{\href{https://github.com/r-hub/rhub-linux-builders/pull/41}{https://github.com/r-hub/rhub-linux-builders/pull/41}}, see `rhub::local_check_linux_images()` for a full list), and are intended for debugging (see Section&nbsp;\nameref{development}) not for reproducible workflows.
 _The rationale_ of not re-using the Rocker image stack is the high number of operatings systems and configurations, which can be more uniformly maintained in a seperate suite of images.
 Also, a common structure across the respective image stacks of the operating systems, e.g., for `debian`, adding GCC in `debian-gcc` and then R's development version in `debian-gcc-devel`.
 The platform also has a specific user configuration differing from the setup covering typical applications of Rocker images, and the images include considerably more software, such as a fairly complete LaTeX installation, to provide an experience closer to CRAN.
@@ -513,7 +513,7 @@ Several second order R packages attempt to make the process of creating Docker i
 - [`dockertest`](https://github.com/traitecoevo/dockertest/)
 - [`renv` with Docker](https://rstudio.github.io/renv/articles/docker.html)
 
-**[_liftr_](https://nanx.me/liftr/)** \citep{liftr2019} aims to solve the problem of persistent reproducible reporting in statistical computing.
+**\pkg{liftr}** ([https://nanx.me/liftr/](https://nanx.me/liftr/)) \citep{liftr2019} aims to solve the problem of persistent reproducible reporting in statistical computing.
 Currently, the R Markdown format and its backend compilation engine _knitr_ offer a _de facto_ standard for creating dynamic documents \citep{xie2018}.
 However, the reproducibility of such content authoring environments is often limited to individual machines --- it is not easy to replicate the system environment (libraries, R versions, R packages) where the document was compiled.
 This issue becomes even more serious when it comes to collaborative document authoring and creating large-scale document building services.
@@ -582,9 +582,14 @@ The cloud is the natural environment of containers, and becomes the go-to mechan
 
 ## Using R to power enterprise software in production environments [@jnolis, @nolistic]
 
-R has been historically viewed as a tool for analysis and scientific research--not for creating software that corporations can rely on to continously run in real time. However, thanks to advancements in R running as a web service, along with with the ability to deploy R in docker containers, modern enterprises are now capable of having real-time machine learning powered by R.
+R has been historically viewed as a tool for analysis and scientific research--not for creating software that corporations can rely on to continously run in real time.
+However, thanks to advancements in R running as a web service, along with with the ability to deploy R in Docker containers, modern enterprises are now capable of having real-time machine learning powered by R.
 
-The backbone of this work is the _[plumber](https://www.rplumber.io/docs/hosting.html#docker)_ package, created by Jeff Allen. The plumber package allows R to be used to host web services through RESTful APIs. When R is running on a server, a different server can ask R to make a computation through an HTTP request and get an immediate response. For instance, if a data scientist at a company creates a machine learning model to tell which customers are likely to make a repeat purchase, if they serve the model through a plumber API then someone else on the marketing team could write software that sends different emails depending on that real-time prediction. Plumber syntax is simple to read and understand: the API is created by commenting above function names in an R script.
+The backbone of this work is the \pkg{plumber} ([https://www.rplumber.io/](https://www.rplumber.io/)) package.
+The plumber package allows R to be used to host web services through RESTful APIs.
+When R is running on a server, a different server can ask R to make a computation through an HTTP request and get an immediate response.
+For instance, if a data scientist at a company creates a machine learning model to tell which customers are likely to make a repeat purchase, if they serve the model through a plumber API then someone else on the marketing team could write software that sends different emails depending on that real-time prediction.
+Plumber syntax is simple to read and understand: the API is created by commenting above function names in an R script.
 
 ```
 #* Return the sum of two numbers
@@ -713,12 +718,12 @@ That way, package builders can use this image as a base image for there testing 
 The fact that Docker images are portable and well defined make them useful when more than one person needs access to the same computing environment.
 This is even more useful when some of the users do not have the expertise to create such an environment themselves, and when these environments can be run in public or shared infrastructure.
 
-[`holepunch`](https://github.com/karthik/holepunch) is an R package that was designed to make sharing work environments accessible to novice R users based on _Binder_.
+**\pkg{holepunch}** ([https://github.com/karthik/holepunch](https://github.com/karthik/holepunch)) is an R package that was designed to make sharing work environments accessible to novice R users based on **Binder**.
 The [Binder project](https://mybinder.readthedocs.io/en/latest/), maintained by the team behind Jupyter, makes it possible for users to create and share their computing environments with others \citep{jupyter_binder_2018}.
 A _BinderHub_ allows anyone with access to a web browser and an internet connection to launch a temporary instance of these custom environments and execute any workflows contained within.
 From a reproducibility standpoint, Binder makes it exceedingly easy to compile a paper, visualize data, and run small examples from papers or tutorials without the need for any local installation.
 To set up Binder for a project, a user typically starts at an instance of a BinderHub and passes the location of a repository with a workspace, e.g., a hosted Git repository, or a data repository like Zenodo.
-Binder's core internal tool is [repo2docker](https://repo2docker.readthedocs.io/en/latest/config_files.html).
+Binder's core internal tool is [`repo2docker`](https://repo2docker.readthedocs.io/en/latest/config_files.html).
 It deterministically builds a Docker image by parsing the contents of a repository, e.g., project dependency configurations or simple configuration files.
 In the most powerful case, `repo2docker` builds a given `Dockerfile`.
 While this approach works well for most run of the mill Python projects, it is not so seamless for R projects.
@@ -806,7 +811,7 @@ Using the Rocker images with RStudio, the disposable environments lack no develo
 **[`r-debug`](https://github.com/wch/r-debug)** is a purpose built Docker image for debugging R memory problems.
 \citet{eddelbuettel_debugging_2019} describes how a Docker container was used to debug an issue with a package only occuring with a particular version of Fortran, and using tools which are not readily available on all platforms (e.g., not on macOS).
 
-The R-hub Docker images (see Section&nbsp;\ref{rhub}) can also be used to debug problems locally using various combinations of Linux platforms, R versions, and compilers\footnote{See \href{https://r-hub.github.io/rhub/articles/local-debugging.html}{https://r-hub.github.io/rhub/articles/local-debugging.html} and \href{https://blog.r-hub.io/2019/04/25/r-devel-linux-x86-64-debian-clang/}{https://blog.r-hub.io/2019/04/25/r-devel-linux-x86-64-debian-clang/}.
+The R-hub Docker images (see Section&nbsp;\nameref{rhub}) can also be used to debug problems locally using various combinations of Linux platforms, R versions, and compilers\footnote{See \href{https://r-hub.github.io/rhub/articles/local-debugging.html}{https://r-hub.github.io/rhub/articles/local-debugging.html} and \href{https://blog.r-hub.io/2019/04/25/r-devel-linux-x86-64-debian-clang/}{https://blog.r-hub.io/2019/04/25/r-devel-linux-x86-64-debian-clang/}.
 The images go beyond the configurations, or _flavours_, used by CRAN for checking packages\footnote{\href{https://cran.r-project.org/web/checks/check_flavors.html}{https://cran.r-project.org/web/checks/check\_flavors.html}}, e.g., with CentOS-based images, but lack a container for checking on Windows or OS X.
 The images greatly support package developers to provide support on operating systems they are not familiar.
 
