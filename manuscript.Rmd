@@ -371,21 +371,24 @@ The images also install R in a versioned directory and use a minimal set of buil
 Furthermore these images are responsible for creating pre-compiled binary R packages for Linux, which supplement the binaries built by CRAN.
 These pre-compiled packages dramatically decrease the installation time of R packages on Linux and subsequently can decrease the build time of Docker images \citep{lopp_package_2019}.
 
-There are also independent projects installing R or RStudio on [**Alpine Linux**](https://www.alpinelinux.org/), but not beyond the proof of concept stage\footnote{\href{https://github.com/artemklevtsov/r-alpine}{https://github.com/artemklevtsov/r-alpine} or \href{https://www.github.com/velaco/alpine-r}{https://www.github.com/velaco/alpine-r} provide different use case images but are not recently maintained (development of the latter documented in \citet{ratesic_building_2018}); \href{https://github.com/cmplopes/alpine-r}{https://github.com/cmplopes/alpine-r} has only base R images, is relatively up-to-date but sparsely documented.}.
-Alpine images are often used for minimalistic and thereby small and secure containers, e.g., in hardware with limited storage, though this advantage quickly deteriorates if more features are needed, e.g. if installing RStudio, package building envrionments, or powerful data science tools.
+There are also independent projects installing R or RStudio on [**Alpine Linux**](https://www.alpinelinux.org/), but not beyond the proof of concept stage\footnote{\href{https://gitlab.com/artemklevtsov/r-alpine}{https://gitlab.com/artemklevtsov/r-alpine} or \href{https://www.github.com/velaco/alpine-r}{https://www.github.com/velaco/alpine-r} provide different use case images but are not recently maintained (development of the latter documented in \citet{ratesic_building_2018}); \href{https://github.com/cmplopes/alpine-r}{https://github.com/cmplopes/alpine-r} has only base R images, is relatively up-to-date but sparsely documented; \href{https://github.com/CenterForStatistics-UGent/mountainr}{https://github.com/CenterForStatistics-UGent/mountainr} is a ghost project with only a single short `Dockerfile`, yet it shows the easy installation of the latest R from Alpine sources}.
+In general, Alpine-based Docker images are often chosen for minimalistic and thereby small and secure containers, e.g., in hardware with limited storage.
+R-hub's proof of concept [`r-minimal`](https://github.com/r-hub/r-minimal) takes this to the extreme with compressed image size of 20MB and bespoke install scripts, e.g., to cleverly remove compilers after package installation.
+For R though, this advantage quickly deteriorates if more features are needed, e.g. if adding compilers, packages, or especially if installing powerful data science and communication tools, like RStudio or LaTeX.
 Furthermore the distribution uses the [`musl` C library](https://www.musl-libc.org/) instead of the `glibc` used in Debian/Ubuntu, for which more tooling and experiences exist\footnote{Cf. \href{https://github.com/rocker-org/rocker/issues/231}{https://github.com/rocker-org/rocker/issues/231}}.
-\href{https://github.com/CenterForStatistics-UGent/mountainr}{https://github.com/CenterForStatistics-UGent/mountainr} only has a single and quite short `Dockerfile`, showing the easy installation of the latest R from Alpine sources.
-These images are used ...
+In fact, using Debian's 'slim' variant and removing capabilities, one could probalby achieve similarly small image sizes on a more common stack.
 
-[`altRnative`](https://github.com/ismailsunni/altRnative/) is an experimental R package for running the same code across multiple containerised versions of R, intended for comparison across operating systems and different implementations of R.
-It comes with a collection of `Dockerfile`s and corresponding images \footnote{\href{https://github.com/ismailsunni/dockeRs}{https://github.com/ismailsunni/dockeRs}}.
+**\pkg{altRnative}** ([https://github.com/ismailsunni/altRnative/](https://github.com/ismailsunni/altRnative/)) is an experimental R package for running the same code across multiple containerised versions of R, intended for comparison across operating systems and different implementations of R.
+It comes with a collection of `Dockerfile`s and corresponding images in multiple combinations, currently including, e.g., MRO, FastR, Fedora, and TERR\footnote{See `Dockerfile`s at \href{https://github.com/ismailsunni/dockeRs}{https://github.com/ismailsunni/dockeRs}.}.
 
 ## Data Science images
 
-The notion of _Data Science_ is widely discussed among all academic disciplines.
-Using computers and complex software to make sense of (large amounts of) collected or simulated data is a cross-cutting phenomenon leading to _X Data Science_ disciplines, seminars, and study majors, there are also Docker images with commonly used tools and software stacks pre-installed that are often used in combination for analysing data.
-A large number of bespoke computing environments are created this way.
-Here we only mention a few image stacks as examples that are not based on Rocker images but prominently include installations of R.
+_Data Science_ is a widely discussed topic among all academic disciplines \citep[cf. e.g.,][]{donoho_50_2017}.
+Using computers and complex software to make sense of (large amounts of) collected or simulated data is a cross-cutting phenomenon leading to _X Data Science_ disciplines, seminars, and study majors.
+The practice to apply a combination tools and software stacks for analysing data and the cross-cutting skillsets connected with data science puts the management of computing environments and the challenges of reproducibility high up on the agenda.
+This awareness leads to a large number of bespoke Docker images but also some commonly used image stacks, ranging from base images with very common tools to 'catch all' images including _a lot_ of software.
+Here we only mention a few image stacks as examples, which are not based on Rocker images or stem from the R community, but prominently include installations of R.
+A general description of what to consider when creating a Docker image used for data science projects in R is provided on [environments.rstudio.com](https://environments.rstudio.com/docker).
 
 The [**Jupyter Docker Stacks** project](https://github.com/jupyter/docker-stacks/) are a set of ready-to-run Docker images containing Jupyter applications and interactive computing tools \citep{project_jupyter_jupyter_2018}.
 The `jupyter/r-notebook` image includes R and "popular packages", and R is also included in the catchall `datascience-notebook` image\footnote{\href{https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html}{https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html}}.
@@ -410,8 +413,6 @@ As data science often applies a multitude of tools, this image favours inclusion
 docker pull vnijs/rsm-msba-spark
 docker images | grep vnijs
 ```
-
-A general description of what to consider when creating a Docker image used for data science projects in R is provided on [environments.rstudio.com](https://environments.rstudio.com/docker).
 
 # Use cases and applications
 <!-- from packages closer to Docker to second level packages to more complex use cases -->
