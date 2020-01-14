@@ -210,7 +210,7 @@ Images are normally build from plain text documents called `Dockerfile`.
 A `Dockerfile` has a specific set of instructions to create and document a well-defined environment, i.e., install specific software and expose specific ports.
 
 For statistical computing and analysis centered around R, the Rocker Project has provided a variety of Docker containers since its start in 2014 \citep{RJ-2017-065}.
-The Rocker Project provides several lines of containers spanning to from building blocks with `R-release` or `R-devel`, via containers with RStudio~Server and Shiny~Server, to domain-specific containers such as `geospatial`.
+The Rocker Project provides several lines of containers spanning to from building blocks with `R-release` or `R-devel`, via containers with [RStudio&nbsp;Server](https://rstudio.com/products/rstudio/) and [Shiny&nbsp;Server](https://rstudio.com/products/shiny/shiny-server/), to domain-specific containers such as [`rocker/geospatial`](https://github.com/rocker-org/geospatial) \citep{rocker_geospatial_2019}.
 These containers form _image stacks_, building on top of each other for better maintainability and 
 Also of note is a series of "versioned" containers which match the R release they contain with the _then-current_ set of packages via the MRAN Snapshot views of CRAN \citep{microsoft_cran_2019}.
 The Rocker Project's impact and importance was acknowledged by the Chan Zuckerberg Initiative's _Essential Open Source Software for Science_, who provide findung for the projects's sustainable maintenance, community growth, and targeting new hardware platforms including GPUs \citep{chan_zuckerberg_initiative_maintaining_2019}.
@@ -366,9 +366,9 @@ _The rationale_ of not re-using the Rocker image stack is the high number of ope
 Also, a common structure across the respective image stacks of the operating systems, e.g., for `debian`, adding GCC in `debian-gcc` and then R's development version in `debian-gcc-devel`.
 The platform also has a specific user configuration differing from the setup covering typical applications of Rocker images, and the images include considerably more software, such as a fairly complete LaTeX installation, to provide an experience closer to CRAN.
 
-**RStudio** also maintains a set of [Docker images](https://github.com/rstudio/r-docker) for multiple operating systems including SUSE, Ubuntu, CentOS, and Debian.
-The image stacks include an [opinionated R installation](https://github.com/rstudio/r-builds) and ensure the R installation and profile is consistent across the different Linux distributions.
-The images also install R in a versioned directory and use a minimal set of build and runtime dependencies,
+[**RStudio**](https://rstudio.com/) also maintains a set of [Docker images](https://github.com/rstudio/r-docker) for multiple operating systems including SUSE, Ubuntu, CentOS, and Debian.
+The image stack includes an [opinionated R installation](https://github.com/rstudio/r-builds) and ensures the R installation and profile is consistent across the different Linux distributions.
+The base image also installs R in a versioned directory and uses a minimal set of build and runtime dependencies.
 Furthermore these images are responsible for creating pre-compiled binary R packages for Linux, which supplement the binaries built by CRAN.
 These pre-compiled packages dramatically decrease the installation time of R packages on Linux and subsequently can decrease the build time of Docker images \citep{lopp_package_2019}.
 
@@ -799,7 +799,7 @@ Notable patterns include:
 Many RStudio customers are managing professional products in Docker containers as an alternative to bare-metals servers or virtual machines. Best practices for [running RStudio with Docker containers](https://support.rstudio.com/hc/en-us/articles/360021594513-Running-RStudio-with-Docker-containers) as well as [Docker images](https://github.com/rstudio/rstudio-docker-products) for RStudio's commerical products are available.
 1. _To run interactive RStudio sessions on a cluster:_
 In the RStudio Server Pro 1.2 release in 2019, RStudio added new functionality called [Launcher](https://solutions.rstudio.com/launcher/overview/).
-It gives users the ability to spawn RStudio instances and background jobs in a scalable way on external clusters, e.g., [Kubernetes based on Docker images](https://support.rstudio.com/hc/en-us/articles/360019253393-Using-Docker-images-with-RStudio-Server-Pro-Launcher-and-Kubernetes) or [Slurm](https://slurm.schedmd.com/) clusters, and optionally, with Singularity containers.
+It gives users the ability to spawn R sessions and background jobs in a scalable way on external clusters, e.g., [Kubernetes based on Docker images](https://support.rstudio.com/hc/en-us/articles/360019253393-Using-Docker-images-with-RStudio-Server-Pro-Launcher-and-Kubernetes) or [Slurm](https://slurm.schedmd.com/) clusters, and optionally, with Singularity containers.
 A key benefit of Launcher is the ability for R and Python users to interactively work in RStudio without learning about Docker at all - while still leveraging containers and Kubernetes.
 Users can submit batch jobs to Kubernetes clusters without writing specific deployment scripts.
 
