@@ -819,7 +819,25 @@ The portability of containers becomes particularly useful when complex processin
 - [dynmethods](https://github.com/dynverse/dynmethods) [@rcannood]: In order to evaluate ±50 computational methods which all used different environments (R, Python, C++, ...), we wrapped each of them in a docker container and can execute these methods from R. Again, all of these containers are being built on travis-ci, and will only be pushed to docker hub if the integration test succeeds.
 - \pkg{drake}, https://docs.ropensci.org/drake/index.html?q=docker#with-docker
 
-## Research Compendia [@benmarwick]
+## Packaging programs for processing pipelines
+
+Docker is perfectly suited to package and execute any software and data, and is a good candidate to build complex processing pipelines independent of the used programming language.
+Because of the original use case (see&nbsp;\nameref{introduction}), Docker does not have a standard mechanism to chain a number of containers together, i.e., to define how environment variables, volume mounts, or ports can be used to pass input parameters and data into a container and how to get results out.
+Some packages, e.g. \pkg{containerit}, provide a Docker image that can be used similar as a CLI, but the usage is cumbersome\footnote{\href{https://o2r.info/containerit/articles/container.html}{https://o2r.info/containerit/articles/container.html}}.
+
+**\pkg{outsider}** ([https://antonellilab.github.io/outsider/](https://antonellilab.github.io/outsider/)) tackles the problem of integrating external programmes into an R workflow \citep{bennett_outsider_2019}.
+Installation and usage of external programmes can be cumbersome and even prohibited if platform dependent.
+Therefore \pkg{outsider} uses the platform-independent Docker images to encapsulate processes in _outsider modules_.
+Each outsider modules has a `Dockerfile` and an R package with functions for interacting with the encapsulated tool.
+A user only needs to use the given functions to install a module and can then integrate a tool into their own workflow seaminglessly using only R functions.
+The module takes care of transmitting arguments and sending and receiving files to and from a container.
+Outsider modules are hosted, e.g., on GitHub, and \pkg{outsider} contains discovery functions for them.
+<!-- illustrating outsider examples:
+https://github.com/DomBennett/om..astral/blob/master/examples/astral.R
+https://github.com/DomBennett/om..raxml#partitioned-dna-analysis
+-->
+
+## Research Compendia
 
 - https://github.com/benmarwick/rrtools
 - \pkg{renv}, https://rstudio.github.io/renv/articles/docker.html
