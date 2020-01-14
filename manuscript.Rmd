@@ -122,9 +122,10 @@ author:
   - name: Ben Marwick
 abstract: >
   The Rocker project provides widely-used Docker images for R across different application scenarios.
-  This articles surveys describe downstream projects building upon Rocker.
-  We also look beyond Rocker to other projects connecting containerisation with R.
-  These use cases and the diversity of applications demonstrate the power of Rocker and containerisation for collaboration, effectivity, scalability, and transparency.
+  This articles surveys downstream projects building upon Rocker and presents the current state of R packages for managing Docker images and controlling containers.
+  We also look beyond Rocker to other projects connecting containerisation with R, namely alternative suites of images.
+  These use cases and the variety of applications demonstrate the power of Rocker specifically and containerisation in general.
+  We identified common themes across this diversity: reproducible environments, scalability and effectivity, and portability across clouds.
 # blank footnote? https://tex.stackexchange.com/questions/170511/footnotes-without-numbering
 output:
   rticles::rjournal_article:
@@ -841,10 +842,11 @@ The images greatly support package developers to provide support on operating sy
 # Conclusions
 
 This article is a snapshot of the R-corner in a universe of applications built many-faced piece of software, Docker.
-Docker became synonymous with applying the concept of containerisation to solve many challenges, such as reproducible environments in research, scalable deployments in heterogenous organisations, and the ability to move processing between machines easily (e.g., locally, one cloud providers VM, another cloud provider's Container-as-a-Service).
-These are probably the thre common themes described in this work.
+`Dockerfile`s and Docker images are the go-to methods for collaboration between roles in an organisation, such as development and IT operations teams, and between parties in the communication of knowledge, such as research workflows or education.
+Docker became synonymous with applying the concept of containerisation to solve challenges of reproducible environments, e.g., in research and in development \& production, and of scalable deployments with the ability to move processing between machines easily (e.g., locally, one cloud providers VM, another cloud provider's Container-as-a-Service).
+Collaboration, reproducibility, and portability are the common themes behind R packages, use cases, and applications in this work.
 
-The R packages and use cases presented show the positive drive in the community to innovate, but also the challenge of keeping up with continuous evolving landscape.
+The R packages and use cases presented show the positive drive in the community to innovate, but also the challenge of keeping up with a continuously evolving landscape.
 The use cases contributed by co-authors also have a degree of overlap.
 A common language and understanding of good practices is still taking shape.
 The easiness with which one can create a complex software systems, such as an independent Docker image stack, to serve one's specific needs currently leads to some fragmentation.
@@ -866,7 +868,7 @@ The dominant position of Docker is a blessing and a curse for these goals.
 It could be wise to start experimenting with non-Docker containerisation tools now, e.g. R packages interfacing with other container engines such as [podman/buildah](https://github.com/containers/libpod) or [rkt](https://coreos.com/rkt/), or an R package for creating Singularity image recipe files.
 Such efforts help to avoid lock-in and to design sustainable workflows based on concepts of _containerisation_, not on their implementation in Docker.
 If adoption of containerisation and R continue to grow, the missing pieces for a success predominantly lie in (a) coordination and documentation of activities to reduce repeated work in favour of open collaboration, (b) the sharing of lessons learned from use cases to build common knowledge and language, and (c) a sustainable continuation and funding for all of development, community support, and education.
-A concrete effort by this work towards these pieces is to sustain the structure and captured status quo in a CRAN Task View _Containerization_.
+A concrete effort to work towards these pieces is to sustain the structure and captured status quo from this work in form of a CRAN Task View on containerization.
 
 # Author contributions
 
@@ -881,7 +883,7 @@ KR ..
 NR ..
 NX wrote the section on liftr.
 LS \& NT wrote the section on Bioconductor.
-All authors contributed minor edits, gave feedback on other sections, and approved the final version.
+All authors approved the final version.
 
 This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
 The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page}, \href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history}, and \href{https://github.com/nuest/rockerverse-paper/issues/}{discussion issues} provide a detailed view on the respective contributions.
