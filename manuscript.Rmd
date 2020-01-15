@@ -560,7 +560,7 @@ Several second order R packages attempt to make the process of creating Docker i
 see/cite http://smaakage85.netlify.com/2019/12/21/dockr-easy-containerization-for-r/
 <!-- from description on CRAN: Build a lightweight Docker r-base container image for your R package, in which the package itself is available. The Docker image seeks to mirror your R session as close as possible with respect to R specific dependencies. Both dependencies on CRAN R packages as well as local non-CRAN R packages will be included in the Docker container image.-->
 
-- [`renv` with Docker](https://rstudio.github.io/renv/articles/docker.html)
+**\pkg{renv}** ([https://rstudio.github.io/renv/](https://rstudio.github.io/renv/)) with Docker: https://rstudio.github.io/renv/articles/docker.html
 
 **\pkg{liftr}** ([https://nanx.me/liftr/](https://nanx.me/liftr/)) \citep{liftr2019} aims to solve the problem of persistent reproducible reporting in statistical computing.
 Currently, the R Markdown format and its backend compilation engine _knitr_ offer a _de facto_ standard for creating dynamic documents \citep{xie2018}.
