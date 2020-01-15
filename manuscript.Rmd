@@ -797,11 +797,11 @@ In the case of shared disks or network-attached volumes, care must be taken to p
 When working with multiple servers, an automation framework such as [Ansible](https://www.ansible.com) may be useful for managing users, permisions, and disks along with containers.
 
 Using **GPUs** (graphical processing units) as a specialised hardware from containerized common work environments is also possible and useful \citep{haydel_enhancing_2015}.
-GPUs are increasingly popular for compute-intensive machine learning tasks, e.g., deep artificial neural networks \citep{schmidhuber_deep_2015}.
-Though in this case, containers are not completely portable between hardware environments.
+GPUs are increasingly popular for compute-intensive machine learning (ML) tasks, e.g., deep artificial neural networks \citep{schmidhuber_deep_2015}.
+Though in this case, containers are not completely portable between hardware environments, but the software stack for ML with GPUs is so complex to set up that a ready-to-use container is helpful.
 Containers running GPU software require drivers and libraries specific to GPU models and versions, and containers require a specialized runtime to connect to the underlying GPU hardware.
 For NVIDIA GPUs, the [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker) includes a specialized runtime plugin for Docker and a set of base images with appropriate drivers and libraries.
-The Rocker project has (beta) images based on these that include GPU-enabled versions of machine-learning R packages: https://github.com/rocker-org/ml.
+The Rocker project [has a repository](https://github.com/rocker-org/ml) with (beta) images based on these that include GPU-enabled versions of machine-learning R packages, e.g., `rocker/ml` and `rocker/tensorflow-gpu`.
 
 **Teaching** is a further example where sharing a prepared computing environment can greatly improve the process, especially for courses that require access to a relatively complex setup of software tools, e.g., as in the case of database systems.
 R is a fantastic tool when it comes to interfacing with databases: almost every open source and proprietary database system has an R package that allows users to connect and interact with the it 
