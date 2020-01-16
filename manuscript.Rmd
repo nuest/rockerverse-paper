@@ -69,7 +69,7 @@ author:
     affiliation: Roswell Park Comprehensive Cancer Center
     address:
       - Elm & Carlton Streets
-      - Buffalo, New York, 14263, USA
+      - Buffalo, NY, 14263, USA
       - \orcid{0000-0002-5910-4010}
     email: lori.shepherd@roswellpark.org
   - name: Nitesh Turaga
@@ -77,7 +77,7 @@ author:
     affiliation: Roswell Park Comprehensive Cancer Center
     address:
       - Elm & Carlton Streets
-      - Buffalo, New York, 14263, USA
+      - Buffalo, NY, 14263, USA
       - \orcid{0000-0002-0224-9817}
     email: nitesh.turaga@roswellpark.org
   - name: Jacqueline Nolis
@@ -92,7 +92,7 @@ author:
     affiliation: T-Mobile
     address:
       - 12920 Se 38th St.
-      - Bellevue, WA, 98006
+      - Bellevue, WA, 98006, USA
       #- \orcid{NA}
     email: heather.wensler1@t-mobile.com
   - name: Hong Ooi
@@ -115,9 +115,9 @@ author:
     # https://github.com/slopp
     affiliation: RStudio, Inc
     address:
-      - RStudio
       - 250 Northern Ave
-      - Boston, MA 02210
+      - Boston, MA 02210, USA
+      #- \orcid{}
     email: sean@rstudio.com
   - name: Ben Marwick
     # https://github.com/benmarwick/
@@ -134,7 +134,7 @@ author:
     address:
       - Department of Biological and Environmental Sciences
       - Carl Skottsbergs gata 22B
-      - 413 19 Gothenburg
+      - 413 19 Gothenburg, Sweden
       - \orcid{0000-0003-2722-1359}
     email: dominic.john.bennett@gmail.com
 abstract: >
@@ -967,16 +967,16 @@ A concrete effort to work towards these pieces is to sustain the structure and c
 
 # Author contributions
 
-DN conceived of the presented idea and \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}, wrote sections not mentioned below, and revised the full first draft.
+DN conceived of the presented idea and \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}, wrote sections not mentioned below, and revised all sections.
+DE wrote the introduction and section about Rocker.
 CB ..
 RC and EH wrote the section on interfaces for Docker in R.
-DE wrote the introduction and section about Rocker.
 ME ..
 CF wrote the paragraphs about `r-online`, `dockerfiler`, `r-ci` and `r-db`.
 BW wrote the section on research compendia and made the project Binder-ready.
 KR ..
 NR ..
-NX wrote the section on liftr.
+NX wrote the section on \pkg{liftr}.
 LS \& NT wrote the section on Bioconductor.
 DB wrote the section on \pkg{outsider}.
 All authors approved the final version.
