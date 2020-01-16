@@ -120,6 +120,15 @@ author:
       - Boston, MA 02210
     email: sean@rstudio.com
   - name: Ben Marwick
+  - name: Dom Bennett
+    # https://github.com/DomBennett
+    affiliation: University of Gothenburg, Sweden
+    address:
+      - Department of Biological and Environmental Sciences
+      - Carl Skottsbergs gata 22B
+      - 413 19 Gothenburg
+      - \orcid{0000-0003-2722-1359}
+    email: dominic.john.bennett@gmail.com
 abstract: >
   The Rocker project provides widely-used Docker images for R across different application scenarios.
   This articles surveys downstream projects building upon Rocker and presents the current state of R packages for managing Docker images and controlling containers.
@@ -868,8 +877,7 @@ Using only R functions, an end-user can install a module with the \pkg{outsider}
 The \pkg{outsider} package and module manage the containers and handle the transmission of arguments and the transfer of files to and from a container.
 These functionalities also allow a user to launch module code on a remote machine via SSH, expanding the potential computational scale.
 Outsider modules can be hosted code-sharing services, e.g., on GitHub, and \pkg{outsider} contains discovery functions for them.
-
-<!-- @nuest, would you like me to expand on these in a particular way?
+<!-- informative examples of how modules work, just as a reminder for @nuest
 https://github.com/DomBennett/om..astral/blob/master/examples/astral.R
 https://github.com/DomBennett/om..raxml#partitioned-dna-analysis
 -->
@@ -962,6 +970,7 @@ KR ..
 NR ..
 NX wrote the section on liftr.
 LS \& NT wrote the section on Bioconductor.
+DB wrote the section on \pkg{outsider}.
 All authors approved the final version.
 
 This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
