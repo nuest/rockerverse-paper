@@ -25,3 +25,5 @@ docker run -i -v $(pwd):/rockerverse --user $UID rockerverse Rscript -e 'setwd("
 - https://github.com/svlentink/dockerfiles/blob/master/svlentink/r-base-alpine/Dockerfile because the Alpine image is quite a trivial one
 - https://github.com/jlisic/R-docker-centos because CentOS images are also provided by R-hub
 - https://github.com/cardcorp/card-rocker because last change 3 years ago, an all based on `rocker/r-base` - lesson learned would be interesting still, see [#15](https://github.com/nuest/rockerverse-paper/issues/15)
+- `sevenbridges` includes several Dockerfiles and documentation about using images, and also seems to use Docker in the built workflows but via other tools, not directly, https://sbg.github.io/sevenbridges-r/, https://github.com/sbg/sevenbridges-r/search?p=4&q=docker&unscoped_q=docker
+- https://github.com/rocker-jp because it seems to have stalled soon after inception
