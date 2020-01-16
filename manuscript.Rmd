@@ -958,12 +958,12 @@ A concrete effort to work towards these pieces is to sustain the structure and c
 
 # Author contributions
 
-_The ordering of authors following DN as first author is alphabetical._ DN conceived the article idea, \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}, wrote sections not mentioned below, and revised all sections.
+The ordering of authors following DN as first author is alphabetical. DN conceived the article idea, \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}, wrote sections not mentioned below, and revised all sections.
 DB wrote the section on \pkg{outsider}.
 DE wrote the introduction and the section about Containerization and Rocker.
 RC \& EH contributed to the section on interfaces for Docker in R.
 ME contributed to the section on processing and deployment to cloud services.
-CF wrote paragraphs about `r-online`, `dockerfiler`, `r-ci` and `r-db`.
+CF wrote paragraphs about \pkg{r-online}, \pkg{dockerfiler}, \pkg{r-ci} and \pkg{r-db}.
 BM wrote the section on research compendia and made the project Binder-ready.
 HN \& JN co-wrote the section on enterprise production environments (\pkg{googleComputeEngineR}, Google Cloud Run, Kubernetes).
 KR wrote the section about \pkg{wholepunch}.
