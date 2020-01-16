@@ -856,18 +856,20 @@ The portability of containers becomes particularly useful when complex processin
 ## Packaging programs for processing pipelines
 \label{packaging}
 
-Docker is perfectly suited to package and execute any software and data, and is a good candidate to build complex processing pipelines independent of the used programming language.
-Because of the original use case (see&nbsp;\nameref{introduction}), Docker does not have a standard mechanism to chain a number of containers together, i.e., to define how environment variables, volume mounts, or ports can be used to pass input parameters and data into a container and how to get results out.
-Some packages, e.g. \pkg{containerit}, provide a Docker image that can be used similar as a CLI, but the usage is cumbersome\footnote{\href{https://o2r.info/containerit/articles/container.html}{https://o2r.info/containerit/articles/container.html}}.
+Docker is perfectly suited for packaging and executing any software and data, and is a good candidate for building complex processing pipelines that are independent from the host programming language.
+Due to its original use case (see&nbsp;\nameref{introduction}), Docker has no standard mechanisms for chaining containers together; it lacks definitions and protocols for environment variables, volume mounts and/or ports that could enable transfer of input (parameters and data) and output (results) to and from containers.
+Some packages, e.g. \pkg{containerit}, do provide Docker images that can be used similarly to CLIs, but their usage is cumbersome\footnote{\href{https://o2r.info/containerit/articles/container.html}{https://o2r.info/containerit/articles/container.html}}.
 
-**\pkg{outsider}** ([https://antonellilab.github.io/outsider/](https://antonellilab.github.io/outsider/)) tackles the problem of integrating external programmes into an R workflow \citep{bennett_outsider_2019}.
-Installation and usage of external programmes can be cumbersome and even prohibited if platform dependent.
+**\pkg{outsider}** ([https://antonellilab.github.io/outsider/](https://antonellilab.github.io/outsider/)) tackles the problem of integrating external programs into an R workflow \citep{bennett_outsider_2020}.
+Installation and usage of external programs can be difficult, convoluted and even impossible if the platform is incompatible. 
 Therefore \pkg{outsider} uses the platform-independent Docker images to encapsulate processes in _outsider modules_.
-Each outsider modules has a `Dockerfile` and an R package with functions for interacting with the encapsulated tool.
-A user only needs to use the given functions to install a module and can then integrate a tool into their own workflow seaminglessly using only R functions.
-The module takes care of transmitting arguments and sending and receiving files to and from a container.
-Outsider modules are hosted, e.g., on GitHub, and \pkg{outsider} contains discovery functions for them.
-<!-- illustrating outsider examples:
+Each outsider module has a `Dockerfile` and an R package with functions for interacting with the encapsulated tool.
+Using only R functions, an end-user can install a module with the \pkg{outsider} package and then call module code to integrate a tool into their own workflow seamlessly.
+The \pkg{outsider} package and module manage the containers and handle the transmission of arguments and the transfer of files to and from a container.
+These functionalities also allow a user to launch module code on a remote machine via SSH, expanding the potential computational scale.
+Outsider modules can be hosted code-sharing services, e.g., on GitHub, and \pkg{outsider} contains discovery functions for them.
+
+<!-- @nuest, would you like me to expand on these in a particular way?
 https://github.com/DomBennett/om..astral/blob/master/examples/astral.R
 https://github.com/DomBennett/om..raxml#partitioned-dna-analysis
 -->
