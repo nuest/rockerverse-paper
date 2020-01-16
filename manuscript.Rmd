@@ -29,6 +29,14 @@ author:
       - 9052 Ghent, Belgium
       - \orcid{0000-0003-3641-729X}
     email: robrecht@cannoodt.dev
+  - name: Dav Clark
+    # https://github.com/davclark
+    affiliation: Gigantum, Inc.
+    address:
+      - 1140 3rd Street NE
+      - Washington, D.C. 20002, USA
+      - \orcid{0000-0002-3982-4416}
+    email: dav@gigantum.com
   - name: Dirk Eddelbuettel
     # https://github.com/eddelbuettel
     affiliation: University of Illinois at Urbana-Champaign
@@ -437,8 +445,22 @@ docker pull vnijs/rsm-msba-spark
 docker images | grep vnijs
 ```
 
-**[Gigantum](http://gigantum.com/)** also its own image stack ([https://github.com/gigantum/base-images](https://github.com/gigantum/base-images)).
-...
+**Gigantum** ([http://gigantum.com/](http://gigantum.com/) is a platform for open and decentralized data science with a focus on using automation and user-friendly tools for easy sharing of reproducible computational workflows.
+Gigantum builds on the _Gigantum Client_ (running either locally or on a remote server) for development and execution of data-focused _Projects_, which can be stored and shared via the _Gigantum Hub_ or via a zipfile export.
+The Client is a user friendly interface to a backend using Docker containers to package, build, and run Gigantum projects. 
+It is configured to use a default set of Docker base images ([https://github.com/gigantum/base-images](https://github.com/gigantum/base-images)), and users are able to define and configure their own custom images.
+The available images include two with R based on Ubuntu Linux have the [`c2d4u` CRAN PPA](https://launchpad.net/~marutter/+archive/ubuntu/c2d4u3.5/) pre-configured for installation of binary R packages\footnote{\href{https://docs.gigantum.com/docs/using-r}{https://docs.gigantum.com/docs/using-r}}.
+The R images vary in the included authoring environment, i.e., Jupyter in `r-tidyverse` or both Jupyter \& RStudio in `rstudio-server`.
+The independent image stack can be traced back to the Gigantum environment and its features.
+The R images are based on Gigantum's `python3-minimal` image, originally to keep the existing front-end configuration, but also to provide a consistent Python-to-R interoperability.
+The `Dockerfile`s also use build args to specify bases, for example for different version of NVIDIA CUDA for GPU processing\footnote{See \href{https://github.com/gigantum/base-images/blob/master/_templates/python3-minimal-template/Dockerfile}{https://github.com/gigantum/base-images/blob/master/\_templates/python3-minimal-template/Dockerfile} for the `Dockerfile` of `python3-minimal`.} so that appropriate GPU drivers can be enabled automatically when supported.
+Furthermore, Gigantum's focus lies on environment management via GUI and ensuring a smooth user interaction, e.g., with reliable and easy conflict detection and resolution.
+For this reason, project repositories store authoritative package information in a separate file per package, allowing Git to directly detect conflicts and changes.
+A Dockerfile is generated from this description that inherits from the specified base image, and additional custom Docker instructions may be appended by users, though Gigantum's default base images do not currently include the `littler` tool, which is used by Rocker to install packages within `Dockerfile`s.
+Because of these specifics, instructions from `rocker/r-ubuntu` could _not_ be readily re-used in this image stack (see Section&nbsp;\nameref{conclusion}).
+Both approaches enable `apt` as an installation method, and this is exposed via the GUI-based environment management,\footnote{See \href{https://docs.gigantum.com/docs/environment-management}{https://docs.gigantum.com/docs/environment-management}}.
+The image build and publication process is scripted with Python and JSON template configuration files, unlike Rocker which relies on plain `Dockerfile`s.
+A minor reason in the inception of the images were also project constraints requiring a Rocker-incompatible licensing of the `Dockerfile`s, i.e., the MIT License.
 
 # Use cases and applications
 <!-- from packages closer to Docker to second level packages to more complex use cases -->
@@ -937,16 +959,20 @@ Collaboration, reproducibility, and portability are the common themes behind R p
 
 The R packages and use cases presented show the positive drive in the community to innovate, but also the challenge of keeping up with a continuously evolving landscape.
 The use cases contributed by co-authors also have a degree of overlap, which can be expected as a common language and understanding of good practices is still taking shape.
-Also, the ease with which one can create a complex software systems, such as an independent Docker image stack, to serve one's specific needs leads to some fragmentation.
-Furthermore fragmentation may not be a bad sign but instead a reflection of a growing market, which is able to sustain multiple related efforts.
+Also, the ease with which one can create a complex software systems with Docker, such as an independent Docker image stack, to serve one's specific needs leads to parallel developments.
+<!-- Tyler W./DC from Gigantum: ideas about ease-of-DIY together with difficulty of composition; shared starting points of Rocker -->
+This ease-of-DIY in combination with the difficulty to compose environments based on `Dockerfile`s alone is a further reason for **fragmentation**.
+Instructions can be outsourced into distributable scripts and then copied into the image during build, but that make `Dockerfile` hard to read and adds a layor of complexity.
+Despite the different image stacks presented here, the pervasiveness of Rocker can be traced back to its maintainers and the user community valueing collaboration and shared starting points over impulses to create individual solutions.
+Aside from that, fragmentation may not be a bad sign, but instead a reflection of a growing market, which is able to sustain multiple related efforts.
 With the maturing of core building blocks, such as the Rocker suite of images, more systems will be built successfully but will also be behind the curtains.
 Docker alone, as a flexible core technology, is not a feasible level of collaboration and abstraction.
 Instead, the use cases and applications observed in this work provide a more useful division.
 
-Still, at least _on the level of R packages_ some consolidation seems in order, e.g., to reduce the number of packages creating `Dockerfile`s from R code or controlling the Docker daemon with R code.
+Nonetheless, at least on the level of R packages some **consolidation** seems in order, e.g., to reduce the number of packages creating `Dockerfile`s from R code or controlling the Docker daemon with R code.
 It remains to be seen which approach to control Docker, via the Docker API as `stevedore` or via system calls as `dockyard`/`docker`/`dockr`, is more sustainable, or if the question will be answered by the endurance of maintainers and sufficient funding.
 Similarly, the capturing of environments and their serialization in form of a `Dockerfile` currently happens at different levels of abstraction and re-use of functionality seems reasonable, e.g. `liftr` could generate the environment with `containerit`, which in turn may use `dockerfiler` for low level objects representing a `Dockerfile`.
-In this consolidation, the Rocker&nbsp;Project could play the role of a unifying and coordinating entity in the future.
+In this consolidation, the Rocker&nbsp;Project could play the role of coordinating entity.
 Though for the moment, the sign of the times points to more experimentation and feature growth, e.g. images for GPU-based computing and artificial intelligence.
 Even with coding being more and more accepted as a required, and achievable skill, an easier access, for example by exposing containerisation benefits via simple user interfaces in the users' IDE, could be an important next step.
 Currently containerisation happens more in the background at the system level.
@@ -965,6 +991,7 @@ The ordering of authors following DN as first author is alphabetical. DN conceiv
 DB wrote the section on \pkg{outsider}.
 DE wrote the introduction and the section about Containerization and Rocker.
 RC \& EH contributed to the section on interfaces for Docker in R.
+DC contributed content on Gigantum.
 ME contributed to the section on processing and deployment to cloud services.
 CF wrote paragraphs about \pkg{r-online}, \pkg{dockerfiler}, \pkg{r-ci} and \pkg{r-db}.
 BM wrote the section on research compendia and made the project Binder-ready.
