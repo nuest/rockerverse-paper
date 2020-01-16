@@ -10,6 +10,15 @@ author:
       - 48149 Münster, Germany
       - \orcid{0000-0002-0024-5046}
     email: daniel.nuest@uni-muenster.de
+  - name: Dom Bennett
+    # https://github.com/DomBennett
+    affiliation: University of Gothenburg, Sweden
+    address:
+      - Department of Biological and Environmental Sciences
+      - Carl Skottsbergs gata 22B
+      - 413 19 Gothenburg, Sweden
+      - \orcid{0000-0003-2722-1359}
+    email: dominic.john.bennett@gmail.com
   - name: Robrecht Cannoodt
     # https://github.com/rcannood
     affiliation: Ghent University
@@ -20,6 +29,14 @@ author:
       - 9052 Ghent, Belgium
       - \orcid{0000-0003-3641-729X}
     email: robrecht@cannoodt.dev
+  - name: Dav Clark
+    # https://github.com/davclark
+    affiliation: Gigantum, Inc.
+    address:
+      - 1140 3rd Street NE
+      - Washington, D.C. 20002, USA
+      - \orcid{0000-0002-3982-4416}
+    email: dav@gigantum.com
   - name: Dirk Eddelbuettel
     # https://github.com/eddelbuettel
     affiliation: University of Illinois at Urbana-Champaign
@@ -40,68 +57,6 @@ author:
       - 93300 Aubervilliers, France
       - \orcid{0000-0001-7343-1846}
     email: contact@colinfay.me
-  - name: Karthik Ram
-    # https://github.com/karthik
-    affiliation: Berkeley Institute for Data Science
-    address:
-      - University of California
-      - Berkeley, CA 94720, USA
-      - \orcid{0000-0002-0233-1757}
-    email: karthik.ram@berkeley.edu
-  - name: Noam Ross
-    # https://github.com/noamross
-    affiliation: EcoHealth Alliance
-    address:
-      - 460 W 34th St., Ste. 1701
-      - New York, NY 10001, USA
-      - \orcid{0000-0002-0233-1757}
-    email: ross@ecohealthalliance.org
-  - name: Nan Xiao
-    # https://github.com/nanxstats
-    affiliation: Seven Bridges Genomics
-    address:
-      - 529 Main St, Suite 6610
-      - Charlestown, MA 02129, USA
-      - \orcid{0000-0002-0250-5673}
-    email: me@nanx.me
-  - name: Lori Shepherd
-    # https://github.com/lshep
-    affiliation: Roswell Park Comprehensive Cancer Center
-    address:
-      - Elm & Carlton Streets
-      - Buffalo, NY, 14263, USA
-      - \orcid{0000-0002-5910-4010}
-    email: lori.shepherd@roswellpark.org
-  - name: Nitesh Turaga
-    # https://github.com/nturaga
-    affiliation: Roswell Park Comprehensive Cancer Center
-    address:
-      - Elm & Carlton Streets
-      - Buffalo, NY, 14263, USA
-      - \orcid{0000-0002-0224-9817}
-    email: nitesh.turaga@roswellpark.org
-  - name: Jacqueline Nolis
-    # https://github.com/jnolis/
-    affiliation: Nolis, LLC
-    address:
-      - Seattle, WA, USA
-      - \orcid{0000-0001-9354-6501}
-    email: jacqueline@nolisllc.com
-  - name: Heather Nolis
-    # https://github.com/nolistic/
-    affiliation: T-Mobile
-    address:
-      - 12920 Se 38th St.
-      - Bellevue, WA, 98006, USA
-      #- \orcid{NA}
-    email: heather.wensler1@t-mobile.com
-  - name: Hong Ooi
-    # https://github.com/Hong-Revo
-    affiliation: Microsoft
-    address:
-    - Level 5, 4 Freshwater Place
-    - Southbank, VIC 3006, Australia
-    email: hongooi@microsoft.com
   - name: Ellis Hughes
     # https://github.com/thebioengineer
     affiliation: Fred Hutchinson Cancer Research Center 
@@ -128,23 +83,68 @@ author:
       - Seattle, WA 98105, USA
       - \orcid{0000-0001-7879-4531}
     email: bmarwick@uw.edu
-  - name: Dom Bennett
-    # https://github.com/DomBennett
-    affiliation: University of Gothenburg, Sweden
+  - name: Heather Nolis
+    # https://github.com/nolistic/
+    affiliation: T-Mobile
     address:
-      - Department of Biological and Environmental Sciences
-      - Carl Skottsbergs gata 22B
-      - 413 19 Gothenburg, Sweden
-      - \orcid{0000-0003-2722-1359}
-    email: dominic.john.bennett@gmail.com
-  - name: Dav Clark
-    # https://github.com/davclark
-    affiliation: Gigantum, Inc.
+      - 12920 Se 38th St.
+      - Bellevue, WA, 98006, USA
+      #- \orcid{NA}
+    email: heather.wensler1@t-mobile.com
+  - name: Jacqueline Nolis
+    # https://github.com/jnolis/
+    affiliation: Nolis, LLC
     address:
-      - 1140 3rd Street NE
-      - Washington, D.C. 20002, USA
-      - \orcid{0000-0002-3982-4416}
-    email: dav@gigantum.com
+      - Seattle, WA, USA
+      - \orcid{0000-0001-9354-6501}
+    email: jacqueline@nolisllc.com
+  - name: Hong Ooi
+    # https://github.com/Hong-Revo
+    affiliation: Microsoft
+    address:
+    - Level 5, 4 Freshwater Place
+    - Southbank, VIC 3006, Australia
+    email: hongooi@microsoft.com
+  - name: Karthik Ram
+    # https://github.com/karthik
+    affiliation: Berkeley Institute for Data Science
+    address:
+      - University of California
+      - Berkeley, CA 94720, USA
+      - \orcid{0000-0002-0233-1757}
+    email: karthik.ram@berkeley.edu
+  - name: Noam Ross
+    # https://github.com/noamross
+    affiliation: EcoHealth Alliance
+    address:
+      - 460 W 34th St., Ste. 1701
+      - New York, NY 10001, USA
+      - \orcid{0000-0002-0233-1757}
+    email: ross@ecohealthalliance.org
+  - name: Lori Shepherd
+    # https://github.com/lshep
+    affiliation: Roswell Park Comprehensive Cancer Center
+    address:
+      - Elm & Carlton Streets
+      - Buffalo, NY, 14263, USA
+      - \orcid{0000-0002-5910-4010}
+    email: lori.shepherd@roswellpark.org
+  - name: Nitesh Turaga
+    # https://github.com/nturaga
+    affiliation: Roswell Park Comprehensive Cancer Center
+    address:
+      - Elm & Carlton Streets
+      - Buffalo, NY, 14263, USA
+      - \orcid{0000-0002-0224-9817}
+    email: nitesh.turaga@roswellpark.org
+  - name: Nan Xiao
+    # https://github.com/nanxstats
+    affiliation: Seven Bridges Genomics
+    address:
+      - 529 Main St, Suite 6610
+      - Charlestown, MA 02129, USA
+      - \orcid{0000-0002-0250-5673}
+    email: me@nanx.me
 abstract: >
   The Rocker&nbsp;Project provides widely-used Docker images for R across different application scenarios.
   This articles surveys downstream projects building upon Rocker and presents the current state of R packages for managing Docker images and controlling containers.
@@ -982,22 +982,20 @@ A concrete effort to work towards these pieces is to sustain the structure and c
 
 # Author contributions
 
-DN conceived of the presented idea and \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}, wrote sections not mentioned below, and revised all sections.
-DE wrote the introduction and section about Rocker.
-CB ..
-RC and EH wrote the section on interfaces for Docker in R.
-ME ..
-CF wrote the paragraphs about `r-online`, `dockerfiler`, `r-ci` and `r-db`.
-BW wrote the section on research compendia and made the project Binder-ready.
-KR ..
-NR ..
-NX wrote the section on \pkg{liftr}.
-LS \& NT wrote the section on Bioconductor.
+_The ordering of authors following DN as first author is alphabetical._ DN conceived the article idea, \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}, wrote sections not mentioned below, and revised all sections.
 DB wrote the section on \pkg{outsider}.
+DE wrote the introduction and the section about Containerization and Rocker.
+RC \& EH contributed to the section on interfaces for Docker in R.
 DC contributed content on Gigantum.
-All authors approved the final version.
-
-This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
+ME contributed to the section on processing and deployment to cloud services.
+CF wrote paragraphs about `r-online`, `dockerfiler`, `r-ci` and `r-db`.
+BM wrote the section on research compendia and made the project Binder-ready.
+HN \& JN co-wrote the section on enterprise production environments (\pkg{googleComputeEngineR}, Google Cloud Run, Kubernetes).
+KR wrote the section about \pkg{wholepunch}.
+NR wrote paragraphs about shared work environments and GPUs.
+LS \& NT wrote the section on Bioconductor.
+NX wrote the section on \pkg{liftr}.
+All authors approved the final version. This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
 The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page}, \href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history}, and \href{https://github.com/nuest/rockerverse-paper/issues/}{discussion issues} provide a detailed view on the respective contributions.
 
 # Acknowledgements
