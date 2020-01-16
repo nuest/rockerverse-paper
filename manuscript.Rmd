@@ -411,9 +411,11 @@ This awareness leads to a large number of bespoke Docker images but also some co
 Here we only mention a few image stacks as examples, which are not based on Rocker images or stem from the R community, but prominently include installations of R.
 A general description of what to consider when creating a Docker image used for data science projects in R is provided on [environments.rstudio.com](https://environments.rstudio.com/docker).
 
-The [**Jupyter Docker Stacks** project](https://github.com/jupyter/docker-stacks/) are a set of ready-to-run Docker images containing Jupyter applications and interactive computing tools \citep{project_jupyter_jupyter_2018}.
-The `jupyter/r-notebook` image includes R and "popular packages", and R is also included in the catchall `datascience-notebook` image\footnote{\href{https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html}{https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html}}.
+The [**Jupyter Docker Stacks**](https://github.com/jupyter/docker-stacks/) project are a set of ready-to-run Docker images containing Jupyter applications and interactive computing tools \citep{project_jupyter_jupyter_2018}.
+The `jupyter/r-notebook` image includes R and "popular packages", and naturally also the IRKernel ([https://irkernel.github.io/](https://irkernel.github.io/)), an R kernel for Jupyter so that Jupyter Notebooks can contain R code cells. 
+R is also included in the catchall `jupyter/datascience-notebook` image\footnote{\href{https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html}{https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html}}.
 For example, these images allow users to quickly start a Jupyter Notebook server locally or build their own specialised images on top of stable toolsets.
+The R installation is installed using the Conda package manager, which can manage environments for various programming languages, pinning both the R version and the versions of R packages\footnote{See `jupyter/datascience-notebook` `Dockerfile` at \href{https://github.com/jupyter/docker-stacks/blob/master/datascience-notebook/Dockerfile#L47}{https://github.com/jupyter/docker-stacks/blob/master/datascience-notebook/Dockerfile#L47}.}.
 
 **Kaggle** provides the [`gcr.io/kaggle-images/rstats`](https://hub.docker.com/r/kaggle/rstats) image (previously `kaggle/rstats`) and [corresponding `Dockerfile`](https://github.com/Kaggle/docker-rstats) for usage in their Machine Learning competitions and easy access to the associated datasets.
 It includes machine learling libraries such as Tensorflow and Keras, and also configures the \pkg{reticulate} package.
