@@ -444,18 +444,20 @@ docker images | grep vnijs
 ```
 
 **Gigantum** ([http://gigantum.com/](http://gigantum.com/) is a platform for open and decentralized data science with a focus on using automation and user-friendly tools for easy sharing of reproducible computational workflows.
-Gigantum builds on the locally running _Gigantum CLI_ and _Gigantum Desktop_ applications for development and execution of analyses, which can be stored and shared via _Gigantum Cloud_.
-The Gigantum apps are user friendly interfaces to a backend using Docker containers to package a Gigantum project ([https://github.com/gigantum/base-images](https://github.com/gigantum/base-images)).
+Gigantum builds on the _Gigantum Client_ (running either locally or on a remote server) for development and execution of data-focused _Projects_, which can be stored and shared via the _Gigantum Hub_ or via a zipfile export.
+The Client is a user friendly interface to a backend using Docker containers to package, build, and run Gigantum projects. 
+It is configured to use a default set of Docker base images ([https://github.com/gigantum/base-images](https://github.com/gigantum/base-images)), and users are able to define and configure their own custom images.
 The available images include two with R based on Ubuntu Linux have the [`c2d4u` CRAN PPA](https://launchpad.net/~marutter/+archive/ubuntu/c2d4u3.5/) pre-configured for installation of binary R packages\footnote{\href{https://docs.gigantum.com/docs/using-r}{https://docs.gigantum.com/docs/using-r}}.
-<!-- mention lack of littler? -->
 The R images vary in the included authoring environment, i.e., Jupyter in `r-tidyverse` or both Jupyter \& RStudio in `rstudio-server`.
 The independent image stack can be traced back to the Gigantum environment and its features.
 The R images are based on Gigantum's `python3-minimal` image, originally to keep the existing front-end configuration, but also to provide a consistent Python-to-R interoperability.
-The `Dockerfile`s also use build args to specify bases, for example for different version of NVIDIA CUDA for GPU processing\footnote{See \href{https://github.com/gigantum/base-images/blob/master/_templates/python3-minimal-template/Dockerfile}{https://github.com/gigantum/base-images/blob/master/_templates/python3-minimal-template/Dockerfile} for the `Dockerfile` of `python3-minimal`.} so that appropriate GPU drivers can be enabled automatically when supported.
-Furthermore, Gigantum's focus lies on environment management via GUI and ensuring a smooth user interaction, e.g., with reliable and easy conflict detection and resulution.
-<!-- @DC: when a user interactively installs packages in Python, do you write that to the Dockerfile? UI-based environment management does not work for R packages, right? \href{https://docs.gigantum.com/docs/environment-management}{https://docs.gigantum.com/docs/environment-management} -->
+The `Dockerfile`s also use build args to specify bases, for example for different version of NVIDIA CUDA for GPU processing\footnote{See \href{https://github.com/gigantum/base-images/blob/master/_templates/python3-minimal-template/Dockerfile}{https://github.com/gigantum/base-images/blob/master/\_templates/python3-minimal-template/Dockerfile} for the `Dockerfile` of `python3-minimal`.} so that appropriate GPU drivers can be enabled automatically when supported.
+Furthermore, Gigantum's focus lies on environment management via GUI and ensuring a smooth user interaction, e.g., with reliable and easy conflict detection and resolution.
+For this reason, project repositories store authoritative package information in a separate file per package, allowing Git to directly detect conflicts and changes.
+A Dockerfile is generated from this description that inherits from the specified base image, and additional custom Docker instructions may be appended by users, though Gigantum's default base images do not currently include the `littler` tool, which is used by Rocker to install packages within `Dockerfile`s.
 Because of these specifics, instructions from `rocker/r-ubuntu` could _not_ be readily re-used in this image stack (see Section&nbsp;\nameref{conclusion}).
-The image build and publication process is scripted with Python and JSON template configuration files, unlike Rocker which relies on more plain `Dockerfile`s.
+Both approaches enable `apt` as an installation method, and this is exposed via the GUI-based environment management,\footnote{See \href{https://docs.gigantum.com/docs/environment-management}{https://docs.gigantum.com/docs/environment-management}}.
+The image build and publication process is scripted with Python and JSON template configuration files, unlike Rocker which relies on plain `Dockerfile`s.
 A minor reason in the inception of the images were also project constraints requiring a Rocker-incompatible licensing of the `Dockerfile`s, i.e., the MIT License.
 
 # Use cases and applications
