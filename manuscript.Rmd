@@ -120,6 +120,14 @@ author:
       - Boston, MA 02210
     email: sean@rstudio.com
   - name: Ben Marwick
+    # https://github.com/benmarwick/
+    affiliation: University of Washington
+    address:
+      - Department of Anthropology
+      - Denny Hall 230, Spokane Ln
+      - Seattle, WA 98105, USA
+      - \orcid{0000-0001-7879-4531}
+    email: bmarwick@uw.edu
   - name: Dom Bennett
     # https://github.com/DomBennett
     affiliation: University of Gothenburg, Sweden
@@ -965,7 +973,7 @@ RC and EH wrote the section on interfaces for Docker in R.
 DE wrote the introduction and section about Rocker.
 ME ..
 CF wrote the paragraphs about `r-online`, `dockerfiler`, `r-ci` and `r-db`.
-BW ..
+BW wrote the section on research compendia and made the project Binder-ready.
 KR ..
 NR ..
 NX wrote the section on liftr.
