@@ -826,7 +826,8 @@ On top of that, `r-db` comes with a comprehensive [online guide](http://colinfay
 Each package contained inside this image also has a series examples, so that the user can get started with the database right away.
 The `rocker/tidyverse` base image ensures that users can also readily use packages for analysis, display, and reporting.
 
-**[RCloud](https://github.com/att/rcloud/tree/master/docker)** uses a `rocker/drd` base image for creation of collaborative data analysis and visualisation environments.
+**RCloud** ([https://rcloud.social](https://rcloud.social)) is a cloud-based platform for data analysis, visualisation and collaboration using R.
+It provides a `rocker/drd` base image for easy evaluation of the platform\footnote{\href{https://github.com/att/rcloud/tree/master/docker}{https://github.com/att/rcloud/tree/master/docker}}.
 
 ## Using Docker in a commercial data science platform
 \label{rstudio}
