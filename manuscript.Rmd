@@ -289,13 +289,15 @@ There are no offical Docker images provided, but indepedently maintained experim
 
 _Bioconductor_ ([https://bioconductor.org/](https://bioconductor.org/)) is an open source, open development project for the analysis and comprehension of genomic data \citep{gentleman_bioconductor_2004}.
 The project consists of 1741 R software packages as of August 15th 2019, as well as packages containing annotation or experiment data.
-_Bioconductor_has a semiannual release cycle, each release is associated with a particular version of R.
+_Bioconductor_ has a semiannual release cycle, each release is associated with a particular version of R.
 Docker images allow availability of current and past versions of _Bioconductor_ for convenience and reproducibility.
-_Bioconductor_ 'base' docker images are built on top of `rocker/r-ver` and `rocker/rstudio`.
+_Bioconductor_'s 'base' docker images are built on top of `rocker/r-ver` and `rocker/rstudio` images.
 _Bioconductor_ installs packages based on the R version, and therefore uses `rocker/rstudio` and `rocker/r-ver` version tagging.
 _Bioconductor_ selects the desired version of R from Rocker, adds the BiocManager CRAN package for installing appropriate versions of _Bioconductor_ packages, and creates a _Bioconductor_ docker image with an informative tag (R\_version\_Bioc\_version).
-The images are summarized on the _Bioconductor_ web site (https://bioconductor.org/help/docker/), maintained on GitHub ([https://github.com/Bioconductor/bioc_docker](https://github.com/Bioconductor/bioc_docker)), and available to the community through [DockerHub](https://hub.docker.com/).
-Past and current combinations of R and _Bioconductor_ are therefore accessible via a specific docker tag.
+The images are summarized on the _Bioconductor_ web site (see [https://bioconductor.org/help/docker/](https://bioconductor.org/help/docker/)), created with `Dockerfile`s maintained on GitHub ([https://github.com/Bioconductor/bioconductor_docker](https://github.com/Bioconductor/bioconductor_docker)), and [distributed through DockerHub](https://hub.docker.com/u/bioconductor).
+Past and current combinations of R and _Bioconductor_ are therefore accessible via a specific image tag.
+A strength of this approach is that the responsibility for complex software configuration (including customized development) is shifted from the user to the experienced _Bioconductor_ core team.
+Images may be valuable in teaching, where participants pull pre-built images to avoid complicated configuration of their own computing environemnts.
 
 _Bioconductor_ has several images in addition to 'base', specific to various areas of research.
 The 'core' image installs the most commonly used _Bioconductor_ packages.
@@ -316,15 +318,6 @@ Users mounting a location on the host file system to this location then persist 
 Many _R_ users pursue flexible work flows tailored to particular analysis needs, rather than standardized work flows.
 The `bioconductor_full` image is well-suited to this pattern.
 `bioconductor_full` provides developers with a test environment like _Bioconductor_'s build system.
-
-Use of images suggests several interesting possibilities for the _Bioconductor_ project.
-Images may be valuable in teaching, where participants pull pre-built images to avoid complicated configuration of their own computing environemnts.
-An appeal of this over our current approach (providing Amazon Machine Instances for the duration of the course) is the utility of the image to participant after the course is over.
-`bioconductor_full` introduces a common system configuration, so it becomes increasingly sensible for _Bioconductor_ to distribute convenient _binary_ packages.
-Images also suggest approaches to more advanced computational models.
-For instance, we are exploring use of images for [Helm](https://helm.sh/)-orchestrated [Kubernetes](https://kubernetes.io/) clusters on the Google Cloud Platform.
-The user interacts with a manager image based on `bioconductor_full`, configured to perform map-reduce style computations via the BiocParallel package communicating with minimally-configured worker images.
-A strength of this approach is that the responsibility for complex software configuration (including customized development) is shifted from the user to the experienced _Bioconductor_ core team.
 
 ## Images for (historic) R versions
 \label{versions}
