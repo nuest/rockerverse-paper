@@ -534,11 +534,12 @@ remotes::install_github("wch/harbor")
 harbor::docker_run(image = "hello-world")
 ```
 
-**\pkg{stevedore}** ([https://cran.r-project.org/package=stevedore](https://cran.r-project.org/package=stevedore)) 
-<!-- from the CRAN description:
-Work with containers over the Docker API. Rather than using system calls to interact with a docker client, using the API directly means that we can receive richer information from docker. The interface in the package is automatically generated using the 'OpenAPI' (a.k.a., 'swagger') specification, and all return values are checked in order to make them type stable.
--->
-currently the most powerful Docker client in R.
+**\pkg{stevedore}** ([https://cran.r-project.org/package=stevedore](https://cran.r-project.org/package=stevedore)) is currently the most powerful Docker client in R.
+It interfaces with the Docker daemon over the Docker HTTP API\footnote{} via a Unix socket on Linux or MacOS, over a named pipe on Windows, or over an HTTP/TCP connection.
+The package is the only one not using system calls to the `docker` CLI for managing images and containers and easily exposes connections to remote Docker daemons, which has to be configured on the Docker level otherwise.
+Using the API gives access to more information and is system independent and likely more reliable than parsing command line output.
+\pkg{stevedore}'s own interface is automatically generated based on the OpenAPI specification of the Docker daemon, but still similar to the Docker CLI.
+The interface is similar to R6 objects, in that a `stevedore_object` has a number of functions attached to it that can be called, and multiple specific versions of the Docker API can be supported thanks to the automatic generation\footnote{See \href{https://github.com/richfitz/stevedore/tree/master/inst/spec}{https://github.com/richfitz/stevedore/tree/master/inst/spec} and \href{https://github.com/richfitz/stevedore/blob/master/development.md}{https://github.com/richfitz/stevedore/blob/master/development.md}.}.
 
 **\pkg{AzureContainers}** ([https://cran.r-project.org/package=AzureContainers](https://cran.r-project.org/package=AzureContainers)) is an interface to a number of container-related services in Microsoft's [Azure Cloud](https://azure.microsoft.com/), namely [Container Instances](https://azure.microsoft.com/en-us/services/container-instances/), [Container Registry](https://azure.microsoft.com/en-us/services/container-registry/), and [Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/).
 While it is mainly intended for working with Azure, as a convenience feature it includes lightweight, cross-platform shells to Docker and Kubernetes (tools `kubectl` and `helm`).
@@ -897,7 +898,7 @@ Some packages, e.g. \pkg{containerit}, do provide Docker images that can be used
 Installation and usage of external programs can be difficult, convoluted and even impossible if the platform is incompatible. 
 Therefore \pkg{outsider} uses the platform-independent Docker images to encapsulate processes in _outsider modules_.
 Each outsider module has a `Dockerfile` and an R package with functions for interacting with the encapsulated tool.
-Using only R functions, an end-user can install a module with the \pkg{outsider} package and then call module code to integrate a tool into their own workflow seamlessly.
+Using only R functions, an end-user can install a module with the \pkg{outsider} package and then call module code to integrate a tool into their own R-based workflow seamlessly.
 The \pkg{outsider} package and module manage the containers and handle the transmission of arguments and the transfer of files to and from a container.
 These functionalities also allow a user to launch module code on a remote machine via SSH, expanding the potential computational scale.
 Outsider modules can be hosted code-sharing services, e.g., on GitHub, and \pkg{outsider} contains discovery functions for them.
