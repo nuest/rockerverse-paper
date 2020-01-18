@@ -1,5 +1,5 @@
 ---
-title: "Containers and R---the Rockerverse and beyond"
+title: "The Rockerverse: Images, Packages, and Applications for Containerization with R"
 author:
   - name: Daniel Nüst
     # https://github.com/nuest
