@@ -37,6 +37,11 @@ author:
       - Washington, D.C. 20002, USA
       - \orcid{0000-0002-3982-4416}
     email: dav@gigantum.com
+  - name: Gergely Daroczi
+    # https://github.com/daroczig
+    address:
+      - \orcid{0000-0003-3149-8537}
+    email: daroczig@rapporter.net
   - name: Dirk Eddelbuettel
     # https://github.com/eddelbuettel
     affiliation: University of Illinois at Urbana-Champaign
@@ -145,11 +150,6 @@ author:
       - Charlestown, MA 02129, USA
       - \orcid{0000-0002-0250-5673}
     email: me@nanx.me
-  - name: Gergely Daroczi
-    # https://github.com/daroczig
-    address:
-      - \orcid{0000-0003-3149-8537}
-    email: daroczig@rapporter.net
 abstract: >
   The Rocker&nbsp;Project provides widely-used Docker images for R across different application scenarios.
   This articles surveys downstream projects building upon Rocker and presents the current state of R packages for managing Docker images and controlling containers.
@@ -940,6 +940,7 @@ A concrete effort to work towards these pieces is to sustain the structure and c
 
 The ordering of authors following DN as first author is alphabetical. DN conceived the article idea, \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}, wrote sections not mentioned below, and revised all sections.
 DB wrote the section on \pkg{outsider}.
+GD contributed the CARD.com use case.
 DE wrote the introduction and the section about Containerization and Rocker.
 RC \& EH contributed to the section on interfaces for Docker in R.
 DC contributed content on Gigantum.
