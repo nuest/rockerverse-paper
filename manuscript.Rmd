@@ -688,6 +688,8 @@ The models are convolutional neural networks that use the RStudio Keras package 
 Since the models power tools for agents and customers, they need to have extremely high uptime and reliability--and they found that R is able to perform.
 The AI @ T-Mobile team open sourced their Docker images [on GitHub](https://github.com/tmobile/r-tensorflow-api).
 
+[RestRserve](http://restrserve.org) is an alternative R web API framework with the main focus on being high-performant and robust. It also ships automated Docker builds at https://hub.docker.com/r/rexyai/restrserve/dockerfile.
+
 ## Deployment to the cloud
 \label{deployment}
 
