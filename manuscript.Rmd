@@ -145,6 +145,11 @@ author:
       - Charlestown, MA 02129, USA
       - \orcid{0000-0002-0250-5673}
     email: me@nanx.me
+  - name: Gergely Daroczi
+    # https://github.com/daroczig
+    address:
+      - \orcid{0000-0003-3149-8537}
+    email: daroczig@rapporter.net
 abstract: >
   The Rocker&nbsp;Project provides widely-used Docker images for R across different application scenarios.
   This articles surveys downstream projects building upon Rocker and presents the current state of R packages for managing Docker images and controlling containers.
