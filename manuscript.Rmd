@@ -656,8 +656,11 @@ The reason behind this is that `dockerfiler`, on top of being scriptable from R,
 R has been historically viewed as a tool for analysis and scientific research--not for creating software that corporations can rely on to continously run in real time.
 However, thanks to advancements in R running as a web service, along with with the ability to deploy R in Docker containers, modern enterprises are now capable of having real-time machine learning powered by R.
 
-The backbone of this work is the \pkg{plumber} ([https://www.rplumber.io/](https://www.rplumber.io/)) package.
-The plumber package allows R to be used to host web services through RESTful APIs.
+One of the first implementations of having R respond to client reqests were TCP/IP and local socket servers, such as \pkg{Rserve} ([https://cran.r-project.org/package=Rserve](https://cran.r-project.org/package=Rserve)) and \pkg{svSocket} ([https://cran.r-project.org/package=svSocket](https://cran.r-project.org/package=svSocket)), which allowed other local or remote processes, even written in other programming languages, such as C/C++ or Java, to make binary requests to interact with R without the need to link to R at compile time.
+
+R could also empower webserver since at least 2007, when [RApache](http://www.rapache.net) was presented at the useR! conference. Rapache runs an R interpreter inside the Apache web server and makes it possible and very efficient to build scalable R-based APIs and web services.
+
+A more recent related work is the \pkg{plumber} ([https://www.rplumber.io/](https://www.rplumber.io/)) package, which makes it even easier for R to be used to host web services through RESTful APIs.
 When R is running on a server, a different server can ask R to make a computation through an HTTP request and get an immediate response.
 For instance, if a data scientist at a company creates a machine learning model to tell which customers are likely to make a repeat purchase, if they serve the model through a plumber API then someone else on the marketing team could write software that sends different emails depending on that real-time prediction.
 Plumber syntax is simple to read and understand: the API is created by commenting above function names in an R script.
