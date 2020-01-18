@@ -142,6 +142,14 @@ author:
       - Buffalo, NY, 14263, USA
       - \orcid{0000-0002-0224-9817}
     email: nitesh.turaga@roswellpark.org
+  - name: Craig Willis
+    # https://github.com/craig-willis
+    affiliation: University of Illinois at Urbana-Champaign
+    address:
+      - 501 E. Daniel St.
+      - Champaign, IL 61820, USA
+      - \orcid{0000-0002-6148-7196}
+    email: willis8@illinois.edu
   - name: Nan Xiao
     # https://github.com/nanxstats
     affiliation: Seven Bridges Genomics
@@ -466,6 +474,8 @@ Because of these specifics, instructions from `rocker/r-ubuntu` could _not_ be r
 Both approaches enable `apt` as an installation method, and this is exposed via the GUI-based environment management,\footnote{See \href{https://docs.gigantum.com/docs/environment-management}{https://docs.gigantum.com/docs/environment-management}}.
 The image build and publication process is scripted with Python and JSON template configuration files, unlike Rocker which relies on plain `Dockerfile`s.
 A minor reason in the inception of the images were also project constraints requiring a Rocker-incompatible licensing of the `Dockerfile`s, i.e., the MIT License.
+
+**Whole Tale** (https://wholetale.org) is a National Science Foundation (NSF) funded project\footnote{NSF Award OAC-1541450} developing a scalable, open-source, multi-user platform for reproducible research \citep{brinckman2019, chard2019a}. A central goal of the platform is to enable researchers to easily create and publish executable research objects\footnote{In Whole Tale a `tale` is a research object that contains metadata, data (by copy or reference), code, narrative, documentation, provenance, and information about the computational environment to support computational reproducibility} associated with published research \citep{chard2019b}. For R users, Whole Tale attempts to combine the strengths of the Rocker Project's curated Docker images with the Jupyter Project's `repo2docker`\footnote{See \href{https://repo2docker.readthedocs.io/}{https://repo2docker.readthedocs.io/}} component to simplify the customization of R-based environments for researchers with limited experience with either Docker or Git. Using Whole Tale, researchers can create and publish Rocker-based reproducible research objects to a growing number of repositories including DataONE member nodes, Zenodo and soon Dataverse. Additionally, Whole Tale supports automatic data citation and is working on capabilities for image preservation and provenance capture to improve the transparency of publish computational research artifacts \citep{mecum2018, mcphillips2019}.
 
 # Use cases and applications
 <!-- from packages closer to Docker to second level packages to more complex use cases -->
@@ -865,6 +875,10 @@ https://github.com/DomBennett/om..raxml#partitioned-dna-analysis
 - \pkg{renv}, https://rstudio.github.io/renv/articles/docker.html
 - what to copy in and what not
 
+## Publication Reproducibility Audits
+
+A recommendation of the recent National Academies' report on _Reproducibility and Replicability in Science_ is that journals "consider ways to ensure computational reproducibility for publications that make claims based on computations" \citep{NASEM2019}.  In fields such as Political Science and Economics, journals are increasingly adopting policies requiring authors to publish the code and data required to reproduce computational findings reported in published manuscripts, subject to independent verification \citep{Jacoby2017,Vilhuber2019,Alvarez2018,Christian2018,Eubank2016,King1995}. Problems with the computational environment, installation and availability of software dependencies are common. R is gaining popularity in these communities (in a sample of 105 replication packages published by the _American Journal of Political Science_ (AJPS) over 65% use R). Projects such as NSF Whole Tale use the Rocker Project community images with the goal of improving the reproducibility of published research artifacts and simplifying the publication and verification process for both authors and journals by reducing errors and time spent specifying the environment.
+
 ## Development and debugging
 \label{development}
 
@@ -951,6 +965,7 @@ HN \& JN co-wrote the section on enterprise production environments (\pkg{google
 KR wrote the section about \pkg{wholepunch}.
 NR wrote paragraphs about shared work environments and GPUs.
 LS \& NT wrote the section on Bioconductor.
+CW wrote the sections on Whole Tale and contributed the publication reproducibility audit use case.
 NX wrote the section on \pkg{liftr}.
 All authors approved the final version. This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
 The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page}, \href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history}, and \href{https://github.com/nuest/rockerverse-paper/issues/}{discussion issues} provide a detailed view on the respective contributions.
@@ -958,7 +973,7 @@ The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contri
 # Acknowledgements
 
 DN is supported by the project Opening Reproducible Research ([o2r](https://www.uni-muenster.de/forschungaz/project/12343)) funded by the German Research Foundation (DFG) under project number [PE&nbsp;1632/17-1](https://gepris.dfg.de/gepris/projekt/415851837).
-The funders had no role in data collection and analysis, decision to publish, or preparation of the manuscript.
+The funders had no role in data collection and analysis, decision to publish, or preparation of the manuscript. CW is supported by the Whole Tale projects (https://wholetale.org) funded by the US National Science Foundation (NSF) under award [OAC-1541450](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1541450).
 
 ```{r word_stats, eval=FALSE, include=FALSE}
 # devtools::install_github("benmarwick/wordcountaddin", type = "source", dependencies = TRUE)
