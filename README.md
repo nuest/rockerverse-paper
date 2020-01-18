@@ -13,9 +13,17 @@ _Want to contribute?_ See https://github.com/nuest/rockerverse-paper/issues/3.
 
 ## Render the manuscript with Docker
 
+**Local build**
+
 ```bash
-docker build --tag rockerverse --file .binder/Dockerfile .
-docker run -i -v $(pwd):/rockerverse --user $UID rockerverse Rscript -e 'setwd("/rockerverse"); rmarkdown::render("manuscript.Rmd")'
+docker build --tag rockerverse-paper --file .binder/Dockerfile .
+docker run -i -v $(pwd):/rockerverse --user $UID rockerverse-paper Rscript -e 'setwd("/rockerverse"); rmarkdown::render("manuscript.Rmd")'
+```
+
+**Image from Docker Hub**
+
+```bash
+docker run -i -v $(pwd):/rockerverse --user $UID nuest/rockerverse-paper Rscript -e 'setwd("/rockerverse"); rmarkdown::render("manuscript.Rmd")'
 ```
 
 ## Not included projects and packages

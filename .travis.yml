@@ -9,11 +9,11 @@ branches:
   only:
     - master
 
-install:
-  - docker build --tag rockerverse --file .binder/Dockerfile .
+#install:
+#  - docker build --tag nuest/rockerverse-paper --file .binder/Dockerfile .
 
 script:
-  - docker run --interactive --volume $(pwd):/rockerverse --user $UID --env GITHUB_PAT rockerverse Rscript -e 'setwd("/rockerverse"); rmarkdown::render("manuscript.Rmd")'
+  - docker run --interactive --volume $(pwd):/rockerverse-paper --user $UID --env GITHUB_PAT nuest/rockerverse-paper Rscript -e 'setwd("/rockerverse-paper"); rmarkdown::render("manuscript.Rmd")'
   - ls -l
 
 # only works for one branch, because of reset
