@@ -810,18 +810,18 @@ On top of that, `r-db` comes with a comprehensive [online guide](http://colinfay
 Each package contained inside this image also has a series examples, so that the user can get started with the database right away.
 The `rocker/tidyverse` base image ensures that users can also readily use packages for analysis, display, and reporting.
 
-Another way this idea of a common environment and the partitioning that docker provides is used in teaching is in the **[Dodona](https://dodona.ugent.be)** project.
+Another way this idea of a common environment and the partitioning that Docker provides is used in teaching is in the **[Dodona](https://dodona.ugent.be)** project.
 Dodona is a web platform developed at Ghent University and is used to teach students basic programming skills.
 Dodona uses Docker containers to test submissions by students.
 This means that both the code testing the students' submissions and the submission itself are executed in a predictable environment, avoiding compatibility issues between the wide variety of configurations used by students.
 The containerization is also used to shield the Dodona servers from bad (or even malicious) code: memory, time and I/O limits are used to make sure students can't overload the system.
 The web application communicates with containers by sending configuration information as a JSON document over standard input. 
-Every Dodona docker image shares a `main.sh` file that passes through this information to the actual testing framework, while setting up some error handling. 
-The testing process in the docker containers sends back the test results by writing a JSON document to its standard output channel.
-In june 2019 R support was added to Dodona using an image derived from the Rocker `r-base` image that sets up the `runner` user and and `main.sh` file expected by Dodona\footnote{\href{https://github.com/dodona-edu/docker-images/blob/master/dodona-r.dockerfile}{https://github.com/dodona-edu/docker-images/blob/master/dodona-r.dockerfile}}. 
+Every Dodona Docker image shares a `main.sh` file that passes through this information to the actual testing framework, while setting up some error handling.
+The testing process in the Docker containers sends back the test results by writing a JSON document to its standard output channel.
+In June 2019, R support was added to Dodona using an image derived from the `rocker/r-base` image that sets up the `runner` user and and `main.sh` file expected by Dodona\footnote{\href{https://github.com/dodona-edu/docker-images/blob/master/dodona-r.dockerfile}{https://github.com/dodona-edu/docker-images/blob/master/dodona-r.dockerfile}}. 
 It also installs the packages required for the testing framework and the exercises so that this doesn't have to happen every time a student's submission is evaluated.
-The actual testing of R exercises is done using a custom framework loosely based on `testthat`.
-During the development of the testing framework it was found that the testthat framework did not provide enough information to its reporter system to send back all the fields required by Dodona to render its feedback.
+The actual testing of R exercises is done using a custom framework loosely based on \CRANpkg{testthat}.
+During the development of the testing framework it was found that the \CRANpkg{testthat} framework did not provide enough information to its reporter system to send back all the fields required by Dodona to render its feedback.
 Right now, multiple statistics courses are developing exercises to automate the feedback for their lab classes.
 
 **RCloud** ([https://rcloud.social](https://rcloud.social)) is a cloud-based platform for data analysis, visualisation and collaboration using R.
