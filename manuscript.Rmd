@@ -829,10 +829,26 @@ https://github.com/DomBennett/om..raxml#partitioned-dna-analysis
 ## Research Compendia
 \label{compendia}
 
-- researchcompendia.science
-- https://github.com/benmarwick/rrtools
-- \CRANpkg{renv}, https://rstudio.github.io/renv/articles/docker.html
-- what to copy in and what not
+Containers provide a high degree of isolation that is often desirable when attempting to capture a specific computational environment so that others can reproduce and extend a research result.
+Many computationally intensive research projects depend on specific versions of original and third-party software packages in diverse languages, joined together to form a pipeline through which data flows.
+New releases of even just a single piece of software in this pipeline can break the entire workflow, making it difficult to find the error and for others to reuse existing pipelines, and making the original the results irreproducible and not extandable.
+The chance of a substantial disruption like this is high in a multi-year research project where key pieces of third-party software may have several major updates over the duration of the project.
+The classical "paper" article is insufficient to adequately communicate the knowledge behind such research projects \citep[cf.][]{donoho_invitation_2010,marwick_how_2015}.
+\citet{gentleman_statistical_2007} coined the term _Research Compendium_ for a dynamic document together with supporting data and code.
+They use the R package system \cite{core_writing_1999} as for the functional prototype to structuring, validation, and distribution of research compendia.
+This concept has been taken up and extended\footnote{See full literature list at \href{https://research-compendium.science/}{https://research-compendium.science/}.}, not the least by applying containerisation and other methods for managing computing environments---see Section&nbsp;\nameref{envs}.
+Containers give the researcher an isolated environment to assemble these research pipelines with specific versions of software.
+Research workflows in containers are safe from contamination from other activities occuring on the researcher's computer, for example the installation of newest version of packages for teaching demonstrations.
+Given the users in this scenario, i.e., often academics with limited formal software development training, templates and assistance with containers around research compendia is essential.
+
+In many fields we see that a typical unit of research for a container is a research report or journal article, where the container holds the compendium, or self-contained set of data (or connections to data elsewhere) and code files needed to fully reproduce the article \citep{marwick_packaging_2018}.
+The package \pkg{rrtools} ([https://github.com/benmarwick/rrtools](https://github.com/benmarwick/rrtools)) provides a template and convienence functions to apply good practices for research compendia, including a starter `Dockerfile`.
+Images of compendium containers can be hosted on services such as Docker&nbsp;Hub for convienient sharing among collaborators and others. 
+Similarly, packages such as \pkg{containerit} and \pkg{dockerfiler} can be used to manage the `Dockerfile` to be archived with a compendium on a data repository (e.g. [Zenodo](https://zenodo.org/), [Dataverse](https://dataverse.org/), [Figshare](https://figshare.com/), [OSF](https://osf.io/)).
+A typial compendium's `Dockerfile` will pull a rocker image fixed to a specific version of R, and install R packages from the MRAN repository to ensure the package versions are tied to a specific date, rather than the most recent version.
+A future researchers can download then compendium from the repository and run the included `Dockerfile` build a new image that recreates the computational environment used to produce the original research results.
+If building the image fails, the human-readable instructions in a `Dockerfile` are a the starting point for rebuilding the environment.
+Further safeguarding practices are currently under development or not part of common practice yet, such as preservation of images \citep{emsley_framework_2018} and storing them alongside `Dockerfile`s \citep[cf.][]{nust_opening_2017}, or pinning of system libraries beyond the tagged base images, which may be seen as stable or dynamic depending on the applied time scale \citep[see discussion on `debian:testing` base image in][]{RJ-2017-065}.
 
 ## Development and debugging
 \label{development}
