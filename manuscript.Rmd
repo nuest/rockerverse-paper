@@ -351,7 +351,7 @@ In most cases, individual developers or researchers worrying about reproducibili
 Naturally, a Windows license is required for the host machine, and the licensing impacts the potential to build images in clouds or redistribute exported images as archive files.
 But the developments in the `rocker-win` prototype show that containers can also be used for R workflows depending on Windows-only tools, for leveraging an existing Windows Server-based infrastructure where policies can otherwise not be met, or for streamlining interactions with system operating staff that runs Windows-based containers themselves.
 
-## Non-Debian Linux images
+## Non-Rocker Linux images
 \label{nondebian}
 
 \label{rhub}
@@ -384,11 +384,11 @@ It comes with a collection of `Dockerfile`s and corresponding images in multiple
 \label{datascience}
 
 _Data Science_ is a widely discussed topic among all academic disciplines \citep[e.g.,][]{donoho_50_2017}.
-Using computers and complex software to make sense of (large amounts of) collected or simulated data is a cross-cutting phenomenon leading to _X Data Science_ disciplines, seminars, and study majors.
-The practice to apply a combination tools and software stacks for analysing data and the cross-cutting skillsets connected with data science puts the management of computing environments and the challenges of reproducibility high up on the agenda.
-This awareness leads to a large number of bespoke Docker images but also some commonly used image stacks, ranging from base images with very common tools to 'catch all' images including _a lot_ of software.
-Here we only mention a few image stacks as examples, which are not based on Rocker images or stem from the R community, but prominently include installations of R.
-A general description of what to consider when creating a Docker image used for data science projects in R is provided on [environments.rstudio.com](https://environments.rstudio.com/docker).
+The discussions shed a light on the tools and craftspersonship behind the analysis of data with computational methods.
+The practice of Data Science often involves a combination tools and software stacks and requires a cross-cutting skillset.
+This complexity and an inherent concern for openness and reproducibility in the Data Science community lead to Docker being used widely.
+<!--A general description of what to consider when creating a Docker image used for data science projects in R is provided on [environments.rstudio.com](https://environments.rstudio.com/docker).-->
+This section presents exemplary Docker images and image stacks featuring R intended for Data Science.
 
 The [**Jupyter Docker Stacks**](https://github.com/jupyter/docker-stacks/) project are a set of ready-to-run Docker images containing Jupyter applications and interactive computing tools \citep{project_jupyter_jupyter_2018}.
 The `jupyter/r-notebook` image includes R and "popular packages", and naturally also the IRKernel ([https://irkernel.github.io/](https://irkernel.github.io/)), an R kernel for Jupyter so that Jupyter Notebooks can contain R code cells.
@@ -397,7 +397,7 @@ For example, these images allow users to quickly start a Jupyter Notebook server
 R is installed using the Conda package manager, which can manage environments for various programming languages, pinning both the R version and the versions of R packages\footnote{See \texttt{jupyter/datascience-notebook}'s \texttt{Dockerfile} at \href{https://github.com/jupyter/docker-stacks/blob/master/datascience-notebook/Dockerfile\#L47}{https://github.com/jupyter/docker-stacks/blob/master/datascience-notebook/Dockerfile\#L47}.}.
 
 **Kaggle** provides the [`gcr.io/kaggle-images/rstats`](https://hub.docker.com/r/kaggle/rstats) image (previously `kaggle/rstats`) and [corresponding `Dockerfile`](https://github.com/Kaggle/docker-rstats) for usage in their Machine Learning competitions and easy access to the associated datasets.
-It includes machine learling libraries such as Tensorflow and Keras, and also configures the \CRANpkg{reticulate} package.
+It includes machine learning libraries such as Tensorflow and Keras (see also image `rocker/ml` in Section&nbsp;\nameref{rocker-gpu}), and also configures the \CRANpkg{reticulate} package.
 The image uses a base image with _all packages from CRAN_, `gcr.io/kaggle-images/rcran`, which requires a Google Cloud Build as Docker&nbsp;Hub would time out\footnote{Originally, a stacked collection of over 20 images with automated builds on Docker~Hub was used, see \href{https://web.archive.org/web/20190606043353/http://blog.kaggle.com/2016/02/05/how-to-get-started-with-data-science-in-containers/}{https://web.archive.org/web/20190606043353/http://blog.kaggle.com/2016/02/05/how-to-get-started-with-data-science-in-containers/} and \href{https://hub.docker.com/r/kaggle/rcran/dockerfile}{https://hub.docker.com/r/kaggle/rcran/dockerfile}}.
 The final extracted image size is over 25GB, which makes it debatable if having everything available is actually convenient.
 
@@ -750,6 +750,7 @@ This may be via in shared disks, attached network volumes, or in separate storag
 In the case of shared disks or network-attached volumes, care must be taken to persist user permissions, and of course backups are still neccessary.
 When working with multiple servers, an automation framework such as [Ansible](https://www.ansible.com) may be useful for managing users, permisions, and disks along with containers.
 
+\label{rocker-gpu}
 Using **GPUs** (graphical processing units) as a specialised hardware from containerized common work environments is also possible and useful \citep{haydel_enhancing_2015}.
 GPUs are increasingly popular for compute-intensive machine learning (ML) tasks, e.g., deep artificial neural networks \citep{schmidhuber_deep_2015}.
 Though in this case, containers are not completely portable between hardware environments, but the software stack for ML with GPUs is so complex to set up that a ready-to-use container is helpful.
