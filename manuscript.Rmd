@@ -185,43 +185,6 @@ The article continues with a brief introduction of containerization basics and t
 Then, we present applications, starting with the R packages specificly for interacting with Docker, second-level packages using containers mediately or only for specific features, up to complex use cases leveraging containers.
 We conclude with a reflection on the landscape of packages and applications and point out future directions of development.
 
-```{r hexSticker, message=TRUE, warning=FALSE, cache=TRUE, include=FALSE}
-if(!file.exists("rockerverse.png")) {
-  library("magick")
-  library("here")
-  
-  # https://commons.wikimedia.org/wiki/File:NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg
-  universe <- magick::image_read("https://upload.wikimedia.org/wikipedia/commons/6/69/NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg")
-  magick::image_write(universe, here("universe.png"))
-  # rockerLogoMask <-
-  magick::image_read("https://avatars2.githubusercontent.com/u/9100160?s=200&v=4") %>%
-    magick::image_scale("2100x2100") %>%
-    magick::image_channel("Matte") %>%
-    image_negate() %>%
-    magick::image_border("black", "150x0") %>%
-    magick::image_write(here("rocker_mask.png"))
-    
-  # does not work: image_composite(universe, rockerLogoMask, operator = "CopyOpacity", compose_args = "-composite -alpha Off")
-  system2("convert", c(here("universe.png"), here("rocker_mask.png"),
-    "-alpha Off",
-    "-compose CopyOpacity",
-    "-composite",
-    here("whaleverse.png")))
-
-  library("hexSticker")
-  hexSticker::sticker(here("whaleverse.png"), package = "Rockerverse",
-          p_size = 20, s_x = 0.97, s_y = 0.95, s_width = 1,
-          h_fill = "#000000", h_color = "#ffffff",
-          url = "github.com/nuest/rockerverse-paper",
-          u_color = "#ffffff", u_size = 4,
-          filename = here("rockerverse.png"))
-  
-  file.remove(c(here("universe.png"), here("whaleverse.png"), here("rocker_mask.png")))
-}
-```
-
-![Rockerverse hex sticker](`r here::here("rockerverse.png")`)
-
 # Containerization and Rocker
 \label{containerisation}
 \label{rocker}
