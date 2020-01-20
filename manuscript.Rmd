@@ -783,7 +783,7 @@ Dodona is a web platform developed at Ghent University and is used to teach stud
 Dodona uses Docker containers to test submissions by students.
 This means that both the code testing the students' submissions and the submission itself are executed in a predictable environment, avoiding compatibility issues between the wide variety of configurations used by students.
 The containerization is also used to shield the Dodona servers from bad (or even malicious) code: memory, time and I/O limits are used to make sure students can't overload the system.
-The web application communicates with containers by sending configuration information as a JSON document over standard input. 
+The web application managing the containers communicates with them by sending configuration information as a JSON document over standard input. 
 Every Dodona Docker image shares a `main.sh` file that passes through this information to the actual testing framework, while setting up some error handling.
 The testing process in the Docker containers sends back the test results by writing a JSON document to its standard output channel.
 In June 2019, R support was added to Dodona using an image derived from the `rocker/r-base` image that sets up the `runner` user and and `main.sh` file expected by Dodona\footnote{\href{https://github.com/dodona-edu/docker-images/blob/master/dodona-r.dockerfile}{https://github.com/dodona-edu/docker-images/blob/master/dodona-r.dockerfile}}. 
