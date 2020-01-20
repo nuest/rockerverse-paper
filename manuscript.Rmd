@@ -155,7 +155,7 @@ abstract: >
   This articles surveys downstream projects building upon Rocker and presents the current state of R packages for managing Docker images and controlling containers.
   We also look beyond Rocker to other projects connecting containerisation with R, namely alternative suites of images.
   These use cases and the variety of applications demonstrate the power of Rocker specifically and containerisation in general.
-  We identified common themes across this diversity: reproducible environments, scalability and effectivity, and portability across clouds.
+  We identified common themes across this diversity: reproducible environments, scalability and efficiency, and portability across clouds.
 # blank footnote? https://tex.stackexchange.com/questions/170511/footnotes-without-numbering
 output:
   rticles::rjournal_article:
@@ -182,7 +182,7 @@ We also introduce related activities connecting the R language and environment w
 The main contributions is a coherent picture of the current lay of the land of using containers in, with, and for R.
 
 The article continues with a brief introduction of containerization basics and the Rocker&nbsp;Project, followed by descriptions of projects developing images with R installations.
-Then, we present applications, starting with the R packages specificly for interacting with Docker, second-level packages using containers mediately or only for specific features, up to complex use cases leveraging containers.
+Then, we present applications, starting with the R packages specificly for interacting with Docker, second-level packages using containers indirectly or only for specific features, up to complex use cases leveraging containers.
 We conclude with a reflection on the landscape of packages and applications and point out future directions of development.
 
 # Containerization and Rocker
@@ -203,7 +203,7 @@ The success even lead to standardisation and industry collaboration \citep{oci_o
 The key accomplishment of Docker as an "application" is to make a "bundled" aggregation of software (the so-called "image") available to any system equipped to run Docker, without requiring much else from the host besides the actual Docker application installation.
 This is a rather attractive proposition and Docker's very easy to use user interface has lead to widespread adoption and use of Docker in a variety of domains, e.g., cloud computing infrastructure \citep[e.g.,][]{Bernstein2014}, data science \citep[e.g.,][]{boettiger_introduction_2015}, and edge computing \citep[e.g.,][]{alam_orchestration_2018}.
 It provided to be a natural match for "cloud deployment" which runs, or at least appears to run, "seamlessly" without much explicit reference to the underlying machine, architecture or operating system: containers are portable and can be deployed with very little in terms of dependencies on the host system---only the container runtime is required.
-Images are normally build from plain text documents called `Dockerfile`.
+Images are normally built from plain text documents called `Dockerfile`.
 A `Dockerfile` has a specific set of instructions to create and document a well-defined environment, i.e., install specific software and expose specific ports.
 
 For statistical computing and analysis centered around R, the Rocker&nbsp;Project has provided a variety of Docker containers since its start in 2014 \citep{RJ-2017-065}.
@@ -225,27 +225,28 @@ This might quickly change when usability and spread increase, or security featur
 # Container images
 \label{images}
 
-## Images for alternative R distributions
+## Images for alternative R engines
 \label{alternatives}
 
 As outlined above, R is a widely-used language with a large community.
 The large number of extension packages provides access to an unrivaled variety of established and upcoming features.
-Nevertheless, special use cases and experimental projects in academia and industry exist to test new approaches or provide features different to what _GNU-R_, or Base R, provides.
-GNU-R is the R distribution maintained by the [R Core Team](https://www.r-project.org/contributors.html) and available via [CRAN](https://cran.r-project.org/).
+Nevertheless, special use cases and experimental projects in academia and industry exist to test new approaches, or provide features different to what the R implementation maintained by the [R Core Team](https://www.r-project.org/contributors.html) and available via [CRAN](https://cran.r-project.org/) provides.
 While the images presented in this section are far from being as vetted, stable, and widely used as any of the Rocker images, they demonstrate an important advantage of containerisation technology, namely the abiliy to transparently build portable stacks of open source software and make them easily accessible to others.
-All these distributions of R are published under GPL licenses.
-Since all of the R distributions claim better performance as a core motivation, a comparision based on Docker images, potentially leveraging the [resource restriction mechanisms](https://docs.docker.com/config/containers/resource_constraints/) of Docker to level the playing field, seems useful future work.
+All these alternative implementations of R are published under GPL licenses.
+Since all implementations of R claim better performance as a core motivation, a comparision based on Docker images, potentially leveraging the [resource restriction mechanisms](https://docs.docker.com/config/containers/resource_constraints/) of Docker to level the playing field, seems useful future work.
 
 **Microsoft R Open** (MRO) is an R distribution formerly known as Revolution R Open (RRO) before Revolution Analytics was acquired by Microsoft.
 MRO is compatible with main R and its packages and it "[..] includes additional capabilities for improved performance, reproducibility, and platform support." \citep{microsoft_mro}
-Most notably these capabilities are the MRAN repository, which is enabled by default, and the (optional) integration with [Intel® Math Kernel Library](https://software.intel.com/en-us/mkl) (MKL) for multi-threading in linear algebra operations \citep{microsoft_multithread}.
+Most notably these capabilities are the MRAN repository, which is enabled by default, and some bundled packages such as \CRANpkg{checkpoint} and specific R packages maintained by Microsoft\footnote{See "Bundled Packages" on \href{https://mran.microsoft.com/rro/installed}{https://mran.microsoft.com/rro/installed}.}.
+Originally the optional integration with [Intel® Math Kernel Library](https://software.intel.com/en-us/mkl) (MKL) for multi-threading in linear algebra operations \citep{microsoft_multithread} was a distinguishing feature before it was made available publicly, and can be used in base R, too \citep{eddelbuettel_thinking_2018}.
+
 MRO does not provide official Docker images, but a set of community-maintained `Dockerfile`s and Docker images are provided by the poject `mro-docker` ([https://github.com/nuest/mro-docker](https://github.com/nuest/mro-docker)), e.g., the image [`nuest/mro`](https://hub.docker.com/repository/docker/nuest/mro/).
 The images are inspired by the Rocker images and can be used much in the same fashion, effectively a drop-in replacement allowing users to quickly evaluate if the benefits of MRO + Intel® MKL apply to their use case.
 Version-tagged images are provided for the latest bugfix release of recent R versions.
 Extended license information about MKL is printed at every startup.
 
 **Renjin** is an interpreter for the R language running on top of the [Java Virtual Machine](https://en.wikipedia.org/wiki/Java_virtual_machine) (JVM) providing full two-way access between Java and R code \citep{wikipedia_renjin_2018}.
-It was developed to combine the benefits of R, such scripting and extension packages, with the JVM's advantages in the areas of security, cross-platform availability, and established position in enterprise settings.
+It was developed to combine the benefits of R, such scripting and extension packages, with the JVM's advantages in the areas of security, cross-platform availability and integration into enterprise platforms.
 R extension packages need to be specially compiled and are distributed via the Java package manager [Apache Maven](https://en.wikipedia.org/wiki/Apache_Maven), cf. [http://packages.renjin.org/packages](http://packages.renjin.org/packages) for available packages.
 Packages are loaded on demand, i.e., at the first call to `library()`.
 Not all R packages, especially one linking to binary libraries, are available, e.g., `rgdal` \footnote{\href{http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1}{http://packages.renjin.org/package/org.renjin.cran/rgdal/1.4-4/build/1}}.
@@ -266,7 +267,7 @@ There are no offical Docker images provided, but indepedently maintained experim
 
 _Bioconductor_ ([https://bioconductor.org/](https://bioconductor.org/)) is an open source, open development project for the analysis and comprehension of genomic data \citep{gentleman_bioconductor_2004}.
 The project consists of 1741 R software packages as of August 15th 2019, as well as packages containing annotation or experiment data.
-_Bioconductor_ has a semiannual release cycle, each release is associated with a particular version of R.
+_Bioconductor_ has a semi-annual release cycle, each release is associated with a particular version of R.
 Docker images allow availability of current and past versions of _Bioconductor_ for convenience and reproducibility.
 _Bioconductor_'s 'base' docker images are built on top of `rocker/r-ver` and `rocker/rstudio` images.
 _Bioconductor_ installs packages based on the R version, and therefore uses `rocker/rstudio` and `rocker/r-ver` version tagging.
@@ -280,7 +281,7 @@ _Bioconductor_ has several images in addition to 'base', specific to various are
 The 'core' image installs the most commonly used _Bioconductor_ packages.
 _Bioconductor_ images for proteomics, metabolomics, and flow cytometry are community maintained.
 All community maintained images build on top of the _Bioconductor_ base image and therefore indirectly the Rocker images.
-To simplify building and maintaining _Bioconductor_ images, we use a Ruby templating engine.
+To simplify building and maintaining _Bioconductor_ images a Ruby templating engine is used for the `Dockerfile`s.
 A recent audit of the _Bioconductor_ `Dockerfile`s, following best practices from the Docker website, led to a reduction in the size and number of layers.
 The most important insights involve the ['union' file system used by Docker](https://docs.docker.com/storage/storagedriver/overlayfs-driver/#how-container-reads-and-writes-work-with-overlay-or-overlay2).
 In this file system, once a layer (e.g., `RUN` statement) writes to a file path, the file path is never altered.
@@ -340,13 +341,14 @@ The images are built using two CI services, [Travis CI](https://docs.travis-ci.c
 The images are built from manually maintained seperate `Dockerfile`s, are tagged with both Windows-variant and R version, e.g., `nuest/rocker-win:ltsc2019-3.6.2` or `nuest/rocker-win:1803-latest`, and run the `R.exe` process by default.
 All these images can be run on Docker for Desktop on Windows 10.
 New R versions are only added on demand.
-The explorative rocker-win project demonstrates the variety and pontentially confusing complexity of Windows on Docker, e.g., because of the different base images, but also provides a starting point for any Windows-constrained user to leverage containerisation, including examples for apps using \pkg{plumber\, \pkg{Shiny}, or R packages with system dependencies such as \pkg{sf}.
-The latter is quite comfortable and fast actually, compared to installation from source on Linux, as R ships pre-compiled binaries for Windows.
+The explorative rocker-win project demonstrates the variety of Windows on Docker, which is potentially confusing, e.g., because of the different base images.
+The proof of concept provides a starting point for any Windows-constrained user to leverage containerisation, including examples for apps using \CRANpkg{plumber}, \CRANpkg{Shiny}, or R packages with system dependencies such as \CRANpkg{sf}.
+The latter is quite comfortable and fast actually, compared to the default installation from source on Linux, because CRAN ships pre-compiled binaries for Windows.
 However, compared to the various Linux images, the footprint of Windows images is quite large.
 
 For Windows, just as originally for Linux, the cloud use cases drive the development and Docker and Microsoft collaborate closely\footnote{\href{https://www.docker.com/partners/microsoft}{https://www.docker.com/partners/microsoft}}.
 In most cases, individual developers or researchers worrying about reproducibility, will prefer the more widely and host independent Linux-based containers.
-Naturally, a Windows license is required for the host machine, and the licensing impacts the potnetial to build images in clouds or redistribute exported images as archive files.
+Naturally, a Windows license is required for the host machine, and the licensing impacts the potential to build images in clouds or redistribute exported images as archive files.
 But the developments in the `rocker-win` prototype show that containers can also be used for R workflows depending on Windows-only tools, for leveraging an existing Windows Server-based infrastructure where policies can otherwise not be met, or for streamlining interactions with system operating staff that runs Windows-based containers themselves.
 
 ## Non-Debian Linux images
@@ -354,7 +356,7 @@ But the developments in the `rocker-win` prototype show that containers can also
 
 \label{rhub}
 The **R-hub** project provides _"a collection of services to help R package development"_, with the package builder as the most prominent one\citep{r-hub_docs_2019}.
-The builder allows R package developers to check their R package on different platforms and R versions using a web form or the package \pkg{rhub} \citep{csardi_rhub_2019}.
+The builder allows R package developers to check their R package on different platforms and R versions using a web form or the package \CRANpkg{rhub} \citep{csardi_rhub_2019}.
 The builder uses Docker containers to conduct these checks, taking advantages of their well-defined environments and sandboxing.
 The `Dockerfile`s and images are published on Docker&nbsp;Hub\footnote{\href{https://hub.docker.com/u/rhub}{https://hub.docker.com/u/rhub}} and GitHub\footnote{\href{https://github.com/r-hub/rhub-linux-builders}{https://github.com/r-hub/rhub-linux-builders}} respectively.
 The images comprise release and development builds of R running in the base images of the [Debian](https://www.debian.org/), [Ubuntu](https://ubuntu.com/), [Fedora](https://getfedora.org/), and [CentOS](https://centos.org/) linux distributions (Arch Linux is under development\footnote{\href{https://github.com/r-hub/rhub-linux-builders/pull/41}{https://github.com/r-hub/rhub-linux-builders/pull/41}}, see `rhub::local_check_linux_images()` for a full list), and are intended for debugging (see Section&nbsp;\nameref{development}) not for reproducible workflows.
@@ -395,7 +397,7 @@ For example, these images allow users to quickly start a Jupyter Notebook server
 R is installed using the Conda package manager, which can manage environments for various programming languages, pinning both the R version and the versions of R packages\footnote{See \texttt{jupyter/datascience-notebook}'s \texttt{Dockerfile} at \href{https://github.com/jupyter/docker-stacks/blob/master/datascience-notebook/Dockerfile\#L47}{https://github.com/jupyter/docker-stacks/blob/master/datascience-notebook/Dockerfile\#L47}.}.
 
 **Kaggle** provides the [`gcr.io/kaggle-images/rstats`](https://hub.docker.com/r/kaggle/rstats) image (previously `kaggle/rstats`) and [corresponding `Dockerfile`](https://github.com/Kaggle/docker-rstats) for usage in their Machine Learning competitions and easy access to the associated datasets.
-It includes machine learling libraries such as Tensorflow and Keras, and also configures the \pkg{reticulate} package.
+It includes machine learling libraries such as Tensorflow and Keras, and also configures the \CRANpkg{reticulate} package.
 The image uses a base image with _all packages from CRAN_, `gcr.io/kaggle-images/rcran`, which requires a Google Cloud Build as Docker&nbsp;Hub would time out\footnote{Originally, a stacked collection of over 20 images with automated builds on Docker~Hub was used, see \href{https://web.archive.org/web/20190606043353/http://blog.kaggle.com/2016/02/05/how-to-get-started-with-data-science-in-containers/}{https://web.archive.org/web/20190606043353/http://blog.kaggle.com/2016/02/05/how-to-get-started-with-data-science-in-containers/} and \href{https://hub.docker.com/r/kaggle/rcran/dockerfile}{https://hub.docker.com/r/kaggle/rcran/dockerfile}}.
 The final extracted image size is over 25GB, which makes it debatable if having everything available is actually convenient.
 
@@ -406,7 +408,7 @@ docker pull gcr.io/kaggle-images/rstats
 docker images | grep kaggle
 ```
 
-As a further example, [**Radiant** project](https://radiant-rstats.github.io/docs/) provides several images, e.g., [`vnijs/rsm-msba-spark`](https://hub.docker.com/r/vnijs/rsm-msba-spark), for their browser-based business analytics interface based on \pkg{Shiny} (`Dockerfile` [on GitHub](https://github.com/radiant-rstats/docker)) and for use in education as part of an MSc course.
+As a further example, [**Radiant** project](https://radiant-rstats.github.io/docs/) provides several images, e.g., [`vnijs/rsm-msba-spark`](https://hub.docker.com/r/vnijs/rsm-msba-spark), for their browser-based business analytics interface based on \CRANpkg{Shiny} (`Dockerfile` [on GitHub](https://github.com/radiant-rstats/docker)) and for use in education as part of an MSc course.
 As data science often applies a multitude of tools, this image favours inclusion over selection and features Python, Postgres, JupyterLab and Visual Studio Code besides R and RStudio, bringing the image size up to 9GB.
 
 ```{bash radiant_images, eval=FALSE, include=FALSE}
@@ -443,7 +445,7 @@ However, moving back and forth between an R console and the command line can cre
 A number of first-order R packages provide a interface to the Docker CLI, allowing to automate interaction with the Docker CLI from an R console.
 
 Each of these packages has particular advantages as they provide function wrappers for interacting with the Docker CLI at different stages of a container's life cycle.
-Examples of such interactions are installing the Docker software, creating `Dockerfile`s (\pkg{dockerfiler}), \pkg{containerit}), building images and launching a containers (\pkg{stevedore}, \pkg{docker}) on a local machine or on the cloud.
+Examples of such interactions are installing the Docker software, creating `Dockerfile`s (\CRANpkg{dockerfiler}, \pkg{containerit}), building images and launching a containers (\CRANpkg{stevedore}, \pkg{docker}) on a local machine or on the cloud.
 As such, the choice of which package is most useful depends on the use-case at hand, but also the users level of expertise.
 
 ```{r clientfunctionalities, echo=FALSE, results='asis', warning=FALSE, message=FALSE}
@@ -495,7 +497,7 @@ if (packageVersion("rticles") >= "0.12.3") {
 ```
 
 **\pkg{harbor}** ([https://github.com/wch/harbor](https://github.com/wch/harbor) is not actively maintained anymore, but should be honorably mentioned as the first R package for managing Docker images and containers.
-It uses the \pkg{sys} package to run system commands against the Docker CLI, both locally and through an ssh connection, and has convenience functions, e.g., for listing and removing containers/images and for accessing logs.
+It uses the \CRANpkg{sys} package to run system commands against the Docker CLI, both locally and through an ssh connection, and has convenience functions, e.g., for listing and removing containers/images and for accessing logs.
 The output of container executions are converted to appropriate R types.
 The Docker CLI, while evolving quickly and not with great concern for introducing breaking changes, basic functionality is unchanged for a long time so `harbor::docker_run(image = "hello-world")` works like a charm.
 
@@ -504,19 +506,18 @@ remotes::install_github("wch/harbor")
 harbor::docker_run(image = "hello-world")
 ```
 
-**\pkg{stevedore}** ([https://cran.r-project.org/package=stevedore](https://cran.r-project.org/package=stevedore)) is currently the most powerful Docker client in R.
-It interfaces with the Docker daemon over the Docker HTTP API\footnote{} via a Unix socket on Linux or MacOS, over a named pipe on Windows, or over an HTTP/TCP connection.
+**\CRANpkg{stevedore}** ([https://cran.r-project.org/package=stevedore](https://cran.r-project.org/package=stevedore)) is currently the most powerful Docker client in R.
+It interfaces with the Docker daemon over the Docker HTTP API\footnote{\href{https://docs.docker.com/engine/api/latest/}{https://docs.docker.com/engine/api/latest/}} via a Unix socket on Linux or MacOS, over a named pipe on Windows, or over an HTTP/TCP connection.
 The package is the only one not using system calls to the `docker` CLI for managing images and containers and easily exposes connections to remote Docker daemons, which has to be configured on the Docker level otherwise.
 Using the API gives access to more information and is system independent and likely more reliable than parsing command line output.
-\pkg{stevedore}'s own interface is automatically generated based on the OpenAPI specification of the Docker daemon, but still similar to the Docker CLI.
+\CRANpkg{stevedore}'s own interface is automatically generated based on the OpenAPI specification of the Docker daemon, but still similar to the Docker CLI.
 The interface is similar to R6 objects, in that a `stevedore_object` has a number of functions attached to it that can be called, and multiple specific versions of the Docker API can be supported thanks to the automatic generation\footnote{See \href{https://github.com/richfitz/stevedore/tree/master/inst/spec}{https://github.com/richfitz/stevedore/tree/master/inst/spec} and \href{https://github.com/richfitz/stevedore/blob/master/development.md}{https://github.com/richfitz/stevedore/blob/master/development.md}.}.
 
-**\pkg{AzureContainers}** ([https://cran.r-project.org/package=AzureContainers](https://cran.r-project.org/package=AzureContainers)) is an interface to a number of container-related services in Microsoft's [Azure Cloud](https://azure.microsoft.com/), see Section&nbsp;\nameref{azurecontainers}.
+**\CRANpkg{AzureContainers}** is an interface to a number of container-related services in Microsoft's [Azure Cloud](https://azure.microsoft.com/), see Section&nbsp;\nameref{azurecontainers}.
 While it is mainly intended for working with Azure, as a convenience feature it includes lightweight, cross-platform shells to Docker and Kubernetes (tools `kubectl` and `helm`).
 These can be used to create and manage arbitrary Docker images and containers, as well as Kubernetes clusters on any platform or cloud service.
 
-**\pkg{babelwhale}** ([https://cran.r-project.org/package=babelwhale](https://cran.r-project.org/package=babelwhale)) 
-allows executing and interacting with containers, which can use either Docker or Singularity as a backend.
+**\CRANpkg{babelwhale}** allows executing and interacting with containers, which can use either Docker or Singularity as a backend \citep{cannoodt_babelwhale_2019}.
 The package provides a unified interface to interact with Docker and Singularity containers.
 Users can, for example, execute a command inside a container, mount a volume or copy a file.
 
@@ -562,11 +563,11 @@ Several second order R packages attempt to make the process of creating Docker i
 see/cite http://smaakage85.netlify.com/2019/12/21/dockr-easy-containerization-for-r/
 <!-- from description on CRAN: Build a lightweight Docker r-base container image for your R package, in which the package itself is available. The Docker image seeks to mirror your R session as close as possible with respect to R specific dependencies. Both dependencies on CRAN R packages as well as local non-CRAN R packages will be included in the Docker container image.-->
 
-**\pkg{renv}** ([https://rstudio.github.io/renv/](https://rstudio.github.io/renv/)) with Docker: https://rstudio.github.io/renv/articles/docker.html
+**\CRANpkg{renv}** ([https://rstudio.github.io/renv/](https://rstudio.github.io/renv/)) with Docker: https://rstudio.github.io/renv/articles/docker.html
 
 _version pinning_ with packages \pkg{remotes} and \pkg{versions} for R, and with system package managers for distros
 
-**\pkg{liftr}** ([https://nanx.me/liftr/](https://nanx.me/liftr/)) \citep{liftr2019} aims to solve the problem of persistent reproducible reporting in statistical computing.
+**\CRANpkg{liftr}** ([https://nanx.me/liftr/](https://nanx.me/liftr/)) \citep{liftr2019} aims to solve the problem of persistent reproducible reporting in statistical computing.
 Currently, the R Markdown format and its backend compilation engine _knitr_ offer a _de facto_ standard for creating dynamic documents \citep{xie2018}.
 However, the reproducibility of such content authoring environments is often limited to individual machines --- it is not easy to replicate the system environment (libraries, R versions, R packages) where the document was compiled.
 This issue becomes even more serious when it comes to collaborative document authoring and creating large-scale document building services.
@@ -640,7 +641,7 @@ The AWS SDK allowed to run R consumers reading from real-time data processing st
 The applications were deployed on Amazon Elastic Container Service ([ECS](https://aws.amazon.com/ecs/)).
 The main learnings from using R in Docker was the imporance of not only pinning the R package versions via MRAN, but also moving away from Debian testing to an LTS distribution to minimize the risk of breaking the automated builds of the Docker images and production jobs.
 
-A more recent related work is the \pkg{plumber} ([https://www.rplumber.io/](https://www.rplumber.io/)) package, which makes it even easier for R to be used to host web services through RESTful APIs.
+A more recent related work is the \CRANpkg{plumber} ([https://www.rplumber.io/](https://www.rplumber.io/)) package, which makes it even easier for R to be used to host web services through RESTful APIs.
 When R is running on a server, a different server can ask R to make a computation through an HTTP request and get an immediate response.
 For instance, if a data scientist at a company creates a machine learning model to tell which customers are likely to make a repeat purchase, if they serve the model through a plumber API then someone else on the marketing team could write software that sends different emails depending on that real-time prediction.
 Plumber syntax is simple to read and understand: the API is created by commenting above function names in an R script.
@@ -683,12 +684,12 @@ The cloud is the natural environment of containers, and is the natural mechanism
 - Kubernetes - A popular platform for managing Docker containers is [Kubernetes](https://kubernetes.io/), which is used for a wide variety of containerized applications. It may be your organisation has a Kubernetes cluster already for other applications. Docker containers are used within Kubernetes clusters to hold native code, for which Kubernetes creates a framework around network connections and scaling of resources up and down. An introduction on using [Kubernetes with R is published at this blog post](https://code.markedmondson.me/r-on-kubernetes-serverless-shiny-r-apis-and-scheduled-scripts/).
 
 \label{azurecontainers}
-**\pkg{AzureContainers}** is an umbrealla package providing interfaces the three services of Microsoft's Azure Cloud, namely [Container Instances](https://azure.microsoft.com/en-us/services/container-instances/) for running individual containers, [Container Registry](https://azure.microsoft.com/en-us/services/container-registry/) for private image distribution, and [Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/) for orchestrated deployments.
-While a package like \pkg{plumber} provides the infrastructure for turning an R workflow a service, for production purposes it is usually necessary to take into account scalability, reliability and ease of management.
+**\CRANpkg{AzureContainers}** is an umbrealla package providing interfaces the three services of Microsoft's Azure Cloud, namely [Container Instances](https://azure.microsoft.com/en-us/services/container-instances/) for running individual containers, [Container Registry](https://azure.microsoft.com/en-us/services/container-registry/) for private image distribution, and [Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/) for orchestrated deployments.
+While a package like \CRANpkg{plumber} provides the infrastructure for turning an R workflow a service, for production purposes it is usually necessary to take into account scalability, reliability and ease of management.
 A single container is limited in the volume of requests it can service, and if the container goes down or is occupied with processing a computationally intensive task, the service becomes unavailable.
 These issues can be mitigated by deploying not a single container, but a _cluster_ of containers, orchestrated as a single deployment, e.g., with [Kubernetes](https://kubernetes.io).
 A cluster features load-balancing, autoscaling of containers across numerous servers (in the cloud or on premise), and restarting failed ones.
-\pkg{AzureContainers} provides a lightweight yet powerful interface for working with Resource Manager, the framework for deploying and managing arbitrary resources in Azure.
+AzureContainers provides a lightweight yet powerful interface for working with Resource Manager, the framework for deploying and managing arbitrary resources in Azure.
 On the client side, it provides simple shells to the Docker, and to Kubernetes' `kubectl` and `helm` tools, that are needed for managing Kubernetes clusters.
 The package simplifies complex infrastructure management to a number of R funcction calls, given an Azure account with sufficient credit\footnote{See \emph{"Deploying a prediction service with Plumber"} vignette for details:  \href{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01_plumber_deploy.html}{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01\_plumber\_deploy.html}.}.
 
@@ -828,7 +829,7 @@ https://github.com/DomBennett/om..raxml#partitioned-dna-analysis
 
 - researchcompendia.science
 - https://github.com/benmarwick/rrtools
-- \pkg{renv}, https://rstudio.github.io/renv/articles/docker.html
+- \CRANpkg{renv}, https://rstudio.github.io/renv/articles/docker.html
 - what to copy in and what not
 
 ## Development and debugging
@@ -846,7 +847,7 @@ Purpose built Docker are used to prepare for upcoming releases of system librari
 There are also special images for identifying problems beyond the mere R code, such as **debugging R memory problems**.
 The images significantly reduce the barrier to follow complex steps for fixing memory allocation bugs \citep[cf. Section~4.3 in][]{core_writing_1999}.
 These problems are hard to debug and critical, both because when they occur they lead to fatal crashing processes.
-[`rocker/r-devel-san`](https://github.com/rocker-org/r-devel-san) and [`rocker/r-devel-ubsan-clang`](https://github.com/rocker-org/r-devel-san-clang) are Docker images have a particularly configured version of R to trace such problems with gcc and clang compilers, respectively \citep[cf.~\pkg{sanitizers} for examples,][]{eddelbuettel_sanitizers_2014}.
+[`rocker/r-devel-san`](https://github.com/rocker-org/r-devel-san) and [`rocker/r-devel-ubsan-clang`](https://github.com/rocker-org/r-devel-san-clang) are Docker images have a particularly configured version of R to trace such problems with gcc and clang compilers, respectively \citep[cf.~\CRANpkg{sanitizers} for examples,][]{eddelbuettel_sanitizers_2014}.
 The image [`wch/r-debug`](https://github.com/wch/r-debug) is a purpose built Docker image with _multiple_ instrumented builds of R, each with a different diagnostic utility activated.
 
 Second, containers are useful for **testing** R code during development.
@@ -872,7 +873,7 @@ This gives on the one hand easy access after every update of the R Markdown sour
 This article is a snapshot of the R-corner in a universe of applications built many-faced piece of software, Docker.
 `Dockerfile`s and Docker images are the go-to methods for collaboration between roles in an organisation, such as development and IT operations teams, and between parties in the communication of knowledge, such as research workflows or education.
 Docker became synonymous with applying the concept of containerisation to solve challenges of reproducible environments, e.g., in research and in development \& production, and of scalable deployments with the ability to move processing between machines easily (e.g., locally, one cloud providers VM, another cloud provider's Container-as-a-Service).
-Collaboration, reproducibility, and portability are the common themes behind R packages, use cases, and applications in this work.
+Reproducible environments, scalability and efficiency, and portability across clouds are the common themes behind R packages, use cases, and applications in this work.
 
 The R packages and use cases presented show the positive drive in the community to innovate, but also the challenge of keeping up with a continuously evolving landscape.
 The use cases contributed by co-authors also have a degree of overlap, which can be expected as a common language and understanding of good practices is still taking shape.
