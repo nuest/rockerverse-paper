@@ -475,11 +475,16 @@ Both approaches enable `apt` as an installation method, and this is exposed via 
 The image build and publication process is scripted with Python and JSON template configuration files, unlike Rocker which relies on plain `Dockerfile`s.
 A minor reason in the inception of the images were also project constraints requiring a Rocker-incompatible licensing of the `Dockerfile`s, i.e., the MIT License.
 
-**Whole Tale** (https://wholetale.org) is a National Science Foundation (NSF) funded project\footnote{NSF Award OAC-1541450} developing a scalable, open-source, multi-user platform for reproducible research \citep{brinckman2019, chard2019a}.
+**Whole Tale** (https://wholetale.org) is a National Science Foundation (NSF) funded project developing a scalable, open-source, multi-user platform for reproducible research \citep{brinckman2019, chard2019a}.
 A central goal of the platform is to enable researchers to easily create and publish executable research objects\footnote{In Whole Tale a `tale` is a research object that contains metadata, data (by copy or reference), code, narrative, documentation, provenance, and information about the computational environment to support computational reproducibility} associated with published research \citep{chard2019b}.
 For R users, Whole Tale attempts to combine the strengths of the Rocker Project's curated Docker images with the Jupyter Project's `repo2docker`\footnote{See \href{https://repo2docker.readthedocs.io/}{https://repo2docker.readthedocs.io/}} component to simplify the customization of R-based environments for researchers with limited experience with either Docker or Git.
 Using Whole Tale, researchers can create and publish Rocker-based reproducible research objects to a growing number of repositories including DataONE member nodes, Zenodo and soon Dataverse.
-Additionally, Whole Tale supports automatic data citation and is working on capabilities for image preservation and provenance capture to improve the transparency of publish computational research artifacts \citep{mecum2018, mcphillips2019}.
+Additionally, Whole Tale supports automatic data citation and is working on capabilities for image preservation and provenance capture to improve the transparency of published computational research artifacts \citep{mecum2018, mcphillips2019}.
+Multiple options have been discussed to allow users to change the base image used in `repo2docker` from the default Ubuntu LTS required to support the Rocker Project images. 
+Whole Tale implemented a custom `RockerBuildPack`\footnote{See \href{https://github.com/whole-tale/repo2docker\_wholetale}{https://github.com/whole-tale/repo2docker\_wholetale}} to support customization of the `rocker/geospatial` image through `repo2docker` composability \footnote{Composability refers to the ability to combine multiple package managers -- such as R, `pip`, and `conda`}.
+This works in part because Rocker images are based on a Debian distribution.
+
+
 
 # Use cases and applications
 <!-- from packages closer to Docker to second level packages to more complex use cases -->
