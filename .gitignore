@@ -20,3 +20,5 @@ README.html
 manuscript_cache/
 
 .Renviron
+
+README_cache/
