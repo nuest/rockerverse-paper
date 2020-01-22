@@ -276,32 +276,20 @@ There are no offical Docker images provided, but indepedently maintained experim
 
 _Bioconductor_ ([https://bioconductor.org/](https://bioconductor.org/)) is an open source, open development project for the analysis and comprehension of genomic data \citep{gentleman_bioconductor_2004}.
 The project consists of 1823 R software packages as of October 30th 2019, as well as packages containing annotation or experiment data.
-_Bioconductor_ has a semi-annual release cycle, each release is associated with a particular version of R.
-Docker images allow availability of current and past versions of _Bioconductor_ for convenience and reproducibility.
-_Bioconductor_'s 'base' docker images are built on top of `rocker/r-ver` and `rocker/rstudio` images.
-_Bioconductor_ installs packages based on the R version and the Bioconductor version, and therefore uses Bioconductor version tagging `devel` and `RELEASE_X_Y`.
-_Bioconductor_ selects the desired version of R from Rocker, adds the BiocManager CRAN package for installing appropriate versions of _Bioconductor_ packages.
-All community maintained images are supposed to be built on top of the _Bioconductor_ base image and therefore indirectly the Rocker images.
-The images are summarized on the _Bioconductor_ web site (see [https://bioconductor.org/help/docker/](https://bioconductor.org/help/docker/)), created with `Dockerfile`s maintained on GitHub ([https://github.com/Bioconductor/bioconductor_docker](https://github.com/Bioconductor/bioconductor_docker)), and [distributed through DockerHub](https://hub.docker.com/u/bioconductor).
-Past and current combinations of R and _Bioconductor_ are therefore accessible via a specific image tag `RELEASE_X_Y`.
+_Bioconductor_ has a semi-annual release cycle, each release is associated with a particular version of R, and Docker images are provided for current and past versions of _Bioconductor_ for convenience and reproducibility.
+All images, included  are described on the _Bioconductor_ web site (see [https://bioconductor.org/help/docker/](https://bioconductor.org/help/docker/)), created with `Dockerfile`s maintained on GitHub, and distributed through Docker&nbsp;Hub\footnote{See \href{https://github.com/Bioconductor/bioconductor_docker}{https://github.com/Bioconductor/bioconductor\_docker} and \href{https://hub.docker.com/u/bioconductor}{https://hub.docker.com/u/bioconductor} respectively.}.
+_Bioconductor_'s 'base' Docker images are built on top of the `rocker/rstudio` image.
+_Bioconductor_ installs packages based on the R version in combination with the Bioconductor version, and therefore uses Bioconductor version tagging `devel` and `RELEASE_X_Y`, e.g., `RELEASE_3_10`.
+Past and current combinations of R and _Bioconductor_ will therefore be accessible via a specific image tags.
+The _Bioconductor_ `Dockerfile` selects the desired version of R from Rocker, adds required system dependencies, and uses the \CRANpkg{BiocManager} package for installing appropriate versions of _Bioconductor_ packages.
 A strength of this approach is that the responsibility for complex software configuration (including customized development) is shifted from the user to the experienced _Bioconductor_ core team.
-Images may be valuable in teaching, where participants pull pre-built images to avoid complicated configuration of their own computing environemnts.
-
-A recent audit of our deprecated _Bioconductor_ `Dockerfile`s, following best practices from the Docker website, led to a reduction in the size and number of layers.
-The most important insights involve the ['union' file system used by Docker](https://docs.docker.com/storage/storagedriver/overlayfs-driver/#how-container-reads-and-writes-work-with-overlay-or-overlay2).
-In this file system, once a layer (e.g., `RUN` statement) writes to a file path, the file path is never altered.
-A subsequent layer that might appear to remove or overwrite the path actually masks, rather than alters, the original.
-It is therefore important to clean up (e.g., cache removal) within each layer, and to avoid re-installing existing dependencies.
-
-A recent innovation is to produce a `bioconductor_docker` image to emulate the _Bioconductor_ nightly Linux build machine as closely as possible.
-This image contains the build system environment variables.
-The image contains the _system dependencies_ needed to install and check almost all (1813 out of 1823) _Bioconductor_ software packages.
-Users no longer have to manage complciated system dependencies.
-The image is configured so that `.libPaths()` has `/usr/local/lib/R/host-site-library` as the first location.
-Users mounting a location on the host file system to this location then persist installed packages across docker sessions or updates.
-Many _R_ users pursue flexible work flows tailored to particular analysis needs, rather than standardized work flows.
-The `bioconductor_docker` image is well-suited to this pattern.
-`bioconductor_docker` provides developers with a test environment like _Bioconductor_'s build system.
+A recent audit of the _Bioconductor_  image stack `Dockerfile` led to the deprecation of several community-maintained images, because the numerous specific images became too hard to understand, complex to maintain, and cumbersome to extent.
+As part of the simplification, a recent innovation is to produce a `bioconductor_docker:devel` image to emulate the _Bioconductor_ nightly Linux build machine as closely as possible.
+This image contains the build system environment variables and the _system dependencies_ needed to install and check almost all (1813 out of 1823) _Bioconductor_ software packages and saves users and package developers from managing these themselves.
+Furthermore the image is configured so that `.libPaths()` has `/usr/local/lib/R/host-site-library` as the first location.
+Users mounting a location on the host file system to this location can persist installed packages across Docker sessions or image updates.
+Many R users pursue flexible work flows tailored to particular analysis needs, rather than standardized work flows.
+The new `bioconductor_docker` image is well-suited for this pattern, while `bioconductor_docker:devel` provides developers with a test environment close to _Bioconductor_'s build system.
 
 ## Images for (historic) R versions
 \label{versions}
