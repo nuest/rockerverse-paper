@@ -12,11 +12,10 @@ author:
     email: daniel.nuest@uni-muenster.de
   - name: Dom Bennett
     # https://github.com/DomBennett
-    affiliation: University of Gothenburg, Sweden
+    affiliation: Gothenburg Global Biodiversity Centre, Sweden
     address:
-      - Department of Biological and Environmental Sciences
       - Carl Skottsbergs gata 22B
-      - 413 19 Gothenburg, Sweden
+      - 413 19 Göteborg, Sweden
       - \orcid{0000-0003-2722-1359}
     email: dominic.john.bennett@gmail.com
   - name: Robrecht Cannoodt
@@ -785,7 +784,7 @@ Docker is perfectly suited for packaging and executing any software and data, an
 Due to its original use case (see&nbsp;\nameref{introduction}), Docker has no standard mechanisms for chaining containers together; it lacks definitions and protocols for environment variables, volume mounts and/or ports that could enable transfer of input (parameters and data) and output (results) to and from containers.
 Some packages, e.g., \pkg{containerit}, do provide Docker images that can be used similarly to CLIs, but their usage is cumbersome\footnote{\href{https://o2r.info/containerit/articles/container.html}{https://o2r.info/containerit/articles/container.html}}.
 
-**\pkg{outsider}** ([https://antonellilab.github.io/outsider/](https://antonellilab.github.io/outsider/)) tackles the problem of integrating external programs into an R workflow \citep{bennett_outsider_2020}.
+**\pkg{outsider}** ([https://docs.ropensci.org/outsider/](https://docs.ropensci.org/outsider/)) tackles the problem of integrating external programs into an R workflow \citep{bennett_outsider_2020}.
 Installation and usage of external programs can be difficult, convoluted and even impossible if the platform is incompatible.
 Therefore \pkg{outsider} uses the platform-independent Docker images to encapsulate processes in _outsider modules_.
 Each outsider module has a `Dockerfile` and an R package with functions for interacting with the encapsulated tool.
