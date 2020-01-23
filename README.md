@@ -47,10 +47,6 @@ docker run -i -v $(pwd):/rockerverse --user $UID nuest/rockerverse-paper Rscript
     because the Alpine image is quite a trivial one
   - <https://github.com/jlisic/R-docker-centos> because CentOS images
     are also provided by R-hub
-  - <https://github.com/cardcorp/card-rocker> because last change 3
-    years ago, an all based on `rocker/r-base` - lesson learned would be
-    interesting still, see
-    [\#15](https://github.com/nuest/rockerverse-paper/issues/15)
   - `sevenbridges` includes several Dockerfiles and documentation about
     using images, and also seems to use Docker in the built workflows
     but via other tools, not directly,
@@ -58,3 +54,10 @@ docker run -i -v $(pwd):/rockerverse --user $UID nuest/rockerverse-paper Rscript
     <https://github.com/sbg/sevenbridges-r/search?p=4&q=docker&unscoped_q=docker>
   - <https://github.com/rocker-jp> because it seems to have stalled soon
     after inception
+  - <https://github.com/thomasp85/fiery> because no examples/docs for
+    Docker (though probably trivial anyway)
+  - [RStudio Connect](https://rstudio.com/products/connect/) because
+    while it does use a similar mechanism to seperate processes, it does
+    *not* use Docker and the comparison would require a lot of
+    background explanation, and not all details are available because
+    the software is proprietary

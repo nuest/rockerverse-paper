@@ -620,10 +620,17 @@ The AI @ T-Mobile team found that the models performed well and today these mode
 \label{cicd}
 \label{deployment}
 
-The cloud is the natural environment of containers, and is the natural mechanism to deploy R server applications.
+The cloud is the natural environment of containers, and subsequently containers are the go-to mechanism to deploy R server applications.
 More and more continuous integration (CI) and continuous delivery (CD) services also use containers, opening up new options for use.
 The controlled nature of containers, i.e., the possibility to define the software environment very well, even on remote machines, is crucial here, for example to match test or build environments with production environments.
 
+As a first example, \CRANpkg{Shiny} is the most popular package for creating interactive online dashboards with R and it enables users with very diverse backgrounds to create stable and user friendly web applications.
+The ShinyProxy ([https://www.shinyproxy.io/](https://www.shinyproxy.io/)) is an open source tool to deploy Shiny apps in an enterprise context.
+They feature single sign-on, but also in scientific use cases \citep[e.g., ][]{savini_epiexplorer_2019,glouzon_structurexplor_2017}.
+ShinyProxy uses Docker containers to isolate user sessions and to achieve scalability for multi-user scenarious with multiple apps.
+ShinyProxy itself is written in Java to accomodate corporate requirements and may itself run in a container for stability and availability.
+The tool is build on ContainerProxy ([https://www.containerproxy.io/](https://www.containerproxy.io/)), which provides similar features for executign long-running R jobs or interactive R sessions.
+The started containers can run on a regular Docker host but also in clusters.
 - `RSelenium`
 - [`googleComputeEngineR`](https://cloudyr.github.io/googleComputeEngineR/) (function `gce_vm_template()`)
   - To enable quick deployments of key R services such as RStudio and Shiny onto cloud virtual machines (VMs), this package utilises Dockerfiles to move the labour of setting up those services from the user to a premade Docker image. For example, by specifying the template `template="rstudio"` in `gce_vm_template()/gce_vm()` an up to date RStudio Service image is launched.  Specifying `template="rstudio-gpu"` will launch an RStudio Server image with a GPU attached, etc.  
