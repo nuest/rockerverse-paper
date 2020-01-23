@@ -631,6 +631,16 @@ ShinyProxy uses Docker containers to isolate user sessions and to achieve scalab
 ShinyProxy itself is written in Java to accomodate corporate requirements and may itself run in a container for stability and availability.
 The tool is build on ContainerProxy ([https://www.containerproxy.io/](https://www.containerproxy.io/)), which provides similar features for executign long-running R jobs or interactive R sessions.
 The started containers can run on a regular Docker host but also in clusters.
+
+Second, containers can be used to create **platform installation packages** in a DevOps setting.
+The [OpenCPU](https://www.opencpu.org/) system provides an HTTP API for data analysis based on R.
+\citet{ooms_opencpu_2017} describes how various platform-specific installation files for OpenCPU are created using Docker&nbsp;Hub: the automated builds install the software stack from source on different operating systems; afterwards a script file downloads the images and extracts the OpenCPU binaries.
+
+- [dynwrap](https://github.com/dynverse/dynwrap_containers/blob/master/.travis.yml) [@rcannood]
+  - For this project, we use travis-ci to build rocker-derived containers, test them, and only push them to Docker&nbsp;Hub (from travis-ci.org) if the integration tests succeed.
+
+For example, the **[`golem`](https://github.com/ThinkR-open/golem)** package makes an heavy use of `dockerfiler` when it comes to creating the `Dockerfile` for building production-grade Shiny applications and deploying them.
+
 - `RSelenium`
 - [`googleComputeEngineR`](https://cloudyr.github.io/googleComputeEngineR/) (function `gce_vm_template()`)
   - To enable quick deployments of key R services such as RStudio and Shiny onto cloud virtual machines (VMs), this package utilises Dockerfiles to move the labour of setting up those services from the user to a premade Docker image. For example, by specifying the template `template="rstudio"` in `gce_vm_template()/gce_vm()` an up to date RStudio Service image is launched.  Specifying `template="rstudio-gpu"` will launch an RStudio Server image with a GPU attached, etc.  
@@ -653,24 +663,6 @@ These products often entail a high amount of open source software in combination
 One such example is RStudio's data science platform [RStudio Team](https://rstudio.com/products/team/).
 It allows teams of data scientists and their respective IT/DevOps groups to develop and deploy code in R and Python around the RStudio Open Source Server inside of Docker images, without requiring users to learn new tools or directly interact with containers.
 The best practices for [running RStudio with Docker containers](https://support.rstudio.com/hc/en-us/articles/360021594513-Running-RStudio-with-Docker-containers) as well as [Docker images](https://github.com/rstudio/rstudio-docker-products) for RStudio's commerical products are openly available.
-
-The controlled nature of containers, i.e., it is possible to define the software environment very well, even on remote machines, make them also useful for continuous integration (CI) and continuous delivery of applications.
-
-- DevOps
-  - https://www.opencpu.org/posts/opencpu-with-docker/
-
-When doing continuous integration and continuous delivery, it's crucial to test in an environment that matches the production environment.
-Tools like `Gitlab-CI` are built on top of Docker images: the user specifies a base Docker image, and the whole tests are run inside this environment.
-But, as we just said, this environment has to be fixed, but it also have to contain the necessary toolkit.
-In order to achieve that, [`r-ci`](https://github.com/ColinFay/r-ci) combines `rocker` versioning and a series of tools specifically designed for testing.
-That way, package builders can use this image as a base image for there testing environment, without having to install the necessary packages every time they need to run a new test.
-
-- [dynwrap](https://github.com/dynverse/dynwrap_containers/blob/master/.travis.yml) [@rcannood]
-  - For this project, we use travis-ci to build rocker-derived containers, test them, and only push them to Docker&nbsp;Hub (from travis-ci.org) if the integration tests succeed.
-- Google Cloud Build
-  - https://cloud.google.com/cloud-build/
-  - Cloud Build is another continuous intergation service that helps move the workload of building the Docker images to an online service. Cloud Build can be set up to build the Dockerfiles on each GitHub commit or release. This means you do not need to build the Docker images locally, which can tie up resources since Docker images can be several GBs and take a long time to compile. Google Cloud Build works alongside Google Container Registry to allow you to build private and public Docker images, which allows you to build up your own dependency graphs for downstream applications.
-  - https://code.markedmondson.me/googleCloudRunner/articles/cloudbuild.html
 
 ## Common or public work environments
 \label{workenvs}
@@ -752,25 +744,36 @@ RStudio Connect uses an approach to isolate deployed R applications that is simi
 ## Processing
 \label{processing}
 
-The portability of containers becomes particularly useful when complex processing tasks shall be offloaded to a server.
+The portability of containerized environments becomes particularly useful for improving expensive processing of data or shipping complex processing pipelines.
 
-- Docker images for cloud services
-  - A popular application of using Docker is to create the environments that can run in parallel for speeding up R code. For example, [`googleComputeEngineR`](https://CRAN.R-project.org/package=googleComputeEngineR)'s `gce_vm_cluster()` function can create clusters of 2 or more virtual machines, running multi-CPU architectures. Instead of running a local R script with the local CPU and RAM restrictions, the same code can be processed on all CPU threads of the cluster of machines in the cloud, all running in a Docker container with the same R environments. This is achieved through `googleComputeEngineR`'s integration with the R parralisation library [`library(future)` by Henrik Bengtsson]( https://CRAN.R-project.org/package=future). Local R computation can be thrown up to a multi-CPU and VM environment to achieve parrell computation in a few lines of R code in your local session.
+First, it is possible to **offload complex processing to a server**.
+...
+
+Second, when processes can be **run in parallel** for speeding up R code.
+
+For example, [`googleComputeEngineR`](https://CRAN.R-project.org/package=googleComputeEngineR)'s `gce_vm_cluster()` function can create clusters of 2 or more virtual machines, running multi-CPU architectures. Instead of running a local R script with the local CPU and RAM restrictions, the same code can be processed on all CPU threads of the cluster of machines in the cloud, all running in a Docker container with the same R environments. This is achieved through `googleComputeEngineR`'s integration with the R parralisation library [`library(future)` by Henrik Bengtsson]( https://CRAN.R-project.org/package=future). Local R computation can be thrown up to a multi-CPU and VM environment to achieve parrell computation in a few lines of R code in your local session.
   - [some demonstrations are available here](https://cloudyr.github.io/googleComputeEngineR/articles/massive-parallel.html).
 - [Google Cloud Run](https://cloud.run) - This is a CaaS (Containers as a Service) that lets you launch a Docker container without worrying about underlying infrastructure. This dispenses with the developer creating a cloud server to run the Docker image on, by abstracting away those servers to a more serverless configuration. Cloud Run lets you run your code on top of a managed or your own Kubernetes cluster running Knative, and can accept any Docker image. The service takes care of network ingress, scaling machines up and down to zero, authentication and authorisation, all features which are non-trivial for a developer to create on their own. This can be used to scale up R code to millions of instances if they need to, with little or no changes to existing code. An R implementation is shown here at [cloudRunR](https://github.com/MarkEdmondson1234/cloudRunR) which uses Cloud Run to create a scalable R plumber API.
-  - How does this relate to https://code.markedmondson.me/googleCloudRunner/index.html ?`
-- `batchtools` \citep{Lang2017batchtools} can [schedule jobs with Docker Swarm](https://mllg.github.io/batchtools/reference/makeClusterFunctionsDocker.html)
+https://code.markedmondson.me/googleCloudRunner/index.html
+
+[Google Cloud Build](https://cloud.google.com/cloud-build/) and the Google Container Registry are a continuous intergation service respectively image registry that offload building of images to the cloud, while serving the needs of commercial environments  that helps move the workload of building the Docker images to an online service, while  Cloud Build can be set up to build the Dockerfiles on each GitHub commit or release. This means you do not need to build the Docker images locally, which can tie up resources since Docker images can be several GBs and take a long time to compile. Google Cloud Build works alongside  to allow you to build private and public Docker images, which allows you to build up your own dependency graphs for downstream applications.
+  - https://code.markedmondson.me/googleCloudRunner/articles/cloudbuild.html
+
+- \CRANpkg{batchtools} \citep{Lang2017batchtools} can [schedule jobs with Docker Swarm](https://mllg.github.io/batchtools/reference/makeClusterFunctionsDocker.html)
 - scalable deployments, e.g., start with numerous Shiny talks mentioning Rocker at useR!2017
 - [dynmethods](https://github.com/dynverse/dynmethods) [@rcannood]: In order to evaluate ±50 computational methods which all used different environments (R, Python, C++, ...), we wrapped each of them in a docker container and can execute these methods from R. Again, all of these containers are being built on travis-ci, and will only be pushed to Docker&nbsp;Hub if the integration test succeeds.
-- \pkg{drake}, https://docs.ropensci.org/drake/index.html?q=docker#with-docker
+- \CRANpkg{drake}, https://docs.ropensci.org/drake/index.html?q=docker#with-docker
 
-## Packaging programs for processing pipelines
-\label{packaging}
+In the RStudio Server Pro 1.2 release in 2019, RStudio added new functionality called [Launcher](https://solutions.rstudio.com/launcher/overview/).
+It gives users the ability to spawn R sessions and background jobs in a scalable way on external clusters, e.g., [Kubernetes based on Docker images](https://support.rstudio.com/hc/en-us/articles/360019253393-Using-Docker-images-with-RStudio-Server-Pro-Launcher-and-Kubernetes) or [Slurm](https://slurm.schedmd.com/) clusters, and optionally, with Singularity containers.
+A key benefit of Launcher is the ability for R and Python users to interactively work in RStudio without learning about Docker at all - while still leveraging containers and Kubernetes.
+Users can submit batch jobs to Kubernetes clusters without writing specific deployment scripts.
 
-Docker is perfectly suited for packaging and executing any software and data, and is a good candidate for building complex processing pipelines that are independent from the host programming language.
+\label{pipelines}
+Third, containers are perfectly suited for **packaging and executing software pipelines** and required data.
+Containers allow building complex processing pipelines that are independent from the host programming language.
 Due to its original use case (see&nbsp;\nameref{introduction}), Docker has no standard mechanisms for chaining containers together; it lacks definitions and protocols for environment variables, volume mounts and/or ports that could enable transfer of input (parameters and data) and output (results) to and from containers.
 Some packages, e.g., \pkg{containerit}, do provide Docker images that can be used similarly to CLIs, but their usage is cumbersome\footnote{\href{https://o2r.info/containerit/articles/container.html}{https://o2r.info/containerit/articles/container.html}}.
-
 **\pkg{outsider}** ([https://antonellilab.github.io/outsider/](https://antonellilab.github.io/outsider/)) tackles the problem of integrating external programs into an R workflow \citep{bennett_outsider_2020}.
 Installation and usage of external programs can be difficult, convoluted and even impossible if the platform is incompatible.
 Therefore \pkg{outsider} uses the platform-independent Docker images to encapsulate processes in _outsider modules_.
