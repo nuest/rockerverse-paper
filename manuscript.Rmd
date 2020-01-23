@@ -565,32 +565,26 @@ dockermachine::machine_create(driver = "amazonec2")
 
 Several second order R packages attempt to make the process of creating Docker images and using containers for specific tasks, such as running tests or rendering reproducible reports, easier.
 While authoring and managing an environment with Docker by hand is possible and feasible for experts\footnote{See, e.g., this tutorial by RStudio on how to manage environments and package versions and to ensure deterministic image builds with Docker: \href{https://environments.rstudio.com/docker}{https://environments.rstudio.com/docker}.}, the following examples show the power of automation when environments become too cumbersome or acquiring the skills is not possible in due course.
+Especially _version pinning_, with packages \pkg{remotes} and \pkg{versions} for R or by using MRAN, and with system package managers for different operating systems, can greatly increase the reproducibility of built images and are common approaches.
 
-**\pkg{dockerfiler}** ([https://github.com/ColinFay/dockerfiler/](https://github.com/ColinFay/dockerfiler/)) ...
-At the same time, doing it by hand prevents from using programming language for what they are good for: iteration, and automation.
-Iteration and automation for `Dockerfile`s is the very reason behind [`dockerfiler`](https://github.com/ColinFay/dockerfiler), an R package designed for building `Dockerfile`s straight from R.
-For example, the **[`golem`](https://github.com/ThinkR-open/golem)** package makes an heavy use of `dockerfiler` when it comes to creating the `Dockerfile` for building production-grade Shiny applications and deploying them.
-The reason behind this is that `dockerfiler`, on top of being scriptable from R, can leverage all the tools available in R to parse a `DESCRIPTION` file, to get system requirements, to list dependencies, versions, etc.
-
-
-**\pkg{containerit}** ([https://github.com/o2r-project/containerit/](https://github.com/o2r-project/containerit/)) ...
-
-**\pkg{dockr}** ([https://github.com/smaakage85/dockr](https://github.com/smaakage85/dockr)) ...
-see/cite http://smaakage85.netlify.com/2019/12/21/dockr-easy-containerization-for-r/
-<!-- from description on CRAN: Build a lightweight Docker r-base container image for your R package, in which the package itself is available. The Docker image seeks to mirror your R session as close as possible with respect to R specific dependencies. Both dependencies on CRAN R packages as well as local non-CRAN R packages will be included in the Docker container image.-->
-
-**\CRANpkg{renv}** ([https://rstudio.github.io/renv/](https://rstudio.github.io/renv/)) with Docker: https://rstudio.github.io/renv/articles/docker.html
-
-_version pinning_ with packages \pkg{remotes} and \pkg{versions} for R, and with system package managers for distros
-
-**\CRANpkg{liftr}** aims to solve the problem of persistent reproducible reporting in statistical computing\citep[\href{https://nanx.me/liftr/}{https://nanx.me/liftr/}, ][]{liftr2019}.
-Currently, the R Markdown format and its backend compilation engine _knitr_ offer a _de facto_ standard for creating dynamic documents \citep{xie2018}.
-The reproducibility authoring environments is often limited to individual machines and becomes an issue for collaborative documents and large-scale platforms for processing documents.
-\CRANpkg{liftr} helps R Markdown users to create and manage Docker containers for rendering the documents.
-It introduced new fields to the R Markdown document header, allowing users to declare the dependencies, including versions, for rendering the document.
-The package then generates a `Dockerfile` from this metadata and provides a utitility function to render the document inside a Docker container, e.g., `render_docker("foo.Rmd")`.
+**\pkg{dockerfiler}** ([https://github.com/ColinFay/dockerfiler/](https://github.com/ColinFay/dockerfiler/)) is an R package designed for building `Dockerfile`s straight from R.
+A scripted creation of a `Dockerfile` enables iteration and automation, for example for packaging applications for deployment (see \nameref{deployment}).
+Being scriptable from R developers can leverage the tools available in R to parse a `DESCRIPTION` file, to get system requirements, to list dependencies, versions, etc.
+**\pkg{containerit}** ([https://github.com/o2r-project/containerit/](https://github.com/o2r-project/containerit/)) attempts to take this one step further and includes these tools to automatically create a `Dockerfile` that can execute a given workflow \citep{nust_containerit_2019}.
+\pkg{containerit} accepts R `sessionInfo` objects as input and provides helper functions to derive these from workflows, e.g., an R script or R Markdown document, by analysing the session state at the end of the workflow.
+It relies on the \pkg{sysreqs} ([https://github.com/r-hub/sysreqs/](https://github.com/r-hub/sysreqs/)) package and it's mapping of package system dependencies to platform specific installation package names\footnote{See \href{https://sysreqs.r-hub.io/}{https://sysreqs.r-hub.io/}.}.
+\pkg{containerit} uses \CRANpkg{stevedore} to streamline the user interaction and improve the created `Dockerfile`s, e.g., by running a container for the desired base image to extract the already available R packages.
+**\pkg{dockr}** ([https://github.com/smaakage85/dockr](https://github.com/smaakage85/dockr)) is a very similar package attempting to mirror a given R session, including local non-CRAN packages\citep{kjeldgaard_dockr_2019}.
+Users can manually add statements for non-R dependencies to the `Dockerfile`.
+**\CRANpkg{liftr}** aims to solve the problem of persistent reproducible reporting in statistical computing based on the R Markdown format \citep{xie2018} for dynamic documents \citep[\href{https://nanx.me/liftr/}{https://nanx.me/liftr/}, ][]{liftr2019}.
+The irreproducibility of authoring environments can become an issue for collaborative documents and large-scale platforms for processing documents.
+\CRAKpkg{liftr} makes the document the main and sole workflow control file and the only file that needs to be shared between collaborators for consistent environments, e.g. demonstrated in the DockFlow project (https://dockflow.org).
+It introduces new fields to the R Markdown document header, allowing users to manually declare the dependencies, including versions, for rendering the document.
+The package then generates a `Dockerfile` from this metadata and provides a utitility function to render the document inside a Docker container, i.e., `render_docker("foo.Rmd")`.
 An RStudio addins even allows compilation of documents with a single push of a button.
-\CRAKpkg{liftr} makes the document the main and sole workflow control file and the only file that needs to be shared between collaborators for consistent workflow environments, e.g. demonstrated in the DockFlow project (https://dockflow.org).
+
+The package **\CRANpkg{renv}** ([https://rstudio.github.io/renv/](https://rstudio.github.io/renv/)) helps users to manage the state of the R library in a reproducible way, further providing isolation and portability \citep{renv2019}.
+The package does not cover system dependencies, though, the \CRANpkg{renv}-based environment can be transferred into a container either by restoring the environment based on the main configuration file `renv.lock` or by storing the \CRANpkg{renv}-cache on the host and not in the container \citep{ushey_using_2019}.
 
 ## Using R to power enterprise software in production environments
 \label{enterprise}
