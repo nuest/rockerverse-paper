@@ -643,12 +643,12 @@ R could also empower web services since at least 2007, when [rApache](http://www
 rApache runs an R interpreter inside the Apache web server, which makes it possible and very efficient to build scalable R-based APIs and web services.
 
 Such rApache applications have been used at [rapporter.net](http://rapporter.net), transforming parametrized R Markdown-like documents into interactive web applications for reporting.
-A similar design was implemented at [CARD.com](https://www.card.com/), where the optimization of the acquisition flow and the real-time analysis of debit card transactions both relied on an efficient combination of Rserve and rApache running in Docker containers:
+A similar design was implemented at [CARD.com](https://www.card.com/), where the optimization of the acquisition flow and the real-time analysis of debit card transactions both relied on an efficient combination of \CRANpkg{Rserve} and rApache running in Docker containers:
 the R session behind Rserve acted as a read-only, extremely fast and scalabale, in-memory database for the many concurrent rApache processes responding to the live-scoring requests of various divisions of the company.
 Similar dockerized R scripts were responsible for the ETL processes and even the client-facing email, text message and push notification alerts sent in real-time based on card transactions.
 The related Docker images were made available at [https://github.com/cardcorp/card-rocker](https://github.com/cardcorp/card-rocker).
 The images extend `rocker/r-base`, e.g., with an SSH client and a workaround for being able to mount SSH keys from the host, Pandoc, the Amazon Web Services (AWS) SDK, and Java, which is required by the AWS SDK.
-The AWS SDK allowed to run R consumers reading from real-time data processing streams of [AWS Kinesis](https://aws.amazon.com/kinesis/).
+The AWS SDK allowed to run R consumers reading from real-time data processing streams of [AWS Kinesis](https://aws.amazon.com/kinesis/)\footnote{See useR!2017 talk _Stream processing with R in AWS_ at \href{https://static.sched.com/hosted_files/user2017/2f/AWR%20Kinesis%20at%20useR%202017.pdf}{https://static.sched.com/hosted_files/user2017/2f/AWR Kinesis at use 02017.pdf}.}.
 The applications were deployed on Amazon Elastic Container Service ([ECS](https://aws.amazon.com/ecs/)).
 The main learnings from using R in Docker was the imporance of not only pinning the R package versions via MRAN, but also moving away from Debian testing to an LTS distribution.
 For the use case at hand, the priority was to have more control over upstream updates, and to minimize the risk of breaking the automated builds of the Docker images and production jobs.
