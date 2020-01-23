@@ -703,22 +703,19 @@ Containers running GPU software require drivers and libraries specific to GPU mo
 For NVIDIA GPUs, the [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker) includes a specialized runtime plugin for Docker and a set of base images with appropriate drivers and libraries.
 The Rocker&nbsp;Project [has a repository](https://github.com/rocker-org/ml) with (beta) images based on these that include GPU-enabled versions of machine-learning R packages, e.g., `rocker/ml` and `rocker/tensorflow-gpu`.
 
-**Teaching** is a further example where sharing a prepared computing environment can greatly improve the process, especially for courses that require access to a relatively complex setup of software tools, e.g., as in the case of database systems.
-R is a fantastic tool when it comes to interfacing with databases: almost every open source and proprietary database system has an R package that allows users to connect and interact with the it 
-This flexibility is even broader now that we have tools like \CRANpkg{DBI}, that allows to create a common API for interfacing these databases, or like \CRANpkg{dbplyr}, which are designed to run \CRANpkg{dplyr} code straight against the database.
-But learning and teaching these tools comes with a cost: the cost of deploying or having access to an environment with the softwares and drivers installed.
-For people teaching R, it can become a barrier if they need to install local versions of the drivers, or to connect to remote instances which might or might not be made available by IT services.
-Giving access to a sandbox for the most common database environments is the idea behind [`r-db`](https://github.com/ColinFay/r-db) [@ColinFay], a Docker image that contains everything needed to connect, from R, to a database.
+Teaching is a further example where shared computing environments and sandboxing can greatly improve the process.
+First, **prepared environments for teaching** are especially helpful for courses that require access to a relatively complex setup of software tools, e.g., database systems.
+R is very useful tool for interfacing with databases, because almost every open source and proprietary database system has an R package that allows users to connect and interact with the it.
+This flexibility is even broadened by \CRANpkg{DBI}, which allows to create a common API for interfacing these databases, or the \CRANpkg{dbplyr} package, which runs \CRANpkg{dplyr} code straight against the database as queries.
+But learning and teaching these tools comes with the cost of deploying or having access to an environment with the software and drivers installed.
+For people teaching R, it can become a barrier if they need to install local versions of database drivers, or to connect to remote instances which might or might not be made available by IT services.
+Giving access to a sandbox for the most common database environments is the idea behind [`r-db`](https://github.com/ColinFay/r-db), a Docker image that contains everything needed to connect to a database from R.
 Notably, with `r-db`, the users don't have to install complex drivers or to configure their machine in a specific way.
-On top of that, `r-db` comes with a comprehensive [online guide](http://colinfay.me/r-db/), explaining how to spin a Docker instance of a specific database, and how to use `r-db` to connect to it.
-Each package contained inside this image also has a series examples, so that the user can get started with the database right away.
 The `rocker/tidyverse` base image ensures that users can also readily use packages for analysis, display, and reporting.
-
-Another way this idea of a common environment and partitioning containers in teaching is in the **[Dodona](https://dodona.ugent.be)** project.
-Dodona is a web platform developed at Ghent University and is used to teach students basic programming skills.
-Dodona uses Docker containers to test submissions by students.
+Second, the idea of a common environment and partitioning allow using **containers in teaching for secure execution and automated testing** of submissions by students.
+[Dodona](https://dodona.ugent.be) is a web platform developed at Ghent University and is used to teach students basic programming skills, and it uses Docker containers to test submissions by students.
 This means that both the code testing the students' submissions and the submission itself are executed in a predictable environment, avoiding compatibility issues between the wide variety of configurations used by students.
-The containerization is also used to shield the Dodona servers from bad (or even malicious) code: memory, time and I/O limits are used to make sure students can't overload the system.
+The containerization is also used to shield the Dodona servers from bad or even malicious code: memory, time and I/O&nbsp;limits are used to make sure students can't overload the system.
 The web application managing the containers communicates with them by sending configuration information as a JSON document over standard input. 
 Every Dodona Docker image shares a `main.sh` file that passes through this information to the actual testing framework, while setting up some error handling.
 The testing process in the Docker containers sends back the test results by writing a JSON document to its standard output channel.
@@ -730,12 +727,6 @@ Right now, multiple statistics courses are developing exercises to automate the 
 
 **RCloud** ([https://rcloud.social](https://rcloud.social)) is a cloud-based platform for data analysis, visualisation and collaboration using R.
 It provides a `rocker/drd` base image for easy evaluation of the platform\footnote{\href{https://github.com/att/rcloud/tree/master/docker}{https://github.com/att/rcloud/tree/master/docker}}.
-
-<!-- ## Commercial data science platforms
-\label{rstudio}
-[RStudio Connect](https://rstudio.com/products/connect/) is a commercial publishing platform to deploy dashboards, REST APIs, and other R and Python content into production.
-RStudio Connect uses an approach to isolate deployed R applications that is similar to Docker's filesystem and process namespacing and leverages the [RStudio Package Manager](https://rstudio.com/products/package-manager/) to manage R environments including system dependencies.
--->
 
 ## Processing
 \label{processing}
