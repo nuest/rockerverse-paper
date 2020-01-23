@@ -588,7 +588,7 @@ The package does not cover system dependencies, though, the \CRANpkg{renv}-based
 R has been historically viewed as a tool for analysis and scientific research, but not for creating software that corporations can rely on for production services.
 However, thanks to advancements in R running as a web service, along with with the ability to deploy R in Docker containers, modern enterprises are now capable of having real-time machine learning powered by R.
 A number of packages and projects enabled R to respond to client reqests over TCP/IP and local socket servers, such as \CRANpkg{Rserve}, \CRANpkg{svSocket}, [rApache](http://www.rapache.net) and more recently \CRANpkg{plumber} ([https://www.rplumber.io/](https://www.rplumber.io/)) and \pkg{RestRserve} ([http://restrserve.org](http://restrserve.org)), which even processes incoming requests in parallel with forked processes using \CRANpkg{Rserve}.
-The latter two also provide documentation for deployment with Docker or ready to use automated builds of images\footnote{See \href{https://www.rplumber.io/docs/hosting.html#docker}{https://www.rplumber.io/docs/hosting.html#docker}, \href{https://hub.docker.com/r/trestletech/plumber/}{https://hub.docker.com/r/trestletech/plumber/} and \href{https://hub.docker.com/r/rexyai/restrserve/}{https://hub.docker.com/r/rexyai/restrserve/}.}.
+The latter two also provide documentation for deployment with Docker or ready to use automated builds of images\footnote{See \href{https://www.rplumber.io/docs/hosting.html\#docker}{https://www.rplumber.io/docs/hosting.html\#docker}, \href{https://hub.docker.com/r/trestletech/plumber/}{https://hub.docker.com/r/trestletech/plumber/} and \href{https://hub.docker.com/r/rexyai/restrserve/}{https://hub.docker.com/r/rexyai/restrserve/}.}.
 These software allow other (remote) processes and programming languages to interact with R and to expose R-based function in a service architecture with HTTP APIs.
 APIs based on these package can be deployed with scalability and high availability using containers.
 This pattern of deploying code matches those used by software engineering services created in more established languages in the enterprise domain, such as Java or Python, and R can be used alongside those langages as a first class member of a software engineering technical stack.
@@ -900,13 +900,14 @@ RC \& EH contributed to the section on interfaces for Docker in R.
 DC contributed content on Gigantum.
 ME contributed to the section on processing and deployment to cloud services.
 CF wrote paragraphs about \pkg{r-online}, \pkg{dockerfiler}, \pkg{r-ci} and \pkg{r-db}.
+SL contributed content on RStudio's usage of Docker.
 BM wrote the section on research compendia and made the project Binder-ready.
 HN \& JN co-wrote the section on enterprise production environments (\pkg{googleComputeEngineR}, Google Cloud Run, Kubernetes).
 KR wrote the section about \pkg{holepunch}.
 NR wrote paragraphs about shared work environments and GPUs.
 LS \& NT wrote the section on Bioconductor.
 CW wrote the sections on Whole Tale and contributed the publication reproducibility audit use case.
-NX wrote the section on \pkg{liftr}.
+NX contributed content on \pkg{liftr}.
 All authors approved the final version.
 This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
 The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page}, \href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history}, and \href{https://github.com/nuest/rockerverse-paper/issues/}{discussion issues} provide a detailed view on the respective contributions.
