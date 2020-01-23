@@ -440,7 +440,7 @@ A central goal of the platform is to enable researchers to easily create and pub
 Using Whole&nbsp;Tale, researchers can create and publish Rocker-based reproducible research objects to a growing number of repositories including DataONE member nodes, Zenodo and soon Dataverse.
 Additionally, Whole&nbsp;Tale supports automatic data citation and is working on capabilities for image preservation and provenance capture to improve the transparency of published computational research artifacts \citep{mecum2018, mcphillips2019}.
 For R users, Whole&nbsp;Tale attempts to combine the strengths of the Rocker Project's curated Docker images with the Jupyter Project's `repo2docker`\footnote{See \href{https://repo2docker.readthedocs.io/}{https://repo2docker.readthedocs.io/}} component to simplify the customization of R-based environments for researchers with limited experience with either Docker or Git.
-Multiple options have been discussed to allow users to change the base image used in `repo2docker` from the default Ubuntu LTS required to support the Rocker Project images. 
+Multiple options have been discussed to allow users to change the base image used in `repo2docker` from the default Ubuntu LTS (long-term support) required to support the Rocker Project images. 
 Whole&nbsp;Tale implemented a custom `RockerBuildPack`\footnote{See \href{https://github.com/whole-tale/repo2docker\_wholetale}{https://github.com/whole-tale/repo2docker\_wholetale}} to support customization of the `rocker/geospatial` image through `repo2docker` composability\footnote{Composability refers to the ability to combine multiple package managers -- such as R, `pip`, and `conda`}.
 This works in part because Rocker images are based on a Debian distribution, so the instructions created by `repo2docker` for Ubuntu work because of compatible shell and package manager.
 
@@ -508,7 +508,7 @@ if (packageVersion("rticles") >= "0.12.3") {
 ```
 
 **\pkg{harbor}** ([https://github.com/wch/harbor](https://github.com/wch/harbor) is not actively maintained anymore, but should be honorably mentioned as the first R package for managing Docker images and containers.
-It uses the \CRANpkg{sys} package to run system commands against the Docker CLI, both locally and through an ssh connection, and has convenience functions, e.g., for listing and removing containers/images and for accessing logs.
+It uses the \CRANpkg{sys} package to run system commands against the Docker CLI, both locally and through an SSH connection, and has convenience functions, e.g., for listing and removing containers/images and for accessing logs.
 The output of container executions are converted to appropriate R types.
 The Docker CLI's basic functionality, while evolving quickly and with small concern for avoiding breaking changes, is unchanged for a long time so a core function such as `harbor::docker_run(image = "hello-world")` still works depsite the stopped development.
 ```{r harbor, eval=FALSE, include=FALSE}
@@ -578,10 +578,10 @@ It relies on the \pkg{sysreqs} ([https://github.com/r-hub/sysreqs/](https://gith
 Users can manually add statements for non-R dependencies to the `Dockerfile`.
 **\CRANpkg{liftr}** aims to solve the problem of persistent reproducible reporting in statistical computing based on the R Markdown format \citep{xie2018} for dynamic documents \citep[\href{https://nanx.me/liftr/}{https://nanx.me/liftr/}, ][]{liftr2019}.
 The irreproducibility of authoring environments can become an issue for collaborative documents and large-scale platforms for processing documents.
-\CRAKpkg{liftr} makes the document the main and sole workflow control file and the only file that needs to be shared between collaborators for consistent environments, e.g. demonstrated in the DockFlow project (https://dockflow.org).
+\CRANpkg{liftr} makes the document the main and sole workflow control file and the only file that needs to be shared between collaborators for consistent environments, e.g. demonstrated in the DockFlow project (https://dockflow.org).
 It introduces new fields to the R Markdown document header, allowing users to manually declare the dependencies, including versions, for rendering the document.
 The package then generates a `Dockerfile` from this metadata and provides a utitility function to render the document inside a Docker container, i.e., `render_docker("foo.Rmd")`.
-An RStudio addins even allows compilation of documents with a single push of a button.
+An RStudio addin even allows compilation of documents with a single push of a button.
 
 The package **\CRANpkg{renv}** ([https://rstudio.github.io/renv/](https://rstudio.github.io/renv/)) helps users to manage the state of the R library in a reproducible way, further providing isolation and portability \citep{renv2019}.
 The package does not cover system dependencies, though, the \CRANpkg{renv}-based environment can be transferred into a container either by restoring the environment based on the main configuration file `renv.lock` or by storing the \CRANpkg{renv}-cache on the host and not in the container \citep{ushey_using_2019}.
@@ -793,13 +793,13 @@ New releases of even just a single piece of software in this pipeline can break 
 These breakages can make the original the results irreproducible and not extandable.
 The chance of a substantial disruption like this is high in a multi-year research project where key pieces of third-party software may have several major updates over the duration of the project.
 The classical "paper" article is insufficient to adequately communicate the knowledge behind such research projects \citep[cf.][]{donoho_invitation_2010,marwick_how_2015}.
+
 \citet{gentleman_statistical_2007} coined the term **Research Compendium** for a dynamic document together with supporting data and code.
 They use the R package system \cite{core_writing_1999} as for the functional prototype to structuring, validation, and distribution of research compendia.
 This concept has been taken up and extended\footnote{See full literature list at \href{https://research-compendium.science/}{https://research-compendium.science/}.}, not the least by applying containerisation and other methods for managing computing environments---see Section&nbsp;\nameref{envs}.
 Containers give the researcher an isolated environment to assemble these research pipelines with specific versions of software.
 Research workflows in containers are safe from contamination from other activities occuring on the researcher's computer, for example the installation of newest version of packages for teaching demonstrations.
 Given the users in this scenario, i.e., often academics with limited formal software development training, templates and assistance with containers around research compendia is essential.
-
 In many fields we see that a typical unit of research for a container is a research report or journal article, where the container holds the compendium, or self-contained set of data (or connections to data elsewhere) and code files needed to fully reproduce the article \citep{marwick_packaging_2018}.
 The package \pkg{rrtools} ([https://github.com/benmarwick/rrtools](https://github.com/benmarwick/rrtools)) provides a template and convienence functions to apply good practices for research compendia, including a starter `Dockerfile`.
 Images of compendium containers can be hosted on services such as Docker&nbsp;Hub for convienient sharing among collaborators and others. 
@@ -861,12 +861,13 @@ This gives on the one hand easy access after every update of the R Markdown sour
 # Conclusions
 \label{conclusions}
 
-This article is a snapshot of the R-corner in a universe of applications built many-faced piece of software, Docker.
+This article is a snapshot of the R-corner in a universe of applications built with a many-faced piece of software, Docker.
 `Dockerfile`s and Docker images are the go-to methods for collaboration between roles in an organisation, such as development and IT operations teams, and between parties in the communication of knowledge, such as research workflows or education.
 Docker became synonymous with applying the concept of containerisation to solve challenges of reproducible environments, e.g., in research and in development \& production, and of scalable deployments with the ability to move processing between machines easily (e.g., locally, one cloud providers VM, another cloud provider's Container-as-a-Service).
-Reproducible environments, scalability and efficiency, and portability across clouds are the common themes behind R packages, use cases, and applications in this work.
+Reproducible environments, scalability and efficiency, and portability across platforms/infrastructures are the common themes behind R packages, use cases, and applications in this work.
 
-The R packages and use cases presented show the positive drive in the community to innovate, but also the challenge of keeping up with a continuously evolving landscape.
+The R packages and use cases presented show the growing number of users, developers, and real-world applications in the community and the resulting innovations.
+But the applications also point to the challenge of keeping up with a continuously evolving landscape.
 The use cases contributed by co-authors also have a degree of overlap, which can be expected as a common language and understanding of good practices is still taking shape.
 Also, the ease with which one can create a complex software systems with Docker, such as an independent Docker image stack, to serve one's specific needs leads to parallel developments.
 <!-- Tyler W./DC from Gigantum: ideas about ease-of-DIY together with difficulty of composition; shared starting points of Rocker -->
@@ -887,10 +888,10 @@ Even with coding being more and more accepted as a required, and achievable skil
 Currently containerisation happens more in the background at the system level.
 
 New features, which make complex workflows accessible and reproducible, and the variety in packages connected with containerisation, even when they have overlapping features, are a signal and a support for a growing user base.
-This growth is possibly the most important goal for the foreseeable future in the _Rockerverse_, and just like the Rocker images have matured over years of use and millions of runs the new ideas and prototypes will have to proof themselves.
+This growth is possibly the most important goal for the foreseeable future in the _Rockerverse_, and just like the Rocker images have matured over years of use and millions of runs, the new ideas and prototypes will have to proof themselves.
 It should be noted that the dominant position of Docker is a blessing and a curse for these goals.
-It could be wise to start experimenting with non-Docker containerisation tools now, e.g., R packages interfacing with other container engines such as [podman/buildah](https://github.com/containers/libpod) or [rkt](https://coreos.com/rkt/), or an R package for creating Singularity image recipe files.
-Such efforts help to avoid lock-in and to design sustainable workflows based on concepts of _containerisation_, not on their implementation in Docker.
+It could be wise to start experimenting with non-Docker containerisation tools now, e.g., R packages interfacing with other container engines such as [podman/buildah](https://github.com/containers/libpod) or [rkt](https://coreos.com/rkt/), or an R package for creating `Singularity` files.
+Such efforts can help to avoid lock-in and to design sustainable workflows based on concepts of _containerisation_, not on their implementation in Docker.
 If adoption of containerisation and R continue to grow, the missing pieces for a success predominantly lie in (a) coordination and documentation of activities to reduce repeated work in favour of open collaboration, (b) the sharing of lessons learned from use cases to build common knowledge and language, and (c) a sustainable continuation and funding for all of development, community support, and education.
 A concrete effort to work towards these pieces is to sustain the structure and captured status quo from this work in form of a _CRAN Task View on containerization_.
 
