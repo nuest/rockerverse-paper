@@ -510,8 +510,7 @@ if (packageVersion("rticles") >= "0.12.3") {
 **\pkg{harbor}** ([https://github.com/wch/harbor](https://github.com/wch/harbor) is not actively maintained anymore, but should be honorably mentioned as the first R package for managing Docker images and containers.
 It uses the \CRANpkg{sys} package to run system commands against the Docker CLI, both locally and through an ssh connection, and has convenience functions, e.g., for listing and removing containers/images and for accessing logs.
 The output of container executions are converted to appropriate R types.
-The Docker CLI, while evolving quickly and not with great concern for introducing breaking changes, basic functionality is unchanged for a long time so `harbor::docker_run(image = "hello-world")` works like a charm.
-
+The Docker CLI's basic functionality, while evolving quickly and with small concern for avoiding breaking changes, is unchanged for a long time so a core function such as `harbor::docker_run(image = "hello-world")` still works depsite the stopped development.
 ```{r harbor, eval=FALSE, include=FALSE}
 remotes::install_github("wch/harbor")
 harbor::docker_run(image = "hello-world")
@@ -742,9 +741,9 @@ It deterministically builds a Docker image by parsing the contents of a reposito
 In the most powerful case, `repo2docker` builds a given `Dockerfile`.
 While this approach works well for most run of the mill Python projects, it is not so seamless for R projects.
 For any R projects that use the Tidyverse suite \citep{wickham_welcome_2019}, the time and resources required to build all dependencies from source can often time out before completion, making it frustrating for the average R user.
-`holepunch` removes some of these limitations by leveraging Rocker images that contain the Tidyverse along special Jupyter dependencies, and only installs additional packages from CRAN and Bioconductor that are not already part of these images.
+\pkg{holepunch} removes some of these limitations by leveraging Rocker images that contain the Tidyverse along special Jupyter dependencies, and only installs additional packages from CRAN and Bioconductor that are not already part of these images.
 It short cicuits the configuration file parsing in `repo2docker` and starts with the Binder/Tidyverse base images, which eliminates a large part of the build time and in most cases results in a binder instance launching within a minute.
-`holepunch` as a side effect also creates a `DESCRIPTION` file which then turns any project into a research compendium \citep{marwick_packaging_2018}.
+\pkg{holepunch} as a side effect also creates a `DESCRIPTION` file which then turns any project into a research compendium \citep{marwick_packaging_2018}.
 The `Dockerfile` included with the project can also be used to launch a RStudio server locally, i.e., independent of Binder, which is especially useful when more or special computational resources can be provided there.
 The local image usage reduces the number of seperately managed environments and thereby reduces work and increases portability and reproducibility.
 
@@ -755,7 +754,7 @@ The former models provide modularity, while the latter approach is most similar 
 Second, software updates can be achieved by updating and redeploying the container, rather than tracking local installs on each server.
 Third, the containerized environment can be quickly deployed to other hardware, cloud or local, if more resources are neccessary or in case of server destruction or failure.
 In any of these cases, users need a method to interact with the containers, be it and IDE, or command-like access and tools such as SSH, which is usually not part of standard container recipes and must be added.
-The Rocker&nbsp;Project provides containers pre-installed with the RStudio IDE.
+The Rocker&nbsp;Project provides containers pre-installed with the RStudio&nbsp;IDE.
 In cases where users store nontrivial amounts of data for their projects, data needs to persist beyond the life of the container.
 This may be via in shared disks, attached network volumes, or in separate storage where it is uploaded between sessions.
 In the case of shared disks or network-attached volumes, care must be taken to persist user permissions, and of course backups are still neccessary.
@@ -771,16 +770,16 @@ The Rocker&nbsp;Project [has a repository](https://github.com/rocker-org/ml) wit
 
 **Teaching** is a further example where sharing a prepared computing environment can greatly improve the process, especially for courses that require access to a relatively complex setup of software tools, e.g., as in the case of database systems.
 R is a fantastic tool when it comes to interfacing with databases: almost every open source and proprietary database system has an R package that allows users to connect and interact with the it 
-This flexibility is even broader now that we have tools like `DBI`, that allows to create a common API for interfacing these databases, or like `dbplyr`, which are designed to run `dplyr` code straight against the database.
+This flexibility is even broader now that we have tools like \CRANpkg{DBI}, that allows to create a common API for interfacing these databases, or like \CRANpkg{dbplyr}, which are designed to run \CRANpkg{dplyr} code straight against the database.
 But learning and teaching these tools comes with a cost: the cost of deploying or having access to an environment with the softwares and drivers installed.
 For people teaching R, it can become a barrier if they need to install local versions of the drivers, or to connect to remote instances which might or might not be made available by IT services.
-Giving access to a sandbox for the most common database environments is the idea behind **[`r-db`](https://github.com/ColinFay/r-db)** [@ColinFay], a Docker image that contains everything needed to connect, from R, to a database.
+Giving access to a sandbox for the most common database environments is the idea behind [`r-db`](https://github.com/ColinFay/r-db) [@ColinFay], a Docker image that contains everything needed to connect, from R, to a database.
 Notably, with `r-db`, the users don't have to install complex drivers or to configure their machine in a specific way.
 On top of that, `r-db` comes with a comprehensive [online guide](http://colinfay.me/r-db/), explaining how to spin a Docker instance of a specific database, and how to use `r-db` to connect to it.
 Each package contained inside this image also has a series examples, so that the user can get started with the database right away.
 The `rocker/tidyverse` base image ensures that users can also readily use packages for analysis, display, and reporting.
 
-Another way this idea of a common environment and the partitioning that Docker provides is used in teaching is in the **[Dodona](https://dodona.ugent.be)** project.
+Another way this idea of a common environment and partitioning containers in teaching is in the **[Dodona](https://dodona.ugent.be)** project.
 Dodona is a web platform developed at Ghent University and is used to teach students basic programming skills.
 Dodona uses Docker containers to test submissions by students.
 This means that both the code testing the students' submissions and the submission itself are executed in a predictable environment, avoiding compatibility issues between the wide variety of configurations used by students.
@@ -881,7 +880,7 @@ In fields such as Political Science and Economics, journals are increasingly ado
 Problems with the computational environment, installation and availability of software dependencies are common.
 R is gaining popularity in these communities, such as creating a research compendium.
 In a sample of 105 replication packages published by the _American Journal of Political Science_ (AJPS) over 65% use R.
-The NSF-funded Whole Tale project uses the Rocker Project community images with the goal of improving the reproducibility of published research artifacts and simplifying the publication and verification process for both authors and journals by reducing errors and time spent specifying the environment.
+The NSF-funded Whole Tale project uses the Rocker Project community images with the goal of improving the reproducibility of published research artifacts and simplifying the publication and verification process for both authors and reviewers by reducing errors and time spent specifying the environment.
 
 ## Development and debugging
 \label{development}
@@ -946,8 +945,8 @@ Docker alone, as a flexible core technology, is not a feasible level of collabor
 Instead, the use cases and applications observed in this work provide a more useful division.
 
 Nonetheless, at least on the level of R packages some **consolidation** seems in order, e.g., to reduce the number of packages creating `Dockerfile`s from R code or controlling the Docker daemon with R code.
-It remains to be seen which approach to control Docker, via the Docker API as `stevedore` or via system calls as `dockyard`/`docker`/`dockr`, is more sustainable, or if the question will be answered by the endurance of maintainers and sufficient funding.
-Similarly, the capturing of environments and their serialization in form of a `Dockerfile` currently happens at different levels of abstraction and re-use of functionality seems reasonable, e.g., `liftr` could generate the environment with `containerit`, which in turn may use `dockerfiler` for low level objects representing a `Dockerfile`.
+It remains to be seen which approach to control Docker, via the Docker API as \pkg{stevedore} or via system calls as \pkg{dockyard}/\pkg{docker}/\pkg{dockr}, is more sustainable, or if the question will be answered by the endurance of maintainers and sufficient funding.
+Similarly, the capturing of environments and their serialization in form of a `Dockerfile` currently happens at different levels of abstraction and re-use of functionality seems reasonable, e.g., \pkg{liftr} could generate the environment with \pkg{containerit}, which in turn may use \pkg{dockerfiler} for low level R objects representing a `Dockerfile` and its instructions.
 In this consolidation, the Rocker&nbsp;Project could play the role of coordinating entity.
 Though for the moment, the sign of the times points to more experimentation and feature growth, e.g., images for GPU-based computing and artificial intelligence.
 Even with coding being more and more accepted as a required, and achievable skill, an easier access, for example by exposing containerisation benefits via simple user interfaces in the users' IDE, could be an important next step.
