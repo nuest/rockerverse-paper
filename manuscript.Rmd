@@ -681,10 +681,14 @@ The AI @ T-Mobile team open sourced their Docker images [on GitHub](https://gith
 [RestRserve](http://restrserve.org) is an alternative R web API framework with the main focus on being high-performant and robust.
 It also ships automated Docker builds at https://hub.docker.com/r/rexyai/restrserve/dockerfile.
 
-## Deployment to the cloud
+
+## Continuous integration, continuous delivery, and deployment
+\label{cicd}
 \label{deployment}
 
 The cloud is the natural environment of containers, and is the natural mechanism to deploy R server applications.
+More and more continuous integration (CI) and continuous delivery (CD) services also use containers, opening up new options for use.
+The controlled nature of containers, i.e., the possibility to define the software environment very well, even on remote machines, is crucial here, for example to match test or build environments with production environments.
 
 - `RSelenium`
 - [`googleComputeEngineR`](https://cloudyr.github.io/googleComputeEngineR/) (function `gce_vm_template()`)
@@ -695,17 +699,19 @@ The cloud is the natural environment of containers, and is the natural mechanism
 - Kubernetes - A popular platform for managing Docker containers is [Kubernetes](https://kubernetes.io/), which is used for a wide variety of containerized applications. It may be your organisation has a Kubernetes cluster already for other applications. Docker containers are used within Kubernetes clusters to hold native code, for which Kubernetes creates a framework around network connections and scaling of resources up and down. An introduction on using [Kubernetes with R is published at this blog post](https://code.markedmondson.me/r-on-kubernetes-serverless-shiny-r-apis-and-scheduled-scripts/).
 
 \label{azurecontainers}
-**\CRANpkg{AzureContainers}** is an umbrealla package providing interfaces the three services of Microsoft's Azure Cloud, namely [Container Instances](https://azure.microsoft.com/en-us/services/container-instances/) for running individual containers, [Container Registry](https://azure.microsoft.com/en-us/services/container-registry/) for private image distribution, and [Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/) for orchestrated deployments.
+**\CRANpkg{AzureContainers}** is an umbrella package providing interfaces three commercial services of Microsoft's Azure Cloud, namely [Container Instances](https://azure.microsoft.com/en-us/services/container-instances/) for running individual containers, [Container Registry](https://azure.microsoft.com/en-us/services/container-registry/) for private image distribution, and [Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/) for orchestrated deployments.
 While a package like \CRANpkg{plumber} provides the infrastructure for turning an R workflow a service, for production purposes it is usually necessary to take into account scalability, reliability and ease of management.
-A single container is limited in the volume of requests it can service, and if the container goes down or is occupied with processing a computationally intensive task, the service becomes unavailable.
-These issues can be mitigated by deploying not a single container, but a _cluster_ of containers, orchestrated as a single deployment, e.g., with [Kubernetes](https://kubernetes.io).
+A _cluster_ of containers, orchestrated as a single deployment, e.g., with [Kubernetes](https://kubernetes.io), can mitigate limitations on request volumes or a container occupied with computationally intensive task.
 A cluster features load-balancing, autoscaling of containers across numerous servers (in the cloud or on premise), and restarting failed ones.
-AzureContainers provides a lightweight yet powerful interface for working with Resource Manager, the framework for deploying and managing arbitrary resources in Azure.
-On the client side, it provides simple shells to the Docker, and to Kubernetes' `kubectl` and `helm` tools, that are needed for managing Kubernetes clusters.
-The package simplifies complex infrastructure management to a number of R funcction calls, given an Azure account with sufficient credit\footnote{See \emph{"Deploying a prediction service with Plumber"} vignette for details:  \href{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01_plumber_deploy.html}{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01\_plumber\_deploy.html}.}.
+AzureContainers provides an R-based interface to these features for Azure.
+On the client side, it provides simple wrappers to Docker and to Kubernetes' management tools `kubectl` and `helm`.
+The package simplifies complex infrastructure management to a number of R function calls, given an Azure account with sufficient credit\footnote{See \emph{"Deploying a prediction service with Plumber"} vignette for details:  \href{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01_plumber_deploy.html}{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01\_plumber\_deploy.html}.}.
 
-## Continuous integration and continuous delivery [@noamross, @ColinFay]
-\label{cicd}
+The prevelance of Docker in industry naturally leads to usage of containers with R in such settings as well, as customers already manage platforms in Docker containers.
+These products often entail a high amount of open source software in combination with proprietary layers addign the relevant commercializable features.
+One such example is RStudio's data science platform [RStudio Team](https://rstudio.com/products/team/).
+It allows teams of data scientists and their respective IT/DevOps groups to develop and deploy code in R and Python around the RStudio Open Source Server inside of Docker images, without requiring users to learn new tools or directly interact with containers.
+The best practices for [running RStudio with Docker containers](https://support.rstudio.com/hc/en-us/articles/360021594513-Running-RStudio-with-Docker-containers) as well as [Docker images](https://github.com/rstudio/rstudio-docker-products) for RStudio's commerical products are openly available.
 
 The controlled nature of containers, i.e., it is possible to define the software environment very well, even on remote machines, make them also useful for continuous integration (CI) and continuous delivery of applications.
 
@@ -796,24 +802,11 @@ Right now, multiple statistics courses are developing exercises to automate the 
 **RCloud** ([https://rcloud.social](https://rcloud.social)) is a cloud-based platform for data analysis, visualisation and collaboration using R.
 It provides a `rocker/drd` base image for easy evaluation of the platform\footnote{\href{https://github.com/att/rcloud/tree/master/docker}{https://github.com/att/rcloud/tree/master/docker}}.
 
-## Using Docker in a commercial data science platform
+<!-- ## Commercial data science platforms
 \label{rstudio}
-
-In addition to embedding RStudio Open Source Server inside of Docker images, such as Rocker, RStudio offers the moduler data science platform [RStudio Team](https://rstudio.com/products/team/), a commercial product allowing teams of data scientists and their respective IT/DevOps groups to develop and deploy code in R and Python.
-RStudio team enables these groups to use the benefits of containers, without requiring users to learn new tools or directly interact with containers.
-Notable patterns include:
-
-1. _To deploy and manage RStudio Professional Products:_
-Many RStudio customers are managing professional products in Docker containers as an alternative to bare-metals servers or virtual machines. Best practices for [running RStudio with Docker containers](https://support.rstudio.com/hc/en-us/articles/360021594513-Running-RStudio-with-Docker-containers) as well as [Docker images](https://github.com/rstudio/rstudio-docker-products) for RStudio's commerical products are available.
-1. _To run interactive RStudio sessions on a cluster:_
-In the RStudio Server Pro 1.2 release in 2019, RStudio added new functionality called [Launcher](https://solutions.rstudio.com/launcher/overview/).
-It gives users the ability to spawn R sessions and background jobs in a scalable way on external clusters, e.g., [Kubernetes based on Docker images](https://support.rstudio.com/hc/en-us/articles/360019253393-Using-Docker-images-with-RStudio-Server-Pro-Launcher-and-Kubernetes) or [Slurm](https://slurm.schedmd.com/) clusters, and optionally, with Singularity containers.
-A key benefit of Launcher is the ability for R and Python users to interactively work in RStudio without learning about Docker at all - while still leveraging containers and Kubernetes.
-Users can submit batch jobs to Kubernetes clusters without writing specific deployment scripts.
-
 [RStudio Connect](https://rstudio.com/products/connect/) is a commercial publishing platform to deploy dashboards, REST APIs, and other R and Python content into production.
 RStudio Connect uses an approach to isolate deployed R applications that is similar to Docker's filesystem and process namespacing and leverages the [RStudio Package Manager](https://rstudio.com/products/package-manager/) to manage R environments including system dependencies.
-RStudio Package manager may also be used to [manage their R environments and package versions with Docker](https://environments.rstudio.com/docker) and to ensure deterministic image builds.
+-->
 
 ## Processing
 \label{processing}
