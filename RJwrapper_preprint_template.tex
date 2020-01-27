@@ -1,0 +1,32 @@
+\documentclass[a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{RJournal}
+\usepackage{amsmath,amssymb,array}
+\usepackage{booktabs}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+% clear footers
+\fancyfoot[L]{January~2020}
+\fancyfoot[R]{\href{https://github.com/nuest/rockerverse-paper/}{github.com/nuest/rockerverse-paper}}
+
+\begin{document}
+
+%% do not edit, for illustration only
+\sectionhead{Preprint}
+\volume{}
+\volnumber{}
+\year{}
+\month{}
+
+\begin{article}
+  \input{$filename$}
+\end{article}
+
+\end{document}

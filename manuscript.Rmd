@@ -920,4 +920,65 @@ wordcountaddin::readability(here::here("manuscript.Rmd"))
 wordcountaddin::text_stats(here::here("manuscript.Rmd"))
 ```
 
+```{r preprint_pdf, eval=FALSE, include=FALSE}
+# run this chunk, get the PDF, then revert changes in touched files
+library("rmarkdown")
+library("rticles")
+unlink('manuscript_cache', recursive = TRUE)
+
+# function is a copy of rticles::rjournal_article() but...
+# - using RJWrapper_preprint_template.tex (which includes header.tex commands)
+# - directly referencing unexported functions from rticles
+# - direclty setting the keep_tex option
+rjournal_style_preprint <- function (..., citation_package = "natbib") {
+    rmarkdown::pandoc_available("2.2", TRUE)
+    base <- rticles:::pdf_document_format("rjournal_article", highlight = NULL, 
+        citation_package = citation_package, ...)
+    base$pandoc$to <- "latex"
+    base$pandoc$ext <- ".tex"
+    base$pandoc$keep_tex <- TRUE # added
+    base$post_processor <- function(metadata, utf8_input, output_file, 
+        clean, verbose) {
+      filename <- basename(output_file)
+      if (filename != (filename2 <- gsub("_", "-", filename))) {
+          file.rename(filename, filename2)
+          filename <- filename2
+      }
+      m <- list(filename = xfun::sans_ext(filename))
+      h <- rticles:::get_list_element(metadata, c("output", "rticles::rjournal_article", 
+          "includes", "in_header"))
+      h <- c(h, if (length(preamble <- unlist(metadata[c("preamble", 
+          "header-includes")]))) {
+          f <- tempfile(fileext = ".tex")
+          on.exit(unlink(f), add = TRUE)
+          xfun::write_utf8(preamble, f)
+          f
+      })
+      #t <- find_resource("rjournal_article", "RJwrapper.tex")
+      t <- here::here("RJwrapper_preprint_template.tex")
+      rticles:::template_pandoc(m, t, "RJwrapper.tex", h, verbose)
+      tinytex::latexmk("RJwrapper.tex", base$pandoc$latex_engine, 
+          clean = clean)
+    }
+    base$knitr$opts_chunk$comment <- "#>"
+    hilight_source <- rticles:::knitr_fun("hilight_source")
+    hook_chunk = function(x, options) {
+        if (rticles:::output_asis(x, options)) 
+            return(x)
+        paste0("```{=latex}\n\\begin{Schunk}\n", x, "\\end{Schunk}\n```")
+    }
+    hook_input <- function(x, options) paste(c("\\begin{Sinput}", 
+        hilight_source(x, "sweave", options), "\\end{Sinput}", 
+        ""), collapse = "\n")
+    hook_output <- function(x, options) paste("\\begin{Soutput}\n", 
+        x, "\\end{Soutput}\n", sep = "")
+    base$knitr$knit_hooks <- rticles:::merge_list(base$knitr$knit_hooks, 
+        list(chunk = hook_chunk, source = hook_input, output = hook_output, 
+            message = hook_output, warning = hook_output, plot = knitr::hook_plot_tex))
+    base
+}
+
+rmarkdown::render("manuscript.Rmd", output_format = rjournal_style_preprint())
+```
+
 \bibliography{RJreferences}
