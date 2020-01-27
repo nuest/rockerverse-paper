@@ -589,7 +589,7 @@ The R session behind \CRANpkg{Rserve} acted as a read-only in-memory database, w
 Similarly dockerized R scripts were responsible for the ETL processes and even the client-facing email, text message and push notification alerts sent in real-time based on card transactions.
 The related Docker images were made available at [https://github.com/cardcorp/card-rocker](https://github.com/cardcorp/card-rocker).
 The images extend `rocker/r-base` and additionally entailed an SSH client and a workaround for being able to mount SSH keys from the host, Pandoc, the Amazon Web Services (AWS) SDK, and Java, which is required by the AWS SDK.
-The AWS SDK allowed to run R consumers reading from real-time data processing streams of [AWS Kinesis](https://aws.amazon.com/kinesis/)\footnote{See useR!2017 talk _Stream processing with R in AWS_ at \href{https://static.sched.com/hosted_files/user2017/2f/AWR%20Kinesis%20at%20useR%202017.pdf}{https://static.sched.com/hosted_files/user2017/2f/AWR Kinesis at use 02017.pdf}.}.
+The AWS SDK allowed to run R consumers reading from real-time data processing streams of [AWS Kinesis](https://aws.amazon.com/kinesis/) \footnote{See useR!2017 talk \href{https://static.sched.com/hosted\_files/user2017/2f/AWR Kinesis at useR 2017.pdf}{"Stream processing with R in AWS"}.}.
 The applications were deployed on Amazon Elastic Container Service ([ECS](https://aws.amazon.com/ecs/)).
 The main learnings from using R in Docker was the imporance of not only pinning the R package versions via MRAN, but also moving away from Debian testing to a distribution with long-term support.
 For the use case at hand, this switch served the priority to have more control over upstream updates, and to minimize the risk of breaking the automated builds of the Docker images and production jobs.
@@ -653,7 +653,7 @@ The best practices for [running RStudio with Docker containers](https://support.
 The fact that Docker images are portable and well defined make them useful when more than one person needs access to the same computing environment.
 This is even more useful when some of the users do not have the expertise to create such an environment themselves, and when these environments can be run in public or shared infrastructure.
 
-The [Binder project](https://mybinder.readthedocs.io/en/latest/), maintained by the team behind Jupyter, makes it possible for users to create and share their computing environments with others \citep{jupyter_binder_2018}.
+The [**Binder**](https://mybinder.readthedocs.io/en/latest/) project, maintained by the team behind Jupyter, makes it possible for users to **create and share computing environments** with others \citep{jupyter_binder_2018}.
 A _BinderHub_ allows anyone with access to a web browser and an internet connection to launch a temporary instance of these custom environments and execute any workflows contained within.
 From a reproducibility standpoint, Binder makes it exceedingly easy to compile a paper, visualize data, and run small examples from papers or tutorials without the need for any local installation.
 To set up Binder for a project, a user typically starts at an instance of a BinderHub and passes the location of a repository with a workspace, e.g., a hosted Git repository, or a data repository like Zenodo.
@@ -663,7 +663,7 @@ In the most powerful case, `repo2docker` builds a given `Dockerfile`.
 While this approach works well for most run of the mill Python projects, it is not so seamless for R projects.
 This is partly because `repo2docker` does not support arbitrary base images due to the complex auto-generation of the `Dockerfile` instructions.
 Two approaches make using Binder easier. for R users.
-First, **\pkg{holepunch}** ([https://github.com/karthik/holepunch](https://github.com/karthik/holepunch)) is an R package that was designed to make sharing work environments accessible to novice R users based on **Binder**.
+First, **\pkg{holepunch}** ([https://github.com/karthik/holepunch](https://github.com/karthik/holepunch)) is an R package that was designed to make sharing work environments accessible to novice R users based on Binder.
 For any R projects that use the Tidyverse suite \citep{wickham_welcome_2019}, the time and resources required to build all dependencies from source can often time out before completion, making it frustrating for the average R user.
 \pkg{holepunch} removes some of these limitations by leveraging Rocker images that contain the Tidyverse along special Jupyter dependencies, and only installs additional packages from CRAN and Bioconductor that are not already part of these images.
 It short cicuits the configuration file parsing in `repo2docker` and starts with the Binder/Tidyverse base images, which eliminates a large part of the build time and in most cases results in a binder instance launching within a minute.
@@ -739,7 +739,7 @@ Instead of running a local R script with the local CPU and RAM restrictions, the
 [Google Cloud Run](https://cloud.run) is a CaaS (Containers as a Service) platform.
 Users can launch containers using any Docker image without worrying about underlying infrastructure in a so called serverless configuration.
 The service takes care of network ingress, scaling machines up and down, authentication and authorisation---all features which are non-trivial for a developer to create on their own.
-This can be used to scale up R code to millions of instances if need be with little or no changes to existing code, as demonstrated by the proof of concept `cloudRunR` ([https://github.com/MarkEdmondson1234/cloudRunR](https://github.com/MarkEdmondson1234/cloudRunR)), which uses Cloud Run to create a scalable R-based API using \CRANpkg{plumber}.
+This can be used to scale up R code to millions of instances if need be with little or no changes to existing code, as demonstrated by the proof of concept `cloudRunR`\footnote{\href{https://github.com/MarkEdmondson1234/cloudRunR}{https://github.com/MarkEdmondson1234/cloudRunR}}, which uses Cloud Run to create a scalable R-based API using \CRANpkg{plumber}.
 [Google Cloud Build](https://cloud.google.com/cloud-build/) and the Google Container Registry are a continuous integration service respectively image registry that offload building of images to the cloud, while serving the needs of commercial environments such as private Docker images or image stacks.
 As Googl Cloud Build itself can run any container, the package \pkg{googleCloudRunner} demonstrates how R can be used as the control language for one time or batch processing jobs and scheduling of jobs\footnote{\href{https://code.markedmondson.me/googleCloudRunner/articles/cloudbuild.html}{https://code.markedmondson.me/googleCloudRunner/articles/cloudbuild.html}}.
 \label{drake} **\CRANpkg{drake}** is a workflow manager for data science projects \citep{landau_drake_2019}.
@@ -815,7 +815,7 @@ Using the Rocker images with RStudio, these disposable environments lack no deve
 \citet{eddelbuettel_debugging_2019} describes an example how a Docker container was used to debug an issue with a package only occuring with a particular version of Fortran, and using tools which are not readily available on all platforms (e.g., not on macOS).
 
 Second, the strong integration of **system libraries in core packages** in the [R-spatial community](https://www.r-spatial.org/) makes containers essential for stable and proactive development of common classes for geospatial data modelling and analysis. For example, GDAL \citep{gdal_2019} is a crucial library in the geospatial domain.
-GDAL is a system dependen^cy allowing R packages such as \CRANpkg{sf}, which provides the core data model for geospatial vector data, or \CRANpkg{rgdal}, to accomodate users to be able to read and write hundreds of different spatial raster and vector formats.
+GDAL is a system dependency allowing R packages such as \CRANpkg{sf}, which provides the core data model for geospatial vector data, or \CRANpkg{rgdal}, to accomodate users to be able to read and write hundreds of different spatial raster and vector formats.
 \CRANpkg{sf} and \CRANpkg{rgdal} have hundreds of indirect reverse imports and dependencies and therefore the maintainers spend a lot of efforts not to break these.
 Purpose built Docker are used to prepare for upcoming releases of system libraries, individual bug reports, and for the lowest supported versions of system libraries\footnote{Cf. \href{https://github.com/r-spatial/sf/tree/master/inst/docker}{https://github.com/r-spatial/sf/tree/master/inst/docker}, \href{https://github.com/Nowosad/rspatial_proj6}{https://github.com/Nowosad/rspatial\_proj6}, and \href{https://github.com/r-spatial/sf/issues/1231}{https://github.com/r-spatial/sf/issues/1231}}.
 ```{r geospatial_deps, eval=FALSE, include=FALSE}
