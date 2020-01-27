@@ -488,13 +488,9 @@ tab <-
 # inserting a table in the R Journal currently fails
 # waiting for new release of articles including this PR to be published: https://github.com/rstudio/rticles/pull/261
 # Until then, use remotes::install_github("rstudio/rticles")
-if (packageVersion("rticles") >= "0.12.3") {
-  requireNamespace("kableExtra")
-  knitr::kable(tab, escape = FALSE) %>%
-    kableExtra::row_spec(0, angle = -90)
-} else {
-  cat("\n\n[Functionality overview table omitted due to a small bug in rticles]\n\n")
-}
+requireNamespace("kableExtra")
+knitr::kable(tab, format = "latex", escape = FALSE) %>%
+  kableExtra::row_spec(0, angle = -90)
 ```
 
 **\pkg{harbor}** ([https://github.com/wch/harbor](https://github.com/wch/harbor) is not actively maintained anymore, but should be honorably mentioned as the first R package for managing Docker images and containers.
