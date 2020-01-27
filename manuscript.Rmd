@@ -10,6 +10,15 @@ author:
       - 48149 Münster, Germany
       - \orcid{0000-0002-0024-5046}
     email: daniel.nuest@uni-muenster.de
+  - name: Dirk Eddelbuettel
+    # https://github.com/eddelbuettel
+    affiliation: University of Illinois at Urbana-Champaign
+    address:
+      - Department of Statistics
+      - Illini Hall, 725 S Wright St
+      - Champaign, IL 61820, USA
+      - \orcid{0000-0001-6419-907X}
+    email: dirkd@eddelbuettel.com
   - name: Dom Bennett
     # https://github.com/DomBennett
     affiliation: Gothenburg Global Biodiversity Centre, Sweden
@@ -41,15 +50,6 @@ author:
     address:
       - \orcid{0000-0003-3149-8537}
     email: daroczig@rapporter.net
-  - name: Dirk Eddelbuettel
-    # https://github.com/eddelbuettel
-    affiliation: University of Illinois at Urbana-Champaign
-    address:
-      - Department of Statistics
-      - Illini Hall, 725 S Wright St
-      - Champaign, IL 61820, USA
-      - \orcid{0000-0001-6419-907X}
-    email: dirkd@eddelbuettel.com
   - name: Mark Edmondson
     affiliation: IIH Nordic A/S, Google Developer Expert for GCP
     email: mark@markedmondson.me
@@ -890,11 +890,11 @@ A concrete effort to work towards these pieces is to sustain the structure and c
 
 # Author contributions
 
-The ordering of authors following DN as first author is alphabetical.
+The ordering of authors following DN and DE is alphabetical.
 DN conceived the article idea, \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}, wrote sections not mentioned below, and revised all sections.
 DB wrote the section on \pkg{outsider}.
 GD contributed the CARD.com use case.
-DE wrote the introduction and the section about Containerization and Rocker.
+DE wrote the introduction and the section about Containerization and Rocker and reviewed all sections.
 RC \& EH contributed to the section on interfaces for Docker in R.
 DC contributed content on Gigantum.
 ME contributed to the section on processing and deployment to cloud services.
