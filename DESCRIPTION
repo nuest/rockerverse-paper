@@ -1,6 +1,6 @@
 Type: Compendium
 Package: compendium
-Title: What the Package Does (One Line, Title Case)
+Title: Rockerverse paper
 Version: 0.0.1
 Authors@R: 
     person(given = "Ben",
@@ -17,8 +17,6 @@ Depends:
     hexSticker,
     magick,
     here
-Remotes:
-    rstudio/rticles
 Encoding: UTF-8
 LazyData: true
 
