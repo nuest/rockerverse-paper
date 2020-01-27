@@ -61,3 +61,8 @@ docker run -i -v $(pwd):/rockerverse --user $UID nuest/rockerverse-paper Rscript
     *not* use Docker and the comparison would require a lot of
     background explanation, and not all details are available because
     the software is proprietary
+  - <https://github.com/ecohealthalliance/reservoir> is an invididual
+    specific data science image container for a group - add if it fits
+  - <https://itsalocke.com/blog/building-an-r-training-environment/>
+    (one single container for many users in teaching, uses
+    rocker/tidyverse)

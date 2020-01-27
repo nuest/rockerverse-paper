@@ -546,7 +546,7 @@ dockermachine::machine_create(driver = "amazonec2")
 \label{envs}
 
 Several second order R packages attempt to make the process of creating Docker images and using containers for specific tasks, such as running tests or rendering reproducible reports, easier.
-While authoring and managing an environment with Docker by hand is possible and feasible for experts\footnote{See, e.g., this tutorial by RStudio on how to manage environments and package versions and to ensure deterministic image builds with Docker: \href{https://environments.rstudio.com/docker}{https://environments.rstudio.com/docker}.}, the following examples show the power of automation when environments become too cumbersome or acquiring the skills is not possible in due course.
+While authoring and managing an environment with Docker by hand is possible and feasible for experts\footnote{See, e.g., this tutorial by RStudio on how to manage environments and package versions and to ensure deterministic image builds with Docker: \href{https://environments.rstudio.com/docker}{https://environments.rstudio.com/docker}.}, the following examples show the power of automation when environments become too cumbersome.
 Especially _version pinning_, with packages \pkg{remotes} and \pkg{versions} for R or by using MRAN, and with system package managers for different operating systems, can greatly increase the reproducibility of built images and are common approaches.
 
 **\pkg{dockerfiler}** ([https://github.com/ColinFay/dockerfiler/](https://github.com/ColinFay/dockerfiler/)) is an R package designed for building `Dockerfile`s straight from R.
@@ -565,8 +565,10 @@ It introduces new fields to the R Markdown document header, allowing users to ma
 The package then generates a `Dockerfile` from this metadata and provides a utitility function to render the document inside a Docker container, i.e., `render_docker("foo.Rmd")`.
 An RStudio addin even allows compilation of documents with a single push of a button.
 
-The package **\CRANpkg{renv}** ([https://rstudio.github.io/renv/](https://rstudio.github.io/renv/)) helps users to manage the state of the R library in a reproducible way, further providing isolation and portability \citep{renv2019}.
-The package does not cover system dependencies, though, the \CRANpkg{renv}-based environment can be transferred into a container either by restoring the environment based on the main configuration file `renv.lock` or by storing the \CRANpkg{renv}-cache on the host and not in the container \citep{ushey_using_2019}.
+System dependencies are the domain of Docker, but for a full description of the computing environment one must also manage the R package.
+This can be achiedved with MRAN, or with the package **\CRANpkg{renv}** ([https://rstudio.github.io/renv/](https://rstudio.github.io/renv/)), which helps users to manage the state of the R library in a reproducible way, further providing isolation and portability \citep{renv2019}.
+While \CRANpkg{renv} does not cover system dependencies, the \CRANpkg{renv}-based environment can be transferred into a container either by restoring the environment based on the main configuration file `renv.lock` or by storing the \CRANpkg{renv}-cache on the host and not in the container \citep{ushey_using_2019}.
+With both the system dependencies and R packages consciously managed in a Docker image, users can start using containers as the _only_ environment for their workflows, which allows them to work indepenently of physical computers\footnote{Allowing them to be digital "nomads", cf. J.~Bryan's \href{https://github.com/jennybc/docker-why}{https://github.com/jennybc/docker-why}.} and to assert a specific degree of confidence in the stability of a developed software \citep[cf. \texttt{README.Rmd} in][]{marwick_research_2017}.
 
 ## Using R to power enterprise software in production environments
 \label{enterprise}
@@ -636,6 +638,9 @@ These functions are translated to Docker CLI commands and transferred transparen
 \CRANpkg{AzureContainers} is an umbrella package providing interfaces three commercial services of Microsoft's Azure Cloud, namely [Container Instances](https://azure.microsoft.com/en-us/services/container-instances/) for running individual containers, [Container Registry](https://azure.microsoft.com/en-us/services/container-registry/) for private image distribution, and [Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/) for orchestrated deployments.
 While a package like \CRANpkg{plumber} provides the infrastructure for turning an R workflow a service, for production purposes it is usually necessary to take into account scalability, reliability and ease of management.
 AzureContainers provides an R-based interface to these features and thereby simplifies complex infrastructure management to a number of R function calls, given an Azure account with sufficient credit\footnote{See \emph{"Deploying a prediction service with Plumber"} vignette for details:  \href{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01_plumber_deploy.html}{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01\_plumber\_deploy.html}.}.
+[Heroku](https://www.heroku.com/) is a further cloud platform as a service provider, who supports container-based applications.
+`heroku-docker-r` ([https://github.com/virtualstaticvoid/heroku-docker-r](https://github.com/virtualstaticvoid/heroku-docker-r)) is an independent project providing a template for deploying R applications based on Heroku's image stack, including multiple examples for interfacing R with other programming languages.
+Yet the approach requires a manual management of the computing environment.
 
 The prevelance of Docker in industry naturally leads to usage of containers with R in such settings as well, as customers already manage platforms in Docker containers.
 These products often entail a high amount of open source software in combination with proprietary layers adding the relevant commercializable features.
@@ -698,7 +703,11 @@ For NVIDIA GPUs, the [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia
 The Rocker&nbsp;Project [has a repository](https://github.com/rocker-org/ml) with (beta) images based on these that include GPU-enabled versions of machine-learning R packages, e.g., `rocker/ml` and `rocker/tensorflow-gpu`.
 
 Teaching is a further example where shared computing environments and sandboxing can greatly improve the process.
-First, **prepared environments for teaching** are especially helpful for courses that require access to a relatively complex setup of software tools, e.g., database systems.
+First, **prepared environments for teaching** are especially helpful for (a) introductory courses where the first step of installation and configuration can be hurdles for students \citep{cetinkaya-rundel_infrastructure_2018}, and (b) courses that require access to a relatively complex setup of software tools, e.g., database systems.
+\citet{cetinkaya-rundel_infrastructure_2018} describe how a Docker-based deployment of RStudio (i) avoided problems with troubleshooting individual students computers and greatly increase engagement through very quickly showing tangible outcomes, e.g., a visualisation, and (ii) reduced demand on teaching and IT staff.
+Each student get's acces to a personal RStudio instance running in a container after authentication with the university login, which gives the benefits of sandboxing and possibility of limiting resources.
+\citet{cetinkaya-rundel_infrastructure_2018} found that for the courses at hand, actual usage of the UI is intermittent so a single cloud based VM with 4&nbsp;cores and 28GB&nbsp;RAM sufficed for over 100 containers.
+An example for mitigating _complex setups_ is teaching databases.
 R is very useful tool for interfacing with databases, because almost every open source and proprietary database system has an R package that allows users to connect and interact with the it.
 This flexibility is even broadened by \CRANpkg{DBI}, which allows to create a common API for interfacing these databases, or the \CRANpkg{dbplyr} package, which runs \CRANpkg{dplyr} code straight against the database as queries.
 But learning and teaching these tools comes with the cost of deploying or having access to an environment with the software and drivers installed.
@@ -770,14 +779,14 @@ https://github.com/DomBennett/om..raxml#partitioned-dna-analysis
 Containers provide a high degree of isolation that is often desirable when attempting to capture a specific computational environment so that others can reproduce and extend a research result.
 Many computationally intensive research projects depend on specific versions of original and third-party software packages in diverse languages, joined together to form a pipeline through which data flows.
 New releases of even just a single piece of software in this pipeline can break the entire workflow, making it difficult to find the error and difficult for others to reuse existing pipelines.
-These breakages can make the original the results irreproducible and not extandable.
+These breakages can make the original the results irreproducible and not ¸
 The chance of a substantial disruption like this is high in a multi-year research project where key pieces of third-party software may have several major updates over the duration of the project.
 The classical "paper" article is insufficient to adequately communicate the knowledge behind such research projects \citep[cf.][]{donoho_invitation_2010,marwick_how_2015}.
 
 \citet{gentleman_statistical_2007} coined the term **Research Compendium** for a dynamic document together with supporting data and code.
 They use the R package system \cite{core_writing_1999} as for the functional prototype to structuring, validation, and distribution of research compendia.
 This concept has been taken up and extended\footnote{See full literature list at \href{https://research-compendium.science/}{https://research-compendium.science/}.}, not the least by applying containerisation and other methods for managing computing environments---see Section&nbsp;\nameref{envs}.
-Containers give the researcher an isolated environment to assemble these research pipelines with specific versions of software.
+Containers give the researcher an isolated environment to assemble these research pipelines with specific versions of software to minimize problems with breaking changes and make workflows easier to share \citep[cf.][]{boettiger_introduction_2015,marwick_packaging_2018}.
 Research workflows in containers are safe from contamination from other activities occuring on the researcher's computer, for example the installation of newest version of packages for teaching demonstrations.
 Given the users in this scenario, i.e., often academics with limited formal software development training, templates and assistance with containers around research compendia is essential.
 In many fields we see that a typical unit of research for a container is a research report or journal article, where the container holds the compendium, or self-contained set of data (or connections to data elsewhere) and code files needed to fully reproduce the article \citep{marwick_packaging_2018}.
@@ -786,10 +795,12 @@ Images of compendium containers can be hosted on services such as Docker&nbsp;Hu
 Similarly, packages such as \pkg{containerit} and \pkg{dockerfiler} can be used to manage the `Dockerfile` to be archived with a compendium on a data repository (e.g. [Zenodo](https://zenodo.org/), [Dataverse](https://dataverse.org/), [Figshare](https://figshare.com/), [OSF](https://osf.io/)).
 A typial compendium's `Dockerfile` will pull a rocker image fixed to a specific version of R, and install R packages from the MRAN repository to ensure the package versions are tied to a specific date, rather than the most recent version.
 A more extreme case is the _dynverse_ project ([https://dynverse.org/](https://dynverse.org/)), which packages over 50 computational methods with different environments (R, Python, C++, etc.) in Docker images, which can be executed from R.
-_dynverse_ uses a continuous integreation (CI) platform to build Rocker-derived images, test them, and publish them on Docker&nbsp;Hub if the tests succeed.
+_dynverse_ uses a CI platform (see&nbsp;\nameref{ci}) to build Rocker-derived images, test them, and publish them on Docker&nbsp;Hub if the tests succeed.
 
 Future researchers can download the compendium from the repository and run the included `Dockerfile` to build a new image that recreates the computational environment used to produce the original research results.
 If building the image fails, the human-readable instructions in a `Dockerfile` are the starting point for rebuilding the environment.
+When combinded with CI (see&nbsp;\nameref{ci}), a research compendium set-up can enable _continuous analysis_ with easier verification of reproducibility and audits trails \citep{beaulieu-jones_reproducibility_2017}.
+
 Further safeguarding practices are currently under development or not part of common practice yet, such as preservation of images \citep{emsley_framework_2018} and storing them alongside `Dockerfile`s \citep[cf.][]{nust_opening_2017}, or pinning of system libraries beyond the tagged base images, which may be seen as stable or dynamic depending on the applied time scale \citep[see discussion on `debian:testing` base image in][]{RJ-2017-065}.
 A recommendation of the recent National Academies' report on _Reproducibility and Replicability in Science_ is that journals _"consider ways to ensure computational reproducibility for publications that make claims based on computations"_ \citep{NASEM2019}.
 In fields such as Political Science and Economics, journals are increasingly adopting policies requiring authors to publish the code and data required to reproduce computational findings reported in published manuscripts, subject to independent verification \citep{Jacoby2017,Vilhuber2019,Alvarez2018,Christian2018,Eubank2016,King1995}.
@@ -837,7 +848,8 @@ This approach clearly seperates test environment, test code, and current working
 \label{rselenium} Another use case where a container helps to standardise tests across operating systems is detailed the vignettes of the package \CRANpkg{RSelenium} \citep{rselenium_2019}.
 The package recommends Docker for running the [Selenium](https://selenium.dev/) Server application needed to execute test suites on browser-based user interfaces and webpages, but requires users to manually manage the Docker containers.
 
-Fifth, Docker images can be used **on CI platforms** to streamline the testing of packages.
+\label{ci}
+Fifth, Docker images can be used **on continuous integration (CI) platforms** to streamline the testing of packages.
 \citet{ye_docker_2019} describes how they speed up the process of testing by running tasks on [Travis&nbsp;CI](https://travis-ci.org/) within a container using `docker exec`, e.g., the package check or rendering of documentation.
 \citet{cardozo_faster_2018} saved time, also on Travis&nbsp;CI, by re-using the testing image as the base for an image intended for publication on Docker&nbsp;Hub.
 [`r-ci`](https://github.com/ColinFay/r-ci) is in turn used with [GitLab&nbsp;CI](https://docs.gitlab.com/ee/ci/), which itself is built on top of Docker images: the user specifies a base Docker image, and the whole tests are run inside this environment.
@@ -872,8 +884,7 @@ It remains to be seen which approach to control Docker, via the Docker API as \p
 Similarly, the capturing of environments and their serialization in form of a `Dockerfile` currently happens at different levels of abstraction and re-use of functionality seems reasonable, e.g., \pkg{liftr} could generate the environment with \pkg{containerit}, which in turn may use \pkg{dockerfiler} for low level R objects representing a `Dockerfile` and its instructions.
 In this consolidation, the Rocker&nbsp;Project could play the role of coordinating entity.
 Though for the moment, the sign of the times points to more experimentation and feature growth, e.g., images for GPU-based computing and artificial intelligence.
-Even with coding being more and more accepted as a required, and achievable skill, an easier access, for example by exposing containerisation benefits via simple user interfaces in the users' IDE, could be an important next step.
-Currently containerisation happens more in the background at the system level.
+Even with coding being more and more accepted as a required, and achievable skill, an easier access, for example by exposing containerisation benefits via simple user interfaces in the users' IDE, could be an important next step since currently containerisation happens more in the background for UI-based development (e.g., a `rocker/rstudio` image in the cloud).
 Furthermore, a maturing of the Rockerverse packages for managing containers may lead to their adoption where currently manual coding is required, e.g. in the case of \CRANpkg{RSelentium} or \CRANpkg{drake} (see Sections&nbsp;\nameref{rselenium} and \nameref{drake} respectively).
 In specific cases, e.g., for \CRANpkg{analogsea}, the interaction with the Docker daemon may remain to specific to reuse first order packages to control Docker.
 

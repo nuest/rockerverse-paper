@@ -88,3 +88,5 @@ docker run -i -v $(pwd):/rockerverse --user $UID nuest/rockerverse-paper Rscript
 - https://github.com/rocker-jp because it seems to have stalled soon after inception
 - https://github.com/thomasp85/fiery because no examples/docs for Docker (though probably trivial anyway)
 - [RStudio Connect](https://rstudio.com/products/connect/) because while it does use a similar mechanism to seperate processes, it does _not_ use Docker and the comparison would require a lot of background explanation, and not all details are available because the software is proprietary
+- https://github.com/ecohealthalliance/reservoir is an invididual specific data science image container for a group - add if it fits
+- https://itsalocke.com/blog/building-an-r-training-environment/ (one single container for many users in teaching, uses rocker/tidyverse)
