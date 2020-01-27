@@ -353,9 +353,7 @@ tab <-
   slice(match(functionalities$id, id)) %>% 
   select(-id)
 
-# inserting a table in the R Journal currently fails
-# waiting for new release of articles including this PR to be published: https://github.com/rstudio/rticles/pull/261
-# Until then, use remotes::install_github("rstudio/rticles")
+# insert table
 requireNamespace("kableExtra")
 knitr::kable(tab, format = "latex", escape = FALSE) %>%
   kableExtra::row_spec(0, angle = -90)
