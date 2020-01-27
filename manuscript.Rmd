@@ -511,9 +511,9 @@ It interfaces with the Docker daemon over the Docker HTTP API\footnote{\href{htt
 The package is the only one not using system calls to the `docker` CLI for managing images and containers and easily exposes connections to remote Docker daemons, which has to be configured on the Docker level otherwise.
 Using the API gives access to more information and is system independent and likely more reliable than parsing command line output.
 \CRANpkg{stevedore}'s own interface is automatically generated based on the OpenAPI specification of the Docker daemon, but still similar to the Docker CLI.
-The interface is similar to R6 objects, in that a `stevedore_object` has a number of functions attached to it that can be called, and multiple specific versions of the Docker API can be supported thanks to the automatic generation\footnote{See \href{https://github.com/richfitz/stevedore/tree/master/inst/spec}{https://github.com/richfitz/stevedore/tree/master/inst/spec} and \href{https://github.com/richfitz/stevedore/blob/master/development.md}{https://github.com/richfitz/stevedore/blob/master/development.md}.}.
+The interface is similar to R6 objects, in that a `stevedore_object` has a number of functions attached to it that can be called, and multiple specific versions of the Docker API can be supported thanks to the automatic generation\footnote{See \href{https://github.com/richfitz/stevedore/blob/master/development.md}{https://github.com/richfitz/stevedore/blob/master/development.md}.}.
 
-**\CRANpkg{AzureContainers}** is an interface to a number of container-related services in Microsoft's [Azure Cloud](https://azure.microsoft.com/), see Section&nbsp;\nameref{azurecontainers}.
+**\CRANpkg{AzureContainers}** is an interface to a number of container-related services in Microsoft's [Azure Cloud](https://azure.microsoft.com/) \citep{AzureContainers_2019}.
 While it is mainly intended for working with Azure, as a convenience feature it includes lightweight, cross-platform shells to Docker and Kubernetes (tools `kubectl` and `helm`).
 These can be used to create and manage arbitrary Docker images and containers, as well as Kubernetes clusters on any platform or cloud service.
 
@@ -602,52 +602,50 @@ The corresponding `Dockerfile`s are published [on GitHub](https://github.com/tmo
 Since the models power tools for agents and customers, they need to have extremely high uptime and reliability.
 The AI @ T-Mobile team found that the models performed well and today these models power real-time services that are called over a million times a day.
 
-## Continuous integration, continuous delivery, and deployment
-\label{cicd}
+## Deployment and continuous delivery
 \label{deployment}
 
 The cloud is the natural environment of containers, and subsequently containers are the go-to mechanism to deploy R server applications.
 More and more continuous integration (CI) and continuous delivery (CD) services also use containers, opening up new options for use.
-The controlled nature of containers, i.e., the possibility to define the software environment very well, even on remote machines, is crucial here, for example to match test or build environments with production environments.
+The controlled nature of containers, i.e., the possibility to abstract internal software environment from a minimal dependency outside of the container is crucial, for example to match test or build environments with production environments or transfer runnable entities to as-a-service infrastructures.
 
-As a first example, \CRANpkg{Shiny} is the most popular package for creating interactive online dashboards with R and it enables users with very diverse backgrounds to create stable and user friendly web applications.
-The ShinyProxy ([https://www.shinyproxy.io/](https://www.shinyproxy.io/)) is an open source tool to deploy Shiny apps in an enterprise context.
+First, different packages use containers for the **deployment of R and \CRANpkg{Shiny} apps**.
+\CRANpkg{Shiny} is a popular package for creating interactive online dashboards with R and it enables users with very diverse backgrounds to create stable and user friendly web applications.
+For example, _ShinyProxy_ ([https://www.shinyproxy.io/](https://www.shinyproxy.io/)) is an open source tool to deploy Shiny apps in an enterprise context.
 They feature single sign-on, but also in scientific use cases \citep[e.g., ][]{savini_epiexplorer_2019,glouzon_structurexplor_2017}.
 ShinyProxy uses Docker containers to isolate user sessions and to achieve scalability for multi-user scenarious with multiple apps.
 ShinyProxy itself is written in Java to accomodate corporate requirements and may itself run in a container for stability and availability.
 The tool is build on ContainerProxy ([https://www.containerproxy.io/](https://www.containerproxy.io/)), which provides similar features for executign long-running R jobs or interactive R sessions.
 The started containers can run on a regular Docker host but also in clusters.
+Another example is the package \CRANpkg{golem} ([https://github.com/ThinkR-open/golem](https://github.com/ThinkR-open/golem)), which makes an heavy use of `dockerfiler` when it comes to creating the `Dockerfile` for building production-grade Shiny applications and deploying them.
+\CRANpkg{googleComputeEngineR} ([https://cloudyr.github.io/googleComputeEngineR/](https://cloudyr.github.io/googleComputeEngineR/)) enables quick deployments of key R services, such as RStudio and Shiny, onto cloud virtual machines (VMs) with Google Cloud Compute Engine \citep{googleComputeEngineR_2019}.
+The package utilises `Dockerfile`s to move the labour of setting up those services from the user to a premade Docker image, which is configured and run in the cloud VM.
+For example, by specifying the template `template="rstudio"` in functions `gce_vm_template()/gce_vm()` an up to date RStudio Service image is launched for development work, while specifying `template="rstudio-gpu"` will launch an RStudio Server image with a GPU attached, etc.
 
 Second, containers can be used to create **platform installation packages** in a DevOps setting.
 The [OpenCPU](https://www.opencpu.org/) system provides an HTTP API for data analysis based on R.
 \citet{ooms_opencpu_2017} describes how various platform-specific installation files for OpenCPU are created using Docker&nbsp;Hub: the automated builds install the software stack from source on different operating systems; afterwards a script file downloads the images and extracts the OpenCPU binaries.
 
-- [dynwrap](https://github.com/dynverse/dynwrap_containers/blob/master/.travis.yml) [@rcannood]
-  - For this project, we use travis-ci to build rocker-derived containers, test them, and only push them to Docker&nbsp;Hub (from travis-ci.org) if the integration tests succeed.
-
-For example, the **[`golem`](https://github.com/ThinkR-open/golem)** package makes an heavy use of `dockerfiler` when it comes to creating the `Dockerfile` for building production-grade Shiny applications and deploying them.
-
-- [`googleComputeEngineR`](https://cloudyr.github.io/googleComputeEngineR/) (function `gce_vm_template()`)
-  - To enable quick deployments of key R services such as RStudio and Shiny onto cloud virtual machines (VMs), this package utilises Dockerfiles to move the labour of setting up those services from the user to a premade Docker image. For example, by specifying the template `template="rstudio"` in `gce_vm_template()/gce_vm()` an up to date RStudio Service image is launched.  Specifying `template="rstudio-gpu"` will launch an RStudio Server image with a GPU attached, etc.  
-- [`analogsea`](https://github.com/sckott/analogsea) (digital ocean R client)
-- [`plumber`](https://www.rplumber.io/docs/hosting.html#docker)
-- [production deployment of neural networks](https://github.com/tmobile/r-tensorflow-api) [@jnolis, @nolistic]
-- Kubernetes - A popular platform for managing Docker containers is [Kubernetes](https://kubernetes.io/), which is used for a wide variety of containerized applications. It may be your organisation has a Kubernetes cluster already for other applications. Docker containers are used within Kubernetes clusters to hold native code, for which Kubernetes creates a framework around network connections and scaling of resources up and down. An introduction on using [Kubernetes with R is published at this blog post](https://code.markedmondson.me/r-on-kubernetes-serverless-shiny-r-apis-and-scheduled-scripts/).
-
-\label{azurecontainers}
-**\CRANpkg{AzureContainers}** is an umbrella package providing interfaces three commercial services of Microsoft's Azure Cloud, namely [Container Instances](https://azure.microsoft.com/en-us/services/container-instances/) for running individual containers, [Container Registry](https://azure.microsoft.com/en-us/services/container-registry/) for private image distribution, and [Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/) for orchestrated deployments.
-While a package like \CRANpkg{plumber} provides the infrastructure for turning an R workflow a service, for production purposes it is usually necessary to take into account scalability, reliability and ease of management.
-A _cluster_ of containers, orchestrated as a single deployment, e.g., with [Kubernetes](https://kubernetes.io), can mitigate limitations on request volumes or a container occupied with computationally intensive task.
+Third, containers can greatly facilitate the **deployment to existing infrastructures**.
+_Kubernetes_ ([https://kubernetes.io/](https://kubernetes.io/)) is a container-orchestration system for managing container-based application deployment and scaling.
+A _cluster_ of containers, orchestrated as a single deployment, e.g., with Kubernetes, can mitigate limitations on request volumes or a container occupied with computationally intensive task.
 A cluster features load-balancing, autoscaling of containers across numerous servers (in the cloud or on premise), and restarting failed ones.
-AzureContainers provides an R-based interface to these features for Azure.
-On the client side, it provides simple wrappers to Docker and to Kubernetes' management tools `kubectl` and `helm`.
-The package simplifies complex infrastructure management to a number of R function calls, given an Azure account with sufficient credit\footnote{See \emph{"Deploying a prediction service with Plumber"} vignette for details:  \href{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01_plumber_deploy.html}{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01\_plumber\_deploy.html}.}.
+It may be your organisation has a Kubernetes cluster already for other applications, or you may use one of the different provides for managed Kubernetes clusters.
+Docker containers are used within Kubernetes clusters to hold native code, for which Kubernetes creates a framework around network connections and scaling of resources up and down.
+R applications, big parallel tasks, or scheduled batch jobs can be deployed in a scalable way using Kubernetes, and the deployment can even be triggered by changes to code repositories (i.e., CD), see blog post "R on Kubernetes" \citep{edmondson_r_2018}.
+The package \pkg{googleKubernetesR} ([https://github.com/RhysJackson/googleKubernetesR](https://github.com/RhysJackson/googleKubernetesR)) is a proof of concept for wrapping the Google Kubernetes Engine API, Google's hosted Kubernetes solution, in an easy to use R package.
+The package \CRANpkg{analogsea} provides a solution to programmatically create and destroy cloud VMs on the [Digital Ocean](https://www.digitalocean.com/) platform \citep{analogsea_2019}.
+It also includes R wrapper functions to install Docker in such a VM, manage images, and control containers straight from R functions.
+These functions are translated to Docker CLI commands and transferred transparently to the respective remove machine using SSH.
+\CRANpkg{AzureContainers} is an umbrella package providing interfaces three commercial services of Microsoft's Azure Cloud, namely [Container Instances](https://azure.microsoft.com/en-us/services/container-instances/) for running individual containers, [Container Registry](https://azure.microsoft.com/en-us/services/container-registry/) for private image distribution, and [Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/) for orchestrated deployments.
+While a package like \CRANpkg{plumber} provides the infrastructure for turning an R workflow a service, for production purposes it is usually necessary to take into account scalability, reliability and ease of management.
+AzureContainers provides an R-based interface to these features and thereby simplifies complex infrastructure management to a number of R function calls, given an Azure account with sufficient credit\footnote{See \emph{"Deploying a prediction service with Plumber"} vignette for details:  \href{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01_plumber_deploy.html}{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01\_plumber\_deploy.html}.}.
 
 The prevelance of Docker in industry naturally leads to usage of containers with R in such settings as well, as customers already manage platforms in Docker containers.
-These products often entail a high amount of open source software in combination with proprietary layers addign the relevant commercializable features.
+These products often entail a high amount of open source software in combination with proprietary layers adding the relevant commercializable features.
 One such example is RStudio's data science platform [RStudio Team](https://rstudio.com/products/team/).
 It allows teams of data scientists and their respective IT/DevOps groups to develop and deploy code in R and Python around the RStudio Open Source Server inside of Docker images, without requiring users to learn new tools or directly interact with containers.
-The best practices for [running RStudio with Docker containers](https://support.rstudio.com/hc/en-us/articles/360021594513-Running-RStudio-with-Docker-containers) as well as [Docker images](https://github.com/rstudio/rstudio-docker-products) for RStudio's commerical products are openly available.
+The best practices for [running RStudio with Docker containers](https://support.rstudio.com/hc/en-us/articles/360021594513-Running-RStudio-with-Docker-containers) as well as [Docker images](https://github.com/rstudio/rstudio-docker-products) for RStudio's commerical products are publicly available.
 
 ## Common or public work environments
 \label{workenvs}
@@ -660,7 +658,7 @@ A _BinderHub_ allows anyone with access to a web browser and an internet connect
 From a reproducibility standpoint, Binder makes it exceedingly easy to compile a paper, visualize data, and run small examples from papers or tutorials without the need for any local installation.
 To set up Binder for a project, a user typically starts at an instance of a BinderHub and passes the location of a repository with a workspace, e.g., a hosted Git repository, or a data repository like Zenodo.
 Binder's core internal tool is `repo2docker`.
-It deterministically builds a Docker image by parsing the contents of a repository, e.g., project dependency configurations or simple configuration files\footnote{See supported file types at \href{https://repo2docker.readthedocs.io/en/latest/config_files.html}{https://repo2docker.readthedocs.io/en/latest/config_files.html}.}.
+It deterministically builds a Docker image by parsing the contents of a repository, e.g., project dependency configurations or simple configuration files\footnote{See supported file types at \href{https://repo2docker.readthedocs.io/en/latest/config\_files.html}{https://repo2docker.readthedocs.io/en/latest/config\_files.html}.}.
 In the most powerful case, `repo2docker` builds a given `Dockerfile`.
 While this approach works well for most run of the mill Python projects, it is not so seamless for R projects.
 This is partly because `repo2docker` does not support arbitrary base images due to the complex auto-generation of the `Dockerfile` instructions.
@@ -792,10 +790,11 @@ Images of compendium containers can be hosted on services such as Docker&nbsp;Hu
 Similarly, packages such as \pkg{containerit} and \pkg{dockerfiler} can be used to manage the `Dockerfile` to be archived with a compendium on a data repository (e.g. [Zenodo](https://zenodo.org/), [Dataverse](https://dataverse.org/), [Figshare](https://figshare.com/), [OSF](https://osf.io/)).
 A typial compendium's `Dockerfile` will pull a rocker image fixed to a specific version of R, and install R packages from the MRAN repository to ensure the package versions are tied to a specific date, rather than the most recent version.
 A more extreme case is the _dynverse_ project ([https://dynverse.org/](https://dynverse.org/)), which packages over 50 computational methods with different environments (R, Python, C++, etc.) in Docker images, which can be executed from R.
+_dynverse_ uses a CI (cf.&nbsp;\nameref{cicd}) to build Rocker-derived containers, test them, and push them to Docker&nbsp;Hub if the tests succeed.
+
 Future researchers can download the compendium from the repository and run the included `Dockerfile` to build a new image that recreates the computational environment used to produce the original research results.
 If building the image fails, the human-readable instructions in a `Dockerfile` are the starting point for rebuilding the environment.
 Further safeguarding practices are currently under development or not part of common practice yet, such as preservation of images \citep{emsley_framework_2018} and storing them alongside `Dockerfile`s \citep[cf.][]{nust_opening_2017}, or pinning of system libraries beyond the tagged base images, which may be seen as stable or dynamic depending on the applied time scale \citep[see discussion on `debian:testing` base image in][]{RJ-2017-065}.
-
 A recommendation of the recent National Academies' report on _Reproducibility and Replicability in Science_ is that journals _"consider ways to ensure computational reproducibility for publications that make claims based on computations"_ \citep{NASEM2019}.
 In fields such as Political Science and Economics, journals are increasingly adopting policies requiring authors to publish the code and data required to reproduce computational findings reported in published manuscripts, subject to independent verification \citep{Jacoby2017,Vilhuber2019,Alvarez2018,Christian2018,Eubank2016,King1995}.
 Problems with the computational environment, installation and availability of software dependencies are common.
@@ -880,6 +879,7 @@ Though for the moment, the sign of the times points to more experimentation and 
 Even with coding being more and more accepted as a required, and achievable skill, an easier access, for example by exposing containerisation benefits via simple user interfaces in the users' IDE, could be an important next step.
 Currently containerisation happens more in the background at the system level.
 Furthermore, a maturing of the Rockerverse packages for managing containers may lead to their adoption where currently manual coding is required, e.g. in the case of \CRANpkg{RSelentium} or \CRANpkg{drake} (see Sections&nbsp;\nameref{rselenium} and \nameref{drake} respectively).
+In specific cases, e.g., for \CRANpkg{analogsea}, the interaction with the Docker daemon may remain to specific to reuse first order packages to control Docker.
 
 New features, which make complex workflows accessible and reproducible, and the variety in packages connected with containerisation, even when they have overlapping features, are a signal and a support for a growing user base.
 This growth is possibly the most important goal for the foreseeable future in the _Rockerverse_, and just like the Rocker images have matured over years of use and millions of runs, the new ideas and prototypes will have to proof themselves.
@@ -896,13 +896,13 @@ DN conceived the article idea, \href{https://github.com/nuest/rockerverse-paper/
 DB wrote the section on \pkg{outsider}.
 GD contributed the CARD.com use case.
 DE wrote the introduction and the section about Containerization and Rocker and reviewed all sections.
-RC \& EH contributed to the section on interfaces for Docker in R.
+RC \& EH contributed to the section on interfaces for Docker in R (_dynverse_ and `dynwrap`).
 DC contributed content on Gigantum.
 ME contributed to the section on processing and deployment to cloud services.
 CF wrote paragraphs about \pkg{r-online}, \pkg{dockerfiler}, \pkg{r-ci} and \pkg{r-db}.
 SL contributed content on RStudio's usage of Docker.
 BM wrote the section on research compendia and made the project Binder-ready.
-HN \& JN co-wrote the section on enterprise production environments (\pkg{googleComputeEngineR}, Google Cloud Run, Kubernetes).
+HN \& JN co-wrote the section on the T-Mobile use case.
 KR wrote the section about \pkg{holepunch}.
 NR wrote paragraphs about shared work environments and GPUs.
 LS \& NT wrote the section on Bioconductor.
