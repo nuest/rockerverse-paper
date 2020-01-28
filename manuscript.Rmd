@@ -863,7 +863,15 @@ rjournal_style_preprint <- function (..., citation_package = "natbib") {
 }
 
 rmarkdown::render("manuscript.Rmd", output_format = rjournal_style_preprint())
-file.rename("RJwrapper.pdf", "rockerverse-preprint.pdf")
+file.rename("RJwrapper.pdf", "rockerverse-preprint.pdf") # file for own archival
+
+# for submission to arXiv, copy the following files into a new folder and run pdfLaTeX directly on RJwrapper.text (works with RStudio): figures/*, manuscript.tex, RJournal.sty, RJreferences.bib, RJwrapper.tex
+# then tip the following files and submit to arXiv:
+# - /figures
+# - manuscript.tex
+# - RJournal.sty
+# - RJwrapper.bbl
+# - RJwrapper.tex
 ```
 
 \bibliography{RJreferences}
