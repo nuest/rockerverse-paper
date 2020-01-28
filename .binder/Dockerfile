@@ -3,7 +3,7 @@ LABEL maintainer='Daniel Nüst'
 USER root
 RUN tlmgr init-usertree \
  && tlmgr update --self \
- && tlmgr install pgf environ placeins psnfss titlesec trimspaces palatino mathpazo setspace microtype xcolor fancyhdr ms
+ && tlmgr install pgf environ placeins psnfss titlesec trimspaces palatino mathpazo setspace microtype xcolor fancyhdr ms pgf
 COPY . ${HOME}
 RUN chown -R ${NB_USER} ${HOME}
 USER ${NB_USER}
