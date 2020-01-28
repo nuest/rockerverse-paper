@@ -863,6 +863,7 @@ rjournal_style_preprint <- function (..., citation_package = "natbib") {
 }
 
 rmarkdown::render("manuscript.Rmd", output_format = rjournal_style_preprint())
+file.rename("RJwrapper.pdf", "rockerverse-preprint.pdf")
 ```
 
 \bibliography{RJreferences}

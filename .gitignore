@@ -22,3 +22,7 @@ manuscript_cache/
 .Renviron
 
 README_cache/
+
+*.log
+
+rockerverse-preprint.pdf
