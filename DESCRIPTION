@@ -16,7 +16,10 @@ Depends:
     kableExtra,
     hexSticker,
     magick,
-    here
+    here,
+    tibble,
+    tidyr,
+    dplyr
 Encoding: UTF-8
 LazyData: true
 

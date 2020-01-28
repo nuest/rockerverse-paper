@@ -180,7 +180,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-library(tidyverse)
+Sys.setlocale('LC_ALL','C')
 ```
 
 # Introduction
@@ -248,6 +248,10 @@ Examples of such interactions are installing the Docker software, creating `Dock
 As such, the choice of which package is most useful depends on the use-case at hand, but also the users level of expertise.
 
 ```{r clientfunctionalities, echo=FALSE, results='asis', warning=FALSE, message=FALSE}
+library("tibble")
+library("tidyr")
+library("dplyr")
+
 functionalities <- tribble(
   ~id, ~Functionality,
   "dockerfile", "Generate a Dockerfile",
@@ -729,7 +733,6 @@ In a sample of 105 replication packages published by the _American Journal of Po
 The NSF-funded Whole Tale project uses the Rocker Project community images with the goal of improving the reproducibility of published research artifacts and simplifying the publication and verification process for both authors and reviewers by reducing errors and time spent specifying the environment.
 
 # Conclusions
-\label{conclusions}
 
 This article is a snapshot of the R-corner in a universe of applications built with a many-faced piece of software, Docker.
 `Dockerfile`s and Docker images are the go-to methods for collaboration between roles in an organisation, such as development and IT operations teams, and between parties in the communication of knowledge, such as research workflows or education.
