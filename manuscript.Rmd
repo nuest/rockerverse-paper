@@ -18,7 +18,7 @@ author:
       - Illini Hall, 725 S Wright St
       - Champaign, IL 61820, USA
       - \orcid{0000-0001-6419-907X}
-    email: dirkd@eddelbuettel.com
+    email: dirk@eddelbuettel.com
   - name: Dom Bennett
     # https://github.com/DomBennett
     affiliation: Gothenburg Global Biodiversity Centre, Sweden
@@ -872,6 +872,12 @@ file.rename("RJwrapper.pdf", "rockerverse-preprint.pdf") # file for own archival
 # - RJournal.sty
 # - RJwrapper.bbl
 # - RJwrapper.tex
+```
+
+```{r collab_emails}
+front_matter <- rmarkdown::yaml_front_matter("manuscript.Rmd")
+emails <- sapply(X = front_matter$author, FUN = function(a) { a$email })
+cat(emails, sep = "\n")
 ```
 
 \bibliography{RJreferences}
