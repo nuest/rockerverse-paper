@@ -583,6 +583,7 @@ These products often entail a high amount of open source software in combination
 One such example is RStudio's data science platform [RStudio Team](https://rstudio.com/products/team/).
 It allows teams of data scientists and their respective IT/DevOps groups to develop and deploy code in R and Python around the RStudio Open Source Server inside of Docker images, without requiring users to learn new tools or directly interact with containers.
 The best practices for [running RStudio with Docker containers](https://support.rstudio.com/hc/en-us/articles/360021594513-Running-RStudio-with-Docker-containers) as well as [Docker images](https://github.com/rstudio/rstudio-docker-products) for RStudio's commerical products are publicly available.
+
 ## Using R to power enterprise software in production environments
 \label{enterprise}
 
