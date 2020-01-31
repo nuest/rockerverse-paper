@@ -69,7 +69,7 @@ hexSticker::sticker(here::here("whaleverse.png"), package = "ROCKERVERSE",
 #file.remove(c(here("universe.png"), here("whaleverse.png"), here("rocker_mask.png")))
 ```
 
-![Rockerverse hex sticker](`r here::here("rockerverse.png")`)
+![Rockerverse hex sticker](rockerverse.png)
 
 Hex sticker uses the font [Final Frontier Old Style](https://www.fontspace.com/allen-r-walden/final-frontier-old-style) and the [Hubble Ultra-Deep Field](https://en.wikipedia.org/wiki/Hubble_Ultra-Deep_Field) combined with the Docker logo as background.
 

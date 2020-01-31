@@ -20,8 +20,7 @@ originally based on the blog post <http://bit.ly/docker-r>.
 **Current draft:
 <https://nuest.github.io/rockerverse-paper/master.pdf>**
 
-![Rockerverse hex
-sticker](/home/daniel/git/o2r/rockerverse-paper/rockerverse.png)
+![Rockerverse hex sticker](rockerverse.png)
 
 Hex sticker uses the font [Final Frontier Old
 Style](https://www.fontspace.com/allen-r-walden/final-frontier-old-style)
