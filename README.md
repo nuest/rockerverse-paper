@@ -11,8 +11,9 @@ Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/nuest/ro
 Status](https://travis-ci.org/nuest/rockerverse-paper.svg?branch=master)](https://travis-ci.org/nuest/rockerverse-paper)
 <!-- badges: end -->
 
-Draft for an article of everything related to containers and R,
-originally based on the blog post <http://bit.ly/docker-r>.
+Article about everything related to containers and R, originally based
+on the blog post <http://bit.ly/docker-r> and now **available as a
+preprint on arXiv.org: <https://arxiv.org/abs/2001.10641>**.
 
 *Want to contribute?* See
 <https://github.com/nuest/rockerverse-paper/issues/3>.
@@ -22,7 +23,7 @@ originally based on the blog post <http://bit.ly/docker-r>.
 
 ![Rockerverse hex sticker](rockerverse.png)
 
-Hex sticker uses the font [Final Frontier Old
+The hex sticker uses the font [Final Frontier Old
 Style](https://www.fontspace.com/allen-r-walden/final-frontier-old-style)
 and the [Hubble Ultra-Deep
 Field](https://en.wikipedia.org/wiki/Hubble_Ultra-Deep_Field) combined
