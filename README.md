@@ -23,6 +23,12 @@ originally based on the blog post <http://bit.ly/docker-r>.
 ![Rockerverse hex
 sticker](/home/daniel/git/o2r/rockerverse-paper/rockerverse.png)
 
+Hex sticker uses the font [Final Frontier Old
+Style](https://www.fontspace.com/allen-r-walden/final-frontier-old-style)
+and the [Hubble Ultra-Deep
+Field](https://en.wikipedia.org/wiki/Hubble_Ultra-Deep_Field) combined
+with the Docker logo as background.
+
 ## Render the manuscript with Docker
 
 **Local build**

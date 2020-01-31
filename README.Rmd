@@ -27,41 +27,51 @@ _Want to contribute?_ See https://github.com/nuest/rockerverse-paper/issues/3.
 **Current draft: https://nuest.github.io/rockerverse-paper/master.pdf**
 
 ```{r hexSticker, message=TRUE, warning=FALSE, cache=TRUE, include=FALSE}
-if(!file.exists("rockerverse.png")) {
-  library("magick")
-  library("here")
-  
-  # https://commons.wikimedia.org/wiki/File:NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg
+library("magick")
+library("here")
+
+# https://commons.wikimedia.org/wiki/File:NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg
+if(!file.exists("universe.png")) {
   universe <- magick::image_read("https://upload.wikimedia.org/wikipedia/commons/6/69/NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg")
   magick::image_write(universe, here("universe.png"))
-  # rockerLogoMask <-
-  magick::image_read("https://avatars2.githubusercontent.com/u/9100160?s=200&v=4") %>%
-    magick::image_scale("2100x2100") %>%
-    magick::image_channel("Matte") %>%
-    image_negate() %>%
-    magick::image_border("black", "150x0") %>%
-    magick::image_write(here("rocker_mask.png"))
-    
-  # does not work: image_composite(universe, rockerLogoMask, operator = "CopyOpacity", compose_args = "-composite -alpha Off")
-  system2("convert", c(here("universe.png"), here("rocker_mask.png"),
-    "-alpha Off",
-    "-compose CopyOpacity",
-    "-composite",
-    here("whaleverse.png")))
-
-  library("hexSticker")
-  hexSticker::sticker(here("whaleverse.png"), package = "Rockerverse",
-          p_size = 20, s_x = 0.97, s_y = 0.95, s_width = 1,
-          h_fill = "#000000", h_color = "#ffffff",
-          url = "github.com/nuest/rockerverse-paper",
-          u_color = "#ffffff", u_size = 4,
-          filename = here("rockerverse.png"))
-  
-  file.remove(c(here("universe.png"), here("whaleverse.png"), here("rocker_mask.png")))
 }
+
+magick::image_read("https://avatars2.githubusercontent.com/u/9100160?s=200&v=4") %>%
+  magick::image_scale("2100x2100") %>%
+  magick::image_channel("Matte") %>%
+  image_negate() %>%
+  magick::image_border("black", "150x0") %>%
+  magick::image_write(here("rocker_mask.png"))
+  
+# does not work: image_composite(universe, rockerLogoMask, operator = "CopyOpacity", compose_args = "-composite -alpha Off")
+system2("convert", c(here("universe.png"), here("rocker_mask.png"),
+  "-alpha Off",
+  "-compose CopyOpacity",
+  "-composite",
+  here("whaleverse.png")))
+
+library("sysfonts")
+if(!file.exists(here::here("FinalFrontierOldStyle-8Pg.ttf"))) {
+  stop("Download font Final Frontier Old Style, e.g. from https://www.fontspace.com/allen-r-walden/final-frontier-old-style and put the file in the repo root.")
+}
+sysfonts::font_add("finalfrontier", here::here("FinalFrontierOldStyle-8Pg.ttf"))
+
+library("hexSticker")
+hexSticker::sticker(here::here("whaleverse.png"), package = "ROCKERVERSE",
+        p_family = "finalfrontier",
+        p_size = 29, p_y = 1.3,
+        s_x = 0.97, s_y = 0.95, s_width = 1,
+        h_fill = "#000000", h_color = "#ffffff",
+        url = "github.com/nuest/rockerverse-paper",
+        u_color = "#ffffff", u_size = 4,
+        filename = here::here("rockerverse.png"))
+
+#file.remove(c(here("universe.png"), here("whaleverse.png"), here("rocker_mask.png")))
 ```
 
 ![Rockerverse hex sticker](`r here::here("rockerverse.png")`)
+
+Hex sticker uses the font [Final Frontier Old Style](https://www.fontspace.com/allen-r-walden/final-frontier-old-style) and the [Hubble Ultra-Deep Field](https://en.wikipedia.org/wiki/Hubble_Ultra-Deep_Field) combined with the Docker logo as background.
 
 ## Render the manuscript with Docker
 
