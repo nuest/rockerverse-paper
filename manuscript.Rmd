@@ -169,8 +169,10 @@ author:
 abstract: >
   The Rocker Project provides widely used Docker images for R across different application scenarios.
   This articles surveys downstream projects that build upon Rocker images and presents the current state of R packages for managing Docker images and controlling containers.
-  These use cases and the variety of applications demonstrate the power of Rocker specifically and containerisation in general.
+  These use cases cover diverse topics such as package development, reproducible research, collaborative work, cloud-based data processing, and production deployment of services.
+  The variety of applications demonstrates the power of Rocker specifically and containerisation in general.
   Across the diverse ways to use containers, we identified common themes: reproducible environments, scalability and efficiency, and portability across clouds.
+  We conclude that the current growth and diversification of use cases is likely to continue its positive impact, but see the need for consolidating the Rockerverse ecosystem of packages, developing common practices for applications, and exploring alternative containerisation software.
 output:
   rticles::rjournal_article:
     keep_tex: true
