@@ -117,6 +117,13 @@ author:
       - Berkeley, CA 94720, USA
       - \orcid{0000-0002-0233-1757}
     email: karthik.ram@berkeley.edu
+  - name: Lars Kjeldgaard
+    # https://github.com/smaakage85
+    affiliation: Danish Tax Authorities
+    address:
+      - Oestbanegade 123
+      - 2100, Koebenhavn Oe
+    email: lars_kjeldgaard@hotmail.com
   - name: Noam Ross
     # https://github.com/noamross
     affiliation: EcoHealth Alliance
@@ -166,13 +173,6 @@ author:
       - 9000 Gent, Belgium
       - \orcid{0000-0003-0779-4897}
     email: charlotte.vanpetegem@ugent.be
-  - name: Lars Kjeldgaard
-    # https://github.com/smaakage85
-    affiliation: Danish Tax Authorities
-    address:
-      - Oestbanegade 123
-      - 2100, Koebenhavn Oe
-    email: lars_kjeldgaard@hotmail.com
 abstract: >
   The Rocker&nbsp;Project provides widely-used Docker images for R across different application scenarios.
   This articles surveys downstream projects building upon Rocker and presents the current state of R packages for managing Docker images and controlling containers.
@@ -576,8 +576,9 @@ Being scriptable from R developers can leverage the tools available in R to pars
 \pkg{containerit} accepts R `sessionInfo` objects as input and provides helper functions to derive these from workflows, e.g., an R script or R Markdown document, by analysing the session state at the end of the workflow.
 It relies on the \pkg{sysreqs} ([https://github.com/r-hub/sysreqs/](https://github.com/r-hub/sysreqs/)) package and it's mapping of package system dependencies to platform specific installation package names\footnote{See \href{https://sysreqs.r-hub.io/}{https://sysreqs.r-hub.io/}.}.
 \pkg{containerit} uses \CRANpkg{stevedore} to streamline the user interaction and improve the created `Dockerfile`s, e.g., by running a container for the desired base image to extract the already available R packages.
-**\pkg{dockr}** ([https://github.com/smaakage85/dockr](https://github.com/smaakage85/dockr)) is a similar package. It is often desirable to organize R code in the R package structure. \pkg{dockr} facilitates the creation of a Docker container image for your R
-package, in which the package itself is available. The container image mirrors your current R session and includes all of the R dependencies needed to run your R package - also local non-CRAN packages\citep{kjeldgaard_dockr_2019}. Users can manually add statements for non-R dependencies to the `Dockerfile`.
+**\pkg{dockr}** ([https://github.com/smaakage85/dockr](https://github.com/smaakage85/dockr)) is a similar package focusing on the generation of Docker images for R packages, in which the package itself and all of the R dependencies, including local non-CRAN packages, are available \citep{kjeldgaard_dockr_2019}.
+\pkg{dockr} facilitates the organisation of code in the R package structure and the resulting Docker image mirrors the package versions of the current R session.
+Users can manually add statements for non-R dependencies to the `Dockerfile`.
 **\CRANpkg{liftr}** aims to solve the problem of persistent reproducible reporting in statistical computing based on the R Markdown format \citep{xie2018} for dynamic documents \citep[\href{https://nanx.me/liftr/}{https://nanx.me/liftr/}, ][]{liftr2019}.
 The irreproducibility of authoring environments can become an issue for collaborative documents and large-scale platforms for processing documents.
 \CRANpkg{liftr} makes the document the main and sole workflow control file and the only file that needs to be shared between collaborators for consistent environments, e.g. demonstrated in the DockFlow project (https://dockflow.org).
