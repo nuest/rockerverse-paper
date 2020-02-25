@@ -140,6 +140,22 @@ author:
       - Buffalo, NY, 14263, USA
       - \orcid{0000-0002-5910-4010}
     email: lori.shepherd@roswellpark.org
+  - name: Tyson Lee Swetnam
+    # https://github.com/tyson-swetnam
+    affiliation: University of Arizona
+    address:
+      - 1657 E Helen St.
+      - Tucson, AZ, 85721, USA
+      - \orcid{0000-0002-6639-7181}
+    email: tswetnam@arizona.edu
+  - name: Jason Williams
+    # https://github.com/jasonjwilliamsny
+    affiliation: Cold Spring Harbor Laboratory
+    address:
+      - 1 Bungtown Rd.
+      - Cold Spring Harbor, NY, 11724, USA
+      - \orcid{0000-0003-3049-2010}
+    email: williams@cshl.edu       
   - name: Nitesh Turaga
     # https://github.com/nturaga
     affiliation: Roswell Park Comprehensive Cancer Center
@@ -714,6 +730,25 @@ It also installs the packages required for the testing framework and the exercis
 The actual testing of R exercises is done using a custom framework loosely based on \CRANpkg{testthat}.
 During the development of the testing framework, it was found that the \CRANpkg{testthat} framework did not provide enough information to its reporter system to send back all the fields required by Dodona to render its feedback.
 Right now, multiple statistics courses are developing exercises to automate the feedback for their lab classes.
+
+[CyVerse](https://cyverse.org) is an open source, NSF-funded cyberinfrastructure
+platform for the life sciences \citep{merchant2016iplant}. CyVerse supports a
+browser-based 'data science workbench' called the [Discovery Environment (DE)](https://cyverse-de.github.io/), which uses a combination of [HTCondor](https://research.cs.wisc.edu/htcondor/)
+and Kubernetes for orchestrating container based analysis, it integrates with external HPC (High Performance Computing), NSF-XSEDE through [TAPIS] (https://www.tacc.utexas.edu/tapis) API's. In addition, CyVerse provides a multi-petabyte Data Store based on [iRODS](https://irods.org/, this allows users to share and manage hundreds of GB's of data.  The DE uses an [OAuth](https://oauth.net/2/) system for single sign on (SSO) for its 70+ thousand registered user. Rocker integration in the DE is designed to provide life science researchers with scalable,
+compute-intensive R analysis capabilities needed for large and complex datasets
+(e.g. genomics/multi-omics, GWAS, phenotypic data, spatial data etc.). The DE runs Docker
+containers on demand, with users able to integrate containers from DockerHub or
+other registries \citep{devisetty2016bringing}. These capabilities give users
+flexibility similar to Binder, but allows containers to run on larger computational resources (RAM, CPU, Disk), and for longer periods of time (days to weeks).. The
+Rocker Project's RStudio and Shiny containers are integrated into the DE by
+building new layers from official Rocker images (including a reverse proxy using
+`nginx` to handle communication with CyVerse authentication systems). All running instances are protected through this authentication system and users can invite other registered users to securely access the same instance. 
+\citep{rstudio_proxy_2020}). Users can reference the same base image and add packages to further customize their R environment, the Rocker base image is cached on all nodes in the Kubernetes environment to speed up launching. CyVerse maintains its own [GitHub Organization](https://github.com/cyverse-vice/) with Dockerfiles and configuration scripts auto-built on
+DockerHub. For additional reproducibility, CyVerse operates a private
+Docker registry where a user's published (publicly available) containers are
+held. CyVerse user accounts are free (with some limitations for non-US users)
+and its ReadTheDocs documentation repository [CyVerse Learning Center](https://learning.cyverse.org/) allows community members to document their containers
+to support training and education.
 
 ## Packaging research reproducibly
 \label{compendia}
