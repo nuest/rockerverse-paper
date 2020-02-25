@@ -140,15 +140,7 @@ author:
       - 1657 E Helen St.
       - Tucson, AZ, 85721, USA
       - \orcid{0000-0002-6639-7181}
-    email: tswetnam@arizona.edu
-  - name: Jason Williams
-    # https://github.com/jasonjwilliamsny
-    affiliation: Cold Spring Harbor Laboratory
-    address:
-      - 1 Bungtown Rd.
-      - Cold Spring Harbor, NY, 11724, USA
-      - \orcid{0000-0003-3049-2010}
-    email: williams@cshl.edu       
+    email: tswetnam@arizona.edu      
   - name: Nitesh Turaga
     # https://github.com/nturaga
     affiliation: Roswell Park Comprehensive Cancer Center
@@ -157,6 +149,14 @@ author:
       - Buffalo, NY, 14263, USA
       - \orcid{0000-0002-0224-9817}
     email: nitesh.turaga@roswellpark.org
+  - name: Jason Williams
+    # https://github.com/jasonjwilliamsny
+    affiliation: Cold Spring Harbor Laboratory
+    address:
+      - 1 Bungtown Rd.
+      - Cold Spring Harbor, NY, 11724, USA
+      - \orcid{0000-0003-3049-2010}
+    email: williams@cshl.edu 
   - name: Craig Willis
     # https://github.com/craig-willis
     affiliation: University of Illinois at Urbana-Champaign
