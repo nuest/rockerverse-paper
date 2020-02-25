@@ -70,6 +70,13 @@ author:
       - Seattle, WA 98109-1024, USA
       #- \orcid{}
     email: ehhughes@fredhutch.org
+  - name: Lars Kjeldgaard
+    # https://github.com/smaakage85
+    affiliation: Danish Tax Authorities
+    address:
+      - Oestbanegade 123
+      - 2100, Koebenhavn Oe
+    email: lars_kjeldgaard@hotmail.com
   - name: Sean Lopp
     # https://github.com/slopp
     affiliation: RStudio, Inc
@@ -432,7 +439,8 @@ Developers can retrieve system requirements and package dependencies to write a 
 It relies on the \pkg{sysreqs} ([https://github.com/r-hub/sysreqs/](https://github.com/r-hub/sysreqs/)) package and it's mapping of package system dependencies to platform specific installation package names\footnote{See \href{https://sysreqs.r-hub.io/}{https://sysreqs.r-hub.io/}.}.
 \pkg{containerit} uses \CRANpkg{stevedore} to streamline the user interaction and improve the created `Dockerfile`s, e.g., by running a container for the desired base image to extract the already available R packages.
 
-**\pkg{dockr}** ([https://github.com/smaakage85/dockr](https://github.com/smaakage85/dockr)) is a very similar package attempting to mirror a given R session, including local non-CRAN packages\citep{kjeldgaard_dockr_2019}.
+**\pkg{dockr}** ([https://github.com/smaakage85/dockr](https://github.com/smaakage85/dockr)) is a similar package focusing on the generation of Docker images for R packages, in which the package itself and all of the R dependencies, including local non-CRAN packages, are available \citep{kjeldgaard_dockr_2019}.
+\pkg{dockr} facilitates the organisation of code in the R package structure and the resulting Docker image mirrors the package versions of the current R session.
 Users can manually add statements for non-R dependencies to the `Dockerfile`.
 
 **\CRANpkg{liftr}** aims to solve the problem of persistent reproducible reporting in statistical computing based on the R Markdown format \citep{xie2018} for dynamic documents \citep[\href{https://nanx.me/liftr/}{https://nanx.me/liftr/}, ][]{liftr2019}.
@@ -799,6 +807,7 @@ NR wrote paragraphs about shared work environments and GPUs.
 LS \& NT wrote the section on Bioconductor.
 CW wrote the sections on Whole Tale and contributed the publication reproducibility audit use case.
 NX contributed content on \pkg{liftr}.
+LK contributed content on \pkg{dockr}.
 All authors approved the final version.
 This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
 The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page}, \href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history}, and \href{https://github.com/nuest/rockerverse-paper/issues/}{discussion issues} provide a detailed view on the respective contributions.
