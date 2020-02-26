@@ -653,6 +653,7 @@ This is even more useful when some of the users do not have the expertise to cre
 For example, _RCloud_ ([https://rcloud.social](https://rcloud.social)) is a cloud-based platform for data analysis, visualisation and collaboration using R.
 It provides a `rocker/drd` base image for easy evaluation of the platform\footnote{\href{https://github.com/att/rcloud/tree/master/docker}{https://github.com/att/rcloud/tree/master/docker}}.
 
+\label{binder}
 The [**Binder**](https://mybinder.readthedocs.io/en/latest/) project, maintained by the team behind Jupyter, makes it possible for users to **create and share computing environments** with others \citep{jupyter_binder_2018}.
 A _BinderHub_ allows anyone with access to a web browser and an internet connection to launch a temporary instance of these custom environments and execute any workflows contained within.
 From a reproducibility standpoint, Binder makes it exceedingly easy to compile a paper, visualize data, and run small examples from papers or tutorials without the need for any local installation.
@@ -694,7 +695,19 @@ The Rocker&nbsp;Project provides containers pre-installed with the RStudio&nbsp;
 In cases where users store nontrivial amounts of data for their projects, the data needs to persist beyond the life of the container.
 This may be in shared disks, attached network volumes, or in separate storage where it is uploaded between sessions.
 In the case of shared disks or network-attached volumes, care must be taken to match user permissions, and of course backups are still neccessary.
-When working with multiple servers, an automation framework such as [Ansible](https://www.ansible.com) may be useful for managing users, permisions, and disks along with containers.
+
+[CyVerse](https://cyverse.org) is an open source, NSF-funded cyberinfrastructure platform for the life sciences providing easy access to computing and storage resources \citep{merchant_iplant_2016}.
+CyVerse's a browser-based 'data science workbench' is called [Discovery Environment](https://cyverse-de.github.io/) (DE).
+DE uses a combination of [HTCondor](https://research.cs.wisc.edu/htcondor/) and Kubernetes for orchestrating container-based analysis and integrates with external HPC, i.e., [NSF-XSEDE](https://www.xsede.org/), through [TAPIS](https://www.tacc.utexas.edu/tapis) API's.
+In addition, CyVerse provides a multi-petabyte Data Store based on [iRODS](https://irods.org/) with shared access by users.
+The DE runs Docker containers on demand, with users able to integrate bespoke containers from DockerHub or other registries \citep{devisetty_bringing_2016}.
+Rocker integration in the DE is designed to provide life science researchers with scalable, compute-intensive R analysis capabilities needed for large and complex datasets (e.g., genomics/multi-omics, GWAS, phenotypic data, spatial data etc.).
+These capabilities give users flexibility similar to Binder, but allows containers to run on larger computational resources (RAM, CPU, Disk), and for longer periods of time (days to weeks).
+The Rocker Project's RStudio and Shiny containers are integrated into the DE by deriving new images from Rocker images\footnote{See \href{https://github.com/cyverse-vice/}{https://github.com/cyverse-vice/} for \texttt{Dockerfile}s and configuration scripts; images are auto-built on DockerHub at \href{https://hub.docker.com/u/cyversevice}{https://hub.docker.com/u/cyversevice}.}.
+These images include a reverse proxy using `nginx` to handle communication with CyVerse's authentication systems, which allow users to invite other registered users to securely access the same instance \citep{rstudio_proxy_2020}.
+The images further include specific tools, such as the CLI utility `icommands` to access iRODS.
+Users can reference the same base image and add packages to further customize their R environment, or they can use CyVerse's image registry where a user's published, i.e., publicly available, containers are held for additional reproducibility.
+CyVerse user accounts are free (with some limitations for non-US users) and the [CyVerse Learning Center](https://learning.cyverse.org/) allows community members to document their containers to support training and education.
 
 \label{rocker-gpu}
 Using **GPUs** (graphical processing units) as a specialised hardware from containerised common work environments is also possible and useful \citep{haydel_enhancing_2015}.
@@ -730,22 +743,6 @@ It also installs the packages required for the testing framework and the exercis
 The actual testing of R exercises is done using a custom framework loosely based on \CRANpkg{testthat}.
 During the development of the testing framework, it was found that the \CRANpkg{testthat} framework did not provide enough information to its reporter system to send back all the fields required by Dodona to render its feedback.
 Right now, multiple statistics courses are developing exercises to automate the feedback for their lab classes.
-
-[CyVerse](https://cyverse.org) is an open source, NSF-funded cyberinfrastructure platform for the life sciences \citep{merchant_iplant_2016}.
-CyVerse supports a browser-based 'data science workbench' called the [Discovery Environment (DE)](https://cyverse-de.github.io/), which uses a combination of [HTCondor](https://research.cs.wisc.edu/htcondor/) and Kubernetes for orchestrating container based analysis, it integrates with external HPC (High Performance Computing), NSF-XSEDE through [TAPIS](https://www.tacc.utexas.edu/tapis) API's.
-In addition, CyVerse provides a multi-petabyte Data Store based on [iRODS](https://irods.org/), this allows users to share and manage hundreds of GB's of data.
-The DE uses an [OAuth](https://oauth.net/2/) system for single sign on (SSO) for its 70+ thousand registered users.
-Rocker integration in the DE is designed to provide life science researchers with scalable, compute-intensive R analysis capabilities needed for large and complex datasets (e.g., genomics/multi-omics, GWAS, phenotypic data, spatial data etc.).
-The DE runs Docker containers on demand, with users able to integrate containers from DockerHub or other registries \citep{devisetty_bringing_2016}.
-These capabilities give users flexibility similar to Binder, but allows containers to run on larger computational resources (RAM, CPU, Disk), and for longer periods of time (days to weeks).
-The Rocker Project's RStudio and Shiny containers are integrated into the DE by deriving new images from Rocker images.
-These images include a reverse proxy using `nginx` to handle communication with CyVerse authentication systems.
-All running instances are protected through this authentication system and users can invite other registered users to securely access the same instance \citep{rstudio_proxy_2020}.
-Users can reference the same base image and add packages to further customize their R environment.
-The Rocker base image is cached on all nodes in the Kubernetes environment to speed up launching.
-CyVerse maintains its own [GitHub Organization](https://github.com/cyverse-vice/) with Dockerfiles and configuration scripts auto-built on DockerHub.
-For additional reproducibility, CyVerse operates a private Docker image registry where a user's published, i.e., publicly available, containers are held.
-CyVerse user accounts are free (with some limitations for non-US users) and the documentation repository [CyVerse Learning Center](https://learning.cyverse.org/) allows community members to document their containers to support training and education.
 
 ## Packaging research reproducibly
 \label{compendia}
@@ -810,7 +807,7 @@ In this consolidation, the Rocker&nbsp;Project could play the role of a coordina
 Nonetheless, for the moment, it seems that Rocker Project will be used more experimentation and feature growth, e.g., images for GPU-based computing and artificial intelligence.
 Even with coding being more and more accepted as a required and achievable skill, an easier access, for example by exposing containerisation benefits via simple user interfaces in the users' IDE, could be an important next step, since currently containerisation happens more in the background for UI-based development (e.g., a `rocker/rstudio` image in the cloud).
 Furthermore, a maturing of the Rockerverse packages for managing containers may lead to them being adopted in situations where manual coding is currently required, e.g. in the case of \CRANpkg{RSelentium} or \CRANpkg{drake} (see Sections&nbsp;\nameref{rselenium} and \nameref{drake} respectively).
-In specific cases, e.g., for \CRANpkg{analogsea}, the interaction with the Docker daemon may remain too specific to re-use first-order packages to control Docker.
+In some cases, e.g., for \CRANpkg{analogsea}, the interaction with the Docker daemon may remain too specific to re-use first-order packages to control Docker.
 
 New features which make complex workflows accessible and reproducible and the variety in packages connected with containerisation, even when they have overlapping features, are a signal and a support for a growing user base.
 This growth is possibly the most important goal for the foreseeable future in the _Rockerverse_, and, just like the Rocker images have matured over years of use and millions of runs, the new ideas and prototypes will have to prove themselves.
