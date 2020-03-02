@@ -589,6 +589,14 @@ ShinyProxy uses Docker containers to isolate user sessions and to achieve scalab
 ShinyProxy itself is written in Java to accomodate corporate requirements and may itself run in a container for stability and availability.
 The tool is built on ContainerProxy ([https://www.containerproxy.io/](https://www.containerproxy.io/)), which provides similar features for executing long-running R jobs or interactive R sessions.
 The started containers can run on a regular Docker host but also in clusters.
+Continuous integration and deployment (CI/CD) for Shiny applications using Shinyproxy on virtual machines
+can be achieved e.g. via [GitLab pipelines](https://docs.gitlab.com/ee/ci/pipelines.html). 
+A pipeline can include building and checking R packages and Shiny apps. After the code has passed
+checks, Docker images are built and pushed to GitLab's container registry
+(public or private, depending on project settings). The pipeline is finished off by sending an HTTP
+request to the virtual machine where and endpoint (webhook) is waiting to execute the
+deployment script (updating configurations, pulling new Docker images, restarting services).
+
 Another example is the package \CRANpkg{golem} ([https://github.com/ThinkR-open/golem](https://github.com/ThinkR-open/golem)), which makes an heavy use of `dockerfiler` when it comes to creating the `Dockerfile` for building and deploying production-grade Shiny applications.
 \CRANpkg{googleComputeEngineR} ([https://cloudyr.github.io/googleComputeEngineR/](https://cloudyr.github.io/googleComputeEngineR/)) enables quick deployments of key R services, such as RStudio and Shiny, onto cloud virtual machines (VMs) with Google Cloud Compute Engine \citep{googleComputeEngineR_2019}.
 The package utilises `Dockerfile`s to move the labour of setting up those services from the user to a premade Docker image, which is configured and run in the cloud VM.
