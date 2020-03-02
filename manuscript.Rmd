@@ -63,7 +63,7 @@ author:
     email: contact@colinfay.me
   - name: Ellis Hughes
     # https://github.com/thebioengineer
-    affiliation: Fred Hutchinson Cancer Research Center 
+    affiliation: Fred Hutchinson Cancer Research Center
     address:
       - Vaccine and Infectious Disease
       - 1100 Fairview Ave. N., P.O. Box 19024
@@ -141,7 +141,7 @@ author:
     # https://github.com/psolymos
     affiliation: Analythium Solutions
     address:
-      - \#258 150 Chippewa Road 
+      - \#258 150 Chippewa Road
       - Sherwood Park, AB, T8A 6A2, Canada
       - \orcid{0000-0001-7337-1740}
     email: peter@analythium.io
@@ -168,7 +168,7 @@ author:
       - 1 Bungtown Rd.
       - Cold Spring Harbor, NY, 11724, USA
       - \orcid{0000-0003-3049-2010}
-    email: williams@cshl.edu 
+    email: williams@cshl.edu
   - name: Craig Willis
     # https://github.com/craig-willis
     affiliation: University of Illinois at Urbana-Champaign
@@ -237,7 +237,7 @@ While related approaches exist, such as LXC\footnote{\href{https://en.wikipedia.
 In doing so, Docker had recognised and validated the importance of one very important thread that had been emerging, namely virtualisation.
 By allowing (one or possibly) multiple applications or services to run concurrently on one host machine without any fear of interference between them, Docker provides an important scalability opportunity.
 Beyond this though, Docker has improved this compartmentalisation by accessing the host system---generally Linux---through a much thinner and smaller shim than a full operating system emulation or virtualisation.
-This containerisation, also called operating-system-level virtualisation \citep{wikipedia_contributors_os-level_2020}, 
+This containerisation, also called operating-system-level virtualisation \citep{wikipedia_contributors_os-level_2020},
 makes efficient use of operating system resources \citep{felter_updated_2015} and allows another order of magnitude in terms of scalability of deployment \citep[cf.][]{datadog_8_2018} because, while a container typically runs one process, virtualisation may run whole operating systems at a larger footprint.
 This makes for more efficient use of system resources \citep{felter_updated_2015} and allowed another order of magnitude in terms of scalability of deployment \citep[cf.][]{datadog_8_2018}.
 While Docker makes use of Linux kernel features, it has become important enough that some required aspects of running Docker have been added to other operating systems so that those systems can more efficiently support Docker \citep{microsoft_linux_2019}.
@@ -296,7 +296,7 @@ functionalities <- tribble(
 
 # some functionalities might be missing. please add them if you find that any are missing!
 package_functionalities <- tribble(
-  ~package, ~id,  
+  ~package, ~id,
   "harbor", c("execute", "cloud", "images"),
   "stevedore", c("api", "execute", "cloud", "images", "interact"), # build?
   "AzureContainers", c("build", "execute", "cloud"),
@@ -305,15 +305,15 @@ package_functionalities <- tribble(
   "dockermachine", c("install", "execute", "cloud", "interact")
 )
 
-tab <- 
+tab <-
   full_join(
-  functionalities %>% crossing(package = package_functionalities$package), 
+  functionalities %>% crossing(package = package_functionalities$package),
   package_functionalities %>% unnest(id) %>% mutate(check = "\\checkmark"),#\u2714 # \\checkmark
   by = c("id", "package")
 ) %>%
-  mutate(check = ifelse(is.na(check), "", check)) %>% 
-  spread(package, check) %>% 
-  slice(match(functionalities$id, id)) %>% 
+  mutate(check = ifelse(is.na(check), "", check)) %>%
+  spread(package, check) %>%
+  slice(match(functionalities$id, id)) %>%
   select(-id)
 
 # insert table
@@ -703,7 +703,7 @@ A central goal of the platform is to enable researchers to easily create and pub
 Using Whole&nbsp;Tale, researchers can create and publish Rocker-based reproducible research objects to a growing number of repositories including DataONE member nodes, Zenodo and soon Dataverse.
 Additionally, Whole&nbsp;Tale supports automatic data citation and is working on capabilities for image preservation and provenance capture to improve the transparency of published computational research artefacts \citep{mecum2018, mcphillips2019}.
 For R users, Whole&nbsp;Tale extends the Jupyter Project's `repo2docker` component to simplify the customisation of R-based environments for researchers with limited experience with either Docker or Git.
-Multiple options have been discussed to allow users to change the base image used in `repo2docker` from the default Ubuntu LTS (long-term support) required to support the Rocker Project images. 
+Multiple options have been discussed to allow users to change the base image used in `repo2docker` from the default Ubuntu LTS (long-term support) required to support the Rocker Project images.
 Whole&nbsp;Tale implemented a custom `RockerBuildPack`\footnote{See \href{https://github.com/whole-tale/repo2docker\_wholetale}{https://github.com/whole-tale/repo2docker\_wholetale}} to support customisation of the `rocker/geospatial` image through `repo2docker` composability\footnote{Composability refers to the ability to combine multiple package managers -- such as R, `pip`, and `conda`}.
 This works in part because Rocker images are based on a Debian distribution, so the instructions created by `repo2docker` for Ubuntu work because of compatible shell and package manager.
 
@@ -723,7 +723,7 @@ This may be in shared disks, attached network volumes, or in separate storage wh
 In the case of shared disks or network-attached volumes, care must be taken to match user permissions, and of course backups are still neccessary.
 
 [CyVerse](https://cyverse.org) is an open source, NSF-funded cyberinfrastructure platform for the life sciences providing easy access to computing and storage resources \citep{merchant_iplant_2016}.
-CyVerse's a browser-based 'data science workbench' is called [Discovery Environment](https://cyverse-de.github.io/) (DE).
+CyVerse's a browser-based 'data science workbench' is called [Discovery Environment](https://cyverse.org/discovery-environment) (DE).
 DE uses a combination of [HTCondor](https://research.cs.wisc.edu/htcondor/) and Kubernetes for orchestrating container-based analysis and integrates with external HPC, i.e., [NSF-XSEDE](https://www.xsede.org/), through [TAPIS](https://www.tacc.utexas.edu/tapis) API's.
 In addition, CyVerse provides a multi-petabyte Data Store based on [iRODS](https://irods.org/) with shared access by users.
 The DE runs Docker containers on demand, with users able to integrate bespoke containers from DockerHub or other registries \citep{devisetty_bringing_2016}.
@@ -761,10 +761,10 @@ Second, the idea of a common environment and partitioning allows for using _cont
 [Dodona](https://dodona.ugent.be) is a web platform developed at Ghent University that is used to teach students basic programming skills, and it uses Docker containers to test submissions by students.
 This means that both the code testing the students' submissions and the submission itself are executed in a predictable environment, avoiding compatibility issues between the wide variety of configurations used by students.
 The containerisation is also used to shield the Dodona servers from bad or even malicious code: memory, time and I/O&nbsp;limits are used to make sure students cannot overload the system.
-The web application managing the containers communicates with them by sending configuration information as a JSON document over standard input. 
+The web application managing the containers communicates with them by sending configuration information as a JSON document over standard input.
 Every Dodona Docker image shares a `main.sh` file that passes through this information to the actual testing framework, while setting up some error handling.
 The testing process in the Docker containers sends back the test results by writing a JSON document to its standard output channel.
-In June 2019, R support was added to Dodona using an image derived from the `rocker/r-base` image that sets up the `runner` user and and `main.sh` file expected by Dodona\footnote{\href{https://github.com/dodona-edu/docker-images/blob/master/dodona-r.dockerfile}{https://github.com/dodona-edu/docker-images/blob/master/dodona-r.dockerfile}}. 
+In June 2019, R support was added to Dodona using an image derived from the `rocker/r-base` image that sets up the `runner` user and and `main.sh` file expected by Dodona\footnote{\href{https://github.com/dodona-edu/docker-images/blob/master/dodona-r.dockerfile}{https://github.com/dodona-edu/docker-images/blob/master/dodona-r.dockerfile}}.
 It also installs the packages required for the testing framework and the exercises so that this does not have to happen every time a student's submission is evaluated.
 The actual testing of R exercises is done using a custom framework loosely based on \CRANpkg{testthat} \citep{wickham_testthat_2011}.
 During the development of the testing framework, it was found that the \CRANpkg{testthat} framework did not provide enough information to its reporter system to send back all the fields required by Dodona to render its feedback.
@@ -787,7 +787,7 @@ Research workflows in containers are safe from contamination from other activiti
 Given the users in this scenario, i.e., often academics with limited formal software development training, templates and assistance with containers around research compendia is essential.
 In many fields we see that a typical unit of research for a container is a research report or journal article, where the container holds the compendium, or self-contained set of data (or connections to data elsewhere) and code files needed to fully reproduce the article \citep{marwick_packaging_2018}.
 The package \pkg{rrtools} ([https://github.com/benmarwick/rrtools](https://github.com/benmarwick/rrtools)) provides a template and convienence functions to apply good practices for research compendia, including a starter `Dockerfile`.
-Images of compendium containers can be hosted on services such as Docker&nbsp;Hub for convienient sharing among collaborators and others. 
+Images of compendium containers can be hosted on services such as Docker&nbsp;Hub for convienient sharing among collaborators and others.
 Similarly, packages such as \pkg{containerit} and \pkg{dockerfiler} can be used to manage the `Dockerfile` to be archived with a compendium on a data repository (e.g. [Zenodo](https://zenodo.org/), [Dataverse](https://dataverse.org/), [Figshare](https://figshare.com/), [OSF](https://osf.io/)).
 A typial compendium's `Dockerfile` will pull a rocker image fixed to a specific version of R, and install R packages from the MRAN repository to ensure the package versions are tied to a specific date, rather than the most recent version.
 A more extreme case is the _dynverse_ project ([https://dynverse.org/](https://dynverse.org/)), which packages over 50 computational methods with different environments (R, Python, C++, etc.) in Docker images, which can be executed from R.
@@ -865,6 +865,7 @@ NX contributed content on \pkg{liftr}.
 LK contributed content on \pkg{dockr}.
 PS wrote the paragraphs about GitLab CI/CD pipelines with Shinyproxy and OpenFaaS R templates.
 CV wrote the section on the usage of Docker containers in Dodona.
+TS and JW wrote the section on CyVerse. 
 All authors approved the final version.
 This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
 The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page}, \href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history}, and \href{https://github.com/nuest/rockerverse-paper/issues/}{discussion issues} provide a detailed view on the respective contributions.
@@ -894,12 +895,12 @@ unlink('manuscript_cache', recursive = TRUE)
 # - direclty setting the keep_tex option
 rjournal_style_preprint <- function (..., citation_package = "natbib") {
     rmarkdown::pandoc_available("2.2", TRUE)
-    base <- rticles:::pdf_document_format("rjournal_article", highlight = NULL, 
+    base <- rticles:::pdf_document_format("rjournal_article", highlight = NULL,
         citation_package = citation_package, ...)
     base$pandoc$to <- "latex"
     base$pandoc$ext <- ".tex"
     base$pandoc$keep_tex <- TRUE # added
-    base$post_processor <- function(metadata, utf8_input, output_file, 
+    base$post_processor <- function(metadata, utf8_input, output_file,
         clean, verbose) {
       filename <- basename(output_file)
       if (filename != (filename2 <- gsub("_", "-", filename))) {
@@ -907,9 +908,9 @@ rjournal_style_preprint <- function (..., citation_package = "natbib") {
           filename <- filename2
       }
       m <- list(filename = xfun::sans_ext(filename))
-      h <- rticles:::get_list_element(metadata, c("output", "rticles::rjournal_article", 
+      h <- rticles:::get_list_element(metadata, c("output", "rticles::rjournal_article",
           "includes", "in_header"))
-      h <- c(h, if (length(preamble <- unlist(metadata[c("preamble", 
+      h <- c(h, if (length(preamble <- unlist(metadata[c("preamble",
           "header-includes")]))) {
           f <- tempfile(fileext = ".tex")
           on.exit(unlink(f), add = TRUE)
@@ -919,23 +920,23 @@ rjournal_style_preprint <- function (..., citation_package = "natbib") {
       #t <- find_resource("rjournal_article", "RJwrapper.tex")
       t <- here::here("RJwrapper_preprint_template.tex")
       rticles:::template_pandoc(m, t, "RJwrapper.tex", h, verbose)
-      tinytex::latexmk("RJwrapper.tex", base$pandoc$latex_engine, 
+      tinytex::latexmk("RJwrapper.tex", base$pandoc$latex_engine,
           clean = clean)
     }
     base$knitr$opts_chunk$comment <- "#>"
     hilight_source <- rticles:::knitr_fun("hilight_source")
     hook_chunk = function(x, options) {
-        if (rticles:::output_asis(x, options)) 
+        if (rticles:::output_asis(x, options))
             return(x)
         paste0("```{=latex}\n\\begin{Schunk}\n", x, "\\end{Schunk}\n```")
     }
-    hook_input <- function(x, options) paste(c("\\begin{Sinput}", 
-        hilight_source(x, "sweave", options), "\\end{Sinput}", 
+    hook_input <- function(x, options) paste(c("\\begin{Sinput}",
+        hilight_source(x, "sweave", options), "\\end{Sinput}",
         ""), collapse = "\n")
-    hook_output <- function(x, options) paste("\\begin{Soutput}\n", 
+    hook_output <- function(x, options) paste("\\begin{Soutput}\n",
         x, "\\end{Soutput}\n", sep = "")
-    base$knitr$knit_hooks <- rticles:::merge_list(base$knitr$knit_hooks, 
-        list(chunk = hook_chunk, source = hook_input, output = hook_output, 
+    base$knitr$knit_hooks <- rticles:::merge_list(base$knitr$knit_hooks,
+        list(chunk = hook_chunk, source = hook_input, output = hook_output,
             message = hook_output, warning = hook_output, plot = knitr::hook_plot_tex))
     base
 }
