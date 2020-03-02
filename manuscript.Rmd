@@ -68,7 +68,6 @@ author:
       - Vaccine and Infectious Disease
       - 1100 Fairview Ave. N., P.O. Box 19024
       - Seattle, WA 98109-1024, USA
-      #- \orcid{}
     email: ehhughes@fredhutch.org
   - name: Lars Kjeldgaard
     # https://github.com/smaakage85
@@ -83,10 +82,9 @@ author:
     address:
       - 250 Northern Ave
       - Boston, MA 02210, USA
-      #- \orcid{}
     email: sean@rstudio.com
   - name: Ben Marwick
-    # https://github.com/benmarwick/
+    # https://github.com/benmarwick
     affiliation: University of Washington
     address:
       - Department of Anthropology
@@ -95,15 +93,14 @@ author:
       - \orcid{0000-0001-7879-4531}
     email: bmarwick@uw.edu
   - name: Heather Nolis
-    # https://github.com/nolistic/
+    # https://github.com/nolistic
     affiliation: T-Mobile
     address:
       - 12920 Se 38th St.
       - Bellevue, WA, 98006, USA
-      #- \orcid{NA}
     email: heather.wensler1@t-mobile.com
   - name: Jacqueline Nolis
-    # https://github.com/jnolis/
+    # https://github.com/jnolis
     affiliation: Nolis, LLC
     address:
       - Seattle, WA, USA
@@ -965,6 +962,10 @@ file.rename("RJwrapper.pdf", "rockerverse-preprint.pdf") # file for own archival
 front_matter <- rmarkdown::yaml_front_matter("manuscript.Rmd")
 emails <- sapply(X = front_matter$author, FUN = function(a) { a$email })
 cat(emails, sep = "\n")
+```
+
+```{bash collab_handles, eval=FALSE, include=FALSE}
+cat manuscript.Rmd | grep '    # https://github.com/' | sed 's|    # https://github.com/|@|'
 ```
 
 \bibliography{RJreferences}
