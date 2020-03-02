@@ -628,7 +628,7 @@ Yet the approach requires a manual management of the computing environment.
 Parallel efforts to enable R for different cloud providers leads to some level of code fragmentation. This fact and to avoid vendor lock in motivated the [OpenFaaS project](https://www.openfaas.com/), that facilitates the deployment of functions and microservices to Kubernetes or Docker Swarm. OpenFaaS is language agnostic, it provides auto-scaling, metrics, and an API gateway.
 Reduced boilerplate code is achieved via templates. R templates\footnote{OpenFaaS R templates: \href{https://github.com/analythium/openfaas-rstats-templates}{https://github.com/analythium/openfaas-rstats-templates}}
 are provided based on Rocker's and R-hub's [r-minimal](https://github.com/r-hub/r-minimal) Docker images.
-The templates use multi-stage Docker builds\footnote{\herf{https://docs.docker.com/develop/develop-images/multistage-build/}{https://docs.docker.com/develop/develop-images/multistage-build/}} to combine R base images with the OpenFaaS 'watchdog', a tiny Golang webserver that marshals an HTTP request accepted on the API Gateway and invokes the application. 
+The templates use [multi-stage Docker builds](https://docs.docker.com/develop/develop-images/multistage-build/) to combine R base images with the OpenFaaS 'watchdog', a tiny Golang webserver that marshals an HTTP request accepted on the API Gateway and invokes the application. 
 The R session use \CRANpkg{plumber} or similar packages for the API endpoint with packages and data preloaded, thus minimizing response times.
 
 The prevelance of Docker in industry naturally leads to the use of containers with R in such settings as well, as companies already manage platforms in Docker containers.
