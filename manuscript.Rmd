@@ -530,6 +530,7 @@ Fifth, Docker images can be used **on continuous integration (CI) platforms** to
 [`r-ci`](https://github.com/ColinFay/r-ci) is, in turn, used with [GitLab&nbsp;CI](https://docs.gitlab.com/ee/ci/), which itself is built on top of Docker images: the user specifies a base Docker image and control code, and the whole set of tests is run inside a container.
 The `r-ci` image stack combines `rocker` versioning and a series of tools specifically designed for testing in a fixed environment with a customized list of preinstalled packages.
 Especially for long-running tests or complex system dependencies, these approaches to seperate installation of build dependencies with code testing streamline the development process.
+Containers can also simplify the integration of R software into larger, multi-language CI pipelines.
 Furthermore, with each change, even this manuscript is rendered into a PDF and deployed to a GitHub-hosted website (see `.travis.yml` and `Dockerfile` in the manuscript repository), not because of concern about time, but to control the environment used on a CI server.
 This gives, on the one hand, easy access after every update of the R Markdown source code and, on the other hand a second controlled environment to make sure that the article renders successfully and correctly.
 
