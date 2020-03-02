@@ -864,6 +864,7 @@ CW wrote the sections on Whole Tale and contributed the publication reproducibil
 NX contributed content on \pkg{liftr}.
 LK contributed content on \pkg{dockr}.
 PS wrote the paragraphs about GitLab CI/CD pipelines with Shinyproxy and OpenFaaS R templates.
+CV wrote the section on the usage of Docker containers in Dodona.
 All authors approved the final version.
 This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
 The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page}, \href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history}, and \href{https://github.com/nuest/rockerverse-paper/issues/}{discussion issues} provide a detailed view on the respective contributions.
