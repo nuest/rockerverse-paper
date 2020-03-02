@@ -589,13 +589,12 @@ ShinyProxy uses Docker containers to isolate user sessions and to achieve scalab
 ShinyProxy itself is written in Java to accomodate corporate requirements and may itself run in a container for stability and availability.
 The tool is built on ContainerProxy ([https://www.containerproxy.io/](https://www.containerproxy.io/)), which provides similar features for executing long-running R jobs or interactive R sessions.
 The started containers can run on a regular Docker host but also in clusters.
-Continuous integration and deployment (CI/CD) for Shiny applications using Shinyproxy on virtual machines
-can be achieved e.g. via [GitLab pipelines](https://docs.gitlab.com/ee/ci/pipelines.html). 
-A pipeline can include building and checking R packages and Shiny apps. After the code has passed
-checks, Docker images are built and pushed to GitLab's container registry
-(public or private, depending on project settings). The pipeline is finished off by sending an HTTP
-request to the virtual machine where and endpoint (webhook) is waiting to execute the
-deployment script (updating configurations, pulling new Docker images, restarting services).
+Continuous integration and deployment (CI/CD) for Shiny applications using Shinyproxy can be achieved, e.g., via [GitLab pipelines](https://docs.gitlab.com/ee/ci/pipelines.html).
+A pipeline can include building and checking R packages and Shiny apps.
+After the code has passed the checks, Docker images are built and pushed to GitLab's container registry.
+The pipeline finishes with triggering a webhook on the server, where the
+deployment script is executed.
+The script updates configurations, pulls the new Docker images, and restarts the services.
 
 Another example is the package \CRANpkg{golem} ([https://github.com/ThinkR-open/golem](https://github.com/ThinkR-open/golem)), which makes an heavy use of `dockerfiler` when it comes to creating the `Dockerfile` for building and deploying production-grade Shiny applications.
 \CRANpkg{googleComputeEngineR} ([https://cloudyr.github.io/googleComputeEngineR/](https://cloudyr.github.io/googleComputeEngineR/)) enables quick deployments of key R services, such as RStudio and Shiny, onto cloud virtual machines (VMs) with Google Cloud Compute Engine \citep{googleComputeEngineR_2019}.
@@ -625,10 +624,15 @@ AzureContainers provides an R-based interface to these features and, thereby, si
 `heroku-docker-r` ([https://github.com/virtualstaticvoid/heroku-docker-r](https://github.com/virtualstaticvoid/heroku-docker-r)) is an independent project providing a template for deploying R applications based on Heroku's image stack, including multiple examples for interfacing R with other programming languages.
 Yet the approach requires a manual management of the computing environment.
 
-Parallel efforts to enable R for different cloud providers leads to some level of code fragmentation. This fact and to avoid lock-in motivated the [OpenFaaS project](https://www.openfaas.com/), that facilitates the deployment of functions and microservices to Kubernetes or Docker Swarm. OpenFaaS is language agnostic, it provides auto-scaling, metrics, and an API gateway.
-Reduced boilerplate code is achieved via templates. R templates\footnote{OpenFaaS R templates: \href{https://github.com/analythium/openfaas-rstats-templates}{https://github.com/analythium/openfaas-rstats-templates}}
+Independent integrations of R for different cloud providers lead to repeated efforts and code fragmentation.
+To mitigate these problems and to avoid vendor lock-in motivated the [OpenFaaS project](https://www.openfaas.com/).
+OpenFaas facilitates the deployment of functions and microservices to Kubernetes or Docker Swarm.
+It is language agnostic and provides auto-scaling, metrics, and an API gateway.
+Reduced boilerplate code is achieved via templates.
+Template for R\footnote{See OpenFaaS R templates at \href{https://github.com/analythium/openfaas-rstats-templates}{https://github.com/analythium/openfaas-rstats-templates}.}
 are provided based on Rocker's Debian and R-hub's [r-minimal](https://github.com/r-hub/r-minimal) Alpine images.
-The templates use [multi-stage Docker builds](https://docs.docker.com/develop/develop-images/multistage-build/) to combine R base images with the OpenFaaS 'watchdog', a tiny Golang webserver that marshals an HTTP request and invokes the application. 
+The templates use [multi-stage Docker builds](https://docs.docker.com/develop/develop-images/multistage-build/) to combine R base images with the OpenFaaS 'watchdog', a tiny Golang webserver.
+The watchdog marshals an HTTP request and invokes the actual application.
 The R session uses \CRANpkg{plumber} or similar packages for the API endpoint with packages and data preloaded, thus minimizing response times.
 
 The prevelance of Docker in industry naturally leads to the use of containers with R in such settings as well, as companies already manage platforms in Docker containers.
