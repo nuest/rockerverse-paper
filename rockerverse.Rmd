@@ -741,17 +741,16 @@ This may be in shared disks, attached network volumes, or in separate storage wh
 In the case of shared disks or network-attached volumes, care must be taken to match user permissions, and of course backups are still necessary.
 
 [CyVerse](https://cyverse.org) is an open source, NSF-funded cyberinfrastructure platform for the life sciences providing easy access to computing and storage resources \citep{merchant_iplant_2016}.
-CyVerse's a browser-based 'data science workbench' is called [Discovery Environment](https://cyverse.org/discovery-environment) (DE).
-DE uses a combination of [HTCondor](https://research.cs.wisc.edu/htcondor/) and Kubernetes for orchestrating container-based analysis and integrates with external HPC, i.e., [NSF-XSEDE](https://www.xsede.org/), through [TAPIS](https://www.tacc.utexas.edu/tapis) API's.
-In addition, CyVerse provides a multi-petabyte Data Store based on [iRODS](https://irods.org/) with shared access by users.
+CyVerse has a browser-based 'data science workbench' called the [Discovery Environment](https://cyverse.org/discovery-environment) (DE).
+The DE uses a combination of [HTCondor](https://research.cs.wisc.edu/htcondor/) and Kubernetes for orchestrating container-based analysis and integrates with external HPC, i.e., [NSF-XSEDE](https://www.xsede.org/), through [TAPIS](https://www.tacc.utexas.edu/tapis)(TACC-API's).
+CyVerse hosts a multi-petabyte Data Store based on [iRODS](https://irods.org/) with shared access by its users.
 The DE runs Docker containers on demand, with users able to integrate bespoke containers from DockerHub or other registries \citep{devisetty_bringing_2016}.
-Rocker images integration in the DE is designed to provide life science researchers with scalable, compute-intensive R analysis capabilities needed for large and complex datasets (e.g., genomics/multi-omics, GWAS, phenotypic data, spatial data etc.).
-These capabilities give users flexibility similar to Binder, but allows containers to run on larger computational resources (RAM, CPU, Disk), and for longer periods of time (days to weeks).
-The Rocker Project's RStudio and Shiny containers are integrated into the DE by deriving new images from Rocker images\footnote{See \href{https://github.com/cyverse-vice/}{https://github.com/cyverse-vice/} for \texttt{Dockerfile}s and configuration scripts; images are auto-built on DockerHub at \href{https://hub.docker.com/u/cyversevice}{https://hub.docker.com/u/cyversevice}.}.
-These images include a reverse proxy using `nginx` to handle communication with CyVerse's authentication systems, which allow users to invite other registered users to securely access the same instance \citep{rstudio_proxy_2020}.
-The images further include specific tools, such as the CLI utility `icommands` to access iRODS.
-Users can reference the same base image and add packages to further customize their R environment, or they can use CyVerse's image registry where a user's published, i.e., publicly available, containers are held for additional reproducibility.
-CyVerse user accounts are free (with some limitations for non-US users) and the [CyVerse Learning Center](https://learning.cyverse.org/) allows community members to document their containers to support training and education.
+Rocker image integration in the DE is designed to provide researchers with scalable, compute-intensive, R analysis capabilities for large and complex datasets (e.g., genomics/multi-omics, GWAS, phenotypic data, geospatial data, etc.).
+These capabilities give users flexibility similar to Binder, but allow containers to be run on larger computational resources (RAM, CPU, Disk, GPU), and for longer periods of time (days to weeks).
+The Rocker Project's RStudio and Shiny are integrated into the DE by deriving new images from Rocker images\footnote{See \href{https://github.com/cyverse-vice/}{https://github.com/cyverse-vice/} for \texttt{Dockerfile}s and configuration scripts; images are auto-built on DockerHub at \href{https://hub.docker.com/u/cyversevice}{https://hub.docker.com/u/cyversevice}.}.
+These new images include a reverse proxy using `nginx` to handle communication with CyVerse's authentication system \citep{rstudio_proxy_2020}; CyVerse also allows owners to invite other registered users to securely access the same instance.
+The CyVerse Rocker images further include tools for connecting to its Data Store, such as the CLI utility `icommands` for iRODS.
+CyVerse accounts are free (with some limitations for non-US users), and the [CyVerse Learning Center](https://learning.cyverse.org/) provides community members with information about the platform, incuding training and education opportunities.
 
 \label{rocker-gpu}
 Using **GPUs** (graphical processing units) as a specialised hardware from containerised common work environments is also possible and useful \citep{haydel_enhancing_2015}.
