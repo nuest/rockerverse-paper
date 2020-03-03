@@ -880,7 +880,7 @@ LS \& NT wrote the section on Bioconductor.
 PS wrote the paragraphs about GitLab CI/CD pipelines with Shinyproxy and OpenFaaS templates.
 TS \& JW wrote the section on CyVerse.
 CvP wrote the section on the usage of Docker containers in Dodona.
-CW wrote the sections on Whole Tale and contributed the publication reproducibility audit use case.
+CW wrote the sections on Whole Tale and contributed content about publication reproducibility audits.
 NX contributed content on \pkg{liftr}.
 All authors approved the final version.
 This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
@@ -892,7 +892,7 @@ DN is supported by the project Opening Reproducible Research ([o2r](https://www.
 The funders had no role in data collection and analysis, decision to publish, or preparation of the manuscript.
 KR was supported in part  by a grant from The Leona M. and Harry B. Helmsley Charitable Trust, award number 2016PG-BRI004.
 LS and NT are supported by US NIH / NHGRI awards U41HG00405 and U24HG010263.
-CW is supported by the Whole Tale projects (https://wholetale.org) funded by the US National Science Foundation (NSF) under award [OAC-1541450](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1541450).
+CW is supported by the Whole Tale project (https://wholetale.org) funded by the US National Science Foundation (NSF) under award [OAC-1541450](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1541450).
 We would like to thank Celeste R. Brennecka from the Science Writing Support Service of the University of Münster for her editorial support.
 
 \bibliography{RJreferences}
