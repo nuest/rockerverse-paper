@@ -161,6 +161,15 @@ author:
       - Buffalo, NY, 14263, USA
       - \orcid{0000-0002-0224-9817}
     email: nitesh.turaga@roswellpark.org
+  - name: Charlotte Van Petegem
+    # https://github.com/charvp
+    affiliation: Ghent University
+    address:
+      - Department WE02
+      - Krijgslaan 281, S9
+      - 9000 Gent, Belgium
+      - \orcid{0000-0003-0779-4897}
+    email: charlotte.vanpetegem@ugent.be
   - name: Jason Williams
     # https://github.com/jasonjwilliamsny
     affiliation: Cold Spring Harbor Laboratory
@@ -185,15 +194,6 @@ author:
       - Charlestown, MA 02129, USA
       - \orcid{0000-0002-0250-5673}
     email: me@nanx.me
-  - name: Charlotte Van Petegem
-    # https://github.com/charvp
-    affiliation: Ghent University
-    address:
-      - Department WE02
-      - Krijgslaan 281, S9
-      - 9000 Gent, Belgium
-      - \orcid{0000-0003-0779-4897}
-    email: charlotte.vanpetegem@ugent.be
 abstract: >
   The Rocker Project provides widely used Docker images for R across different application scenarios.
   This articles surveys downstream projects that build upon Rocker images and presents the current state of R packages for managing Docker images and controlling containers.
@@ -854,18 +854,18 @@ RC \& EH contributed to the section on interfaces for Docker in R (_dynverse_ an
 DC contributed content on Gigantum.
 ME contributed to the section on processing and deployment to cloud services.
 CF wrote paragraphs about \pkg{r-online}, \pkg{dockerfiler}, \pkg{r-ci} and \pkg{r-db}.
+LK contributed content on \pkg{dockr}.
 SL contributed content on RStudio's usage of Docker.
 BM wrote the section on research compendia and made the project Binder ready.
 HN \& JN co-wrote the section on the T-Mobile use case.
 KR wrote the section about \pkg{holepunch}.
 NR wrote paragraphs about shared work environments and GPUs.
 LS \& NT wrote the section on Bioconductor.
+PS wrote the paragraphs about GitLab CI/CD pipelines with Shinyproxy and OpenFaaS templates.
+TS \& JW wrote the section on CyVerse.
+CvP wrote the section on the usage of Docker containers in Dodona.
 CW wrote the sections on Whole Tale and contributed the publication reproducibility audit use case.
 NX contributed content on \pkg{liftr}.
-LK contributed content on \pkg{dockr}.
-PS wrote the paragraphs about GitLab CI/CD pipelines with Shinyproxy and OpenFaaS R templates.
-CV wrote the section on the usage of Docker containers in Dodona.
-TS and JW wrote the section on CyVerse. 
 All authors approved the final version.
 This articles was collaboratively written at \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
 The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page}, \href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history}, and \href{https://github.com/nuest/rockerverse-paper/issues/}{discussion issues} provide a detailed view on the respective contributions.
