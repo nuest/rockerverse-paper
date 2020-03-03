@@ -359,7 +359,7 @@ It interfaces with the Docker daemon over the Docker HTTP API\footnote{\href{htt
 The package is the only one not using system calls to the `docker` CLI tool for managing images and containers.
 The package thereby enables connections to remote Docker instances without direct configuration of the local Docker daemon.
 Furthermore using the API gives access to information in a structured way, is system independent, and is likely more reliable than parsing command line output.
-\CRANpkg{stevedore}'s own interface is automatically generated based on the OpenAPI specification of the Docker daemon, but it is still similar to the Docker CLI.
+\pkg{stevedore}'s own interface is automatically generated based on the OpenAPI specification of the Docker daemon, but it is still similar to the Docker CLI.
 The interface is similar to R6 objects, in that an object of class \code{"stevedore\_object"} has a number of functions attached to it that can be called, and multiple specific versions of the Docker API can be supported thanks to the automatic generation\footnote{See \href{https://github.com/richfitz/stevedore/blob/master/development.md}{https://github.com/richfitz/stevedore/blob/master/development.md}.}.
 
 **\CRANpkg{AzureContainers}** is an interface to a number of container-related services in Microsoft's [Azure Cloud](https://azure.microsoft.com/) \citep{AzureContainers_2019}.
@@ -478,7 +478,7 @@ Developers can retrieve system requirements and package dependencies to write a 
 **\pkg{containerit}** ([https://github.com/o2r-project/containerit/](https://github.com/o2r-project/containerit/)) attempts to take this one step further and includes these tools to automatically create a `Dockerfile` that can execute a given workflow \citep{nust_containerit_2019}.
 \pkg{containerit} accepts an R object of classes \code{"sessionInfo"} or \code{"session\_info"} as input and provides helper functions to derive these from workflows, e.g., an R script or R Markdown document, by analysing the session state at the end of the workflow.
 It relies on the \pkg{sysreqs} ([https://github.com/r-hub/sysreqs/](https://github.com/r-hub/sysreqs/)) package and it's mapping of package system dependencies to platform specific installation package names\footnote{See \href{https://sysreqs.r-hub.io/}{https://sysreqs.r-hub.io/}.}.
-\pkg{containerit} uses \CRANpkg{stevedore} to streamline the user interaction and improve the created `Dockerfile`s, e.g., by running a container for the desired base image to extract the already available R packages.
+\pkg{containerit} uses \pkg{stevedore} to streamline the user interaction and improve the created `Dockerfile`s, e.g., by running a container for the desired base image to extract the already available R packages.
 
 **\CRANpkg{dockr}** is a similar package focusing on the generation of Docker images for R packages, in which the package itself and all of the R dependencies, including local non-CRAN packages, are available \citep{cran_dockr,kjeldgaard_dockr_2019}.
 \pkg{dockr} facilitates the organisation of code in the R package structure and the resulting Docker image mirrors the package versions of the current R session.
@@ -486,7 +486,7 @@ Users can manually add statements for non-R dependencies to the `Dockerfile`.
 
 **\CRANpkg{liftr}** aims to solve the problem of persistent reproducible reporting in statistical computing based on the R Markdown format \citep{xie2018} for dynamic documents \citep[\href{https://nanx.me/liftr/}{https://nanx.me/liftr/}, ][]{liftr2019}.
 The irreproducibility of authoring environments can become an issue for collaborative documents and large-scale platforms for processing documents.
-\CRANpkg{liftr} makes the document the main and sole workflow control file and the only file that needs to be shared between collaborators for consistent environments, e.g. demonstrated in the DockFlow project (https://dockflow.org).
+\pkg{liftr} makes the document the main and sole workflow control file and the only file that needs to be shared between collaborators for consistent environments, e.g. demonstrated in the DockFlow project (https://dockflow.org).
 It introduces new fields to the R Markdown document header, allowing users to manually declare the dependencies, including versions, for rendering the document.
 The package then generates a `Dockerfile` from this metadata and provides a utitility function to render the document inside a Docker container, i.e., \code{render\_docker("foo.Rmd")}.
 An RStudio addin even allows compilation of documents with the single push of a button.
@@ -497,8 +497,8 @@ R versions are available via the versioned Rocker image stack \citep{RJ-2017-065
 With a standalone NodeJS app or [r-online](https://srv.colinfay.me/r-online), the user can compare a piece of code run in two separate versions of R.
 Internally, r-online opens one or two Docker instances with the given version of R based on Rocker images, executes a given piece of code, and returns the result to the user.
 Regarding R package management, this can be achieved with MRAN, or with packages such as \CRANpkg{checkpoint} \citep{cran_checkpoint} and \CRANpkg{renv} \citep{renv2019}, which can naturally be applied within images and containers.
-For example, \CRANpkg{renv} helps users to manage the state of the R library in a reproducible way, further providing isolation and portability.
-While \CRANpkg{renv} does not cover system dependencies, the \CRANpkg{renv}-based environment can be transferred into a container either by restoring the environment based on the main configuration file `renv.lock` or by storing the \CRANpkg{renv}-cache on the host and not in the container \citep{ushey_using_2019}.
+For example, \pkg{renv} helps users to manage the state of the R library in a reproducible way, further providing isolation and portability.
+While \pkg{renv} does not cover system dependencies, the \pkg{renv}-based environment can be transferred into a container either by restoring the environment based on the main configuration file `renv.lock` or by storing the \pkg{renv}-cache on the host and not in the container \citep{ushey_using_2019}.
 With both the system dependencies and R packages consciously managed in a Docker image, users can start using containers as the _only_ environment for their workflows, which allows them to work indepenently of physical computers\footnote{Allowing them to be digital "nomads", cf. J.~Bryan's \href{https://github.com/jennybc/docker-why}{https://github.com/jennybc/docker-why}.} and to assert a specific degree of confidence in the stability of a developed software \citep[cf. \texttt{README.Rmd} in][]{marwick_research_2017}.
 
 ## Development, debugging, and testing
@@ -515,7 +515,7 @@ Using the Rocker images with RStudio, these disposable environments lack no deve
 
 Second, the strong integration of **system libraries in core packages** in the [R-spatial community](https://www.r-spatial.org/) makes containers essential for stable and proactive development of common classes for geospatial data modelling and analysis. For example, GDAL \citep{gdal_2019} is a crucial library in the geospatial domain.
 GDAL is a system dependency allowing R packages such as \CRANpkg{sf}, which provides the core data model for geospatial vector data, or \CRANpkg{rgdal}, to accommodate users to be able to read and write hundreds of different spatial raster and vector formats \citep{pebesma_simple_2018,cran_rgdal}.
-\CRANpkg{sf} and \CRANpkg{rgdal} have hundreds of indirect reverse imports and dependencies and, therefore, the maintainers spend a lot of effort trying not to break them.
+\pkg{sf} and \pkg{rgdal} have hundreds of indirect reverse imports and dependencies and, therefore, the maintainers spend a lot of effort trying not to break them.
 Purpose-built Docker images are used to prepare for upcoming releases of system libraries, individual bug reports, and for the lowest supported versions of system libraries\footnote{Cf. \href{https://github.com/r-spatial/sf/tree/master/inst/docker}{https://github.com/r-spatial/sf/tree/master/inst/docker}, \href{https://github.com/Nowosad/rspatial_proj6}{https://github.com/Nowosad/rspatial\_proj6}, and \href{https://github.com/r-spatial/sf/issues/1231}{https://github.com/r-spatial/sf/issues/1231}}.
 
 <!-- GET THE NUMBER OF REVERSE IMPORTS AND DEPS FOR rgdal AND sf
@@ -560,7 +560,7 @@ First, it is possible to **offload complex processing to a server** or clouds an
 For example, the package can [schedule jobs with Docker Swarm](https://mllg.github.io/batchtools/reference/makeClusterFunctionsDocker.html).
 **\CRANpkg{googleComputeEngineR}** has the function \code{gce\_vm\_cluster()} to create clusters of 2 or more virtual machines, running multi-CPU architectures \citep{googleComputeEngineR_2019}.
 Instead of running a local R script with the local CPU and RAM restrictions, the same code can be processed on all CPU threads of the cluster of machines in the cloud, all running a Docker container with the same R environments.
-\CRANpkg{googleComputeEngineR} integrates with the R parallelisation package \CRANpkg{future} \citep{cran_future} to enable this with only a few lines or R code\footnote{\href{https://cloudyr.github.io/googleComputeEngineR/articles/massive-parallel.html}{https://cloudyr.github.io/googleComputeEngineR/articles/massive-parallel.html}}.
+\pkg{googleComputeEngineR} integrates with the R parallelisation package \CRANpkg{future} \citep{cran_future} to enable this with only a few lines or R code\footnote{\href{https://cloudyr.github.io/googleComputeEngineR/articles/massive-parallel.html}{https://cloudyr.github.io/googleComputeEngineR/articles/massive-parallel.html}}.
 [Google Cloud Run](https://cloud.run) is a CaaS (Containers as a Service) platform.
 Users can launch containers using any Docker image without worrying about underlying infrastructure in a so-called serverless configuration.
 The service takes care of network ingress, scaling machines up and down, authentication, and authorisation---all features which are non-trivial for a developer to build and maintain on their own.
@@ -569,9 +569,9 @@ This can be used to scale up R code to millions of instances if need be with lit
 As Google Cloud Build itself can run any container, the package \pkg{googleCloudRunner} demonstrates how R can be used as the control language for one-time or batch processing jobs and scheduling of jobs\footnote{\href{https://code.markedmondson.me/googleCloudRunner/articles/cloudbuild.html}{https://code.markedmondson.me/googleCloudRunner/articles/cloudbuild.html}}.
 \label{drake} **\CRANpkg{drake}** is a workflow manager for data science projects \citep{landau_drake_2019}.
 It features implicit parallel computing and automated detection of the parts of the work that actually needs to be re-executed.
-\CRANpkg{drake} has been demonstrated to run inside containers for high reproducibility\footnote{See for example \href{https://github.com/joelnitta/pleurosoriopsis}{https://github.com/joelnitta/pleurosoriopsis} or \href{https://gitlab.com/ecohealthalliance/drake-gitlab-docker-example}{https://gitlab.com/ecohealthalliance/drake-gitlab-docker-example}, the latter even running in a continuous integration platform (cf.~\nameref{development}.}.
-Furthermore, \CRANpkg{drake} workflows have been shown to use \CRANpkg{future} package's function \code{makeClusterPSOCK()} for sending parts of the workflow to a Docker image for execution\footnote{\href{https://docs.ropensci.org/drake/index.html?q=docker\#with-docker}{https://docs.ropensci.org/drake/index.html?q=docker\#with-docker}} \citep[see package's function documentation;~][]{future_2020}.
-In the latter case, the container control code must be written by the user, and the \CRANpkg{future} package ensures that the host and worker can connect for communicating over socket connections.
+\pkg{drake} has been demonstrated to run inside containers for high reproducibility\footnote{See for example \href{https://github.com/joelnitta/pleurosoriopsis}{https://github.com/joelnitta/pleurosoriopsis} or \href{https://gitlab.com/ecohealthalliance/drake-gitlab-docker-example}{https://gitlab.com/ecohealthalliance/drake-gitlab-docker-example}, the latter even running in a continuous integration platform (cf.~\nameref{development}.}.
+Furthermore, \pkg{drake} workflows have been shown to use \pkg{future} package's function \code{makeClusterPSOCK()} for sending parts of the workflow to a Docker image for execution\footnote{\href{https://docs.ropensci.org/drake/index.html?q=docker\#with-docker}{https://docs.ropensci.org/drake/index.html?q=docker\#with-docker}} \citep[see package's function documentation;~][]{future_2020}.
+In the latter case, the container control code must be written by the user, and the \pkg{future} package ensures that the host and worker can connect for communicating over socket connections.
 **RStudio Server Pro** includes a functionality called [Launcher](https://solutions.rstudio.com/launcher/overview/) (since version&nbsp;1.2, released in 2019).
 It gives users the ability to spawn R sessions and background/batch jobs in a scalable way on external clusters, e.g., [Kubernetes based on Docker images](https://support.rstudio.com/hc/en-us/articles/360019253393-Using-Docker-images-with-RStudio-Server-Pro-Launcher-and-Kubernetes) or [Slurm](https://slurm.schedmd.com/) clusters, and optionally, with Singularity containers.
 A benefit of the proprietary Launcher software is the ability for R and Python users to leverage containerisation's advantages in RStudio without writing specific deployment scripts or learning about Docker or managing clusters at all.
@@ -597,8 +597,8 @@ The cloud is the natural environment for containers, and, therefore, containers 
 More and more continuous integration (CI) and continuous delivery (CD) services also use containers, opening up new options for use.
 The controlled nature of containers, i.e., the possibility to abstract internal software environment from a minimal dependency outside of the container is crucial, for example to match test or build environments with production environments or transfer runnable entities to as-a-service infrastructures.
 
-First, different packages use containers for the **deployment of R and \CRANpkg{Shiny} apps**.
-\CRANpkg{Shiny} is a popular package for creating interactive online dashboards with R, and it enables users with very diverse backgrounds to create stable and user-friendly web applications \citep{cran_shiny}.
+First, different packages use containers for the **deployment of R and \pkg{Shiny} apps**.
+\pkg{Shiny} is a popular package for creating interactive online dashboards with R, and it enables users with very diverse backgrounds to create stable and user-friendly web applications \citep{cran_shiny}.
 _ShinyProxy_ ([https://www.shinyproxy.io/](https://www.shinyproxy.io/)) is an open source tool to deploy Shiny apps in an enterprise context, where it features single sign-on, but it can also be used in scientific use cases \citep[e.g., ][]{savini_epiexplorer_2019,glouzon_structurexplor_2017}.
 ShinyProxy uses Docker containers to isolate user sessions and to achieve scalability for multi-user scenarios with multiple apps.
 ShinyProxy itself is written in Java to accommodate corporate requirements and may itself run in a container for stability and availability.
@@ -632,8 +632,8 @@ The package \pkg{googleKubernetesR} ([https://github.com/RhysJackson/googleKuber
 The package \CRANpkg{analogsea} provides a way to programmatically create and destroy cloud VMs on the [Digital Ocean](https://www.digitalocean.com/) platform \citep{analogsea_2019}.
 It also includes R wrapper functions to install Docker in such a VM, manage images, and control containers straight from R functions.
 These functions are translated to Docker CLI commands and transferred transparently to the respective remove machine using SSH.
-\CRANpkg{AzureContainers} is an umbrella package that provides interfaces for three commercial services of Microsoft's Azure Cloud, namely [Container Instances](https://azure.microsoft.com/en-us/services/container-instances/) for running individual containers, [Container Registry](https://azure.microsoft.com/en-us/services/container-registry/) for private image distribution, and [Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/) for orchestrated deployments.
-While a package like \CRANpkg{plumber} provides the infrastructure for turning an R workflow into a web service, for production purposes it is usually necessary to take into account scalability, reliability and ease of management.
+\pkg{AzureContainers} is an umbrella package that provides interfaces for three commercial services of Microsoft's Azure Cloud, namely [Container Instances](https://azure.microsoft.com/en-us/services/container-instances/) for running individual containers, [Container Registry](https://azure.microsoft.com/en-us/services/container-registry/) for private image distribution, and [Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/) for orchestrated deployments.
+While a package like \pkg{plumber} provides the infrastructure for turning an R workflow into a web service, for production purposes it is usually necessary to take into account scalability, reliability and ease of management.
 AzureContainers provides an R-based interface to these features and, thereby, simplifies complex infrastructure management to a number of R function calls, given an Azure account with sufficient credit\footnote{See \emph{"Deploying a prediction service with Plumber"} vignette for details:  \href{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01_plumber_deploy.html}{https://cran.r-project.org/web/packages/AzureContainers/vignettes/vig01\_plumber\_deploy.html}.}.
 [Heroku](https://www.heroku.com/) is another cloud platform as a service provider, and it supports container-based applications.
 `heroku-docker-r` ([https://github.com/virtualstaticvoid/heroku-docker-r](https://github.com/virtualstaticvoid/heroku-docker-r)) is an independent project providing a template for deploying R applications based on Heroku's image stack, including multiple examples for interfacing R with other programming languages.
@@ -648,7 +648,7 @@ Template for R\footnote{See OpenFaaS R templates at \href{https://github.com/ana
 are provided based on Rocker's Debian and R-hub's [r-minimal](https://github.com/r-hub/r-minimal) Alpine images.
 The templates use [multi-stage Docker builds](https://docs.docker.com/develop/develop-images/multistage-build/) to combine R base images with the OpenFaaS 'watchdog', a tiny Golang web server.
 The watchdog marshals an HTTP request and invokes the actual application.
-The R session uses \CRANpkg{plumber} or similar packages for the API endpoint with packages and data preloaded, thus minimizing response times.
+The R session uses \pkg{plumber} or similar packages for the API endpoint with packages and data preloaded, thus minimizing response times.
 
 The prevalence of Docker in industry naturally leads to the use of containers with R in such settings as well, as companies already manage platforms in Docker containers.
 These products often entail a large amount of open source software in combination with proprietary layers adding the relevant commercialisation features.
@@ -661,15 +661,15 @@ The best practices for [running RStudio with Docker containers](https://support.
 
 R has been historically viewed as a tool for analysis and scientific research, but not for creating software that corporations can rely on for production services.
 However, thanks to advancements in R running as a web service, along with the ability to deploy R in Docker containers, modern enterprises are now capable of having real-time machine learning powered by R.
-A number of packages and projects have enabled R to respond to client requests over TCP/IP and local socket servers, such as \CRANpkg{Rserve} \citep{cran_rserve}, \CRANpkg{svSocket} \citep{grosjean_sciviews_2019}, [rApache](http://www.rapache.net) and more recently \CRANpkg{plumber} ([https://www.rplumber.io/](https://www.rplumber.io/)) and \pkg{RestRserve} ([http://restrserve.org](http://restrserve.org)), which even processes incoming requests in parallel with forked processes using \CRANpkg{Rserve}.
+A number of packages and projects have enabled R to respond to client requests over TCP/IP and local socket servers, such as \CRANpkg{Rserve} \citep{cran_rserve}, \CRANpkg{svSocket} \citep{grosjean_sciviews_2019}, [rApache](http://www.rapache.net) and more recently \pkg{plumber} ([https://www.rplumber.io/](https://www.rplumber.io/)) and \pkg{RestRserve} ([http://restrserve.org](http://restrserve.org)), which even processes incoming requests in parallel with forked processes using \CRANpkg{Rserve}.
 The latter two also provide documentation for deployment with Docker or ready-to-use images with automated builds\footnote{See \href{https://www.rplumber.io/docs/hosting.html\#docker}{https://www.rplumber.io/docs/hosting.html\#docker}, \href{https://hub.docker.com/r/trestletech/plumber/}{https://hub.docker.com/r/trestletech/plumber/} and \href{https://hub.docker.com/r/rexyai/restrserve/}{https://hub.docker.com/r/rexyai/restrserve/}.}.
 These software allow other (remote) processes and programming languages to interact with R and to expose R-based function in a service architecture with HTTP APIs.
 APIs based on these packages can be deployed with scalability and high availability using containers.
 This pattern of deploying code matches those used by software engineering services created in more established languages in the enterprise domain, such as Java or Python, and R can be used alongside those languages as a first-class member of a software engineering technical stack.
 
 CARD.com implemented a web application for the optimisation of the acquisition flow and the real-time analysis of debit card transactions.
-The software used \CRANpkg{Rserve} and rApache and was deployed in Docker containers.
-The R session behind \CRANpkg{Rserve} acted as a read-only in-memory database, which was extremely fast and scalabale, for the many concurrent rApache processes responding to the live-scoring requests of various divisions of the company.
+The software used \pkg{Rserve} and rApache and was deployed in Docker containers.
+The R session behind \pkg{Rserve} acted as a read-only in-memory database, which was extremely fast and scalabale, for the many concurrent rApache processes responding to the live-scoring requests of various divisions of the company.
 Similarly deodorised R scripts were responsible for the ETL processes and even the client-facing email, text message and push notification alerts sent in real-time based on card transactions.
 The related Docker images were made available at [https://github.com/cardcorp/card-rocker](https://github.com/cardcorp/card-rocker).
 The images extended `rocker/r-base` and additionally entailed an SSH client and a workaround for being able to mount SSH keys from the host, Pandoc, the Amazon Web Services (AWS) SDK, and Java, which is required by the AWS SDK.
@@ -679,8 +679,8 @@ The main takeaways from using R in Docker were not only that pinning the R packa
 For the use case at hand, this switch allowed for more control over upstream updates and for minimising the risk of breaking the automated builds of the Docker images and production jobs.
 
 The AI @ T-Mobile team created a set of neural network machine learning natural language processing models to help customer care agents manage text-based messages for customers \citep{t-mobile_enterprise_2018}.
-For example, one model quickly identifies whether a message is from a customer \citep[see \CRANpkg{Shiny}-based \href{https://secure.message.t-mobile.com/v1/shiny/is-customer/app/}{demo} further described by ][]{nolis_small_2019}, and others tell which customers are likely to make a repeat purchase.
-If a data scientist creates a machine learning model and exposes it through a \CRANpkg{plumber} API, then someone else on the marketing team could write software that sends different emails depending on that real-time prediction.
+For example, one model quickly identifies whether a message is from a customer \citep[see \pkg{Shiny}-based \href{https://secure.message.t-mobile.com/v1/shiny/is-customer/app/}{demo} further described by ][]{nolis_small_2019}, and others tell which customers are likely to make a repeat purchase.
+If a data scientist creates a machine learning model and exposes it through a \pkg{plumber} API, then someone else on the marketing team could write software that sends different emails depending on that real-time prediction.
 The models are convolutional neural networks that use the \CRANpkg{keras} package \citep{cran_keras} and run in a Rocker container.
 The corresponding `Dockerfile`s are published [on GitHub](https://github.com/tmobile/r-tensorflow-api).
 Since the models power tools for agents and customers, they need to have extremely high uptime and reliability.
@@ -785,7 +785,7 @@ The testing process in the Docker containers sends back the test results by writ
 In June 2019, R support was added to Dodona using an image derived from the `rocker/r-base` image that sets up the `runner` user and and `main.sh` file expected by Dodona\footnote{\href{https://github.com/dodona-edu/docker-images/blob/master/dodona-r.dockerfile}{https://github.com/dodona-edu/docker-images/blob/master/dodona-r.dockerfile}}.
 It also installs the packages required for the testing framework and the exercises so that this does not have to happen every time a student's submission is evaluated.
 The actual testing of R exercises is done using a custom framework loosely based on \CRANpkg{testthat} \citep{wickham_testthat_2011}.
-During the development of the testing framework, it was found that the \CRANpkg{testthat} framework did not provide enough information to its reporter system to send back all the fields required by Dodona to render its feedback.
+During the development of the testing framework, it was found that the \pkg{testthat} framework did not provide enough information to its reporter system to send back all the fields required by Dodona to render its feedback.
 Right now, multiple statistics courses are developing exercises to automate the feedback for their lab classes.
 
 ## Packaging research reproducibly
@@ -849,8 +849,8 @@ Similarly, capturing environments and their serialisation in form of a `Dockerfi
 In this consolidation of R packages, the Rocker&nbsp;Project could play the role of a coordinating entity.
 Nonetheless, for the moment, it seems that the Rocker Project will focus on maintaining and extending its image stacks, e.g., images for GPU-based computing and artificial intelligence.
 Even with coding being more and more accepted as a required and achievable skill, an easier access, for example by exposing containerisation benefits via simple user interfaces in the users' IDE, could be an important next step, since currently containerisation happens more in the background for UI-based development (e.g., a `rocker/rstudio` image in the cloud).
-Furthermore, the maturing of the Rockerverse packages for managing containers may lead to them being adopted in situations where manual coding is currently required, e.g. in the case of \CRANpkg{RSelenium} or \CRANpkg{drake} (see Sections&nbsp;\nameref{rselenium} and \nameref{drake} respectively).
-In some cases, e.g., for \CRANpkg{analogsea}, the interaction with the Docker daemon may remain too specific to re-use first-order packages to control Docker.
+Furthermore, the maturing of the Rockerverse packages for managing containers may lead to them being adopted in situations where manual coding is currently required, e.g. in the case of \pkg{RSelenium} or \pkg{drake} (see Sections&nbsp;\nameref{rselenium} and \nameref{drake} respectively).
+In some cases, e.g., for \pkg{analogsea}, the interaction with the Docker daemon may remain too specific to re-use first-order packages to control Docker.
 
 New features which make complex workflows accessible and reproducible and the variety in packages connected with containerisation, even when they have overlapping features, are a signal and a support for a growing user base.
 This growth is possibly the most important goal for the foreseeable future in the _Rockerverse_, and, just like the Rocker images have matured over years of use and millions of runs, the new ideas and prototypes will have to prove themselves.
