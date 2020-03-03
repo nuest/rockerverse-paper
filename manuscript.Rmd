@@ -874,9 +874,10 @@ The \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contri
 
 DN is supported by the project Opening Reproducible Research ([o2r](https://www.uni-muenster.de/forschungaz/project/12343)) funded by the German Research Foundation (DFG) under project number [PE&nbsp;1632/17-1](https://gepris.dfg.de/gepris/projekt/415851837).
 The funders had no role in data collection and analysis, decision to publish, or preparation of the manuscript.
+KR was supported in part  by a grant from The Leona M. and Harry B. Helmsley Charitable Trust, award number 2016PG-BRI004.
+LS and NT are supported by US NIH / NHGRI awards U41HG00405 and U24HG010263.
 CW is supported by the Whole Tale projects (https://wholetale.org) funded by the US National Science Foundation (NSF) under award [OAC-1541450](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1541450).
 We would like to thank Celeste R. Brennecka from the Science Writing Support Service of the University of Münster for her editorial support.
-LS and NT are supported by US NIH / NHGRI awards U41HG00405 and U24HG010263.
 
 ```{r word_stats, eval=FALSE, include=FALSE}
 # devtools::install_github("benmarwick/wordcountaddin", type = "source", dependencies = TRUE)
