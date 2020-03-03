@@ -229,8 +229,8 @@ converted to appropriate R types. The Docker CLI's basic functionality,
 although it evolves quickly and with little concern for avoiding
 breaking changes, has remained unchanged in core functions, meaning that
 a core function such as
-\texttt{harbor::docker\_run(image\ =\ "hello-world")} still works
-depsite its stopped development.
+\code{harbor::docker\_run(image = "hello-world")} still works depsite
+its stopped development.
 
 \textbf{\CRANpkg{stevedore}} is currently the most powerful Docker
 client in R \citep{cran_stevedore}. It interfaces with the Docker daemon
@@ -246,9 +246,10 @@ way, is system independent, and is likely more reliable than parsing
 command line output. \CRANpkg{stevedore}'s own interface is
 automatically generated based on the OpenAPI specification of the Docker
 daemon, but it is still similar to the Docker CLI. The interface is
-similar to R6 objects, in that a \texttt{stevedore\_object} has a number
-of functions attached to it that can be called, and multiple specific
-versions of the Docker API can be supported thanks to the automatic
+similar to R6 objects, in that an object of class
+\code{"stevedore\_object"} has a number of functions attached to it that
+can be called, and multiple specific versions of the Docker API can be
+supported thanks to the automatic
 generation\footnote{See \href{https://github.com/richfitz/stevedore/blob/master/development.md}{https://github.com/richfitz/stevedore/blob/master/development.md}.}.
 
 \textbf{\CRANpkg{AzureContainers}} is an interface to a number of
@@ -271,13 +272,14 @@ runtimes.
 (\url{https://github.com/thebioengineer/dockyard}) has the goal of
 lowering the barrier to creating \texttt{Dockerfile}s, building Docker
 images, and deploying Docker containers. The package follows the
-increasingly used piping paradigm of the \texttt{tidyverse} style of
-programming for chaining R functions representing the instructions in a
-\texttt{Dockerfile}. An existing \texttt{Dockerfile} can be used as a
-template. \pkg{dockyard} also includes wrappers for common steps, such
-as installing an R package or copying files, and provides built-in
-functions for building an image and running a container, which make
-Docker more approachable within a single R-based user interface.
+increasingly used piping paradigm of the Tidyverse-style
+\citep{wickham_welcome_2019} of programming for chaining R functions
+representing the instructions in a \texttt{Dockerfile}. An existing
+\texttt{Dockerfile} can be used as a template. \pkg{dockyard} also
+includes wrappers for common steps, such as installing an R package or
+copying files, and provides built-in functions for building an image and
+running a container, which make Docker more approachable within a single
+R-based user interface.
 
 \textbf{\pkg{dockermachine}}
 (\url{https://github.com/cboettig/dockermachine}) is an R package to
@@ -344,8 +346,8 @@ closely as possible. This image contains the build system environment
 variables and the \emph{system dependencies} needed to install and check
 almost all (1813 out of 1823) \emph{Bioconductor} software packages, and
 it saves users and package developers from managing these themselves.
-Furthermore, the image is configured so that \texttt{.libPaths()} has
-\texttt{/usr/local/lib/R/host-site-library} as the first location. Users
+Furthermore, the image is configured so that \code{.libPaths()} has
+\samp{/usr/local/lib/R/host-site-library} as the first location. Users
 mounting a location on the host file system to this location can
 persistently manage installed packages across Docker containers or image
 updates. Many R users pursue flexible work flows tailored to particular
@@ -497,13 +499,13 @@ file.
 (\url{https://github.com/o2r-project/containerit/}) attempts to take
 this one step further and includes these tools to automatically create a
 \texttt{Dockerfile} that can execute a given workflow
-\citep{nust_containerit_2019}. \pkg{containerit} accepts R
-\texttt{sessionInfo} objects as input and provides helper functions to
-derive these from workflows, e.g., an R script or R Markdown document,
-by analysing the session state at the end of the workflow. It relies on
-the \pkg{sysreqs} (\url{https://github.com/r-hub/sysreqs/}) package and
-it's mapping of package system dependencies to platform specific
-installation package
+\citep{nust_containerit_2019}. \pkg{containerit} accepts an R object of
+classes \code{"sessionInfo"} or \code{"session\_info"} as input and
+provides helper functions to derive these from workflows, e.g., an R
+script or R Markdown document, by analysing the session state at the end
+of the workflow. It relies on the \pkg{sysreqs}
+(\url{https://github.com/r-hub/sysreqs/}) package and it's mapping of
+package system dependencies to platform specific installation package
 names\footnote{See \href{https://sysreqs.r-hub.io/}{https://sysreqs.r-hub.io/}.}.
 \pkg{containerit} uses \CRANpkg{stevedore} to streamline the user
 interaction and improve the created \texttt{Dockerfile}s, e.g., by
@@ -533,8 +535,8 @@ to the R Markdown document header, allowing users to manually declare
 the dependencies, including versions, for rendering the document. The
 package then generates a \texttt{Dockerfile} from this metadata and
 provides a utitility function to render the document inside a Docker
-container, i.e., \texttt{render\_docker("foo.Rmd")}. An RStudio addin
-even allows compilation of documents with the single push of a button.
+container, i.e., \code{render\_docker("foo.Rmd")}. An RStudio addin even
+allows compilation of documents with the single push of a button.
 
 System dependencies are the domain of Docker, but for a full description
 of the computing environment one must also manage the R version and the
@@ -704,7 +706,7 @@ parallel to speed up or to serve many users.
 For example, the package can
 \href{https://mllg.github.io/batchtools/reference/makeClusterFunctionsDocker.html}{schedule
 jobs with Docker Swarm}. \textbf{\CRANpkg{googleComputeEngineR}} has the
-function \texttt{gce\_vm\_cluster()} to create clusters of 2 or more
+function \code{gce\_vm\_cluster()} to create clusters of 2 or more
 virtual machines, running multi-CPU architectures
 \citep{googleComputeEngineR_2019}. Instead of running a local R script
 with the local CPU and RAM restrictions, the same code can be processed
@@ -742,7 +744,7 @@ actually needs to be re-executed. \CRANpkg{drake} has been demonstrated
 to run inside containers for high
 reproducibility\footnote{See for example \href{https://github.com/joelnitta/pleurosoriopsis}{https://github.com/joelnitta/pleurosoriopsis} or \href{https://gitlab.com/ecohealthalliance/drake-gitlab-docker-example}{https://gitlab.com/ecohealthalliance/drake-gitlab-docker-example}, the latter even running in a continuous integration platform (cf.~\nameref{development}.}.
 Furthermore, \CRANpkg{drake} workflows have been shown to use
-\CRANpkg{future} package's function \texttt{makeClusterPSOCK()} for
+\CRANpkg{future} package's function \code{makeClusterPSOCK()} for
 sending parts of the workflow to a Docker image for
 execution\footnote{\href{https://docs.ropensci.org/drake/index.html?q=docker\#with-docker}{https://docs.ropensci.org/drake/index.html?q=docker\#with-docker}}
 \citep[see package's function documentation;~][]{future_2020}. In the
@@ -836,20 +838,19 @@ script updates configurations, pulls the new Docker images, and restarts
 the services.
 
 Another example is the package \CRANpkg{golem}, which makes an heavy use
-of \texttt{dockerfiler} when it comes to creating the
-\texttt{Dockerfile} for building and deploying production-grade Shiny
-applications \citep{cran_golem}. \CRANpkg{googleComputeEngineR} enables
-quick deployments of key R services, such as RStudio and Shiny, onto
-cloud virtual machines (VMs) with Google Cloud Compute Engine
+of \pkg{dockerfiler} when it comes to creating the \texttt{Dockerfile}
+for building and deploying production-grade Shiny applications
+\citep{cran_golem}. \CRANpkg{googleComputeEngineR} enables quick
+deployments of key R services, such as RStudio and Shiny, onto cloud
+virtual machines (VMs) with Google Cloud Compute Engine
 \citep{googleComputeEngineR_2019}. The package utilises
 \texttt{Dockerfile}s to move the labour of setting up those services
 from the user to a premade Docker image, which is configured and run in
 the cloud VM. For example, by specifying the template
-\texttt{template="rstudio"} in functions
-\texttt{gce\_vm\_template()/gce\_vm()} an up-to-date RStudio Server
-image is launched for development work, whereas specifying
-\texttt{template="rstudio-gpu"} will launch an RStudio Server image with
-a GPU attached, etc.
+\texttt{template="rstudio"} in functions \code{gce\_vm\_template()} and
+\code{gce\_vm()} an up-to-date RStudio Server image is launched for
+development work, whereas specifying \texttt{template="rstudio-gpu"}
+will launch an RStudio Server image with a GPU attached, etc.
 
 Second, containers can be used to create \textbf{platform installation
 packages} in a DevOps setting. The
@@ -1327,7 +1328,7 @@ containers can be hosted on services such as Docker~Hub for convenient
 sharing among collaborators and others. Similarly, packages such as
 \pkg{containerit} and \pkg{dockerfiler} can be used to manage the
 \texttt{Dockerfile} to be archived with a compendium on a data
-repository (e.g. \href{https://zenodo.org/}{Zenodo},
+repository (e.g.~\href{https://zenodo.org/}{Zenodo},
 \href{https://dataverse.org/}{Dataverse},
 \href{https://figshare.com/}{Figshare}, \href{https://osf.io/}{OSF}). A
 typical compendium's \texttt{Dockerfile} will pull a rocker image fixed
