@@ -904,8 +904,8 @@ We would like to thank Celeste R. Brennecka from the Science Writing Support Ser
 
 ```{r word_stats, eval=FALSE, include=FALSE}
 # devtools::install_github("benmarwick/wordcountaddin", type = "source", dependencies = TRUE)
-wordcountaddin::readability(here::here("manuscript.Rmd"))
-wordcountaddin::text_stats(here::here("manuscript.Rmd"))
+wordcountaddin::readability(here::here("rockerverse.Rmd"))
+wordcountaddin::text_stats(here::here("rockerverse.Rmd"))
 ```
 
 ```{r preprint_pdf, eval=FALSE, include=FALSE}
@@ -966,33 +966,33 @@ rjournal_style_preprint <- function (..., citation_package = "natbib") {
     base
 }
 
-rmarkdown::render("manuscript.Rmd", output_format = rjournal_style_preprint())
+rmarkdown::render("rockerverse.Rmd", output_format = rjournal_style_preprint())
 file.rename("RJwrapper.pdf", "rockerverse-preprint.pdf") # file for own archival
 
 # For submission to arXiv:
 # 1. Copy the following files into a new folder:
 # - figures/*
-# - manuscript.tex
+# - rockerverse.tex
 # - RJournal.sty
 # - RJreferences.bib
 # - RJwrapper.tex
 # 2. Run pdfLaTeX directly on RJwrapper.tex (works with RStudio)
 # 3. Zip the following files and submit to arXiv:
 # - /figures
-# - manuscript.tex
+# - rockerverse.tex
 # - RJournal.sty
 # - RJwrapper.bbl
 # - RJwrapper.tex
 ```
 
 ```{r collab_emails, eval=FALSE, include=FALSE}
-front_matter <- rmarkdown::yaml_front_matter("manuscript.Rmd")
+front_matter <- rmarkdown::yaml_front_matter("rockerverse.Rmd")
 emails <- sapply(X = front_matter$author, FUN = function(a) { a$email })
 cat(emails, sep = "\n")
 ```
 
 ```{bash collab_handles, eval=FALSE, include=FALSE}
-cat manuscript.Rmd | grep '    # https://github.com/' | sed 's|    # https://github.com/|@|'
+cat rockerverse.Rmd | grep '    # https://github.com/' | sed 's|    # https://github.com/|@|'
 ```
 
 \bibliography{RJreferences}

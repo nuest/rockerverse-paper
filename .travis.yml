@@ -13,7 +13,7 @@ branches:
 #  - docker build --tag nuest/rockerverse-paper --file .binder/Dockerfile .
 
 script:
-  - docker run --interactive --volume $(pwd):/rockerverse-paper --user $UID --env GITHUB_PAT nuest/rockerverse-paper Rscript -e 'setwd("/rockerverse-paper"); rmarkdown::render("manuscript.Rmd")'
+  - docker run --interactive --volume $(pwd):/rockerverse-paper --user $UID --env GITHUB_PAT nuest/rockerverse-paper Rscript -e 'setwd("/rockerverse-paper"); rmarkdown::render("rockerverse.Rmd")'
   - ls -l
 
 # only works for one branch, because of reset

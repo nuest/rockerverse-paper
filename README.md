@@ -35,13 +35,13 @@ with the Docker logo as background.
 
 ``` bash
 docker build --tag rockerverse-paper --file .binder/Dockerfile .
-docker run -i -v $(pwd):/rockerverse --user $UID rockerverse-paper Rscript -e 'setwd("/rockerverse"); rmarkdown::render("manuscript.Rmd")'
+docker run -i -v $(pwd):/rockerverse --user $UID rockerverse-paper Rscript -e 'setwd("/rockerverse"); rmarkdown::render("rockerverse.Rmd")'
 ```
 
 **Image from Docker Hub**
 
 ``` bash
-docker run -i -v $(pwd):/rockerverse --user $UID nuest/rockerverse-paper Rscript -e 'setwd("/rockerverse"); rmarkdown::render("manuscript.Rmd")'
+docker run -i -v $(pwd):/rockerverse --user $UID nuest/rockerverse-paper Rscript -e 'setwd("/rockerverse"); rmarkdown::render("rockerverse.Rmd")'
 ```
 
 ## Not included projects and packages
