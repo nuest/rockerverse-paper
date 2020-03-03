@@ -105,3 +105,100 @@ docker run -i -v $(pwd):/rockerverse --user $UID nuest/rockerverse-paper Rscript
 - [RStudio Connect](https://rstudio.com/products/connect/) because while it does use a similar mechanism to seperate processes, it does _not_ use Docker and the comparison would require a lot of background explanation, and not all details are available because the software is proprietary
 - https://github.com/ecohealthalliance/reservoir is an invididual specific data science image container for a group - add if it fits
 - https://itsalocke.com/blog/building-an-r-training-environment/ (one single container for many users in teaching, uses rocker/tidyverse)
+
+## Helpers
+
+The [README.Rmd](README.Rmd) file's source includes some useful little code snippets, e.g. count words or get a list of all contributor's GitHub handles.
+
+```{r word_stats, eval=FALSE, include=FALSE}
+# devtools::install_github("benmarwick/wordcountaddin", type = "source", dependencies = TRUE)
+wordcountaddin::readability(here::here("rockerverse.Rmd"))
+wordcountaddin::text_stats(here::here("rockerverse.Rmd"))
+```
+
+```{r preprint_pdf, eval=FALSE, include=FALSE}
+# run this chunk, get the PDF, then revert changes in touched files
+library("rmarkdown")
+library("rticles")
+unlink('manuscript_cache', recursive = TRUE)
+
+# function is a copy of rticles::rjournal_article() but...
+# - using RJWrapper_preprint_template.tex (which includes header.tex commands)
+# - directly referencing unexported functions from rticles
+# - direclty setting the keep_tex option
+rjournal_style_preprint <- function (..., citation_package = "natbib") {
+    rmarkdown::pandoc_available("2.2", TRUE)
+    base <- rticles:::pdf_document_format("rjournal_article", highlight = NULL,
+        citation_package = citation_package, ...)
+    base$pandoc$to <- "latex"
+    base$pandoc$ext <- ".tex"
+    base$pandoc$keep_tex <- TRUE # added
+    base$post_processor <- function(metadata, utf8_input, output_file,
+        clean, verbose) {
+      filename <- basename(output_file)
+      if (filename != (filename2 <- gsub("_", "-", filename))) {
+          file.rename(filename, filename2)
+          filename <- filename2
+      }
+      m <- list(filename = xfun::sans_ext(filename))
+      h <- rticles:::get_list_element(metadata, c("output", "rticles::rjournal_article",
+          "includes", "in_header"))
+      h <- c(h, if (length(preamble <- unlist(metadata[c("preamble",
+          "header-includes")]))) {
+          f <- tempfile(fileext = ".tex")
+          on.exit(unlink(f), add = TRUE)
+          xfun::write_utf8(preamble, f)
+          f
+      })
+      #t <- find_resource("rjournal_article", "RJwrapper.tex")
+      t <- here::here("RJwrapper_preprint_template.tex")
+      rticles:::template_pandoc(m, t, "RJwrapper.tex", h, verbose)
+      tinytex::latexmk("RJwrapper.tex", base$pandoc$latex_engine,
+          clean = clean)
+    }
+    base$knitr$opts_chunk$comment <- "#>"
+    hilight_source <- rticles:::knitr_fun("hilight_source")
+    hook_chunk = function(x, options) {
+        if (rticles:::output_asis(x, options))
+            return(x)
+        paste0("```{=latex}\n\\begin{Schunk}\n", x, "\\end{Schunk}\n```")
+    }
+    hook_input <- function(x, options) paste(c("\\begin{Sinput}",
+        hilight_source(x, "sweave", options), "\\end{Sinput}",
+        ""), collapse = "\n")
+    hook_output <- function(x, options) paste("\\begin{Soutput}\n",
+        x, "\\end{Soutput}\n", sep = "")
+    base$knitr$knit_hooks <- rticles:::merge_list(base$knitr$knit_hooks,
+        list(chunk = hook_chunk, source = hook_input, output = hook_output,
+            message = hook_output, warning = hook_output, plot = knitr::hook_plot_tex))
+    base
+}
+
+rmarkdown::render("rockerverse.Rmd", output_format = rjournal_style_preprint())
+file.rename("RJwrapper.pdf", "rockerverse-preprint.pdf") # file for own archival
+
+# For submission to arXiv:
+# 1. Copy the following files into a new folder:
+# - figures/*
+# - rockerverse.tex
+# - RJournal.sty
+# - RJreferences.bib
+# - RJwrapper.tex
+# 2. Run pdfLaTeX directly on RJwrapper.tex (works with RStudio)
+# 3. Zip the following files and submit to arXiv:
+# - /figures
+# - rockerverse.tex
+# - RJournal.sty
+# - RJwrapper.bbl
+# - RJwrapper.tex
+```
+
+```{r collab_emails, eval=FALSE, include=FALSE}
+front_matter <- rmarkdown::yaml_front_matter("rockerverse.Rmd")
+emails <- sapply(X = front_matter$author, FUN = function(a) { a$email })
+cat(emails, sep = "\n")
+```
+
+```{bash collab_handles, eval=FALSE, include=FALSE}
+cat rockerverse.Rmd | grep '    # https://github.com/' | sed 's|    # https://github.com/|@|'
+```

@@ -72,3 +72,9 @@ docker run -i -v $(pwd):/rockerverse --user $UID nuest/rockerverse-paper Rscript
   - <https://itsalocke.com/blog/building-an-r-training-environment/>
     (one single container for many users in teaching, uses
     rocker/tidyverse)
+
+## Helpers
+
+The [README.Rmd](README.Rmd) file’s source includes some useful little
+code snippets, e.g. count words or get a list of all contributor’s
+GitHub handles.

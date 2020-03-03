@@ -275,7 +275,7 @@ Table&nbsp;\ref{tab:clients} gives an overview of packages with client functiona
 The packages focus on different aspects and support different stages of a container's life cycle.
 As such, the choice of which package is most useful depends on the use case at hand as well as on the user's level of expertise.
 
-```{r clientfunctionalities, echo=FALSE, results='asis', warning=FALSE, message=FALSE}
+```{r clients_table, echo=FALSE, results='asis', warning=FALSE, message=FALSE}
 library("tibble")
 library("tidyr")
 library("dplyr")
@@ -348,10 +348,11 @@ xtable(tab, caption = "R packages with Docker client functionality.") %>%
 It uses the \CRANpkg{sys} package \citep{cran_sys} to run system commands against the Docker CLI, both locally and through an SSH connection, and it has convenience functions, e.g., for listing and removing containers/images and for accessing logs.
 The outputs of container executions are converted to appropriate R types.
 The Docker CLI's basic functionality, although it evolves quickly and with little concern for avoiding breaking changes, has remained unchanged in core functions, meaning that a core function such as `harbor::docker_run(image = "hello-world")` still works depsite its stopped development.
-```{r harbor, eval=FALSE, include=FALSE}
+
+<!-- TRY OUT harbor
 remotes::install_github("wch/harbor")
 harbor::docker_run(image = "hello-world")
-```
+-->
 
 **\CRANpkg{stevedore}** is currently the most powerful Docker client in R \citep{cran_stevedore}.
 It interfaces with the Docker daemon over the Docker HTTP API\footnote{\href{https://docs.docker.com/engine/api/latest/}{https://docs.docker.com/engine/api/latest/}} via a Unix socket on Linux or MacOS, over a named pipe on Windows, or over an HTTP/TCP connection.
@@ -379,7 +380,8 @@ A local Docker installation can be configured to transparntly forward all comman
 Docker&nbsp;Machine was especially crucial for local use in the early days of Docker, when no native support was available for Mac or Windows computers, but it remains relevant for provisioning on remote systems.
 The package has not received any updates for two years, but it is functional with a current version of `docker-machine` (`0.16.2`).
 It potentially lowers the barriers for R users to run containers on various hosts if they perceive that using the Docker&nbsp;Machine CLI directly as a barrier and it enables scripted workflows with remote processing.
-```{r dockermachine, eval=FALSE, include=FALSE}
+
+<!-- TRY OUT dockermachine
 library("dockermachine")
 dockermachine::machine_create(driver = "amazonec2")
 # machine started: https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:sort=instanceId
@@ -391,7 +393,7 @@ dockermachine::machine_create(driver = "amazonec2")
 # Nice!
 # > dockermachine::machine_rm()
 # Instance shut down.
-```
+-->
 
 # Use cases and applications
 \label{applications}
@@ -421,7 +423,6 @@ The new `bioconductor_docker` image is well suited for this preference, while `b
 These discussions have shed a light on the tools and craftspersonship behind the analysis of data with computational methods.
 The practice of data science often involves combining tools and software stacks and requires a cross-cutting skillset.
 This complexity and an inherent concern for openness and reproducibility in the data science community has led to Docker being used widely.
-<!--A general description of what to consider when creating a Docker image used for data science projects in R is provided on [environments.rstudio.com](https://environments.rstudio.com/docker).-->
 The remainder of this section presents example Docker images and image stacks featuring R intended for data science.
 
 - The [_Jupyter Docker Stacks_](https://github.com/jupyter/docker-stacks/) project is a set of ready-to-run Docker images containing Jupyter applications and interactive computing tools \citep{project_jupyter_jupyter_2018}.
@@ -433,7 +434,6 @@ R is installed using the Conda package manager\footnote{\href{https://conda.io/}
 It includes machine learning libraries such as Tensorflow and Keras (see also image `rocker/ml` in Section&nbsp;\nameref{rocker-gpu}), and it also configures the \CRANpkg{reticulate} package \citep{cran_reticulate}.
 The image uses a base image with _all packages from CRAN_, `gcr.io/kaggle-images/rcran`, which requires a Google Cloud Build because Docker&nbsp;Hub would time out\footnote{Originally, a stacked collection of over 20~images with automated builds on Docker~Hub was used, see \href{https://web.archive.org/web/20190606043353/http://blog.kaggle.com/2016/02/05/how-to-get-started-with-data-science-in-containers/}{https://web.archive.org/web/20190606043353/http://blog.kaggle.com/2016/02/05/how-to-get-started-with-data-science-in-containers/} and \href{https://hub.docker.com/r/kaggle/rcran/dockerfile}{https://hub.docker.com/r/kaggle/rcran/dockerfile}}.
 The final extracted image size is over 25&nbsp;GB, which calls into question whether having everything available is actually convenient.
-<!--As a further example, -->
 - The [_Radiant_](https://radiant-rstats.github.io/docs/) project provides several images, e.g., [`vnijs/rsm-msba-spark`](https://hub.docker.com/r/vnijs/rsm-msba-spark), for their browser-based business analytics interface based on \CRANpkg{Shiny} \citep{cran_shiny}, and for use in education as part of an MSc course\footnote{`Dockerfile` available on GitHub: \href{https://github.com/radiant-rstats/docker}{https://github.com/radiant-rstats/docker}.}.
 As data science often applies a multitude of tools, this image favours inclusion over selection and features Python, Postgres, JupyterLab and Visual Studio Code besides R and RStudio, bringing the image size up to 9&nbsp;GB.
 - _Gigantum_ ([http://gigantum.com/](http://gigantum.com/)) is a platform for open and decentralized data science with a focus on using automation and user-friendly tools for easy sharing of reproducible computational workflows.
@@ -453,17 +453,15 @@ Both approaches enable the `apt` package manager \citep{wikipedia_contributors_a
 The image build and publication process is scripted with Python and JSON template configuration files, unlike Rocker images which rely on plain `Dockerfile`s.
 A further reason in the creation of an independent image stack were project constraints requiring a Rocker-incompatible licensing of the `Dockerfile`s, i.e., the MIT License.
 
-```{bash kaggle_images, eval=FALSE, include=FALSE}
+<!-- CHECK IMAGES SIZES
 docker pull gcr.io/kaggle-images/rcran
 docker pull kaggle/rcran # over 22 months old
 docker pull gcr.io/kaggle-images/rstats
 docker images | grep kaggle
-```
 
-```{bash radiant_images, eval=FALSE, include=FALSE}
 docker pull vnijs/rsm-msba-spark
 docker images | grep vnijs
-```
+-->
 
 ## Capture and create environments
 \label{envs}
@@ -519,9 +517,10 @@ Second, the strong integration of **system libraries in core packages** in the [
 GDAL is a system dependency allowing R packages such as \CRANpkg{sf}, which provides the core data model for geospatial vector data, or \CRANpkg{rgdal}, to accommodate users to be able to read and write hundreds of different spatial raster and vector formats \citep{pebesma_simple_2018,cran_rgdal}.
 \CRANpkg{sf} and \CRANpkg{rgdal} have hundreds of indirect reverse imports and dependencies and, therefore, the maintainers spend a lot of effort trying not to break them.
 Purpose-built Docker images are used to prepare for upcoming releases of system libraries, individual bug reports, and for the lowest supported versions of system libraries\footnote{Cf. \href{https://github.com/r-spatial/sf/tree/master/inst/docker}{https://github.com/r-spatial/sf/tree/master/inst/docker}, \href{https://github.com/Nowosad/rspatial_proj6}{https://github.com/Nowosad/rspatial\_proj6}, and \href{https://github.com/r-spatial/sf/issues/1231}{https://github.com/r-spatial/sf/issues/1231}}.
-```{r geospatial_deps, eval=FALSE, include=FALSE}
+
+<!-- GET THE NUMBER OF REVERSE IMPORTS AND DEPS FOR rgdal AND sf
 length(tools::dependsOnPkgs(c("rgdal", "sf"), dependencies = c("most"), recursive = TRUE))
-```
+-->
 
 Third, special-purpose images exist for identifying problems beyond the mere R code, such as **debugging R memory problems**.
 These images significantly reduce the barriers to following complex steps for fixing memory allocation bugs \citep[cf. Section~4.3 in][]{core_writing_1999}.
@@ -590,10 +589,6 @@ Using only R functions, an end user can install a module with the \pkg{outsider}
 The \pkg{outsider} package and module manage the containers and handle the transmission of arguments and the transfer of files to and from a container.
 These functionalities also allow a user to launch module code on a remote machine via SSH, expanding the potential computational scale.
 Outsider modules can be hosted code-sharing services, e.g., on GitHub, and \pkg{outsider} contains discovery functions for them.
-<!-- informative examples of how modules work, just as a reminder for @nuest
-https://github.com/DomBennett/om..astral/blob/master/examples/astral.R
-https://github.com/DomBennett/om..raxml#partitioned-dna-analysis
--->
 
 ## Deployment and continuous delivery
 \label{deployment}
@@ -839,7 +834,6 @@ The R packages and use cases presented above show the growing number of users, d
 But the applications also point to the challenges of keeping up with a continuously evolving landscape.
 The use cases contributed by co-authors also have a degree of overlap, which can be expected as a common language and understanding of good practices is still taking shape.
 Also, the ease with which one can create a complex software systems with Docker, such as an independent Docker image stack, to serve one's specific needs leads to parallel developments.
-<!-- Tyler W./DC from Gigantum: ideas about ease-of-DIY together with difficulty of composition; shared starting points of Rocker -->
 This ease-of-DIY in combination with the difficulty of reusing parts from or composing multiple `Dockerfile`s is a further reason for **fragmentation**.
 Instructions can be outsourced into distributable scripts and then copied into the image during build, but that makes `Dockerfile`s harder to read.
 Scripts added to a `Dockerfile` also add a layer of complexity and increase the risk of incomplete recipes.
@@ -902,97 +896,10 @@ LS and NT are supported by US NIH / NHGRI awards U41HG00405 and U24HG010263.
 CW is supported by the Whole Tale projects (https://wholetale.org) funded by the US National Science Foundation (NSF) under award [OAC-1541450](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1541450).
 We would like to thank Celeste R. Brennecka from the Science Writing Support Service of the University of Münster for her editorial support.
 
-```{r word_stats, eval=FALSE, include=FALSE}
-# devtools::install_github("benmarwick/wordcountaddin", type = "source", dependencies = TRUE)
-wordcountaddin::readability(here::here("rockerverse.Rmd"))
-wordcountaddin::text_stats(here::here("rockerverse.Rmd"))
-```
-
-```{r preprint_pdf, eval=FALSE, include=FALSE}
-# run this chunk, get the PDF, then revert changes in touched files
-library("rmarkdown")
-library("rticles")
-unlink('manuscript_cache', recursive = TRUE)
-
-# function is a copy of rticles::rjournal_article() but...
-# - using RJWrapper_preprint_template.tex (which includes header.tex commands)
-# - directly referencing unexported functions from rticles
-# - direclty setting the keep_tex option
-rjournal_style_preprint <- function (..., citation_package = "natbib") {
-    rmarkdown::pandoc_available("2.2", TRUE)
-    base <- rticles:::pdf_document_format("rjournal_article", highlight = NULL,
-        citation_package = citation_package, ...)
-    base$pandoc$to <- "latex"
-    base$pandoc$ext <- ".tex"
-    base$pandoc$keep_tex <- TRUE # added
-    base$post_processor <- function(metadata, utf8_input, output_file,
-        clean, verbose) {
-      filename <- basename(output_file)
-      if (filename != (filename2 <- gsub("_", "-", filename))) {
-          file.rename(filename, filename2)
-          filename <- filename2
-      }
-      m <- list(filename = xfun::sans_ext(filename))
-      h <- rticles:::get_list_element(metadata, c("output", "rticles::rjournal_article",
-          "includes", "in_header"))
-      h <- c(h, if (length(preamble <- unlist(metadata[c("preamble",
-          "header-includes")]))) {
-          f <- tempfile(fileext = ".tex")
-          on.exit(unlink(f), add = TRUE)
-          xfun::write_utf8(preamble, f)
-          f
-      })
-      #t <- find_resource("rjournal_article", "RJwrapper.tex")
-      t <- here::here("RJwrapper_preprint_template.tex")
-      rticles:::template_pandoc(m, t, "RJwrapper.tex", h, verbose)
-      tinytex::latexmk("RJwrapper.tex", base$pandoc$latex_engine,
-          clean = clean)
-    }
-    base$knitr$opts_chunk$comment <- "#>"
-    hilight_source <- rticles:::knitr_fun("hilight_source")
-    hook_chunk = function(x, options) {
-        if (rticles:::output_asis(x, options))
-            return(x)
-        paste0("```{=latex}\n\\begin{Schunk}\n", x, "\\end{Schunk}\n```")
-    }
-    hook_input <- function(x, options) paste(c("\\begin{Sinput}",
-        hilight_source(x, "sweave", options), "\\end{Sinput}",
-        ""), collapse = "\n")
-    hook_output <- function(x, options) paste("\\begin{Soutput}\n",
-        x, "\\end{Soutput}\n", sep = "")
-    base$knitr$knit_hooks <- rticles:::merge_list(base$knitr$knit_hooks,
-        list(chunk = hook_chunk, source = hook_input, output = hook_output,
-            message = hook_output, warning = hook_output, plot = knitr::hook_plot_tex))
-    base
-}
-
-rmarkdown::render("rockerverse.Rmd", output_format = rjournal_style_preprint())
-file.rename("RJwrapper.pdf", "rockerverse-preprint.pdf") # file for own archival
-
-# For submission to arXiv:
-# 1. Copy the following files into a new folder:
-# - figures/*
-# - rockerverse.tex
-# - RJournal.sty
-# - RJreferences.bib
-# - RJwrapper.tex
-# 2. Run pdfLaTeX directly on RJwrapper.tex (works with RStudio)
-# 3. Zip the following files and submit to arXiv:
-# - /figures
-# - rockerverse.tex
-# - RJournal.sty
-# - RJwrapper.bbl
-# - RJwrapper.tex
-```
-
-```{r collab_emails, eval=FALSE, include=FALSE}
-front_matter <- rmarkdown::yaml_front_matter("rockerverse.Rmd")
-emails <- sapply(X = front_matter$author, FUN = function(a) { a$email })
-cat(emails, sep = "\n")
-```
-
-```{bash collab_handles, eval=FALSE, include=FALSE}
-cat rockerverse.Rmd | grep '    # https://github.com/' | sed 's|    # https://github.com/|@|'
-```
-
 \bibliography{RJreferences}
+
+```{r purl_code, eval=TRUE, include=FALSE}
+# generate the reproducible R script every time the R Markdown document is compiled
+library("callr")
+callr::r_safe(function() { knitr::purl("rockerverse.Rmd") })
+```

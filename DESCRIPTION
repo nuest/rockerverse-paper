@@ -19,7 +19,9 @@ Depends:
     here,
     tibble,
     tidyr,
-    dplyr
+    dplyr,
+    callr,
+    xtable
 Encoding: UTF-8
 LazyData: true
 
