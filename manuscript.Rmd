@@ -876,7 +876,7 @@ DN is supported by the project Opening Reproducible Research ([o2r](https://www.
 The funders had no role in data collection and analysis, decision to publish, or preparation of the manuscript.
 CW is supported by the Whole Tale projects (https://wholetale.org) funded by the US National Science Foundation (NSF) under award [OAC-1541450](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1541450).
 We would like to thank Celeste R. Brennecka from the Science Writing Support Service of the University of Münster for her editorial support.
-LS and NT are supported by US NIH / NHGRI awards U41HG00405 and U24HG010263.
+LS and NT are supported by US NIH / NHGRI awards U41HG00405 and U24HG010263. KR was supported in part  by a grant from The Leona M. and Harry B. Helmsley Charitable Trust, award number 2016PG-BRI004.
 
 ```{r word_stats, eval=FALSE, include=FALSE}
 # devtools::install_github("benmarwick/wordcountaddin", type = "source", dependencies = TRUE)
