@@ -1201,11 +1201,20 @@ images based on these that include GPU-enabled versions of
 machine-learning R packages, e.g., \texttt{rocker/ml} and
 \texttt{rocker/tensorflow-gpu}.
 
-\textbf{Teaching} is a further example of where shared computing
-environments and sandboxing can greatly improve the process. First,
-\emph{prepared environments for teaching} are especially helpful for (a)
-introductory courses, where students often struggle with the first step
-of installation and configuration
+\hypertarget{teaching}{%
+\subsection{Teaching}\label{teaching}}
+
+\label{workenvs}
+
+Two use cases demonstrate the practical usefulness and advantages of
+containerisation in the context of teaching. On the one hand a special
+case of shared computing environments (see Section~\ref{workenvs}), and
+on the other hand leveraging sandboxing and controlled environments for
+autograding.
+
+\textbf{Prepared environments for teaching} are especially helpful for
+(a) introductory courses, where students often struggle with the first
+step of installation and configuration
 \citep{cetinkaya-rundel_infrastructure_2018}, and (b) courses that
 require access to a relatively complex setup of software tools, e.g.,
 database systems. \citet{cetinkaya-rundel_infrastructure_2018} describe
@@ -1240,9 +1249,9 @@ complex drivers or configure their machine in a specific way. The
 \texttt{rocker/tidyverse} base image ensures that users can also readily
 use packages for analysis, display, and reporting.
 
-Second, the idea of a common environment and partitioning allows for
-using \emph{containers in teaching for secure execution and automated
-testing} of submissions by students.
+The idea of a common environment and partitioning allows for using
+\textbf{containers in teaching for secure execution and automated
+testing} of submissions by students. First,
 \href{https://dodona.ugent.be}{Dodona} is a web platform developed at
 Ghent University that is used to teach students basic programming
 skills, and it uses Docker containers to test submissions by students.
@@ -1273,40 +1282,39 @@ fields required by Dodona to render its feedback. Right now, multiple
 statistics courses are developing exercises to automate the feedback for
 their lab classes.
 
-Another example of a Docker-based teaching and testing platform is
-\href{https://github.com/PrairieLearn}{PrairieLearn} which is being
-developed at the University of Illinois at Urbana-Champaign
-\citep{prairielearn:2018} where it has already been in extensive use
-across several faculties (along with initial use on some other
-campuses). It uses Docker containers a key components, both internally
-for its operations (programmed mainly in Python as well as in
-Javascript), as well as for two reference containers providing,
-respectively, Python and R autograders. A key design decision made by
-PrairieLearn permits \emph{external} grading container to be supplied
-and accessed via a well-defined interface of invoking, essentially, a
-single script \texttt{run.sh} expecting JSON based configuration,
-relying on a well-defined file layout containing support files, exam
-questions, supplementary data as well as student submissions, and
-returning per-question evaluations as JSON result files which are
-evaluated, aggregated and recorded in SQL. The
+Second, \href{https://github.com/PrairieLearn}{PrairieLearn} is another
+example of a Docker-based teaching and testing platform. PrairieLearn is
+being developed at the University of Illinois at Urbana-Champaign
+\citep{prairielearn:2018} and has been in extensive use across several
+faculties along with initial use on some other campuses. ¸It uses Docker
+containers a key components, both internally for its operations
+(programmed mainly in Python as well as in Javascript), as well as for
+two reference containers providing, respectively, Python and R
+autograders. A key design decision made by PrairieLearn permits
+\emph{external} grading containers to be supplied and accessed via a
+well-defined interface of invoking, essentially, a single script,
+\texttt{run.sh}. This script relies on a well-defined file layout
+containing JSON-based configuration, support files, exam questions,
+supplementary data, and student submissions. It returns per-question
+evaluations as JSON result files, which PrarieLearn evaluates,
+aggregates and records in a database. The
 \href{https://stat430.com}{Data Science Programming Methods} course
 \citep{stat430:2019} uses this via the custom
 \href{https://github.com/stat430dspm/rocker-pl}{\texttt{rocker-pl}}
 container
-\citep{rocker-pl:2019}.\footnote{The reference R container was unavailable at the time, and also relies on a heavier CentOS-based build so that a lighter and alternative was established.}
-The \texttt{rocker-pl} container extends \texttt{rocker/r-base} with
-both the \href{https://github.com/stat430dspm/plr}{\texttt{plr}}
-\citep{pkg:plr:2019} custom R package for integration into PrarieLearn
-testing and question evaluation, along with the actual R packages used
-in instruction and testing for the course in question. As automated
-grading of submitted student answers is close to the well-understood
-problem of unit testing, the \CRANpkg{tinytest} package
-\citep{CRAN:tinytest} is used as it offers both its core features for
-testing as well as clean extensibility which package \CRANpkg{ttdo}
-\citep{CRAN:ttdo} utilizes to render differences between incorrect
-answers and reference answers by invoking the \CRANpkg{diffobj} package
-\citep{CRAN:diffobj} for context-sensitive colorized displays of these
-differences. The setup, described in more detail by
+\citep{rocker-pl:2019}.\footnote{The reference R container was unavailable at the time, and also relies on a heavier CentOS-based build so that a lighter alternative was established.}
+The \texttt{rocker-pl} image extends \texttt{rocker/r-base} with the
+\pkg{plr} R package \citep{pkg:plr:2019} for integration into
+PrarieLearn testing and question evaluation, along with the actual R
+packages used in instruction and testing for the course in question. As
+automated grading of submitted student answers is close to the
+well-understood problem of unit testing, the \CRANpkg{tinytest} package
+\citep{CRAN:tinytest} is used for both its core features for testing as
+well as clean extensibility. The package \CRANpkg{ttdo}
+\citep{CRAN:ttdo} utilizes the extensibility of \pkg{tinytest} to
+display context-sensitive colorized differences between incorrect
+answers and reference answers using the \CRANpkg{diffobj} package
+\citep{CRAN:diffobj}. The setup, described in more detail by
 \citet{paper:r_autograder}, is an excellent illustration of both the
 versatility and flexibility offered by Docker-based approaches in
 teaching and testing.
@@ -1538,9 +1546,10 @@ environments and GPUs. LS \& NT wrote the section on Bioconductor. PS
 wrote the paragraphs about GitLab CI/CD pipelines with Shinyproxy and
 OpenFaaS templates. TS \& JW wrote the section on CyVerse. CvP wrote the
 section on the usage of Docker containers in Dodona. CW wrote the
-sections on Whole Tale and contributed the publication reproducibility
-audit use case. NX contributed content on \pkg{liftr}. All authors
-approved the final version. This articles was collaboratively written at
+sections on Whole Tale and contributed content about publication
+reproducibility audits. NX contributed content on \pkg{liftr}. All
+authors approved the final version. This articles was collaboratively
+written at
 \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
 The
 \href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page},
@@ -1560,7 +1569,7 @@ funders had no role in data collection and analysis, decision to
 publish, or preparation of the manuscript. KR was supported in part by a
 grant from The Leona M. and Harry B. Helmsley Charitable Trust, award
 number 2016PG-BRI004. LS and NT are supported by US NIH / NHGRI awards
-U41HG00405 and U24HG010263. CW is supported by the Whole Tale projects
+U41HG00405 and U24HG010263. CW is supported by the Whole Tale project
 (\url{https://wholetale.org}) funded by the US National Science
 Foundation (NSF) under award
 \href{https://www.nsf.gov/awardsearch/showAward?AWD_ID=1541450}{OAC-1541450}.

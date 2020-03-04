@@ -760,8 +760,12 @@ Containers running GPU software require drivers and libraries specific to GPU mo
 For NVIDIA GPUs, the [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker) includes a specialized runtime plugin for Docker and a set of base images with appropriate drivers and libraries.
 The Rocker&nbsp;Project [has a repository](https://github.com/rocker-org/ml) with (beta) images based on these that include GPU-enabled versions of machine-learning R packages, e.g., `rocker/ml` and `rocker/tensorflow-gpu`.
 
-**Teaching** is a further example of where shared computing environments and sandboxing can greatly improve the process.
-First, _prepared environments for teaching_ are especially helpful for (a) introductory courses, where students often struggle with the first step of installation and configuration \citep{cetinkaya-rundel_infrastructure_2018}, and (b) courses that require access to a relatively complex setup of software tools, e.g., database systems.
+## Teaching
+\label{workenvs}
+
+Two use cases demonstrate the practical usefulness and advantages of containerisation in the context of teaching. On the one hand a special case of shared computing environments (see Section&nbsp;\ref{workenvs}), and on the other hand leveraging sandboxing and controlled environments for autograding.
+
+**Prepared environments for teaching** are especially helpful for (a) introductory courses, where students often struggle with the first step of installation and configuration \citep{cetinkaya-rundel_infrastructure_2018}, and (b) courses that require access to a relatively complex setup of software tools, e.g., database systems.
 \citet{cetinkaya-rundel_infrastructure_2018} describe how a Docker-based deployment of RStudio (i) avoided problems with troubleshooting individual students' computers and greatly increased engagement through very quickly showing tangible outcomes, e.g., a visualisation, and (ii) reduced demand on teaching and IT staff.
 Each student received access to a personal RStudio instance running in a container after authentication with the university login, which gives the benefits of sandboxing and the possibility of limiting resources.
 \citet{cetinkaya-rundel_infrastructure_2018} found that for the courses at hand, actual usage of the UI is intermittent so a single cloud-based VM with four cores and 28&nbsp;GB RAM sufficed for over 100 containers.
@@ -774,8 +778,8 @@ Giving access to a sandbox for the most common environments for teaching databas
 Notably, with `r-db`, users do not have to install complex drivers or configure their machine in a specific way.
 The `rocker/tidyverse` base image ensures that users can also readily use packages for analysis, display, and reporting.
 
-Second, the idea of a common environment and partitioning allows for using _containers in teaching for secure execution and automated testing_ of submissions by students.
-[Dodona](https://dodona.ugent.be) is a web platform developed at Ghent University that is used to teach students basic programming skills, and it uses Docker containers to test submissions by students.
+The idea of a common environment and partitioning allows for using **containers in teaching for secure execution and automated testing** of submissions by students.
+First, [Dodona](https://dodona.ugent.be) is a web platform developed at Ghent University that is used to teach students basic programming skills, and it uses Docker containers to test submissions by students.
 This means that both the code testing the students' submissions and the submission itself are executed in a predictable environment, avoiding compatibility issues between the wide variety of configurations used by students.
 The containerisation is also used to shield the Dodona servers from bad or even malicious code: memory, time and I/O&nbsp;limits are used to make sure students cannot overload the system.
 The web application managing the containers communicates with them by sending configuration information as a JSON document over standard input.
@@ -787,12 +791,16 @@ The actual testing of R exercises is done using a custom framework loosely based
 During the development of the testing framework, it was found that the \pkg{testthat} framework did not provide enough information to its reporter system to send back all the fields required by Dodona to render its feedback.
 Right now, multiple statistics courses are developing exercises to automate the feedback for their lab classes.
 
-Another example of a Docker-based teaching and testing platform is [PrairieLearn](https://github.com/PrairieLearn) which is being developed at the University of Illinois at Urbana-Champaign \citep{prairielearn:2018} where it has already been in extensive use across several faculties (along with initial use on some other campuses).
-It uses Docker containers a key components, both internally for its operations (programmed mainly in Python as well as in Javascript), as well as for two reference containers providing, respectively, Python and R autograders. 
-A key design decision made by PrairieLearn permits _external_ grading container to be supplied and accessed via a well-defined interface of invoking, essentially, a single script `run.sh` expecting JSON based configuration, relying on a well-defined file layout containing support files, exam questions, supplementary data as well as student submissions, and returning per-question evaluations as JSON result files which are evaluated, aggregated and recorded in SQL. 
-The [Data Science Programming Methods](https://stat430.com) course \citep{stat430:2019} uses this via the custom [`rocker-pl`](https://github.com/stat430dspm/rocker-pl) container \citep{rocker-pl:2019}.\footnote{The reference R container was unavailable at the time, and also relies on a heavier CentOS-based build so that a lighter and alternative was established.}
-The `rocker-pl` container extends `rocker/r-base` with both the [`plr`](https://github.com/stat430dspm/plr) \citep{pkg:plr:2019} custom R package for integration into PrarieLearn testing and question evaluation, along with the actual R packages used in instruction and testing for the course in question.
-As automated grading of submitted student answers is close to the well-understood problem of unit testing, the \CRANpkg{tinytest} package \citep{CRAN:tinytest} is used as it offers both its core features for testing as well as clean extensibility which package \CRANpkg{ttdo} \citep{CRAN:ttdo} utilizes to render differences between incorrect answers and reference answers by invoking the \CRANpkg{diffobj} package \citep{CRAN:diffobj} for context-sensitive colorized displays of these differences.
+Second, [PrairieLearn](https://github.com/PrairieLearn) is another example of a Docker-based teaching and testing platform.
+PrairieLearn is being developed at the University of Illinois at Urbana-Champaign \citep{prairielearn:2018} and has been in extensive use across several faculties along with initial use on some other campuses.
+¸It uses Docker containers a key components, both internally for its operations (programmed mainly in Python as well as in Javascript), as well as for two reference containers providing, respectively, Python and R autograders.
+A key design decision made by PrairieLearn permits _external_ grading containers to be supplied and accessed via a well-defined interface of invoking, essentially, a single script, `run.sh`.
+This script relies on a well-defined file layout containing JSON-based configuration, support files, exam questions, supplementary data, and student submissions.
+It returns per-question evaluations as JSON result files, which PrarieLearn evaluates, aggregates and records in a database.
+The [Data Science Programming Methods](https://stat430.com) course \citep{stat430:2019} uses this via the custom [`rocker-pl`](https://github.com/stat430dspm/rocker-pl) container \citep{rocker-pl:2019}.\footnote{The reference R container was unavailable at the time, and also relies on a heavier CentOS-based build so that a lighter alternative was established.}
+The `rocker-pl` image extends `rocker/r-base` with the \pkg{plr} R package \citep{pkg:plr:2019} for integration into PrarieLearn testing and question evaluation, along with the actual R packages used in instruction and testing for the course in question.
+As automated grading of submitted student answers is close to the well-understood problem of unit testing, the \CRANpkg{tinytest} package \citep{CRAN:tinytest} is used for both its core features for testing as well as clean extensibility.
+The package \CRANpkg{ttdo} \citep{CRAN:ttdo} utilizes the extensibility of \pkg{tinytest} to display context-sensitive colorized differences between incorrect answers and reference answers using the \CRANpkg{diffobj} package \citep{CRAN:diffobj}.
 The setup, described in more detail by \citet{paper:r_autograder}, is an excellent illustration of both the versatility and flexibility offered by Docker-based approaches in teaching and testing.
 
 ## Packaging research reproducibly
