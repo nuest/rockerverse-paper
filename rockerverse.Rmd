@@ -761,7 +761,6 @@ For NVIDIA GPUs, the [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia
 The Rocker&nbsp;Project [has a repository](https://github.com/rocker-org/ml) with (beta) images based on these that include GPU-enabled versions of machine-learning R packages, e.g., `rocker/ml` and `rocker/tensorflow-gpu`.
 
 ## Teaching
-\label{workenvs}
 
 Two use cases demonstrate the practical usefulness and advantages of containerisation in the context of teaching. On the one hand a special case of shared computing environments (see Section&nbsp;\ref{workenvs}), and on the other hand leveraging sandboxing and controlled environments for autograding.
 
