@@ -38,9 +38,9 @@ groups\footnote{\href{https://www.r-consortium.org/blog/2019/09/09/r-community-e
 or the foundation and impact of the
 R~Consortium\footnote{\href{https://www.r-consortium.org/news/announcements}{https://www.r-consortium.org/news/announcements}, \href{https://www.r-consortium.org/blog/2019/11/14/data-driven-tracking-and-discovery-of-r-consortium-activities}{https://www.r-consortium.org/blog/2019/11/14/data-driven-tracking-and-discovery-of-r-consortium-activities}}.
 These trends cement the role of R as the \emph{lingua~franca} of
-statistics, data visualisation, and computational research. During the
-last few years, and coinciding with the rise of R, has been the advent
-of \href{https://en.wikipedia.org/wiki/Docker_(software)}{Docker} as a
+statistics, data visualisation, and computational research. The last few
+years, coinciding with the rise of R, have also seen the rise of
+\href{https://en.wikipedia.org/wiki/Docker_(software)}{Docker} as a
 general tool for distributing and deploying of server applications---in
 fact, Docker can be called the \emph{lingua~franca} of describing
 computing environments and packaging software. Combining both these
@@ -1149,41 +1149,38 @@ user permissions, and of course backups are still necessary.
 
 \href{https://cyverse.org}{CyVerse} is an open source, NSF-funded
 cyberinfrastructure platform for the life sciences providing easy access
-to computing and storage resources \citep{merchant_iplant_2016}.
-CyVerse's a browser-based `data science workbench' is called
+to computing and storage resources \citep{merchant_iplant_2016}. CyVerse
+has a browser-based `data science workbench' called the
 \href{https://cyverse.org/discovery-environment}{Discovery Environment}
-(DE). DE uses a combination of
+(DE). The DE uses a combination of
 \href{https://research.cs.wisc.edu/htcondor/}{HTCondor} and Kubernetes
 for orchestrating container-based analysis and integrates with external
 HPC, i.e., \href{https://www.xsede.org/}{NSF-XSEDE}, through
-\href{https://www.tacc.utexas.edu/tapis}{TAPIS} API's. In addition,
-CyVerse provides a multi-petabyte Data Store based on
-\href{https://irods.org/}{iRODS} with shared access by users. The DE
+\href{https://www.tacc.utexas.edu/tapis}{TAPIS}(TACC-API's). CyVerse
+hosts a multi-petabyte Data Store based on
+\href{https://irods.org/}{iRODS} with shared access by its users. The DE
 runs Docker containers on demand, with users able to integrate bespoke
 containers from DockerHub or other registries
-\citep{devisetty_bringing_2016}. Rocker images integration in the DE is
-designed to provide life science researchers with scalable,
-compute-intensive R analysis capabilities needed for large and complex
-datasets (e.g., genomics/multi-omics, GWAS, phenotypic data, spatial
-data etc.). These capabilities give users flexibility similar to Binder,
-but allows containers to run on larger computational resources (RAM,
-CPU, Disk), and for longer periods of time (days to weeks). The Rocker
-Project's RStudio and Shiny containers are integrated into the DE by
-deriving new images from Rocker
+\citep{devisetty_bringing_2016}. Rocker image integration in the DE is
+designed to provide researchers with scalable, compute-intensive, R
+analysis capabilities for large and complex datasets (e.g.,
+genomics/multi-omics, GWAS, phenotypic data, geospatial data, etc.).
+These capabilities give users flexibility similar to Binder, but allow
+containers to be run on larger computational resources (RAM, CPU, Disk,
+GPU), and for longer periods of time (days to weeks). The Rocker
+Project's RStudio and Shiny are integrated into the DE by deriving new
+images from Rocker
 images\footnote{See \href{https://github.com/cyverse-vice/}{https://github.com/cyverse-vice/} for \texttt{Dockerfile}s and configuration scripts; images are auto-built on DockerHub at \href{https://hub.docker.com/u/cyversevice}{https://hub.docker.com/u/cyversevice}.}.
-These images include a reverse proxy using \texttt{nginx} to handle
-communication with CyVerse's authentication systems, which allow users
-to invite other registered users to securely access the same instance
-\citep{rstudio_proxy_2020}. The images further include specific tools,
-such as the CLI utility \texttt{icommands} to access iRODS. Users can
-reference the same base image and add packages to further customize
-their R environment, or they can use CyVerse's image registry where a
-user's published, i.e., publicly available, containers are held for
-additional reproducibility. CyVerse user accounts are free (with some
-limitations for non-US users) and the
-\href{https://learning.cyverse.org/}{CyVerse Learning Center} allows
-community members to document their containers to support training and
-education.
+These new images include a reverse proxy using \texttt{nginx} to handle
+communication with CyVerse's authentication system
+\citep{rstudio_proxy_2020}; CyVerse also allows owners to invite other
+registered users to securely access the same instance. The CyVerse
+Rocker images further include tools for connecting to its Data Store,
+such as the CLI utility \texttt{icommands} for iRODS. CyVerse accounts
+are free (with some limitations for non-US users), and the
+\href{https://learning.cyverse.org/}{CyVerse Learning Center} provides
+community members with information about the platform, incuding training
+and education opportunities.
 
 \label{rocker-gpu} Using \textbf{GPUs} (graphical processing units) as a
 specialised hardware from containerised common work environments is also
@@ -1275,6 +1272,44 @@ provide enough information to its reporter system to send back all the
 fields required by Dodona to render its feedback. Right now, multiple
 statistics courses are developing exercises to automate the feedback for
 their lab classes.
+
+Another example of a Docker-based teaching and testing platform is
+\href{https://github.com/PrairieLearn}{PrairieLearn} which is being
+developed at the University of Illinois at Urbana-Champaign
+\citep{prairielearn:2018} where it has already been in extensive use
+across several faculties (along with initial use on some other
+campuses). It uses Docker containers a key components, both internally
+for its operations (programmed mainly in Python as well as in
+Javascript), as well as for two reference containers providing,
+respectively, Python and R autograders. A key design decision made by
+PrairieLearn permits \emph{external} grading container to be supplied
+and accessed via a well-defined interface of invoking, essentially, a
+single script \texttt{run.sh} expecting JSON based configuration,
+relying on a well-defined file layout containing support files, exam
+questions, supplementary data as well as student submissions, and
+returning per-question evaluations as JSON result files which are
+evaluated, aggregated and recorded in SQL. The
+\href{https://stat430.com}{Data Science Programming Methods} course
+\citep{stat430:2019} uses this via the custom
+\href{https://github.com/stat430dspm/rocker-pl}{\texttt{rocker-pl}}
+container
+\citep{rocker-pl:2019}.\footnote{The reference R container was unavailable at the time, and also relies on a heavier CentOS-based build so that a lighter and alternative was established.}
+The \texttt{rocker-pl} container extends \texttt{rocker/r-base} with
+both the \href{https://github.com/stat430dspm/plr}{\texttt{plr}}
+\citep{pkg:plr:2019} custom R package for integration into PrarieLearn
+testing and question evaluation, along with the actual R packages used
+in instruction and testing for the course in question. As automated
+grading of submitted student answers is close to the well-understood
+problem of unit testing, the \CRANpkg{tinytest} package
+\citep{CRAN:tinytest} is used as it offers both its core features for
+testing as well as clean extensibility which package \CRANpkg{ttdo}
+\citep{CRAN:ttdo} utilizes to render differences between incorrect
+answers and reference answers by invoking the \CRANpkg{diffobj} package
+\citep{CRAN:diffobj} for context-sensitive colorized displays of these
+differences. The setup, described in more detail by
+\citet{paper:r_autograder}, is an excellent illustration of both the
+versatility and flexibility offered by Docker-based approaches in
+teaching and testing.
 
 \hypertarget{packaging-research-reproducibly}{%
 \subsection{Packaging research
