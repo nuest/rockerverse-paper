@@ -146,16 +146,16 @@ Science}, which provides funding for the projects's sustainable
 maintenance, community growth, and targeting new hardware platforms
 including GPUs \citep{chan_zuckerberg_initiative_maintaining_2019}.
 
-Docker is not the only containerisation software. An alternative
-stemming from the domain of high-perfomance computing is
-\textbf{Singularity} \citep{kurtzer_singularity_2017}. Singularity can
-run Docker images. Rocker images work out of the box if the main process
-is R, e.g., in \texttt{rocker/r-base}, but Singularity does not succeed
-in running images where there is an init script, e.g., in containers
-that by default run RStudio~Server. In the latter case, a
-\texttt{Singularity} file, a recipe akin to a \texttt{Dockerfile}, needs
-to be used to make necessary adjustments. To date, no comparable image
-stack to the Rocker Project's images exists on
+Docker is not the only containerisation software. \textbf{Singularity}
+stems from the domain of high-perfomance computing
+\citep{kurtzer_singularity_2017} and can also run Docker images. Rocker
+images work out of the box if the main process is R, e.g., in
+\texttt{rocker/r-base}, but Singularity does not succeed in running
+images where there is an init script, e.g., in containers that by
+default run RStudio~Server. In the latter case, a \texttt{Singularity}
+file, a recipe akin to a \texttt{Dockerfile}, needs to be used to make
+necessary adjustments. To date, no comparable image stack to the Rocker
+Project's images exists on
 \href{https://singularity-hub.org/}{Singularity Hub}. A further tool for
 running containers is
 \href{https://github.com/containers/libpod}{\textbf{podman}}, which can
@@ -329,23 +329,23 @@ therefore, uses Bioconductor version tagging \texttt{devel} and
 combinations of R and \emph{Bioconductor} will therefore be accessible
 via a specific image tags.
 
-The \emph{Bioconductor} \texttt{Dockerfile} selects the desired version
-of R from Rocker, adds required system dependencies, and uses the
-\CRANpkg{BiocManager} package for installing appropriate versions of
+The \emph{Bioconductor} \texttt{Dockerfile} selects the desired R
+version from Rocker images, adds required system dependencies, and uses
+the \CRANpkg{BiocManager} package for installing appropriate versions of
 \emph{Bioconductor} packages \citep{cran_biocmanager}. A strength of
 this approach is that the responsibility for complex software
-configuration (including customized development) is shifted from the
-user to the experienced \emph{Bioconductor} core team. However, a recent
-audit of the \emph{Bioconductor} image stack \texttt{Dockerfile} led to
-the deprecation of several community-maintained images, because the
-numerous specific images became too hard to understand, complex to
-maintain, and cumbersome to customise. As part of the simplification, a
-recent innovation is to produce a \texttt{bioconductor\_docker:devel}
-image to emulate the \emph{Bioconductor} nightly Linux build machine as
-closely as possible. This image contains the build system environment
-variables and the \emph{system dependencies} needed to install and check
-almost all (1813 out of 1823) \emph{Bioconductor} software packages, and
-it saves users and package developers from managing these themselves.
+configuration and customization is shifted from the user to the
+experienced \emph{Bioconductor} core team. However, a recent audit of
+the \emph{Bioconductor} image stack \texttt{Dockerfile} led to the
+deprecation of several community-maintained images, because the numerous
+specific images became too hard to understand, complex to maintain, and
+cumbersome to customise. As part of the simplification, a recent
+innovation is the \texttt{bioconductor\_docker:devel} image, which
+emulates the \emph{Bioconductor} environment for nightly builds as
+closely as possible. This image contains the environment variables and
+the system dependencies needed to install and check almost all
+\emph{Bioconductor} software packages (1813 out of 1823). It saves users
+and package developers from creating this environment themselves.
 Furthermore, the image is configured so that \code{.libPaths()} has
 \samp{/usr/local/lib/R/host-site-library} as the first location. Users
 mounting a location on the host file system to this location can
@@ -521,22 +521,21 @@ image mirrors the package versions of the current R session. Users can
 manually add statements for non-R dependencies to the
 \texttt{Dockerfile}.
 
-\textbf{\CRANpkg{liftr}} aims to solve the problem of persistent
-reproducible reporting in statistical computing based on the R Markdown
-format \citep{xie2018} for dynamic documents
-\citep[\href{https://nanx.me/liftr/}{https://nanx.me/liftr/}, ][]{liftr2019}.
-The irreproducibility of authoring environments can become an issue for
-collaborative documents and large-scale platforms for processing
-documents. \pkg{liftr} makes the document the main and sole workflow
-control file and the only file that needs to be shared between
-collaborators for consistent environments, e.g.~demonstrated in the
-DockFlow project (\url{https://dockflow.org}). It introduces new fields
-to the R Markdown document header, allowing users to manually declare
-the dependencies, including versions, for rendering the document. The
-package then generates a \texttt{Dockerfile} from this metadata and
-provides a utitility function to render the document inside a Docker
-container, i.e., \code{render\_docker("foo.Rmd")}. An RStudio addin even
-allows compilation of documents with the single push of a button.
+\textbf{\CRANpkg{liftr}} \citep{liftr2019} aims to solve the problem of
+persistent reproducible reporting in statistical computing based on the
+R Markdown format \citep{xie2018}. The irreproducibility of authoring
+environments can become an issue for collaborative documents and
+large-scale platforms for processing documents. \pkg{liftr} makes the
+dynamic R Markdown document the main and sole workflow control file and
+the only file that needs to be shared between collaborators for
+consistent environments, e.g.~demonstrated in the DockFlow project
+(\url{https://dockflow.org}). It introduces new fields to the document
+header, allowing users to manually declare the versioned dependencies
+required for rendering the document. The package then generates a
+\texttt{Dockerfile} from this metadata and provides a utitility function
+to render the document inside a Docker container, i.e.,
+\code{render\_docker("foo.Rmd")}. An RStudio addin even allows
+compilation of documents with the single push of a button.
 
 System dependencies are the domain of Docker, but for a full description
 of the computing environment one must also manage the R version and the
@@ -575,26 +574,26 @@ testing}\label{development-debugging-and-testing}}
 
 \label{development}
 
-Containers can also serve as useful playgrounds to create environments
-ad hoc or to provide very specific environments that are not needed or
-not easily available in day-to-day development for the purposes of
-developing R packages. These environments may have specific versions of
-R, of R extension packages, and of system libraries used by R extension
-packages, and all of the above in a specific combination.
+Containers can also serve as playgrounds and provide specific or ad hoc
+environments for the purposes of developing R packages. These
+environments may have specific versions of R, of R extension packages,
+and of system libraries used by R extension packages, and all of the
+above in a specific combination.
 
 First, such containers can greatly facilitate \textbf{fixing bugs and
-quick evaluation}, because developers and users can readily start and
-later discard a container to investigate a bug report or try out a piece
-of software \citep[cf.][]{ooms_opencpu_2017}. The container does not
-affect their regular system. Using the Rocker images with RStudio, these
-disposable environments lack no development comfort
+code evaluation}, because developers and users can readily start a
+container to investigate a bug report or try out a piece of software
+\citep[cf.][]{ooms_opencpu_2017}. The container can later be discarded
+and does not affect their regular system. Using the Rocker images with
+RStudio, these disposable environments lack no development comfort
 (cf.~Section~\nameref{compendia}). \citet{ooms_opencpu_2017} describes
 how \texttt{docker\ exec} can be used to get a root shell in a container
-for customisation during software evaluation.
-\citet{eddelbuettel_debugging_2019} describes an example of how a Docker
-container was used to debug an issue with a package only occurring with
-a particular version of Fortran, and using tools which are not readily
-available on all platforms (e.g., not on macOS).
+for customisation during software evaluation without writing a
+\texttt{Dockerfile}. \citet{eddelbuettel_debugging_2019} describes an
+example of how a Docker container was used to debug an issue with a
+package only occurring with a particular version of Fortran, and using
+tools which are not readily available on all platforms (e.g., not on
+macOS).
 
 Second, the strong integration of \textbf{system libraries in core
 packages} in the \href{https://www.r-spatial.org/}{R-spatial community}
@@ -932,17 +931,16 @@ invokes the actual application. The R session uses \pkg{plumber} or
 similar packages for the API endpoint with packages and data preloaded,
 thus minimizing response times.
 
-The prevalence of Docker in industry naturally leads to the use of
-containers with R in such settings as well, as companies already manage
-platforms in Docker containers. These products often entail a large
-amount of open source software in combination with proprietary layers
-adding the relevant commercialisation features. One such example is
-RStudio's data science platform
-\href{https://rstudio.com/products/team/}{RStudio Team}. It allows teams
-of data scientists and their respective IT/DevOps groups to develop and
-deploy code in R and Python around the RStudio Open Source Server inside
-of Docker images, without requiring users to learn new tools or directly
-interact with containers. The best practices for
+The prevalence of Docker in industry naturally leads to the use of R in
+containers, as companies already manage platforms in Docker containers.
+These products often entail a large amount of open source software in
+combination with proprietary layers adding the relevant
+commercialisation features. One such example is RStudio's data science
+platform \href{https://rstudio.com/products/team/}{RStudio Team}. It
+allows teams of data scientists and their respective IT/DevOps groups to
+develop and deploy code in R and Python around the RStudio Open Source
+Server inside of Docker images, without requiring users to learn new
+tools or directly interact with containers. The best practices for
 \href{https://support.rstudio.com/hc/en-us/articles/360021594513-Running-RStudio-with-Docker-containers}{running
 RStudio with Docker containers} as well as
 \href{https://github.com/rstudio/rstudio-docker-products}{Docker images}
@@ -1005,15 +1003,14 @@ at hand, this switch allowed for more control over upstream updates and
 for minimising the risk of breaking the automated builds of the Docker
 images and production jobs.
 
-The AI @ T-Mobile team created a set of neural network machine learning
-natural language processing models to help customer care agents manage
-text-based messages for customers \citep{t-mobile_enterprise_2018}. For
-example, one model quickly identifies whether a message is from a
-customer
+The AI @ T-Mobile team created a set of machine learning models for
+natural language processing to help customer care agents manage
+text-based messages from customers \citep{t-mobile_enterprise_2018}. For
+example, one model identifies whether a message is from a customer
 \citep[see \pkg{Shiny}-based \href{https://secure.message.t-mobile.com/v1/shiny/is-customer/app/}{demo} further described by ][]{nolis_small_2019},
 and others tell which customers are likely to make a repeat purchase. If
-a data scientist creates a machine learning model and exposes it through
-a \pkg{plumber} API, then someone else on the marketing team could write
+a data scientist creates a such a model and exposes it through a
+\pkg{plumber} API, then someone else on the marketing team can write
 software that sends different emails depending on that real-time
 prediction. The models are convolutional neural networks that use the
 \CRANpkg{keras} package \citep{cran_keras} and run in a Rocker
@@ -1428,43 +1425,41 @@ reducing errors and time spent specifying the environment.
 This article is a snapshot of the R corner in a universe of applications
 built with a many-faced piece of software, Docker. \texttt{Dockerfile}s
 and Docker images are the go-to methods for collaboration between roles
-in an organisation, such as development and IT operations teams, and
-between parties in the communication of knowledge, such as research
-workflows or education. Docker has become synonymous with applying the
-concept of containerisation to solve challenges of reproducible
-environments, e.g., in research and in development \& production, and of
-scalable deployments as it can easily move processing between machines
-(e.g., locally, a cloud provider's VM, another cloud provider's
-Container-as-a-Service). Reproducible environments, scalability and
-efficiency, and portability across platforms/infrastructures are the
-common themes behind R packages, use cases, and applications in this
-work.
+in an organisation, such as developers and IT operators, and between
+participants in the communication of knowledge, such as researchers or
+students. Docker has become synonymous with applying the concept of
+containerisation to solve challenges of reproducible environments, e.g.,
+in research and in development \& production, and of scalable
+deployments because it can easily move processing between machines,
+e.g., locally, a cloud provider's VM, another cloud provider's
+Container-as-a-Service. Reproducible environments, scalability \&
+efficiency, and portability across infrastructures are the common themes
+behind R packages, use cases, and applications in this work.
 
-The R packages and use cases presented above show the growing number of
-users, developers, and real-world applications in the community and the
+The projects presented above show the growing number of users,
+developers, and real-world applications in the community and the
 resulting innovations. But the applications also point to the challenges
-of keeping up with a continuously evolving landscape. The use cases
-contributed by co-authors also have a degree of overlap, which can be
-expected as a common language and understanding of good practices is
-still taking shape. Also, the ease with which one can create a complex
-software systems with Docker, such as an independent Docker image stack,
-to serve one's specific needs leads to parallel developments. This
-ease-of-DIY in combination with the difficulty of reusing parts from or
-composing multiple \texttt{Dockerfile}s is a further reason for
-\textbf{fragmentation}. Instructions can be outsourced into
-distributable scripts and then copied into the image during build, but
-that makes \texttt{Dockerfile}s harder to read. Scripts added to a
-\texttt{Dockerfile} also add a layer of complexity and increase the risk
-of incomplete recipes. Despite the different image stacks presented
-here, the pervasiveness of Rocker images can be traced back to its
-maintainers and the user community valuing collaboration and shared
-starting points over impulses to create individual solutions. Aside from
-that, fragmentation may not be a bad sign but may instead be a
-reflection of a growing market that is able to sustain multiple related
-efforts. With the maturing of core building blocks, such as the Rocker
-Project's suite of images, more systems will be built successfully, but
-they may also be built behind the curtains. Docker alone, as a flexible
-core technology, is not a feasible level of collaboration and
+of keeping up with a continuously evolving landscape. Some use cases
+have considerable overlap, which can be expected as a common language
+and understanding of good practices is still taking shape. Also, the
+ease with which one can create a complex software systems with Docker to
+serve one's specific needs, such as an independent Docker image stack,
+leads to parallel developments. This ease-of-DIY in combination with the
+difficulty of reusing parts from or composing multiple
+\texttt{Dockerfile}s is a further reason for \textbf{fragmentation}.
+Instructions can be outsourced into distributable scripts and then
+copied into the image during build, but that makes \texttt{Dockerfile}s
+harder to read. Scripts added to a \texttt{Dockerfile} also add a layer
+of complexity and increase the risk of incomplete recipes. Despite the
+different image stacks presented here, the pervasiveness of Rocker
+images can be traced back to its maintainers and the user community
+valuing collaboration and shared starting points over impulses to create
+individual solutions. Aside from that, fragmentation may not be a bad
+sign but may instead be a reflection of a growing market that is able to
+sustain multiple related efforts. With the maturing of core building
+blocks, such as the Rocker suite of images, more working systems will be
+built, but they may simply work behind the curtains. Docker alone, as a
+flexible core technology, is not a feasible level of collaboration and
 abstraction. Instead, the use cases and applications observed in this
 work provide a more useful division.
 
@@ -1552,11 +1547,10 @@ authors approved the final version. This articles was collaboratively
 written at
 \href{https://github.com/nuest/rockerverse-paper/}{https://github.com/nuest/rockerverse-paper/}.
 The
-\href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page},
-\href{https://github.com/nuest/rockerverse-paper/commits/master}{commit history},
+\href{https://github.com/nuest/rockerverse-paper/graphs/contributors}{contributors page}
 and
 \href{https://github.com/nuest/rockerverse-paper/issues/}{discussion issues}
-provide a detailed view on the respective contributions.
+provide details on the respective contributions.
 
 \hypertarget{acknowledgements}{%
 \section{Acknowledgements}\label{acknowledgements}}
