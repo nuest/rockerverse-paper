@@ -792,14 +792,15 @@ Right now, multiple statistics courses are developing exercises to automate the 
 
 Second, [PrairieLearn](https://github.com/PrairieLearn) is another example of a Docker-based teaching and testing platform.
 PrairieLearn is being developed at the University of Illinois at Urbana-Champaign \citep{prairielearn:2018} and has been in extensive use across several faculties along with initial use on some other campuses.
-¸It uses Docker containers a key components, both internally for its operations (programmed mainly in Python as well as in Javascript), as well as for two reference containers providing, respectively, Python and R autograders.
+It uses Docker containers as key components, both internally for its operations (programmed mainly in Python as well as in Javascript), as well as for two reference containers providing, respectively, Python and R autograders.
 A key design decision made by PrairieLearn permits _external_ grading containers to be supplied and accessed via a well-defined interface of invoking, essentially, a single script, `run.sh`.
-This script relies on a well-defined file layout containing JSON-based configuration, support files, exam questions, supplementary data, and student submissions.
+This script relies on a well-defined file layout containing JSON-based configurations, support files, exam questions, supplementary data, and student submissions.
 It returns per-question evaluations as JSON result files, which PrarieLearn evaluates, aggregates and records in a database.
 The [Data Science Programming Methods](https://stat430.com) course \citep{stat430:2019} uses this via the custom [`rocker-pl`](https://github.com/stat430dspm/rocker-pl) container \citep{rocker-pl:2019}.\footnote{The reference R container was unavailable at the time, and also relies on a heavier CentOS-based build so that a lighter alternative was established.}
 The `rocker-pl` image extends `rocker/r-base` with the \pkg{plr} R package \citep{pkg:plr:2019} for integration into PrarieLearn testing and question evaluation, along with the actual R packages used in instruction and testing for the course in question.
 As automated grading of submitted student answers is close to the well-understood problem of unit testing, the \CRANpkg{tinytest} package \citep{CRAN:tinytest} is used for both its core features for testing as well as clean extensibility.
 The package \CRANpkg{ttdo} \citep{CRAN:ttdo} utilizes the extensibility of \pkg{tinytest} to display context-sensitive colorized differences between incorrect answers and reference answers using the \CRANpkg{diffobj} package \citep{CRAN:diffobj}.
+Additionally, \CRANpkg{ttdo} addresses the issue of insufficient information collection that Dodona faced by allowing for the collection of arbitrary, test specific attributes for additional logging and feedback. 
 The setup, described in more detail by \citet{paper:r_autograder}, is an excellent illustration of both the versatility and flexibility offered by Docker-based approaches in teaching and testing.
 
 ## Packaging research reproducibly
