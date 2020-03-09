@@ -28,7 +28,8 @@ package_functionalities <- tribble(
   "AzureContainers", c("build", "execute", "cloud"),
   "babelwhale", c("execute", "interact", "othercontainers"),
   "dockyard", c("dockerfile", "build", "execute"), # cloud?
-  "dockermachine", c("install", "execute", "cloud", "interact")
+  "dockermachine", c("install", "execute", "cloud", "interact"),
+  "googleCloudRunner", c("build", "execute", "cloud")
 )
 
 tab <-
