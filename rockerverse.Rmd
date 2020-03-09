@@ -52,8 +52,12 @@ author:
     email: daroczig@rapporter.net
   - name: Mark Edmondson
     # https://github.com/MarkEdmondson1234
-    affiliation: IIH Nordic A/S, Google Developer Expert for GCP
+    affiliation: IIH Nordic A/S, Google Developer Expert for Google Cloud Platform
     email: mark@markedmondson.me
+    address:
+      - Artillerivej 86
+      - 2300 København S, Denmark
+      - \orcid{0000-0002-8434-3881}
   - name: Colin Fay
     # https://github.com/ColinFay
     affiliation: ThinkR
@@ -301,7 +305,8 @@ package_functionalities <- tribble(
   "AzureContainers", c("build", "execute", "cloud"),
   "babelwhale", c("execute", "interact", "othercontainers"),
   "dockyard", c("dockerfile", "build", "execute"), # cloud?
-  "dockermachine", c("install", "execute", "cloud", "interact")
+  "dockermachine", c("install", "execute", "cloud", "interact"),
+  "googleCloudRunner", c("build", "execute", "cloud")
 )
 
 tab <-
@@ -376,7 +381,7 @@ An existing `Dockerfile` can be used as a template.
 
 **\pkg{dockermachine}** ([https://github.com/cboettig/dockermachine](https://github.com/cboettig/dockermachine)) is an R package to provide a convenient interface to [Docker&nbsp;Machine](https://docs.docker.com/machine/overview/) from R.
 The CLI tool `docker-machine` allows users to create and manage a virtual host on local computers, local data centers, or at cloud providers.
-A local Docker installation can be configured to transparntly forward all commands issued on the local Docker CLI to a selected (remote) virtual host.
+A local Docker installation can be configured to transparently forward all commands issued on the local Docker CLI to a selected (remote) virtual host.
 Docker&nbsp;Machine was especially crucial for local use in the early days of Docker, when no native support was available for Mac or Windows computers, but it remains relevant for provisioning on remote systems.
 The package has not received any updates for two years, but it is functional with a current version of `docker-machine` (`0.16.2`).
 It potentially lowers the barriers for R users to run containers on various hosts if they perceive that using the Docker&nbsp;Machine CLI directly as a barrier and it enables scripted workflows with remote processing.
