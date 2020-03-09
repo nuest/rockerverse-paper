@@ -882,7 +882,7 @@ The ordering of authors following DN and DE is alphabetical.
 DN conceived the article idea, \href{https://github.com/nuest/rockerverse-paper/issues/3}{initialised the formation of the writing team}, wrote sections not mentioned below, and revised all sections.
 DE wrote the introduction and the section about containerisation and the Rocker Project, and reviewed all sections.
 DB wrote the section on \pkg{outsider}.
-GD contributed to the CARD.com use case.
+GD contributed the CARD.com use case.
 RC \& EH contributed to the section on interfaces for Docker in R (_dynverse_ and `dynwrap`).
 DC contributed content on Gigantum.
 ME contributed to the section on processing and deployment to cloud services.
