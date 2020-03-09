@@ -824,7 +824,7 @@ The package \pkg{rrtools} ([https://github.com/benmarwick/rrtools](https://githu
 Images of compendium containers can be hosted on services such as Docker&nbsp;Hub for convenient sharing among collaborators and others.
 Similarly, packages such as \pkg{containerit} and \pkg{dockerfiler} can be used to manage the `Dockerfile` to be archived with a compendium on a data repository (e.g. [Zenodo](https://zenodo.org/), [Dataverse](https://dataverse.org/), [Figshare](https://figshare.com/), [OSF](https://osf.io/)).
 A typical compendium's `Dockerfile` will pull a rocker image fixed to a specific version of R, and install R packages from the MRAN repository to ensure the package versions are tied to a specific date, rather than the most recent version.
-A more extreme case is the _dynverse_ project ([https://dynverse.org/](https://dynverse.org/)), which packages over 50 computational methods with different environments (R, Python, C++, etc.) in Docker images, which can be executed from R.
+A more extreme case is the _dynverse_ project \citep{saelens_comparisonsinglecelltrajectory_2019}, which packages over 50 computational methods with different environments (R, Python, C++, etc.) in Docker images, which can be executed from R.
 _dynverse_ uses a CI platform (see&nbsp;\nameref{ci}) to build Rocker-derived images, test them, and, if the tests succeed, publish them on Docker&nbsp;Hub.
 
 Future researchers can download the compendium from the repository and run the included `Dockerfile` to build a new image that recreates the computational environment used to produce the original research results.
