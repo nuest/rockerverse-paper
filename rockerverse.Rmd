@@ -127,7 +127,7 @@ author:
     address:
       - 460 W 34th St., Ste. 1701
       - New York, NY 10001, USA
-      - \orcid{0000-0002-0233-1757}
+      - \orcid{0000-0002-2136-0000}
     email: ross@ecohealthalliance.org
   - name: Lori Shepherd
     # https://github.com/lshep
