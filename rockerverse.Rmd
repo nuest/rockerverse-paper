@@ -52,8 +52,12 @@ author:
     email: daroczig@rapporter.net
   - name: Mark Edmondson
     # https://github.com/MarkEdmondson1234
-    affiliation: IIH Nordic A/S, Google Developer Expert for GCP
+    affiliation: IIH Nordic A/S, Google Developer Expert for Google Cloud Platform
     email: mark@markedmondson.me
+    address:
+      - Artillerivej 86
+      - 2300 København S, Denmark
+      - \orcid{0000-0002-8434-3881}
   - name: Colin Fay
     # https://github.com/ColinFay
     affiliation: ThinkR
@@ -301,7 +305,8 @@ package_functionalities <- tribble(
   "AzureContainers", c("build", "execute", "cloud"),
   "babelwhale", c("execute", "interact", "othercontainers"),
   "dockyard", c("dockerfile", "build", "execute"), # cloud?
-  "dockermachine", c("install", "execute", "cloud", "interact")
+  "dockermachine", c("install", "execute", "cloud", "interact"),
+  "googleCloudRunner", c("build", "execute", "cloud")
 )
 
 tab <-
