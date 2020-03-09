@@ -45,12 +45,13 @@ author:
       - Washington, D.C. 20002, USA
       - \orcid{0000-0002-3982-4416}
     email: dav@gigantum.com
-  - name: Gergely Daroczi
+  - name: Gergely Daróczi
     # https://github.com/daroczig
     address:
       - \orcid{0000-0003-3149-8537}
     email: daroczig@rapporter.net
   - name: Mark Edmondson
+    # https://github.com/MarkEdmondson1234
     affiliation: IIH Nordic A/S, Google Developer Expert for GCP
     email: mark@markedmondson.me
   - name: Colin Fay
