@@ -371,6 +371,10 @@ The interface is similar to R6 objects, in that an object of class \code{"steved
 While it is mainly intended for working with Azure, as a convenience feature it includes lightweight, cross-platform shells to Docker and Kubernetes (tools `kubectl` and `helm`).
 These can be used to create and manage arbitrary Docker images and containers, as well as Kubernetes clusters on any platform or cloud service.
 
+**\CRANpkg{googleCloudRunner}** is an interface with [Google Cloud Platform](https://cloud.google.com/) container-related services, with tools to make it easier for R users to interact with them for common use cases \citep{cran:googleCloudRunner}.
+It includes deployment functions for creating R APIs using the Docker-based [Cloud Run](https://cloud.run) service.
+Users can create long running batch jobs calling any Docker image including Rocker via [Cloud Build](https://cloud.google.com/cloud-build/) and schedule services using [Cloud Scheduler](https://cloud.google.com/scheduler/).
+
 **\CRANpkg{babelwhale}** provides a unified interface to interact with Docker and Singularity containers \citep{cannoodt_babelwhale_2019}.
 Users can, for example, execute a command inside a container, mount a volume, or copy a file with the same R commands for both container runtimes.
 
