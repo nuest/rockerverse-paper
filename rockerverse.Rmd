@@ -892,13 +892,14 @@ DN conceived the article idea, \href{https://github.com/nuest/rockerverse-paper/
 DE wrote the introduction and the section about containerisation and the Rocker Project, and reviewed all sections.
 DB wrote the section on \pkg{outsider}.
 GD contributed the CARD.com use case.
-RC \& EH contributed to the section on interfaces for Docker in R (_dynverse_ and `dynwrap`).
+RC contributed to the section on interfaces for Docker in R (_dynverse_ and `dynwrap`).
 DC contributed content on Gigantum.
 ME contributed to the section on processing and deployment to cloud services.
 CF wrote paragraphs about \pkg{r-online}, \pkg{dockerfiler}, \pkg{r-ci} and \pkg{r-db}.
+EH contributed content on \pkg{dockyard}.
 LK contributed content on \pkg{dockr}.
 SL contributed content on RStudio's usage of Docker.
-BM wrote the section on research compendia and made the project Binder ready.
+BM wrote the section on research compendia and made the project Binder-ready.
 HN \& JN co-wrote the section on the T-Mobile use case.
 KR wrote the section about \pkg{holepunch}.
 NR wrote paragraphs about shared work environments and GPUs.
