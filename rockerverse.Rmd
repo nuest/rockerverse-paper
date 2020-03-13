@@ -921,7 +921,7 @@ KR was supported in part  by a grant from The Leona M. and Harry B. Helmsley Cha
 LS and NT are supported by US NIH / NHGRI awards U41HG00405 and U24HG010263.
 CW is supported by the Whole Tale project (https://wholetale.org) funded by the US National Science Foundation (NSF) under award [OAC-1541450](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1541450).
 NR is supported in part by the Chan-Zuckerberg Initiative Essential Open Source Software for Science program.
-We would like to thank Celeste R. Brennecka from the Science Writing Support Service of the University of Münster for her editorial support.
+We would like to thank Celeste R. Brennecka from the Scientific Editing Service of the University of Münster for her editorial support.
 
 \bibliography{RJreferences}
 
