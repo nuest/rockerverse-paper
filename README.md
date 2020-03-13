@@ -12,11 +12,8 @@ Status](https://travis-ci.org/nuest/rockerverse-paper.svg?branch=master)](https:
 <!-- badges: end -->
 
 Article about everything related to containers and R, originally based
-on the blog post <http://bit.ly/docker-r> and now **available as a
+on [this blog post](http://bit.ly/docker-r) and now **available as a
 preprint on arXiv.org: <https://arxiv.org/abs/2001.10641>**.
-
-*Want to contribute?* See
-<https://github.com/nuest/rockerverse-paper/issues/3>.
 
 **Current draft:
 <https://nuest.github.io/rockerverse-paper/master.pdf>**

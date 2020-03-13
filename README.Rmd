@@ -20,9 +20,7 @@ knitr::opts_chunk$set(
 [![Build Status](https://travis-ci.org/nuest/rockerverse-paper.svg?branch=master)](https://travis-ci.org/nuest/rockerverse-paper)
 <!-- badges: end -->
 
-Article about everything related to containers and R, originally based on the blog post http://bit.ly/docker-r and now **available as a preprint on arXiv.org: https://arxiv.org/abs/2001.10641**.
-
-_Want to contribute?_ See https://github.com/nuest/rockerverse-paper/issues/3.
+Article about everything related to containers and R, originally based on [this blog post](http://bit.ly/docker-r) and now **available as a preprint on arXiv.org: https://arxiv.org/abs/2001.10641**.
 
 **Current draft: https://nuest.github.io/rockerverse-paper/master.pdf**
 
@@ -182,7 +180,7 @@ file.rename("RJwrapper.pdf", "rockerverse-preprint.pdf") # file for own archival
 # - figures/*
 # - rockerverse.tex
 # - RJournal.sty
-# - RJreferences.bib
+# - rockerverse.bib
 # - RJwrapper.tex
 # 2. Run pdfLaTeX directly on RJwrapper.tex (works with RStudio)
 # 3. Zip the following files and submit to arXiv:
@@ -202,3 +200,15 @@ cat(emails, sep = "\n")
 ```{bash collab_handles, eval=FALSE, include=FALSE}
 cat rockerverse.Rmd | grep '    # https://github.com/' | sed 's|    # https://github.com/|@|'
 ```
+
+```{r submission_zipfile, eval=FALSE, include=FALSE}
+# Please upload a zip file of the directory containing a motivating letter (in PDF format) if required, the sources of your article; the *.tex, *.bib and *.R files should have the same file name before the extension, which should be your last or family name in lower-case letters, or the last or family names of the authors joined using hyphens. Your title should not include dashes or hyphens. Make sure to also include RJwrapper.tex and RJwrapper.pdf. 
+zip::zip("rockerverse.zip", c("rockerverse.tex",
+                              "rockerverse.bib",
+                              "rockerverse.R",
+                              "figures/orcid.pdf",
+                              "figures/Rlogo.pdf",
+                              "RJwrapper.tex",
+                              "RJwrapper.pdf"))
+```
+
