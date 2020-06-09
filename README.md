@@ -12,11 +12,8 @@ Status](https://travis-ci.org/nuest/rockerverse-paper.svg?branch=master)](https:
 <!-- badges: end -->
 
 Article about everything related to containers and R, originally based
-on the blog post <http://bit.ly/docker-r> and now **available as a
+on [this blog post](http://bit.ly/docker-r) and now **available as a
 preprint on arXiv.org: <https://arxiv.org/abs/2001.10641>**.
-
-*Want to contribute?* See
-<https://github.com/nuest/rockerverse-paper/issues/3>.
 
 **Current draft:
 <https://nuest.github.io/rockerverse-paper/master.pdf>**
@@ -35,13 +32,13 @@ with the Docker logo as background.
 
 ``` bash
 docker build --tag rockerverse-paper --file .binder/Dockerfile .
-docker run -i -v $(pwd):/rockerverse --user $UID rockerverse-paper Rscript -e 'setwd("/rockerverse"); rmarkdown::render("manuscript.Rmd")'
+docker run -i -v $(pwd):/rockerverse --user $UID rockerverse-paper Rscript -e 'setwd("/rockerverse"); rmarkdown::render("rockerverse.Rmd")'
 ```
 
 **Image from Docker Hub**
 
 ``` bash
-docker run -i -v $(pwd):/rockerverse --user $UID nuest/rockerverse-paper Rscript -e 'setwd("/rockerverse"); rmarkdown::render("manuscript.Rmd")'
+docker run -i -v $(pwd):/rockerverse --user $UID nuest/rockerverse-paper Rscript -e 'setwd("/rockerverse"); rmarkdown::render("rockerverse.Rmd")'
 ```
 
 ## Not included projects and packages
@@ -72,3 +69,9 @@ docker run -i -v $(pwd):/rockerverse --user $UID nuest/rockerverse-paper Rscript
   - <https://itsalocke.com/blog/building-an-r-training-environment/>
     (one single container for many users in teaching, uses
     rocker/tidyverse)
+
+## Helpers
+
+The [README.Rmd](README.Rmd) file’s source includes some useful little
+code snippets, e.g. count words or get a list of all contributor’s
+GitHub handles.

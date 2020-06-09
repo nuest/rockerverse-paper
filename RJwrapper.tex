@@ -1,0 +1,30 @@
+\documentclass[a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{RJournal}
+\usepackage{amsmath,amssymb,array}
+\usepackage{booktabs}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% all of the figures were moved to the 'figures' folder.
+\graphicspath{{./figures/}}
+
+% Helper command for printing orcids
+\newcommand{\orcid}[1]{\href{https://orcid.org/#1}{\includegraphics[height=\fontcharht\font`\0]{figures/orcid.pdf} #1}}
+
+\begin{document}
+
+%% do not edit, for illustration only
+\sectionhead{Contributed research article}
+\volume{XX}
+\volnumber{YY}
+\year{20ZZ}
+\month{AAAA}
+
+\begin{article}
+  \input{rockerverse}
+\end{article}
+
+\end{document}

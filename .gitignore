@@ -5,10 +5,6 @@
 
 RJwrapper\.pdf
 
-manuscript\.tex
-
-RJwrapper\.tex
-
 RJwrapper.aux
 
 RJwrapper.log
@@ -36,3 +32,5 @@ universe.png
 whaleverse.png
 
 rockerverse_1200dpi.png
+
+rockerverse.tex
