@@ -752,7 +752,7 @@ In the case of shared disks or network-attached volumes, care must be taken to m
 
 [CyVerse](https://cyverse.org) is an open-source, NSF-funded cyberinfrastructure platform for the life sciences providing easy access to computing and storage resources \citep{merchant_iplant_2016}.
 CyVerse has a browser-based 'data science workbench' called the [Discovery Environment](https://cyverse.org/discovery-environment) (DE).
-The DE uses a combination of [HTCondor](https://research.cs.wisc.edu/htcondor/) and Kubernetes for orchestrating container-based analysis and integrates with external HPC, i.e., [NSF-XSEDE](https://www.xsede.org/), through [TAPIS](https://www.tacc.utexas.edu/tapis)(TACC-API's).
+The DE uses a combination of [HTCondor](https://research.cs.wisc.edu/htcondor/) and Kubernetes for orchestrating container-based analysis and integrates with external HPC, i.e., [NSF-XSEDE](https://www.xsede.org/), through [TAPIS](https://www.tacc.utexas.edu/tapis) (TACC-API's).
 CyVerse hosts a multi-petabyte Data Store based on [iRODS](https://irods.org/) with shared access by its users.
 The DE runs Docker containers on demand, with users able to integrate bespoke containers from DockerHub or other registries \citep{devisetty_bringing_2016}.
 Rocker image integration in the DE is designed to provide researchers with scalable, compute-intensive, R analysis capabilities for large and complex datasets (e.g., genomics/multi-omics, GWAS, phenotypic data, geospatial data, etc.).
