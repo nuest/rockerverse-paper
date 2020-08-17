@@ -617,8 +617,7 @@ The started containers can run on a regular Docker host but also in clusters.
 Continuous integration and deployment (CI/CD) for Shiny applications using Shinyproxy can be achieved, e.g., via GitLab pipelines or with a combination of GitHub and Docker Hub.
 A pipeline can include building and checking R packages and Shiny apps.
 After the code has passed the checks, Docker images are built and pushed to the container registry.
-The pipeline finishes with triggering a [webhook](https://github.com/analythium/shinyproxy-1-click/blob/master/digitalocean/setup.md#setting-up-webhook) on the server, where the
-deployment script is executed.
+The pipeline finishes with triggering a [webhook](https://github.com/analythium/shinyproxy-1-click/blob/master/digitalocean/setup.md#setting-up-webhook) on the server, where the deployment script is executed.
 The script can update configurations or pull the new Docker images.
 There is a [ShinyProxy 1-Click App](https://marketplace.digitalocean.com/apps/shinyproxy) in the DigitalOcean marketplace that is set up with
 these webhooks. The [documentation](https://github.com/analythium/shinyproxy-1-click/blob/master/digitalocean/secure.md) explains how to set up HTTPS with ShinyProxy and webhooks.
