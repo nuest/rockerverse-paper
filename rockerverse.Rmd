@@ -614,12 +614,13 @@ ShinyProxy uses Docker containers to isolate user sessions and to achieve scalab
 ShinyProxy itself is written in Java to accommodate corporate requirements and may itself run in a container for stability and availability.
 The tool is built on ContainerProxy ([https://www.containerproxy.io/](https://www.containerproxy.io/)), which provides similar features for executing long-running R jobs or interactive R sessions.
 The started containers can run on a regular Docker host but also in clusters.
-Continuous integration and deployment (CI/CD) for Shiny applications using Shinyproxy can be achieved, e.g., via [GitLab pipelines](https://docs.gitlab.com/ee/ci/pipelines.html).
+Continuous integration and deployment (CI/CD) for Shiny applications using Shinyproxy can be achieved, e.g., via GitLab pipelines or with a combination of GitHub and Docker Hub.
 A pipeline can include building and checking R packages and Shiny apps.
-After the code has passed the checks, Docker images are built and pushed to GitLab's container registry.
-The pipeline finishes with triggering a webhook on the server, where the
-deployment script is executed.
-The script updates configurations, pulls the new Docker images, and restarts the services.
+After the code has passed the checks, Docker images are built and pushed to the container registry.
+The pipeline finishes with triggering a [webhook](https://github.com/analythium/shinyproxy-1-click/blob/master/digitalocean/setup.md#setting-up-webhook) on the server, where the deployment script is executed.
+The script can update configurations or pull the new Docker images.
+There is a [ShinyProxy 1-Click App](https://marketplace.digitalocean.com/apps/shinyproxy) in the DigitalOcean marketplace that is set up with
+these webhooks. The [documentation](https://github.com/analythium/shinyproxy-1-click/blob/master/digitalocean/secure.md) explains how to set up HTTPS with ShinyProxy and webhooks.
 
 Another example is the package \CRANpkg{golem}, which makes heavy use of \pkg{dockerfiler} when it comes to creating the `Dockerfile` for building and deploying production-grade Shiny applications \citep{cran_golem}.
 \CRANpkg{googleComputeEngineR} enables quick deployments of key R services, such as RStudio and Shiny, onto cloud virtual machines (VMs) with Google Cloud Compute Engine \citep{googleComputeEngineR_2019}.
@@ -904,7 +905,7 @@ HN \& JN co-wrote the section on the T-Mobile use case.
 KR wrote the section about \pkg{holepunch}.
 NR wrote paragraphs about shared work environments and GPUs.
 LS \& NT wrote the section on Bioconductor.
-PS wrote the paragraphs about GitLab CI/CD pipelines with Shinyproxy and OpenFaaS templates.
+PS wrote the paragraphs about CI/CD pipelines with Shinyproxy 1-Click app and OpenFaaS templates.
 TS \& JW wrote the section on CyVerse.
 CvP wrote the section on the usage of Docker containers in Dodona.
 CW wrote the sections on Whole Tale and contributed content about publication reproducibility audits.
