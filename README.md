@@ -9,15 +9,14 @@
 Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/nuest/rockerverse-paper/master?urlpath=rstudio)
 [![Build
 Status](https://travis-ci.org/nuest/rockerverse-paper.svg?branch=master)](https://travis-ci.org/nuest/rockerverse-paper)
+[![Article DOI](https://img.shields.io/badge/The%20R%20Journal-10.32614%2FRJ--2020--007-blue)](https://doi.org/10.32614/RJ-2020-007)
 <!-- badges: end -->
 
-Article about everything related to containers and R, originally based
-on [this blog post](http://bit.ly/docker-r) and now **available as a
-preprint on arXiv.org: <https://arxiv.org/abs/2001.10641>** ([read as
-HTML](https://www.arxiv-vanity.com/papers/2001.10641/)).
+Article about everything related to containers and R, originally based on [this blog post](http://bit.ly/docker-r), then available as [a preprint on arXiv](https://arxiv.org/abs/2001.10641) and now published as an article in The R Journal:
 
-**Current draft:
-<https://nuest.github.io/rockerverse-paper/master.pdf>**
+> Daniel Nüst, Dirk Eddelbuettel, Dom Bennett, Robrecht Cannoodt, Dav Clark, Gergely Daróczi, Mark Edmondson, Colin Fay, Ellis Hughes, Lars Kjeldgaard, Sean Lopp, Ben Marwick, Heather Nolis, Jacqueline Nolis, Hong Ooi, Karthik Ram, Noam Ross, Lori Shepherd, Péter Sólymos, Tyson Lee Swetnam, Nitesh Turaga, Charlotte Van Petegem, Jason Williams, Craig Willis and Nan Xiao. **The Rockerverse: Packages and Applications for Containerisation with R**. The R Journal (2020), 12:1, pages 437-461. doi:[10.32614/RJ-2020-007](https://doi.org/10.32614/RJ-2020-007)
+
+------
 
 ![Rockerverse hex sticker](rockerverse.png)
 
